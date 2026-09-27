@@ -4,7 +4,7 @@
 
 [![tests](https://github.com/E37dey/callcenter-xray/actions/workflows/tests.yml/badge.svg)](https://github.com/E37dey/callcenter-xray/actions/workflows/tests.yml) ![license](https://img.shields.io/badge/license-MIT-blue) ![no build](https://img.shields.io/badge/build-none%20%C2%B7%20single%20file-0B6E8A)
 
-**אבחון תהליכים ואיתור הזדמנויות AI ואוטומציה: במוקד השירות ובארגון כולו, בעזרת Claude.**
+**אבחון תהליכים, איתור הזדמנויות AI ואוטומציה, ומשילות AI: במוקד השירות ובארגון כולו, בעזרת Claude.**
 
 שני מסלולים:
 1. **ניתוח שיחות מוקד:** מתמלולים, נהלים ותצפיות אל מפת תהליך, הזדמנויות עם ציטוטים מאומתים וחיסכון בשקלים.
@@ -39,10 +39,11 @@
 | **מבחן דיוק** | סיווג שיחות מתויגות ומדידת accuracy, recall ו-precision, עם רשימת הטעויות |
 | **מפת AI לארגון** | טבלת תהליכים לפי מחלקה עם שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), ציון היתכנות בנוסחה גלויה, חיסכון חודשי, המלצה (אוטומציה, סוכן AI, עוזר עם אישור אדם, תמיכה בהחלטה, קודם לסדר נתונים), מפת בועות של היתכנות מול חיסכון ותוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude יציע את רשימת התהליכים |
 | **תרחישי חיסכון** | החיסכון מוצג כטווח: פסימי (40% מהערכת המודל), סביר (70%) ואופטימי (100%), כי ההזדמנויות חופפות והאימוץ לא מלא |
+| **משילות AI** | מלאי של כל שימושי ה-AI שהומלצו. לכל שימוש: רמת סיכון (נמוך, בינוני, גבוה) לפי רגישות, אוטונומיה, מגע בלקוח ומידע אישי, עם נימוק גלוי; בעלים וסטטוס; רשימת בקרות חובה שנגזרת מהסיכון (עד 15 בקרות, למשל תסקיר השפעה, בדיקת הטיה, אדם בלולאה, גילוי ללקוח, מדיניות שמירה). התרעה על שימוש בייצור בלי כל הבקרות, ייצוא המלאי, וטיוטת מדיניות AI לארגון שנכתבת עם Claude. מבוסס על תיקון 13 לחוק הגנת הפרטיות, טיוטת הנחיית הרשות להגנת הפרטיות, מדיניות ה-AI הישראלית, ISO/IEC 42001 ו-NIST AI RMF (מסגרת עבודה, לא ייעוץ משפטי) |
 | **הדרכה בתוך הכלי** | סיור מודרך של שמונה צעדים בכניסה הראשונה (אפשר להפעיל שוב מסרגל הצד), ובסוף כל שלב "מה עכשיו?" עם קישור לשלב הבא |
 | **הקלטות** | תמלול בעברית של קובצי שמע דרך Whisper (OpenAI או Groq) בגרסה העצמאית, סקריפט מקומי עם מודל ivrit.ai שלא שולח שמע החוצה, וקריאת VTT/SRT בלי חותמות זמן |
 | **ניתוחים שמורים** | שמירת המצב הנוכחי בשם, טעינה, ייצוא וייבוא, והשוואה בין שני ניתוחים (למשל לפני ואחרי פיילוט) עם שינוי באחוזים |
-| **מצגת משולבת** | שבעה שקפים שמאחדים את שני המסלולים: תקציר, המוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, הנחות. ניווט בחצים והדפסה ל-PDF |
+| **מצגת משולבת** | שמונה שקפים שמאחדים את שני המסלולים: תקציר, המוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, משילות AI, הנחות. ניווט בחצים והדפסה ל-PDF |
 | **שיתוף** | דוח מנהלים של עמוד אחד (HTML), דוח מלא (Markdown), JSON, שמירה ב-Google Drive, טיוטת Gmail, וטיוטת workflow ל-n8n לכל הזדמנות |
 
 ![מפת AI לארגון](docs/screenshots/org-map.png)
@@ -50,6 +51,8 @@
 | מצגת משולבת | השוואה לפני ואחרי פיילוט |
 |---|---|
 | ![מצגת](docs/screenshots/deck.png) | ![השוואה](docs/screenshots/compare.png) |
+
+![משילות AI](docs/screenshots/governance.png)
 
 ## ארכיטקטורה
 
@@ -83,7 +86,7 @@ flowchart LR
 
 ## בדיקות אוטומטיות
 
-27 בדיקות Playwright רצות ב-GitHub Actions על כל שינוי, במחשב ובמסך טלפון:
+32 בדיקות Playwright רצות ב-GitHub Actions על כל שינוי, במחשב ובמסך טלפון:
 
 - **פרטיות:** ת.ז, טלפון, כרטיס, מייל ושם מוסתרים; מספרים שלא עוברים ספרת ביקורת או Luhn לא מוסתרים; מילים אישיות מוסתרות.
 - **ניתוח חי מול Claude מדומה:** הבקשה ל-API מיורטת, והבדיקה מוודאת שהטקסט שיצא מהדפדפן כבר מוסתר, שה-JSON עובר ולידציה, ושציטוט שהמודל "המציא" מסומן כלא נמצא.
@@ -91,6 +94,7 @@ flowchart LR
 - **מפת הארגון:** שינוי ציון משנה את ההיתכנות ואת ההמלצה, והזדמנויות מהמוקד נוספות למפה פעם אחת בלבד.
 - **ממשק:** מעבר לפני/אחרי, מבחן דיוק מול תשובות מדומות, ייצוא, ניווט בסרגל הצד, ואין גלילה אופקית בטלפון.
 - **הדרכה ושמירה:** הסיור עובר על כל השלבים ונזכר שנסגר; שמירה, השוואה מהישן לחדש, טעינה, ייצוא וייבוא.
+- **משילות:** כל שימוש נכנס למלאי עם רמת סיכון; סינון קורות חיים מסווג כגבוה ודורש תסקיר ובדיקת הטיה; בעלים, סטטוס ובקרות נשמרים ונספרים; טיוטת המדיניות נבנית מהמלאי.
 - **הקלטות ומצגת:** תמלול מול Whisper מדומה (כולל המפתח שנשלח), חסימה בלי מפתח, ניקוי VTT, ושבעת השקפים של המצגת.
 
 ```bash
@@ -157,6 +161,7 @@ docs/                 צילומי מסך ו-GIF
 - Built-in accuracy test (UI and `eval/run_eval.py`) with accuracy, per-label recall and precision.
 - Exports: one-page executive report (HTML), full report (Markdown), JSON, Google Drive doc, Gmail draft, and an n8n workflow draft per opportunity.
 
+- AI governance register: risk tier per AI use (sensitivity, autonomy, customer-facing, personal data) with required controls, owners and status, a live-without-controls alert, CSV export and a Claude-drafted AI usage policy. Grounded in Israel's Privacy Protection Law Amendment 13, the draft PPA AI guideline, Israel's AI policy, ISO/IEC 42001 and NIST AI RMF.
 - Guided tour, 'what now' links at the end of every step, saved analyses with before/after comparison, a seven-slide combined deck, and Hebrew audio transcription (Whisper API in the standalone build, or a local ivrit.ai script).
 - Organization-wide AI map: score any process on six criteria with a transparent formula, get a recommended solution type, a feasibility-vs-savings bubble map and a three-wave rollout plan; or describe the organization and let Claude propose the process inventory.
 

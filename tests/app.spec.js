@@ -222,8 +222,8 @@ test.describe('guidance', () => {
     await open(page, { tour: true });
     const tour = page.locator('#tour');
     await expect(tour).toBeVisible();
-    await expect(page.locator('#tour-n')).toHaveText('1 / 8');
-    for (let i = 0; i < 7; i++) await page.click('#tour-next');
+    await expect(page.locator('#tour-n')).toHaveText('1 / 9');
+    for (let i = 0; i < 8; i++) await page.click('#tour-next');
     await expect(page.locator('#tour-next')).toHaveText('סיום');
     await expect(page.locator('#s-export')).toHaveClass(/tour-hl/);
     await page.click('#tour-next');
@@ -237,7 +237,7 @@ test.describe('guidance', () => {
 
   test('every step ends with a "what now" link to the next step', async ({ page }) => {
     await open(page);
-    await expect(page.locator('.nextbar')).toHaveCount(6);
+    await expect(page.locator('.nextbar')).toHaveCount(7);
     await page.click('#s-results .nextbar a');
     await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-eval').getBoundingClientRect().top))).toBeLessThan(60);
   });
@@ -273,10 +273,11 @@ test.describe('saved analyses', () => {
 });
 
 test.describe('combined deck', () => {
-  test('has seven slides covering both tracks', async ({ page }) => {
+  test('has eight slides covering both tracks and governance', async ({ page }) => {
     await open(page);
     const html = await page.evaluate(() => deckReport());
-    expect((html.match(/<section/g) || []).length).toBe(7);
+    expect((html.match(/<section/g) || []).length).toBe(8);
+    expect(html).toContain('משילות AI');
     for (const s of ['התמונה בקצרה', 'מה קורה במוקד', 'שלוש ההזדמנויות המובילות במוקד', 'מפת AI לארגון', 'תוכנית בשלושה גלים', 'הנחות ושקיפות']) expect(html).toContain(s);
     expect(html).toContain('חיסכון חודשי בשאר הארגון');
   });
@@ -313,5 +314,58 @@ test.describe('recordings', () => {
     await expect(page.locator('#src-list')).toContainText('call.vtt (כתוביות)');
     const text = await page.evaluate(() => state.sources.find((s) => s.name.startsWith('call.vtt')).text);
     expect(text).toBe('לקוח: שלום\nנציג: היי');
+  });
+});
+
+test.describe('AI governance', () => {
+  test('every recommended AI use lands in the register with a risk tier', async ({ page }) => {
+    await open(page);
+    const items = await page.evaluate(() => govItems().map((g) => ({ name: g.name, tier: g.tier, n: g.controls.length })));
+    expect(items.length).toBe(22); // 15 org processes + 7 call-center opportunities
+    const byName = Object.fromEntries(items.map((i) => [i.name, i]));
+    expect(byName['סינון ראשוני של קורות חיים'].tier).toBe(2); // decisions about people
+    expect(byName['תיאום ראיונות עבודה'].tier).toBe(0);
+    expect(byName['סינון ראשוני של קורות חיים'].n).toBeGreaterThan(byName['תיאום ראיונות עבודה'].n);
+  });
+
+  test('high-risk uses require an impact assessment and a bias check', async ({ page }) => {
+    await open(page);
+    const ids = await page.evaluate(() => govItems().find((g) => g.name === 'סינון ראשוני של קורות חיים').controls.map((c) => c.id));
+    for (const id of ['dpia', 'bias', 'review', 'acc', 'log']) expect(ids).toContain(id);
+    expect(ids).not.toContain('hitl'); // already human-approved by design (assist type)
+  });
+
+  test('owner, status and controls are saved and counted', async ({ page }) => {
+    await open(page);
+    const row = page.locator('#gov-tbl tbody tr').first();
+    await row.locator('[data-own]').fill('דנה, מנהלת מוקד');
+    await row.locator('[data-own]').dispatchEvent('change');
+    await page.locator('#gov-tbl tbody tr').first().locator('details summary').click();
+    await page.locator('#gov-tbl tbody tr').first().locator('[data-c="owner"]').check();
+    await expect(page.locator('#gov-kpis')).toContainText('1 מתוך');
+    await page.locator('#gov-tbl tbody tr').first().locator('[data-st]').selectOption('בייצור');
+    await expect(page.locator('#gov-tbl tbody tr').first()).toContainText('בייצור בלי כל הבקרות');
+    await page.reload();
+    await expect(page.locator('#gov-tbl tbody tr').first().locator('[data-own]')).toHaveValue('דנה, מנהלת מוקד');
+  });
+
+  test('risk filter and register export', async ({ page }) => {
+    await open(page);
+    await page.click('[data-gf="2"]');
+    const n = await page.locator('#gov-tbl tbody tr').count();
+    expect(n).toBeGreaterThan(0);
+    for (const tr of await page.locator('#gov-tbl tbody tr').all()) await expect(tr).toContainText('סיכון גבוה');
+    const csv = await page.evaluate(() => govCsv());
+    expect(csv.split('\n')[0]).toContain('בקרות חסרות');
+  });
+
+  test('policy draft is written by (mocked) Claude from the register', async ({ page }) => {
+    await open(page);
+    const bodies = await mockClaude(page, '# מדיניות שימוש בבינה מלאכותית\nטיוטה לעבודה, לא ייעוץ משפטי.');
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.click('#gov-policy');
+    await expect(page.locator('#gov-policy-out')).toContainText('מדיניות שימוש בבינה מלאכותית');
+    expect(JSON.stringify(bodies[0])).toContain('סינון ראשוני של קורות חיים');
   });
 });

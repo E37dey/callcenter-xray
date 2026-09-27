@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="רנטגן למוקד: אבחון תהליכים ואיתור הזדמנויות AI ואוטומציה במוקדים ובארגון כולו, בעזרת Claude">
+<meta name="description" content="רנטגן למוקד: אבחון תהליכים, איתור הזדמנויות AI ומשילות AI במוקדים ובארגון כולו, בעזרת Claude">
 <style>[hidden]{display:none!important}html,body{margin:0;height:100%}img{max-width:100%}</style>
 </head>
 <body>
@@ -426,6 +426,27 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 .cmp td.down{color:var(--crit);font-weight:700}
 .src .chip.au{background:var(--good-soft);border-color:transparent;color:var(--good)}
 @media (max-width:980px){.tour-btn{display:none}.exp .deck-card{grid-column:auto}.exp{grid-template-columns:1fr}}
+
+/* ===== v9: governance ===== */
+.gov-ico{background:var(--good-soft)!important;color:var(--good)!important}
+.builtin{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
+.tier{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.tier.h{background:var(--crit-soft);color:var(--crit)} .tier.m{background:var(--amber-soft);color:var(--amber)} .tier.l{background:var(--good-soft);color:var(--good)}
+.gov-tbl td{vertical-align:middle}
+.gov-tbl input.own{font:inherit;font-size:13px;border:1px solid var(--line-2);background:var(--surface);border-radius:7px;padding:5px 8px;width:120px;color:var(--ink)}
+.gov-tbl select{font:inherit;font-size:13px;border:1px solid var(--line-2);background:var(--surface);border-radius:7px;padding:5px 6px;color:var(--ink)}
+.gov-tbl details summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;white-space:nowrap}
+.gov-tbl details summary::-webkit-details-marker{display:none}
+.prog{width:70px;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;display:inline-block}
+.prog i{display:block;height:100%;background:var(--good)}
+.ctl{display:grid;gap:6px;margin-top:8px;min-width:280px}
+.ctl label{display:grid;grid-template-columns:auto 1fr;gap:8px;font-size:13px;align-items:start;cursor:pointer}
+.ctl label small{display:block;color:var(--muted);font-size:12px}
+.why{font-size:12px;color:var(--muted)}
+.frameworks{border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;background:var(--surface-2)}
+.frameworks summary{cursor:pointer}
+.frameworks ul{margin:10px 0 6px;padding-inline-start:18px;display:grid;gap:6px;font-size:14px}
+.frameworks a{color:var(--accent)}
 </style>
 
 <div class="app">
@@ -438,14 +459,15 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     <a href="#s-results" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>תוצאות<span class="n">03</span></a>
     <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
   </nav>
-  <span class="navlabel second">מיפוי ארגוני</span>
+  <span class="navlabel second">מיפוי ארגוני ומשילות</span>
   <nav aria-label="מפת ארגון">
     <a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">05</span></a>
+    <a href="#s-gov"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12h7M12 8.5v7"/></svg>משילות AI<span class="n">06</span></a>
   </nav>
   <span class="navlabel second">סיכום ושיתוף</span>
   <nav aria-label="סיכום ושיתוף">
-    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">06</span></a>
-    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">07</span></a>
+    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">07</span></a>
+    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">08</span></a>
   </nav>
   <button class="tour-btn" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור מודרך</button>
   <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
@@ -676,12 +698,34 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     <div class="formula" id="org-formula"></div>
 
     <div id="org-out"></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> לפני שמטמיעים: לכל שימוש ב-AI צריך בעלים, רמת סיכון ובקרות. זה שלב המשילות.</span><a class="btn primary sm" href="#s-gov">למשילות AI ←</a></div>
+  </section>
+
+  <!-- GOV -->
+  <section class="panel" id="s-gov" aria-labelledby="h-gov">
+    <div class="phead"><div class="shead"><span class="ico gov-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12h7M12 8.5v7"/></svg></span><div><span class="num">שלב 6</span><h2 id="h-gov">משילות AI: מי אחראי, מה הסיכון, אילו בקרות</h2></div></div>
+      <div class="row"><button class="btn ghost" id="gov-csv">הורדת מלאי השימושים</button><button class="btn primary" id="gov-policy">טיוטת מדיניות AI עם Claude</button></div></div>
+    <p>כל תהליך שהומלץ בו AI, במפת הארגון ובניתוח השיחות, נכנס כאן למלאי שימושי ה-AI. לכל שימוש הכלי קובע רמת סיכון לפי ארבעה גורמים: רגישות, רמת אוטונומיה, מגע ישיר בלקוח ומידע אישי. לפי רמת הסיכון הוא מגדיר את הבקרות שחייבות להתקיים לפני העלייה לאוויר. ממלאים בעלים וסטטוס, ומסמנים בקרות שהושלמו.</p>
+    <div class="kpis" id="gov-kpis"></div>
+    <div class="builtin"><span class="label">הכלי עצמו כבר בנוי לפי העקרונות:</span><span class="chip good">פרטים מזהים מוסתרים לפני שליחה</span><span class="chip good">כל ממצא עם ציטוט שנבדק מול המקור</span><span class="chip good">מבחן דיוק מובנה</span><span class="chip good">אדם מאשר לפני שמירה ב-CRM</span><span class="chip good">נוסחאות וחישובים גלויים</span></div>
+    <div class="grid2" style="align-items:center"><div class="depts" id="gov-filter" role="group" aria-label="סינון לפי רמת סיכון"></div><p class="note" style="text-align:left">לחיצה על "בקרות" פותחת את רשימת הבקרות של אותו שימוש.</p></div>
+    <div class="tbl-wrap"><table class="t gov-tbl" id="gov-tbl"></table></div>
+    <div id="gov-policy-out"></div>
+    <details class="frameworks"><summary><b>על אילו מסגרות זה מבוסס</b></summary>
+      <ul>
+        <li><a href="https://www.gov.il/he/pages/13_amendment" target="_blank" rel="noopener">תיקון 13 לחוק הגנת הפרטיות</a>: בתוקף מאוגוסט 2025. מרחיב את חובות הארגון ואת סמכויות האכיפה, כולל מינוי ממונה הגנת פרטיות בחלק מהארגונים.</li>
+        <li><a href="https://www.gov.il/BlobFolder/rfp/ai_reg/he/ai_regu_draft.pdf" target="_blank" rel="noopener">טיוטת הנחיית הרשות להגנת הפרטיות על מערכות בינה מלאכותית</a> (אפריל 2025): איך חוק הגנת הפרטיות חל על פיתוח ושימוש ב-AI. כדאי לבדוק את הסטטוס העדכני.</li>
+        <li><a href="https://regulations.ai/regulations/israel-2023-12-ai-policy" target="_blank" rel="noopener">מדיניות רגולציה ואתיקה בבינה מלאכותית</a> (משרד החדשנות ומשרד המשפטים, דצמבר 2023): גישה מבוססת סיכון ו"חדשנות אחראית".</li>
+        <li>ISO/IEC 42001:2023 (מערכת ניהול AI) ו-NIST AI RMF 1.0: מסגרות בינלאומיות לניהול סיכוני AI. ה-EU AI Act רלוונטי כשמשרתים לקוחות באירופה.</li>
+      </ul>
+      <p class="note">זו מסגרת עבודה לניהול סיכונים, לא ייעוץ משפטי. לפני עלייה לאוויר עם מידע אישי, מתייעצים עם הממונה על הגנת הפרטיות או עם עורך דין.</p>
+    </details>
     <div class="nextbar"><span><b>מה עכשיו?</b> שומרים את המצב הנוכחי, כדי להשוות אחרי פיילוט או בין מוקדים.</span><a class="btn primary sm" href="#s-projects">לשמירה ←</a></div>
   </section>
 
   <!-- 6. PROJECTS -->
   <section class="panel" id="s-projects" aria-labelledby="h-proj">
-    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><div><span class="num">שלב 6</span><h2 id="h-proj">ניתוחים שמורים והשוואה</h2></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><div><span class="num">שלב 7</span><h2 id="h-proj">ניתוחים שמורים והשוואה</h2></div></div>
       <div class="row"><button class="btn ghost" id="proj-export">ייצוא כל הניתוחים</button><label class="btn ghost" for="proj-import">ייבוא</label><input id="proj-import" type="file" accept=".json" hidden></div></div>
     <p>שומרים את המצב הנוכחי (ניתוח השיחות, מפת הארגון והמספרים) בשם, וחוזרים אליו אחר כך. מסמנים שני ניתוחים כדי להשוות: למשל לפני הפיילוט ואחריו, או שני מוקדים שונים.</p>
     <form class="row" id="proj-form" style="flex-wrap:nowrap"><label for="proj-name" hidden>שם</label><input id="proj-name" class="inp" placeholder="שם לניתוח, למשל: מוקד תקלות, לפני פיילוט" style="max-width:420px"><button class="btn primary" type="submit">שמירת המצב הנוכחי</button></form>
@@ -693,11 +737,11 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 
   <!-- 5. EXPORT -->
   <section class="panel" id="s-export" aria-labelledby="h-exp">
-    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 7</span><h2 id="h-exp">דוחות ושיתוף</h2></div></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 8</span><h2 id="h-exp">דוחות ושיתוף</h2></div></div></div>
     <div class="exp">
       <div class="card deck-card">
         <h3>מצגת משולבת: מוקד וארגון</h3>
-        <p class="note">שבעה שקפים שמאחדים את שני המסלולים: תקציר, מה קורה במוקד, לפני ואחרי, מפת הארגון, תוכנית בשלושה גלים, פיילוט, והנחות. מעבר בין שקפים בחצים, והדפסה ל-PDF מהדפדפן.</p>
+        <p class="note">שמונה שקפים שמאחדים את שני המסלולים: תקציר, מה קורה במוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, משילות AI, והנחות. מעבר בין שקפים בחצים, והדפסה ל-PDF מהדפדפן.</p>
         <div class="row"><button class="btn primary" id="dl-deck">הורדת המצגת</button></div>
         <div id="deck-status" class="note"></div>
       </div>
@@ -1169,7 +1213,7 @@ function renderReadout(a){
     <div class="ro-row"><div><b class="mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
 }
 function renderResults(){
-  const a = state.analysis; renderReadout(a);
+  const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0);
   $('demo-banner').hidden = !state.isDemo;
   $('res-when').textContent = state.isDemo ? 'נתוני דוגמה' : ('נותח ' + new Date(state.when).toLocaleString('he-IL', {dateStyle:'short', timeStyle:'short'}));
   renderSum(a); renderDet(a); renderProc(a); renderOpp(a); renderPilot(a); renderChatSugg();
@@ -1618,7 +1662,7 @@ function bubbleChart(list, med){
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="מפת תהליכים: היתכנות מול חיסכון" direction="ltr">${g}</svg>`;
 }
 function renderOrg(){
-  renderOrgTable();
+  renderOrgTable(); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0);
   const list = orgScored();
   if(!list.length){ $('org-out').innerHTML = '<div class="msg">אין עדיין תהליכים. טענו ארגון לדוגמה, הוסיפו תהליך, או תארו את הארגון ל-Claude.</div>'; return; }
   const vals = list.map(x => x.s.ils).sort((a,b) => a-b), med = vals[Math.floor(vals.length/2)] || 0;
@@ -1760,7 +1804,7 @@ $('stt-save').onclick = () => { stt.key = $('stt-key').value.trim(); stt.provide
 function projGet(){ try{ return JSON.parse(localStorage.getItem('xray-projects') || '[]'); }catch(e){ return []; } }
 function projSet(list){ try{ localStorage.setItem('xray-projects', JSON.stringify(list)); return true; }catch(e){ toast('לא ניתן לשמור בדפדפן הזה', 'err'); return false; } }
 let projSel = [];
-function snapshot(name){ return { id: Date.now().toString(36), name: name || ('ניתוח ' + new Date().toLocaleDateString('he-IL')), date: new Date().toISOString(), profile: profile(), analysis: state.analysis, sent: state.sent, isDemo: state.isDemo, org: { rows: org.rows, cost: +$('org-cost').value || 0, isDemo: org.isDemo } }; }
+function snapshot(name){ return { id: Date.now().toString(36), name: name || ('ניתוח ' + new Date().toLocaleDateString('he-IL')), date: new Date().toISOString(), profile: profile(), analysis: state.analysis, sent: state.sent, isDemo: state.isDemo, org: { rows: org.rows, cost: +$('org-cost').value || 0, isDemo: org.isDemo }, gov: govLoad() }; }
 function metrics(sn){
   const a = sn.analysis, p = sn.profile, t = totals(a, p), v = (() => { const keep = state.sent; state.sent = sn.sent || (sn.isDemo ? demoSent() : null); const r = verifyAll(a); state.sent = keep; return r; })();
   const orgRows = (sn.org && sn.org.rows) || [], cost = (sn.org && sn.org.cost) || 0;
@@ -1794,6 +1838,7 @@ function loadProject(id){
   for(const k of ['type','calls','aht','cost','agents']) if(p.profile[k] != null) $('p-'+k).value = p.profile[k];
   state.analysis = p.analysis; state.sent = p.sent || null; state.isDemo = !!p.isDemo; state.when = p.date; state.chat = [];
   if(p.org){ org.rows = p.org.rows || []; org.isDemo = !!p.org.isDemo; if(p.org.cost) $('org-cost').value = p.org.cost; saveOrg(); }
+  if(p.gov) govSave(p.gov);
   saveLocal(); renderResults(); renderOrg(); toast(`נטען: ${p.name}`);
   $('s-results').scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -1820,7 +1865,9 @@ function deckReport(){
     `<section><h2>שלוש ההזדמנויות המובילות במוקד</h2>${af ? `<div class="ba"><div><span>היום</span><i style="width:100%;background:#B86E00"></i><em>${clock(b)}</em></div><div><span>אחרי</span><i style="width:${Math.round(af / b * 100)}%;background:#1D7A4D"></i><em>${clock(af)}</em></div></div>` : ''}<div class="cards">${topCall.map((o, k) => `<div class="card"><small>${k + 1} · ${esc(o.category || '')}</small><b>${esc(o.title)}</b><p>${esc(o.description)}</p>${quote(o)}<strong>${roi(o).ils ? rng(roi(o).ils) + ' בחודש' : esc(o.roi_note || '')}</strong></div>`).join('')}</div></section>`,
     `<section><h2>מפת AI לארגון: איפה להתחיל</h2><div class="two"><div class="cards col">${topOrg.map((x, k) => `<div class="card"><small>${k + 1} · ${esc(x.r.dept)}</small><b>${esc(x.r.name)}</b><p>${REC[x.s.type].label} · היתכנות ${x.s.feas}/100</p><strong>${rng(x.s.ils)} בחודש</strong></div>`).join('')}</div><div><h3>פוטנציאל לפי מחלקה</h3>${depts.map(([d, val]) => `<div class="bar"><span>${esc(d)}</span><i style="width:${val / maxD * 100}%;background:#5B4DB0"></i><em>${ils(val * SCEN.r)}</em></div>`).join('')}</div></div></section>`,
     `<section><h2>תוכנית בשלושה גלים</h2><div class="waves"><div><h3>גל 1 · 0–3 חודשים</h3><ul>${list([...q.start, ...q.quick])}</ul></div><div><h3>גל 2 · 3–6 חודשים</h3><ul>${list(q.strategic)}</ul></div><div><h3>גל 3 · אחרי זה</h3><ul>${list(q.later)}</ul></div></div>${a.pilot ? `<div class="pilot"><b>פיילוט ראשון במוקד: ${esc(a.pilot.title)}</b><span>${arr(a.pilot.weeks).map(w => `${esc(w.week)}: ${esc(w.goal)}`).join(' · ')}</span><span><b>מדד הצלחה:</b> ${esc(a.pilot.success_metric)}</span></div>` : ''}</section>`,
-    `<section><h2>הנחות ושקיפות</h2><ul class="assume"><li><b>שלושה תרחישים:</b> אופטימי = הערכת המודל המלאה; סביר = 70% ממנה; פסימי = 40%. ההזדמנויות חופפות בחלקן והאימוץ לא מלא.</li><li><b>חיסכון במוקד:</b> שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעת נציג (₪${p.cost}).</li><li><b>מפת הארגון:</b> ציון היתכנות מנוסחה גלויה של שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), עלות שעה ₪${+$('org-cost').value || 0}.</li><li><b>ראיות:</b> כל ממצא במוקד מגובה בציטוט שנבדק אוטומטית מול טקסט המקור (${v.ok} מתוך ${v.total} אומתו).</li><li><b>פרטיות:</b> ת.ז, טלפונים, כרטיסי אשראי, מיילים ושמות הוסתרו בדפדפן לפני שהטקסט נשלח לניתוח.</li>${a.data_gaps.length ? `<li><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</li>` : ''}</ul></section>`
+    (() => { const gm = govLoad(), gi = govItems(), hi = gi.filter(g => g.tier === 2), tot = gi.reduce((n, g) => n + g.controls.length, 0), dn = gi.reduce((n, g) => n + g.controls.filter(c => (gm[g.key]?.done || {})[c.id]).length, 0);
+      return `<section><h2>משילות AI: מי אחראי ואילו בקרות</h2><div class="kpis"><div class="k"><b>${gi.length}</b><span>שימושי AI במלאי</span></div><div class="k"><b style="color:#B42318">${hi.length}</b><span>בסיכון גבוה</span></div><div class="k"><b>${[0,1,2].map(t => gi.filter(g => g.tier === t).length).join(' / ')}</b><span>נמוך / בינוני / גבוה</span></div><div class="k"><b>${tot ? Math.round(dn / tot * 100) : 0}%</b><span>בקרות שהושלמו</span></div></div><div class="two"><div><h3>בסיכון גבוה: לפני עלייה לאוויר</h3><ul>${hi.slice(0, 5).map(g => `<li><b>${esc(g.name)}</b> <span>${esc(g.why.join(' · '))}</span></li>`).join('') || '<li><span>אין שימושים בסיכון גבוה</span></li>'}</ul></div><div><h3>בקרות חובה לסיכון גבוה</h3><ul>${CONTROLS.filter(c => ['dpia','client','hitl','acc','log','bias','review'].includes(c.id)).map(c => `<li><b>${esc(c.t)}</b> <span>${esc(c.d)}</span></li>`).join('')}</ul></div></div></section>`; })(),
+    `<section><h2>הנחות ושקיפות</h2><ul class="assume"><li><b>שלושה תרחישים:</b> אופטימי = הערכת המודל המלאה; סביר = 70% ממנה; פסימי = 40%. ההזדמנויות חופפות בחלקן והאימוץ לא מלא.</li><li><b>חיסכון במוקד:</b> שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעת נציג (₪${p.cost}).</li><li><b>מפת הארגון:</b> ציון היתכנות מנוסחה גלויה של שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), עלות שעה ₪${+$('org-cost').value || 0}.</li><li><b>ראיות:</b> כל ממצא במוקד מגובה בציטוט שנבדק אוטומטית מול טקסט המקור (${v.ok} מתוך ${v.total} אומתו).</li><li><b>פרטיות:</b> ת.ז, טלפונים, כרטיסי אשראי, מיילים ושמות הוסתרו בדפדפן לפני שהטקסט נשלח לניתוח.</li><li><b>משילות:</b> רמת הסיכון נקבעת מרגישות, אוטונומיה, מגע בלקוח ומידע אישי; הבקרות מבוססות על חוק הגנת הפרטיות (תיקון 13), מדיניות ה-AI הישראלית, ISO/IEC 42001 ו-NIST AI RMF. זו מסגרת עבודה, לא ייעוץ משפטי.</li>${a.data_gaps.length ? `<li><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</li>` : ''}</ul></section>`
   ];
   return `<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>תוכנית הטמעת AI · מצגת</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&display=swap">
@@ -1858,6 +1905,7 @@ const TOUR = [
   { sel:'#s-run .shield', t:'2. פרטיות לפני הכול', d:'ת.ז, טלפונים, כרטיסי אשראי ושמות מוסתרים כאן, בדפדפן, לפני שמשהו יוצא. אפשר לראות בדיוק מה נשלח.' },
   { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
   { sel:'#s-org', t:'מפת AI לארגון', d:'מדרגים תהליכים בכל המחלקות בשישה מדדים. הכלי ממליץ על סוג פתרון ובונה תוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude ימפה.' },
+  { sel:'#s-gov', t:'משילות AI', d:'לכל שימוש ב-AI: רמת סיכון, בעלים, סטטוס ובקרות חובה לפי הסיכון. מכאן גם יוצאת טיוטת מדיניות AI לארגון.' },
   { sel:'#s-projects', t:'שומרים ומשווים', d:'שומרים ניתוח בשם ומשווים בין שניים: לפני ואחרי פיילוט, או מוקד מול מוקד.' },
   { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail. בסוף כל שלב יש "מה עכשיו?" שמכוון הלאה.' }
 ];
@@ -1877,6 +1925,100 @@ $('tour-skip').onclick = () => tourShow(-1);
 $('tour-start').onclick = () => tourShow(0);
 document.addEventListener('keydown', e => { if(tourI >= 0 && e.key === 'Escape') tourShow(-1); });
 
+
+/* ================= AI governance ================= */
+const CONTROLS = [
+  { id:'owner',   t:'בעלים עסקי מוגדר', d:'אדם אחד שאחראי לשימוש, לתוצאות ולעצירה אם צריך', when: () => true },
+  { id:'inv',     t:'רישום במלאי שימושי ה-AI', d:'מה המערכת עושה, איזה מודל, אילו נתונים, מי הספק', when: () => true },
+  { id:'min',     t:'מזעור נתונים והסתרת פרטים מזהים', d:'רק המידע שנחוץ; הסתרה לפני שליחה למודל', when: g => g.pd },
+  { id:'ret',     t:'מדיניות שמירה ומחיקה', d:'כמה זמן נשמרים קלט, פלט ולוגים, ומי מוחק', when: g => g.pd },
+  { id:'priv',    t:'בדיקת עמידה בחוק הגנת הפרטיות', d:'מול תיקון 13 והנחיות הרשות; עם הממונה על הפרטיות', when: g => g.pd },
+  { id:'disc',    t:'גילוי ללקוח שמעורב AI', d:'הלקוח יודע שהוא מדבר עם בוט או שהשיחה מנותחת', when: g => g.cf },
+  { id:'handoff', t:'מעבר קל לנציג אנושי', d:'בכל רגע, בלי לחזור על הפרטים', when: g => g.cf },
+  { id:'hitl',    t:'אדם מאשר פעולות שמשנות נתונים', d:'Human-in-the-loop לכל פעולה בלתי הפיכה', when: g => g.auto >= 2 },
+  { id:'acc',     t:'מבחן דיוק לפני עלייה לאוויר', d:'על שיחות אמיתיות, עם סף מוסכם (למשל 90%)', when: g => g.tier >= 1 },
+  { id:'log',     t:'תיעוד ולוג לכל החלטה', d:'אפשר לשחזר מה המודל קיבל, מה החזיר ומי אישר', when: g => g.tier >= 1 },
+  { id:'mon',     t:'ניטור שוטף ורף עצירה', d:'מדדי איכות שבועיים; תנאי ברור להשהיה', when: g => g.tier >= 1 },
+  { id:'dpia',    t:'תסקיר השפעה וסיכונים', d:'לפני עלייה לאוויר: מה יכול להשתבש, למי, ואיך מצמצמים', when: g => g.tier >= 2 },
+  { id:'client',  t:'אישור הלקוח העסקי', d:'כשהנתונים שייכים ללקוח של המוקד (למשל חברת ביטוח)', when: g => g.tier >= 2 && g.cfOrPd },
+  { id:'bias',    t:'בדיקת הטיה והוגנות', d:'במיוחד כשמתקבלות החלטות על אנשים', when: g => g.people },
+  { id:'review',  t:'סקירה רבעונית', d:'האם השימוש עדיין מוצדק, מדויק ובטוח', when: g => g.tier >= 2 }
+];
+const TIER = [{k:'l', t:'סיכון נמוך'}, {k:'m', t:'סיכון בינוני'}, {k:'h', t:'סיכון גבוה'}];
+const STATUS = ['הצעה','בתכנון','בפיילוט','בייצור','מושהה'];
+let govFilter = 'all';
+function govLoad(){ try{ return JSON.parse(localStorage.getItem('xray-gov') || '{}'); }catch(e){ return {}; } }
+function govSave(m){ try{ localStorage.setItem('xray-gov', JSON.stringify(m)); }catch(e){} }
+function govItems(){
+  const items = [];
+  orgScored().forEach(({r, s: sc}) => { if(sc.type === 'data') return; items.push({ key:'org|' + r.dept + '|' + r.name, name: r.name, dept: r.dept, type: sc.type, risk: +r.risk || 3, text: r.dept + ' ' + r.name, src: r.src === 'call' ? 'ניתוח שיחות' : 'מפת הארגון' }); });
+  state.analysis.opportunities.forEach(o => { if(org.rows.some(r => r.src === 'call' && r.name === o.title)) return; const c = CAT_CRIT[o.category] || [4,3,4,3,3,3]; const t = o.category === 'סוכן AI' ? 'agent' : o.category === 'אוטומציה' ? 'auto' : o.category === 'הדרכה' ? 'support' : 'assist'; items.push({ key:'call|' + o.title, name: o.title, dept: 'מוקד', type: t, risk: c[5], text: 'מוקד ' + o.title + ' ' + (o.description || ''), src: 'ניתוח שיחות', callCat: o.category }); });
+  return items.map(govAssess);
+}
+function govAssess(it){
+  const txt = it.text || '';
+  const people = /סינון|קורות חיים|ביצועי נציג|בקרת איכות|הערכת|ציון לנציג/.test(txt), staff = people || /גיוס|עובד|משמרות|שכר|נוכחות/.test(txt);
+  const pd = it.risk >= 3 || staff || /לקוח|שיחות|CRM|חשבונ|גבייה|תשלום|אשראי|ביטוח|רפוא/.test(txt);
+  const cf = /מענה ל|בוט|וואטסאפ|הודעה ללקוח|לקוחות|שאלות חוזרות/.test(txt) && it.type !== 'support';
+  const auto = it.type === 'auto' || it.type === 'agent' ? 2 : it.type === 'assist' ? 1 : 0;
+  let score = (it.risk - 1) * 2 + auto * 1.5 + (cf ? 2 : 0) + (pd ? 1.5 : 0) + (people && auto ? 2 : 0);
+  let tier = score >= 10 ? 2 : score >= 5 ? 1 : 0;
+  if(people && (it.type === 'auto' || it.type === 'agent' || it.type === 'assist')) tier = Math.max(tier, 2);
+  const g = { ...it, people, pd, cf, auto, tier, cfOrPd: cf || pd };
+  g.why = [it.risk >= 4 ? 'רגישות גבוהה' : it.risk >= 3 ? 'רגישות בינונית' : 'רגישות נמוכה', auto === 2 ? 'פועל לבד' : auto === 1 ? 'מציע, אדם מחליט' : 'תומך בהחלטה', cf ? 'מול לקוחות' : null, pd ? 'מידע אישי' : null, people ? 'החלטות על אנשים' : null].filter(Boolean);
+  g.controls = CONTROLS.filter(c => c.when(g));
+  return g;
+}
+function renderGov(){
+  const m = govLoad(), all = govItems();
+  const rows = all.filter(g => govFilter === 'all' || String(g.tier) === govFilter);
+  const doneOf = g => g.controls.filter(c => (m[g.key]?.done || {})[c.id]).length;
+  const totalC = all.reduce((n, g) => n + g.controls.length, 0), doneC = all.reduce((n, g) => n + doneOf(g), 0);
+  const high = all.filter(g => g.tier === 2).length, noOwner = all.filter(g => !(m[g.key]?.owner || '').trim()).length;
+  const live = all.filter(g => (m[g.key]?.status) === 'בייצור'), liveGap = live.filter(g => doneOf(g) < g.controls.length).length;
+  $('gov-kpis').innerHTML = `
+    <div class="kpi"><span class="label">שימושי AI במלאי</span><span class="n mono">${all.length}</span><span class="d">מתוך מפת הארגון וניתוח השיחות</span></div>
+    <div class="kpi"><span class="label">בסיכון גבוה</span><span class="n mono" style="color:${high?'var(--crit)':'var(--ink)'}">${high}</span><span class="d">דורשים תסקיר ואישור לפני עלייה</span></div>
+    <div class="kpi"><span class="label">בקרות שהושלמו</span><span class="n mono ${doneC===totalC&&totalC?'good':''}">${totalC ? Math.round(doneC/totalC*100) : 0}%</span><span class="d">${doneC} מתוך ${totalC}</span></div>
+    <div class="kpi"><span class="label">דורש טיפול</span><span class="n mono" style="color:${noOwner||liveGap?'var(--amber)':'var(--good)'}">${noOwner + liveGap}</span><span class="d">${noOwner} בלי בעלים · ${liveGap} בייצור בלי כל הבקרות</span></div>`;
+  const counts = [0,1,2].map(t => all.filter(g => g.tier === t).length);
+  $('gov-filter').innerHTML = [['all', `הכול · ${all.length}`], ['2', `סיכון גבוה · ${counts[2]}`], ['1', `בינוני · ${counts[1]}`], ['0', `נמוך · ${counts[0]}`]].map(([k, t]) => `<button type="button" aria-pressed="${govFilter===k}" data-gf="${k}">${t}</button>`).join('');
+  $('gov-filter').querySelectorAll('[data-gf]').forEach(b => b.onclick = () => { govFilter = b.dataset.gf; renderGov(); });
+  const sorted = [...rows].sort((a, b) => b.tier - a.tier || a.name.localeCompare(b.name, 'he'));
+  $('gov-tbl').innerHTML = `<thead><tr><th>שימוש</th><th>סוג</th><th>רמת סיכון</th><th>בעלים</th><th>סטטוס</th><th>בקרות</th></tr></thead><tbody>${sorted.map(g => { const st = m[g.key] || {}, d = doneOf(g), n = g.controls.length; return `<tr data-k="${esc(g.key)}">
+    <td><b>${esc(g.name)}</b><div class="why">${esc(g.dept)} · ${esc(g.src)}</div></td>
+    <td><span class="rec" style="color:${REC[g.type].c};background:${REC[g.type].bg}">${REC[g.type].label}</span></td>
+    <td><span class="tier ${TIER[g.tier].k}">${TIER[g.tier].t}</span><div class="why">${g.why.map(esc).join(' · ')}</div></td>
+    <td><input class="own" data-own value="${esc(st.owner || '')}" placeholder="שם הבעלים" aria-label="בעלים"></td>
+    <td><select data-st aria-label="סטטוס">${STATUS.map(x => `<option${(st.status || 'הצעה') === x ? ' selected' : ''}>${x}</option>`).join('')}</select>${st.status === 'בייצור' && d < n ? '<div class="why" style="color:var(--crit)">בייצור בלי כל הבקרות</div>' : ''}</td>
+    <td><details${st.open ? ' open' : ''}><summary>${d}/${n} <span class="prog"><i style="width:${n ? d/n*100 : 0}%"></i></span></summary><div class="ctl">${g.controls.map(c => `<label><input type="checkbox" data-c="${c.id}" ${(st.done || {})[c.id] ? 'checked' : ''}><span>${esc(c.t)}<small>${esc(c.d)}</small></span></label>`).join('')}</div></details></td></tr>`; }).join('')}</tbody>`;
+  const upd = (key, f) => { const mm = govLoad(); mm[key] = mm[key] || {}; f(mm[key]); govSave(mm); };
+  $('gov-tbl').querySelectorAll('tr[data-k]').forEach(tr => {
+    const key = tr.dataset.k;
+    tr.querySelector('[data-own]').addEventListener('change', e => { upd(key, s2 => s2.owner = e.target.value); renderGov(); });
+    tr.querySelector('[data-st]').addEventListener('change', e => { upd(key, s2 => s2.status = e.target.value); renderGov(); });
+    tr.querySelector('details').addEventListener('toggle', e => upd(key, s2 => s2.open = e.target.open));
+    tr.querySelectorAll('[data-c]').forEach(cb => cb.addEventListener('change', () => { upd(key, s2 => { s2.done = s2.done || {}; s2.done[cb.dataset.c] = cb.checked; s2.open = true; }); renderGov(); }));
+  });
+}
+function govCsv(){
+  const m = govLoad(), q = v => `"${String(v ?? '').replace(/"/g,'""')}"`;
+  const head = ['שימוש','מחלקה','מקור','סוג','רמת סיכון','נימוק','בעלים','סטטוס','בקרות שהושלמו','בקרות חסרות'];
+  return [head.map(q).join(','), ...govItems().map(g => { const st = m[g.key] || {}, done = st.done || {}; return [g.name, g.dept, g.src, REC[g.type].label, TIER[g.tier].t, g.why.join(' · '), st.owner || '', st.status || 'הצעה', g.controls.filter(c => done[c.id]).map(c => c.t).join(' | '), g.controls.filter(c => !done[c.id]).map(c => c.t).join(' | ')].map(q).join(','); })].join('\n');
+}
+$('gov-csv').onclick = () => save(`מלאי-שימושי-AI-${stamp()}.csv`, '﻿' + govCsv(), $('deck-status'), 'text/csv');
+$('gov-policy').onclick = async () => {
+  const out = $('gov-policy-out');
+  if(!llmReady()){ out.innerHTML = `<div class="msg warn">${esc(LLM_ERR.no_llm)}</div>`; return; }
+  const items = govItems().map(g => `- ${g.name} (${g.dept}) · ${REC[g.type].label} · ${TIER[g.tier].t} · ${g.why.join(', ')}`).join('\n');
+  out.innerHTML = '<div class="msg"><span class="pulse" style="display:inline-block;margin-inline-end:8px"></span>Claude כותב טיוטת מדיניות…</div>';
+  try{
+    const text = await llm.text([{role:'user', content:`כתוב טיוטת "מדיניות שימוש בבינה מלאכותית" לארגון ישראלי (${profile().type}), בעברית ברורה, עד 600 מילים, עם הכותרות: מטרה ותחולה; עקרונות; תפקידים ואחריות (בעלים לכל שימוש, ועדת AI, ממונה הגנת פרטיות); סיווג סיכונים (נמוך/בינוני/גבוה) והבקרות הנדרשות לכל רמה; שימושים מותרים ואסורים; פרטיות ומידע אישי (בהתייחס לחוק הגנת הפרטיות ותיקון 13 באופן כללי, בלי לצטט סעיפים); ניטור, תיעוד וטיפול בתקלות; הדרכה; עדכון המדיניות. בסוף: טבלת מלאי השימושים הנוכחי ברמת הסיכון שלו. ציין בפתיח שזו טיוטה לעבודה ולא ייעוץ משפטי. השתמש ב-markdown פשוט (# לכותרות, - לרשימות).\n\nמלאי השימושים:\n${items}`}], { onText: ({text}) => { out.innerHTML = `<div class="msg" style="white-space:pre-wrap;max-height:420px;overflow:auto">${esc(text)}</div>`; } });
+    out.innerHTML = `<div style="display:grid;gap:8px"><div class="msg" style="white-space:pre-wrap;max-height:420px;overflow:auto">${esc(text)}</div><div class="row"><button class="btn primary sm" id="gov-policy-dl">הורדת הטיוטה (Markdown)</button><span class="note" id="gov-policy-st">טיוטה לעבודה, לא ייעוץ משפטי.</span></div></div>`;
+    $('gov-policy-dl').onclick = () => save(`טיוטת-מדיניות-AI-${stamp()}.md`, text, $('gov-policy-st'), 'text/markdown');
+  }catch(e){ out.innerHTML = `<div class="msg err">${esc(errText(e) || 'הכתיבה נעצרה.')}</div>`; }
+};
+
 /* ================= nav & boot ================= */
 /* in-page links: scroll by script so they work inside the Claude viewer frame too */
 document.addEventListener('click', e => {
@@ -1887,7 +2029,7 @@ document.addEventListener('click', e => {
   el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   document.querySelectorAll('.side nav a').forEach(x => x.classList.toggle('on', x === a));
 });
-const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-projects','s-export'];
+const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-gov','s-projects','s-export'];
 if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
@@ -1900,7 +2042,7 @@ loadLocal();
 if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
 api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
 renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
-if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects();
+if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov();
 stt.key = ssGet('xray-stt-key'); stt.provider = ssGet('xray-stt-provider') || 'openai'; $('stt-provider').value = stt.provider; if(stt.key) $('stt-key').value = stt.key;
 if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 'בתוך Claude אין אפשרות לשלוח שמע לשירות תמלול. ראו את שלוש הדרכים משמאל.'; }
 (() => { let seen = ''; try{ seen = localStorage.getItem('xray-tour') || ''; }catch(e){ seen = 'done'; } if(!seen) setTimeout(() => tourShow(0), 900); })();
