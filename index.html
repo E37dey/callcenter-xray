@@ -1488,7 +1488,7 @@ $('run').onclick = async () => {
   const prep = preparedSources();
   runCtl = new AbortController(); const t0 = Date.now();
   $('run').disabled = true; $('stop').hidden = false;
-  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${prep.on ? 'פרטים מזהים הוסתרו. ' : ''}Claude קורא את המקורות…</b><span class="mono small muted" id="run-el">0 שנ׳</span></div><div class="scanbar" aria-hidden="true"></div><div class="stream" id="run-stream"></div>`;
+  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${prep.on ? 'פרטים מזהים הוסתרו. ' : ''}Claude קורא את המקורות…</b><span class="mono small muted" id="run-el">0 שנ׳</span><span class="eta">· זמן משוער: כ-${Math.round(40 + prep.list.reduce((n, x) => n + x.text.length, 0) / 800)} שנ׳ · אפשר לעצור בכל רגע</span></div><div class="scanbar" aria-hidden="true"></div><div class="stream" id="run-stream"></div>`;
   runTimer = setInterval(() => { const el = $('run-el'); if(el) el.textContent = Math.round((Date.now()-t0)/1000) + ' שנ׳'; }, 1000);
   try{
     const a = await llm.json(analysisPrompt(prep), { tier:'complex', signal: runCtl.signal,
@@ -1790,10 +1790,11 @@ $('chat-form').addEventListener('submit', async e => {
   $('chat-in').value = ''; state.chat.push({role:'user', content:q}); renderChat();
   const log = $('chat-log'), b = document.createElement('div'); b.className = 'bubble a'; b.textContent = 'חושב…'; log.append(b); log.scrollTop = log.scrollHeight;
   $('chat-send').disabled = true;
-  const p = profile(), src = sentSources().map((s,i) => `### מקור ${i+1}: ${s.name}\n${s.text}`).join('\n\n').slice(0, 6000);
+  const p = profile(), src = (state.sent || (state.isDemo ? demoSent() : preparedSources().list)).map((s,i) => `### מקור ${i+1}: ${s.name}\n${s.text}`).join('\n\n').slice(0, 6000);
+  const piiOn = $('pii-on').checked, turns = state.chat.slice(-8).map(t => t.role === 'user' && piiOn ? { role:'user', content: redact(t.content, {}, extraTerms()) } : t);
   const ctx = `אתה האנליסט שכתב את האבחון הבא למוקד (${p.type}, ${p.calls} שיחות בחודש, עלות שעה ${p.cost} ש"ח). ענה בעברית, קצר ומעשי, בלי markdown כבד. התבסס רק על האבחון והמקורות; אם אין מידע, אמור זאת.\n\nהאבחון:\n${JSON.stringify(state.analysis).slice(0, 16000)}\n\nקטע מהמקורות (פרטים מזהים מוסתרים):\n${src}`;
   try{
-    const text = await llm.text([{role:'user', content: ctx}, ...state.chat.slice(-8)], { onText: ({text}) => { b.textContent = text; log.scrollTop = log.scrollHeight; } });
+    const text = await llm.text([{role:'user', content: ctx}, ...turns], { onText: ({text}) => { b.textContent = text; log.scrollTop = log.scrollHeight; } });
     b.textContent = text; state.chat.push({role:'assistant', content:text}); $('chat-status').textContent = '';
   }catch(err){ if(err.text) b.textContent = err.text; else b.remove(); $('chat-status').textContent = errText(err); state.chat.pop(); }
   finally{ $('chat-send').disabled = false; }
@@ -2365,7 +2366,9 @@ function govAssess(it){
   g.controls = CONTROLS.filter(c => c.when(g));
   return g;
 }
+function demoChip(id){ const el = $(id); if(!el) return; const demo = state.isDemo || org.isDemo; let c = el.querySelector('.demo-chip'); if(demo && !c){ c = document.createElement('span'); c.className = 'chip vio demo-chip'; c.textContent = 'נתוני דוגמה (סינתטיים)'; el.querySelector('.phead').append(c); } if(!demo && c) c.remove(); }
 function renderGov(){
+  demoChip('s-gov');
   const m = govLoad(), all = govItems();
   const rows = all.filter(g => govFilter === 'all' || String(g.tier) === govFilter);
   const doneOf = g => g.controls.filter(c => (m[g.key]?.done || {})[c.id]).length;
@@ -2454,6 +2457,7 @@ function roiChart(items){
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="תזרים מצטבר ל-24 חודשים בשלושה תרחישים" direction="ltr">${g}</svg><div class="legend"><span style="--c:var(--muted)">פסימי${P.p.be ? ' · איזון בחודש ' + P.p.be : ''}</span><span style="--c:var(--good)">סביר${P.r.be ? ' · איזון בחודש ' + P.r.be : ''}</span><span style="--c:var(--accent)">אופטימי${P.o.be ? ' · איזון בחודש ' + P.o.be : ''}</span></div>`;
 }
 function renderRoi(){
+  demoChip('s-roi');
   const items = roiItems(), P = portfolio(items, roiScen);
   document.querySelectorAll('[data-sc]').forEach(b => b.setAttribute('aria-pressed', b.dataset.sc === roiScen));
   $('roi-kpis').innerHTML = `
@@ -2559,7 +2563,7 @@ function insLoad(){ try{ return JSON.parse(localStorage.getItem('xray-insights')
 function insSave(L){ try{ localStorage.setItem('xray-insights', JSON.stringify(L)); }catch(e){} }
 function renderInsights(){
   const L = insLoad(), sev = { high:'חשוב מאוד', medium:'חשוב', low:'לידיעה' };
-  $('ag-insights').innerHTML = L.length ? L.map(x => `<div class="ins ${esc(x.severity)}"><div class="top"><span class="chip ${x.severity==='high'?'crit':x.severity==='medium'?'amb':'acc'}">${sev[x.severity] || ''}</span><span class="chip">${esc(AREA[x.area] || '')}</span>${x.agent ? `<span class="small muted">${esc(x.agent)}</span>` : ''}</div><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></div>`).join('') : '<div class="msg">עדיין אין תובנות. הפעילו את "סוכן תובנות" או סוכן אחר.</div>';
+  $('ag-insights').innerHTML = L.length ? L.map(x => `<div class="ins ${esc(x.severity)}"><div class="top"><span class="chip ${x.severity==='high'?'crit':x.severity==='medium'?'amb':'acc'}">${sev[x.severity] || ''}</span><span class="chip">${esc(AREA[x.area] || '')}</span>${x.agent ? `<span class="small muted">${esc(x.agent)}</span>` : ''}${x.sample ? '<span class="chip vio">דוגמה</span>' : ''}</div><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></div>`).join('') : '<div class="msg">עדיין אין תובנות. הפעילו את "סוכן תובנות" או סוכן אחר.</div>';
 }
 function renderAgents(){
   $('ag-cards').innerHTML = AGENTS.map(a => `<div class="agent"><span class="ai">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + a.icon + '</svg>'}</span><b>${a.name}</b><p>${a.desc}</p><span class="acts">${a.acts}</span>${a.budget ? '<div class="field"><label class="label" for="ag-budget">תקציב הקמה (₪)</label><input id="ag-budget" class="inp mono" type="number" min="0" step="10000" value="150000"></div>' : ''}<button class="btn primary sm" data-agent="${a.id}" type="button">הפעלה</button></div>`).join('');
@@ -2816,6 +2820,7 @@ else (async () => {
   const [s, m, d] = await Promise.all(['sample','mcp','downloads'].map(n => window.claude.use(n).catch(() => null)));
   caps = { sample: s, mcp: m, downloads: d };
   setAiStatus(); renderSources();
+  if(typeof curSec !== 'undefined' && curSec === 'overview') renderOverview();
 })();
 </script>
 

@@ -668,3 +668,38 @@ test.describe('overview story', () => {
   });
 });
 
+test.describe('audit regressions', () => {
+  test('analyst chat never sends unmasked source text or questions', async ({ page }) => {
+    await open(page);
+    const bodies = await mockClaude(page, 'תשובה');
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    // a real (non-demo) state without a stored "sent" copy: the fallback must still mask
+    await page.evaluate(() => { state.isDemo = false; state.sent = null; state.sources = [{ id: 'x', name: 'שיחה', text: 'לקוח: תעודת הזהות שלי 039337423', kind: 'paste' }]; });
+    await page.click('.rtabs [data-r="chat"]');
+    await page.fill('#chat-in', 'מה עם 039337423?');
+    await page.click('#chat-send');
+    await expect(page.locator('#chat-log .bubble.a')).toContainText('תשובה');
+    const sent = JSON.stringify(bodies[0]);
+    expect(sent).not.toContain('039337423');
+    expect(sent).toContain('[ת.ז-');
+  });
+
+  test('synthetic numbers are labelled on governance and ROI', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('#s-gov .demo-chip')).toHaveText('נתוני דוגמה (סינתטיים)');
+    await expect(page.locator('#s-roi .demo-chip')).toBeVisible();
+  });
+
+  test('analysis shows an estimated time and can be stopped', async ({ page }) => {
+    await open(page);
+    await page.route('https://api.anthropic.com/v1/messages', () => {}); // never answers
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.click('#run');
+    await expect(page.locator('#run-state')).toContainText('זמן משוער');
+    await page.click('#stop');
+    await expect(page.locator('#run-state')).toContainText('נעצר');
+  });
+});
+
