@@ -246,7 +246,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 .readout .rh .live{display:inline-flex;align-items:center;gap:6px;color:#9FB2C3;font-weight:600;letter-spacing:0}
 .readout .rh .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#5CC990;box-shadow:0 0 0 3px rgba(92,201,144,.2)}
 .ro-main{display:grid;gap:2px}
-.ro-main b{font-family:"Rubik",sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;font-variant-numeric:tabular-nums}
+.ro-main b{font-family:"Rubik",sans-serif;font-size:36px;line-height:1.1;color:#FFFFFF;font-variant-numeric:tabular-nums}
 .ro-main span{font-size:13px;color:#9FB2C3}
 .ro-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ro-row div{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;display:grid;gap:2px}
@@ -385,6 +385,20 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 .formula{font-size:13px;color:var(--muted);display:grid;gap:4px}
 .formula code{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--surface-2);border-radius:6px;padding:1px 6px;direction:ltr;unicode-bidi:isolate}
 @media (max-width:980px){.tracks,.waves{grid-template-columns:1fr}}
+
+.scen{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line-2);border-radius:14px;overflow:hidden}
+.scen > div{padding:12px 14px;display:grid;gap:2px;background:var(--surface)}
+.scen > div + div{border-inline-start:1px solid var(--line-2)}
+.scen .sc-r{background:var(--good-soft)}
+.scen b{font-family:"Rubik",sans-serif;font-size:22px}
+.scen .sc-r b{color:var(--good)}
+.scen small{font-size:12px;color:var(--muted)}
+.ro-scen{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:11.5px;color:#9FB2C3}
+.ro-scen div{display:grid;gap:1px;border-radius:8px;padding:6px 8px;background:rgba(255,255,255,.05)}
+.ro-scen div.mid{background:rgba(92,201,144,.14);color:#CFEFDD}
+.ro-scen b{font-family:"IBM Plex Mono",monospace;font-size:13px;color:#FFFFFF}
+.opp .addmap{margin-inline-start:auto}
+@media (max-width:680px){.scen{grid-template-columns:1fr}.scen > div + div{border-inline-start:0;border-top:1px solid var(--line-2)}}
 </style>
 
 <div class="app">
@@ -829,6 +843,11 @@ function renderPii(){
 function roi(o){ const p = profile(), calls = p.calls * (+o.affected_calls_pct || 0) / 100, hrs = calls * (+o.seconds_saved_per_call || 0) / 3600; return { hrs, ils: hrs * p.cost, calls }; }
 function totals(a){ let hrs = 0, ils = 0; (a.opportunities||[]).forEach(o => { const r = roi(o); hrs += r.hrs; ils += r.ils; }); const p = profile(), totalHrs = p.calls * p.aht / 60; return { hrs, ils, share: totalHrs ? hrs / totalHrs : 0, fte: hrs / 182 }; }
 const ils = v => '₪' + nf.format(Math.round(v));
+/* savings scenarios: the model estimate is the optimistic bound; overlap between opportunities and partial adoption pull it down */
+const SCEN = { p: .4, r: .7, o: 1 };
+const rng = v => `בין ${ils(v*SCEN.p)} ל-${ils(v*SCEN.o)}`;
+const rngK = v => v*SCEN.o >= 10000 ? `<small style="font-size:.5em;font-weight:600;opacity:.8">בין</small> ${nf.format(Math.round(v*SCEN.p/1000))} <small style="font-size:.5em;font-weight:600;opacity:.8">עד</small> ${nf.format(Math.round(v*SCEN.o/1000))} <small style="font-size:.5em;font-weight:600;opacity:.8">אלף ₪</small>` : rng(v);
+function scenStrip(v, hrs){ return `<div class="scen" role="group" aria-label="תרחישי חיסכון">${[['p','פסימי','אימוץ חלקי וחפיפה מלאה בין ההזדמנויות'],['r','סביר','רוב הנציגים משתמשים, חפיפה חלקית'],['o','אופטימי','הערכת המודל המלאה']].map(([k,l,t]) => `<div class="sc-${k}"><span class="label">${l} · ${Math.round(SCEN[k]*100)}%</span><b class="mono">${ils(v*SCEN[k])}</b><small>${nf.format(Math.round(hrs*SCEN[k]))} שעות · ${esc(t)}</small></div>`).join('')}</div>`; }
 function fmtSec(s){ s = Math.round(+s||0); if(!s) return '–'; const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')} דק׳` : `${r} שנ׳`; }
 const clock = s => { s = Math.round(+s||0); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
 const sumSec = steps => (steps||[]).reduce((n,s) => n + (+s.duration_sec||0), 0);
@@ -1058,7 +1077,8 @@ function showR(r){ document.querySelectorAll('.rtabs button').forEach(x => x.set
 function renderReadout(a){
   const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps), mx = Math.max(b, af, 1);
   $('readout').innerHTML = `<div class="rh"><span>קריאה מהניתוח</span><span class="live">${state.isDemo ? 'נתוני דוגמה' : 'ניתוח אחרון'}</span></div>
-    <div class="ro-main"><b class="mono">${ils(t.ils)}</b><span>חיסכון אפשרי בחודש · ${nf.format(Math.round(t.hrs))} שעות נציג</span></div>
+    <div class="ro-main"><b class="mono">${rngK(t.ils)}</b><span>טווח חיסכון בחודש · ${nf.format(Math.round(t.hrs*SCEN.p))} עד ${nf.format(Math.round(t.hrs))} שעות נציג</span></div>
+    <div class="ro-scen"><div><span>פסימי</span><b>${ils(t.ils*SCEN.p)}</b></div><div class="mid"><span>סביר</span><b>${ils(t.ils*SCEN.r)}</b></div><div><span>אופטימי</span><b>${ils(t.ils*SCEN.o)}</b></div></div>
     ${af ? `<div class="ro-bars"><div><span>היום</span><i style="width:100%;background:#F0A73A"></i></div><div><span>אחרי</span><i style="width:${Math.round(af/mx*100)}%;background:#5CC990"></i></div></div>` : ''}
     <div class="ro-row"><div><b class="mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
 }
@@ -1075,16 +1095,17 @@ function renderSum(a){
   $('r-sum').innerHTML = `<div style="display:grid;gap:16px">
     <p class="lead">${esc(a.summary)}</p>
     <div class="kpis">
-      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="label">חיסכון אפשרי בחודש</span><span class="n good mono">${ils(t.ils)}</span><span class="d">${nf.format(Math.round(t.hrs))} שעות נציג · ${t.fte.toFixed(1)} משרות</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="label">חיסכון בחודש, תרחיש סביר</span><span class="n good mono">${ils(t.ils*SCEN.r)}</span><span class="d">${rng(t.ils)} · ${(t.fte*SCEN.r).toFixed(1)} משרות</span></div>
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><span class="label">דקות בתהליך המרכזי</span><span class="n mono">${af ? clock(b) + ' ← ' + clock(af) : clock(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="label">הזדמנויות שזוהו</span><span class="n mono">${a.opportunities.length}</span><span class="d">${a.opportunities.filter(o=>o.effort<=2&&o.impact>=4).length} מהן ניצחונות מהירים</span></div>
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span><span class="label">ציטוטים שאומתו במקור</span><span class="n mono ${v.total && v.ok===v.total?'good':''}">${v.ok}/${v.total}</span><span class="d">כל ממצא נבדק מול הטקסט</span></div>
     </div>
+    <div style="display:grid;gap:8px"><h3>שלושה תרחישי חיסכון</h3>${scenStrip(t.ils, t.hrs)}</div>
     <div style="display:grid;gap:10px"><h3>שלוש ההזדמנויות המובילות</h3>
-      <div class="top3">${ranked.map((o,i) => { const r = roi(o); return `<div class="card"><span class="rank">${i+1} · ${esc(o.category||'')}</span><b>${esc(o.title)}</b><p class="small muted">${esc(o.description)}</p><span class="mono" style="color:var(--good);font-weight:700">${r.ils ? ils(r.ils)+' בחודש' : esc(o.roi_note || 'חיסכון מחוץ לזמן השיחה')}</span></div>`; }).join('')}</div>
+      <div class="top3">${ranked.map((o,i) => { const r = roi(o); return `<div class="card"><span class="rank">${i+1} · ${esc(o.category||'')}</span><b>${esc(o.title)}</b><p class="small muted">${esc(o.description)}</p><span class="mono" style="color:var(--good);font-weight:700">${r.ils ? rng(r.ils)+' בחודש' : esc(o.roi_note || 'חיסכון מחוץ לזמן השיחה')}</span></div>`; }).join('')}</div>
     </div>
     ${a.data_gaps.length ? `<div class="msg warn"><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</div>` : ''}
-    <p class="note">החישוב: שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעה. שינוי המספרים בשלב 1 מעדכן אותו מיד. חלק מההזדמנויות חופפות, ולכן הסכום הוא גבול עליון.</p>
+    <p class="note">החישוב: שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעה. שינוי המספרים בשלב 1 מעדכן אותו מיד. הערכת המודל היא התרחיש האופטימי; התרחיש הסביר מניח 70% ממנה (חפיפה בין הזדמנויות ואימוץ חלקי), והפסימי 40%.</p>
   </div>`;
 }
 function donut(s){
@@ -1193,11 +1214,12 @@ function renderOpp(a){
         <div class="sortbar"><span class="label">מיון:</span>
           <button class="btn sm ${sortBy==='money'?'primary':''}" data-sort="money">לפי חיסכון</button>
           <button class="btn sm ${sortBy==='quick'?'primary':''}" data-sort="quick">ניצחונות מהירים</button>
-          <button class="btn sm ${sortBy==='orig'?'primary':''}" data-sort="orig">לפי המספר</button></div></div>
+          <button class="btn sm ${sortBy==='orig'?'primary':''}" data-sort="orig">לפי המספר</button></div>
+        <div class="row"><button class="btn sm" id="addmap-all">הוספת כל ההזדמנויות למפת הארגון</button><span class="note">כך המוקד מופיע כחלק מהתמונה הארגונית</span></div></div>
     </div>
     <div class="opps">${sorted.map(({o,i,r}) => `<details class="opp"${i===0?' open':''}>
       <summary><span class="idx">${i+1}</span><span style="display:grid;gap:4px"><b>${esc(o.title)}</b><span class="row small"><span class="chip ${CAT[o.category]||''}">${esc(o.category||'')}</span><span class="muted">השפעה ${dots(o.impact)}</span><span class="muted">מאמץ ${dots(o.effort)}</span><span class="muted">ודאות ${esc(o.confidence||'–')}</span></span></span>
-      <span class="money">${r.ils ? ils(r.ils) : '—'}<small>${r.ils ? nf.format(Math.round(r.hrs)) + ' שעות בחודש' : 'מחוץ לזמן שיחה'}</small><span class="roi" aria-hidden="true"><i style="width:${Math.round(r.ils/maxIls*100)}%"></i></span></span></summary>
+      <span class="money">${r.ils ? ils(r.ils*SCEN.r) : '—'}<small>${r.ils ? rng(r.ils) : 'מחוץ לזמן שיחה'}</small><span class="roi" aria-hidden="true"><i style="width:${Math.round(r.ils/maxIls*100)}%"></i></span></span></summary>
       <div class="body">
         <p>${esc(o.description)}</p>
         <div class="grid2" style="align-items:start">
@@ -1209,12 +1231,14 @@ function renderOpp(a){
             ${o.risk?`<div class="small"><span class="label">סיכון</span><br>${esc(o.risk)}</div>`:''}
           </div>
         </div>
-        <div class="row"><button class="btn sm" data-n8n="${i}">טיוטת workflow ל-n8n</button><span class="note" id="n8n-st-${i}"></span></div>
+        <div class="row"><button class="btn sm" data-n8n="${i}">טיוטת workflow ל-n8n</button><span class="note" id="n8n-st-${i}"></span><button class="btn sm addmap" data-addmap="${i}">${inOrg(o) ? 'במפת הארגון ✓' : 'הוספה למפת הארגון'}</button></div>
         <div id="n8n-out-${i}"></div>
       </div></details>`).join('')}</div>
   </div>`;
   $('r-opp').querySelectorAll('[data-sort]').forEach(b => b.onclick = () => { sortBy = b.dataset.sort; renderOpp(state.analysis); });
   $('r-opp').querySelectorAll('[data-n8n]').forEach(b => b.onclick = () => makeN8n(+b.dataset.n8n, b));
+  $('r-opp').querySelectorAll('[data-addmap]').forEach(b => b.onclick = () => { const n = addOppsToOrg([+b.dataset.addmap]); b.textContent = 'במפת הארגון ✓'; toast(n ? 'נוסף למפת הארגון' : 'כבר נמצא במפת הארגון'); });
+  $('addmap-all').onclick = () => { const n = addOppsToOrg(a.opportunities.map((_,i) => i)); renderOpp(state.analysis); toast(n ? `נוספו ${n} הזדמנויות למפת הארגון` : 'כל ההזדמנויות כבר במפה'); };
 }
 async function makeN8n(i, btn){
   const o = state.analysis.opportunities[i], st = $('n8n-st-'+i), out = $('n8n-out-'+i);
@@ -1324,7 +1348,7 @@ ${items.map(it => `${it.id}. ${it.text}`).join('\n')}`, { tier:'default' });
 function mdReport(){
   const a = state.analysis, p = profile(), t = totals(a), L = [];
   L.push(`# רנטגן למוקד: אבחון תהליכים ואוטומציה`, '', `${p.type} · ${nf.format(p.calls)} שיחות בחודש · זמן טיפול ממוצע ${p.aht} דק׳ · ${p.agents} נציגים${state.isDemo ? ' · **נתוני דוגמה**' : ''}`, '');
-  L.push(`## תמונת מצב`, '', a.summary || '', '', `- חיסכון אפשרי בחודש: ${ils(t.ils)} (${nf.format(Math.round(t.hrs))} שעות נציג, ${t.fte.toFixed(1)} משרות). ההזדמנויות חופפות בחלקן, ולכן זה גבול עליון.`);
+  L.push(`## תמונת מצב`, '', a.summary || '', '', `- חיסכון בחודש: ${rng(t.ils)} (פסימי–אופטימי), תרחיש סביר ${ils(t.ils*SCEN.r)}; ${nf.format(Math.round(t.hrs*SCEN.r))} שעות נציג בתרחיש הסביר.`);
   const b = sumSec(a.process.steps), af = sumSec(a.to_be.steps); if(af) L.push(`- זמן בתהליך המרכזי: ${fmtSec(b)} היום, ${fmtSec(af)} אחרי האוטומציות`);
   L.push('', `## הזדמנויות`, '', `| # | הזדמנות | סוג | השפעה | מאמץ | שעות בחודש | ₪ בחודש |`, `|---|---|---|---|---|---|---|`);
   a.opportunities.forEach((o,i) => { const r = roi(o); L.push(`| ${i+1} | ${o.title} | ${o.category||''} | ${o.impact}/5 | ${o.effort}/5 | ${Math.round(r.hrs)} | ${r.ils ? nf.format(Math.round(r.ils)) : (o.roi_note||'—')} |`); });
@@ -1352,9 +1376,9 @@ function execReport(){
 <h1>אבחון תהליכים ואוטומציה במוקד</h1>
 <div class="meta">${esc(p.type)} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים · ${new Date().toLocaleDateString('he-IL')} ${state.isDemo ? '<span class="demo">נתוני דוגמה</span>' : ''}</div>
 <p class="lead">${esc(a.summary)}</p>
-<div class="kpis"><div class="k g"><b>${ils(t.ils)}</b><span>חיסכון אפשרי בחודש (גבול עליון)</span></div><div class="k"><b>${nf.format(Math.round(t.hrs))}</b><span>שעות נציג בחודש</span></div><div class="k"><b>${af ? fmtSec(b)+' ← '+fmtSec(af) : fmtSec(b)}</b><span>זמן בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div>
+<div class="kpis"><div class="k g"><b>${rngK(t.ils)}</b><span>טווח חיסכון בחודש (פסימי–אופטימי)</span></div><div class="k"><b>${ils(t.ils*SCEN.r)}</b><span>תרחיש סביר בחודש</span></div><div class="k"><b>${af ? fmtSec(b)+' ← '+fmtSec(af) : fmtSec(b)}</b><span>זמן בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div>
 <h2>שלוש ההזדמנויות המובילות</h2>
-${top.map((o,i) => `<div class="opp"><b>${i+1}. ${esc(o.title)}</b><span class="m">${roi(o).ils ? ils(roi(o).ils)+' בחודש' : esc(o.roi_note||'')}</span><p>${esc(o.description)}</p>${q(o)}</div>`).join('')}
+${top.map((o,i) => `<div class="opp"><b>${i+1}. ${esc(o.title)}</b><span class="m">${roi(o).ils ? rng(roi(o).ils)+' בחודש' : esc(o.roi_note||'')}</span><p>${esc(o.description)}</p>${q(o)}</div>`).join('')}
 ${af ? `<h2>לפני ואחרי</h2><div class="bars"><div><span>היום</span><i style="width:100%;background:#B86E00"></i><span>${fmtSec(b)}</span></div><div><span>אחרי</span><i style="width:${Math.round(af/b*100)}%;background:#1D7A4D"></i><span>${fmtSec(af)}</span></div></div>` : ''}
 ${a.pilot ? `<h2>פיילוט מוצע: ${esc(a.pilot.title)}</h2>${arr(a.pilot.weeks).map(w => `<div class="wk"><b>${esc(w.week)}</b><span>${esc(w.goal)}</span></div>`).join('')}<p><b>מדד הצלחה:</b> ${esc(a.pilot.success_metric)}</p>` : ''}
 <div class="foot">הוכן בכלי "רנטגן למוקד" על ידי איליה נודלמן. פרטים מזהים הוסתרו לפני הניתוח. המספרים הם הערכות מתוך המקורות שנותחו${a.data_gaps.length ? '; חסר כדי לדייק: ' + a.data_gaps.map(esc).join(', ') : ''}.</div>
@@ -1391,8 +1415,8 @@ $('to-gmail').onclick = async () => {
   if(!caps.mcp){ st.textContent = noConnector('Gmail'); return; }
   if(to && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){ st.textContent = 'כתובת המייל לא תקינה.'; return; }
   const a = state.analysis, t = totals(a), top = [...a.opportunities].sort((x,y)=>roi(y).ils-roi(x).ils).slice(0,3);
-  const html = `<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6"><p>שלום,</p><p>מצורף סיכום קצר של אבחון התהליכים במוקד${state.isDemo?' (על נתוני דוגמה)':''}.</p><p>${esc(a.summary)}</p><p><b>חיסכון אפשרי:</b> עד כ-${ils(t.ils)} בחודש (${nf.format(Math.round(t.hrs))} שעות נציג).</p><p><b>שלוש ההזדמנויות המובילות:</b></p><ol>${top.map(o=>`<li><b>${esc(o.title)}</b>: ${esc(o.description)} (${roi(o).ils?ils(roi(o).ils)+' בחודש':esc(o.roi_note||'')})</li>`).join('')}</ol>${a.pilot?`<p><b>פיילוט מוצע:</b> ${esc(a.pilot.title)}. מדד הצלחה: ${esc(a.pilot.success_metric)}</p>`:''}<p>אשמח לעבור על זה יחד.</p><p>איליה</p></div>`;
-  const text = `שלום,\n\nסיכום אבחון התהליכים במוקד${state.isDemo?' (נתוני דוגמה)':''}:\n${a.summary}\n\nחיסכון אפשרי: עד כ-${ils(t.ils)} בחודש.\n\nההזדמנויות המובילות:\n${top.map((o,i)=>`${i+1}. ${o.title}`).join('\n')}\n\nאיליה`;
+  const html = `<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6"><p>שלום,</p><p>מצורף סיכום קצר של אבחון התהליכים במוקד${state.isDemo?' (על נתוני דוגמה)':''}.</p><p>${esc(a.summary)}</p><p><b>חיסכון בחודש:</b> ${rng(t.ils)} (פסימי עד אופטימי), בתרחיש הסביר כ-${ils(t.ils*SCEN.r)}.</p><p><b>שלוש ההזדמנויות המובילות:</b></p><ol>${top.map(o=>`<li><b>${esc(o.title)}</b>: ${esc(o.description)} (${roi(o).ils?rng(roi(o).ils)+' בחודש':esc(o.roi_note||'')})</li>`).join('')}</ol>${a.pilot?`<p><b>פיילוט מוצע:</b> ${esc(a.pilot.title)}. מדד הצלחה: ${esc(a.pilot.success_metric)}</p>`:''}<p>אשמח לעבור על זה יחד.</p><p>איליה</p></div>`;
+  const text = `שלום,\n\nסיכום אבחון התהליכים במוקד${state.isDemo?' (נתוני דוגמה)':''}:\n${a.summary}\n\nחיסכון בחודש: ${rng(t.ils)}, בתרחיש הסביר כ-${ils(t.ils*SCEN.r)}.\n\nההזדמנויות המובילות:\n${top.map((o,i)=>`${i+1}. ${o.title}`).join('\n')}\n\nאיליה`;
   b.disabled = true; st.textContent = 'יוצר טיוטה…';
   try{
     const input = {subject:'אבחון תהליכים ואוטומציה במוקד', htmlBody: html, body: text}; if(to) input.to = [to];
@@ -1468,7 +1492,7 @@ function renderOrgTable(){
   const rows = orgScored().filter(x => org.dept === 'הכול' || x.r.dept === org.dept);
   $('org-tbl').innerHTML = `<thead><tr><th>מחלקה</th><th>תהליך</th><th>המלצה</th><th>היתכנות</th><th>חיסכון בחודש</th><th><abbr title="כמה פעמים בחודש התהליך קורה">כמות בחודש</abbr></th><th><abbr title="כמה דקות עבודה לכל פעם">דק׳ לפעם</abbr></th>${CRIT.map(c => `<th><abbr title="${esc(c.tip)}">${c.label}</abbr></th>`).join('')}<th></th></tr></thead>
   <tbody>${rows.map(({r,i,s}) => `<tr data-i="${i}">
-    <td><input data-f="dept" value="${esc(r.dept)}" aria-label="מחלקה" style="width:120px"></td>
+    <td><input data-f="dept" value="${esc(r.dept)}" aria-label="מחלקה" style="width:140px" title="${r.src==='call' ? 'נוסף מניתוח השיחות' : ''}"></td>
     <td><input data-f="name" value="${esc(r.name)}" aria-label="תהליך" style="min-width:210px" title="${esc(r.why||'')}"></td>
     <td><span class="rec" style="color:${REC[s.type].c};background:${REC[s.type].bg}">${REC[s.type].label}</span></td>
     <td class="feas" style="color:${s.feas>=65?'var(--good)':s.feas>=40?'var(--amber)':'var(--muted)'}">${s.feas}</td>
@@ -1522,13 +1546,14 @@ function renderOrg(){
   $('org-out').innerHTML = `<div style="display:grid;gap:18px">
     ${org.isDemo ? '<div class="banner"><span><b>ארגון לדוגמה:</b> חברת מיקור חוץ למוקדים עם כ-400 עובדים. המספרים להמחשה. שנו כל ערך בטבלה והמפה תתעדכן.</span></div>' : ''}
     <div class="kpis">
-      <div class="kpi"><span class="label">פוטנציאל חיסכון בחודש</span><span class="n good mono">${ils(tot)}</span><span class="d">${nf.format(Math.round(totH))} שעות עבודה · ${(totH/182).toFixed(1)} משרות</span></div>
+      <div class="kpi"><span class="label">חיסכון בחודש, תרחיש סביר</span><span class="n good mono">${ils(tot*SCEN.r)}</span><span class="d">${rng(tot)} · ${(totH*SCEN.r/182).toFixed(1)} משרות</span></div>
       <div class="kpi"><span class="label">תהליכים שמופו</span><span class="n mono">${list.length}</span><span class="d">${deptList.length} מחלקות</span></div>
       <div class="kpi"><span class="label">להתחיל כאן</span><span class="n mono">${q.start.length}</span><span class="d">היתכנות גבוהה וחיסכון גבוה</span></div>
       <div class="kpi"><span class="label">דורשים הכנה</span><span class="n mono">${(typeCount.data||0) + (typeCount.support||0)}</span><span class="d">נתונים לא מוכנים או שיקול דעת כבד</span></div>
     </div>
     <div style="display:grid;gap:8px"><h3>שלושת המקומות הראשונים להטמיע AI</h3>
-      <div class="top3">${top.map((x,k) => `<div class="card"><span class="rank">${k+1} · ${esc(x.r.dept)}</span><b>${esc(x.r.name)}</b><span class="rec" style="justify-self:start;color:${REC[x.s.type].c};background:${REC[x.s.type].bg}">${REC[x.s.type].label}</span><span class="small muted">היתכנות ${x.s.feas}/100 · ${nf.format(Math.round(x.s.savedH))} שעות בחודש</span><span class="mono" style="color:var(--good);font-weight:700">${ils(x.s.ils)} בחודש</span></div>`).join('')}</div></div>
+      <div class="top3">${top.map((x,k) => `<div class="card"><span class="rank">${k+1} · ${esc(x.r.dept)}</span><b>${esc(x.r.name)}</b><span class="rec" style="justify-self:start;color:${REC[x.s.type].c};background:${REC[x.s.type].bg}">${REC[x.s.type].label}</span><span class="small muted">היתכנות ${x.s.feas}/100 · ${nf.format(Math.round(x.s.savedH))} שעות בחודש</span><span class="mono" style="color:var(--good);font-weight:700">${rng(x.s.ils)} בחודש</span></div>`).join('')}</div></div>
+    <div style="display:grid;gap:8px"><h3>שלושה תרחישי חיסכון לארגון</h3>${scenStrip(tot, totH)}</div>
     <div class="grid2" style="align-items:start">
       <div style="display:grid;gap:8px"><h3>מפת התהליכים</h3><div class="bubble-wrap">${bubbleChart(list, med)}</div>
         <div class="legend2">${Object.entries(REC).filter(([k]) => typeCount[k]).map(([k,v]) => `<span class="rec" style="color:${v.c};background:${v.bg}">${v.label} · ${typeCount[k]}</span>`).join('')}</div>
@@ -1596,6 +1621,26 @@ $('org-demo').onclick = () => { org.rows = ORG_DEMO.map(r => ({...r})); org.isDe
 $('org-add').onclick = () => { org.rows.push({dept: org.dept !== 'הכול' ? org.dept : 'מחלקה', name:'תהליך חדש', vol:100, min:10, rep:3, rule:3, lang:3, data:3, judg:3, risk:3}); org.isDemo = false; saveOrg(); renderOrg(); const last = $('org-tbl').querySelector('tbody tr:last-child input[data-f="name"]'); if(last){ last.focus(); last.select(); } };
 $('org-clear').onclick = () => { org.rows = []; org.isDemo = false; saveOrg(); renderOrg(); };
 $('org-cost').addEventListener('input', () => { saveOrg(); renderOrg(); });
+
+/* ================= bridge: call-center opportunities -> org map ================= */
+const CAT_CRIT = {
+  'סיכום ותיעוד':[5,4,5,4,2,2], 'אוטומציה':[5,5,2,4,1,2], 'עוזר ידע RAG':[4,3,5,4,2,3],
+  'סוכן AI':[5,3,5,4,2,3], 'בקרת איכות':[4,3,5,4,3,2], 'הדרכה':[4,2,5,3,4,2]
+};
+const CALL_DEPT = 'מוקד (מניתוח שיחות)';
+const inOrg = o => org.rows.some(r => r.src === 'call' && r.name === o.title);
+function addOppsToOrg(idx){
+  const p = profile(); let added = 0;
+  if(org.isDemo){ org.isDemo = false; }
+  idx.forEach(i => { const o = state.analysis.opportunities[i]; if(!o || inOrg(o)) return;
+    const c = CAT_CRIT[o.category] || [4,3,4,3,3,3];
+    const vol = Math.round(p.calls * (+o.affected_calls_pct || 0) / 100);
+    const min = +o.seconds_saved_per_call ? Math.round(p.aht * 10) / 10 : 0;
+    org.rows.push({ dept: CALL_DEPT, name: o.title, vol, min, rep:c[0], rule:c[1], lang:c[2], data:c[3], judg:c[4], risk:c[5], why: o.description, src:'call' });
+    added++; });
+  if(added){ org.dept = 'הכול'; saveOrg(); renderOrg(); }
+  return added;
+}
 
 /* ================= nav & boot ================= */
 const secIds = ['s-sources','s-run','s-results','s-eval','s-export','s-org'];
