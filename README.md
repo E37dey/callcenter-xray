@@ -2,7 +2,11 @@
 
 # רנטגן למוקד · Call Center X-Ray
 
-**אבחון תהליכים ואיתור אוטומציות במוקדי שירות ומכירות, בעזרת Claude.**
+**אבחון תהליכים ואיתור הזדמנויות AI ואוטומציה: במוקד השירות ובארגון כולו, בעזרת Claude.**
+
+שני מסלולים:
+1. **ניתוח שיחות מוקד:** מתמלולים, נהלים ותצפיות אל מפת תהליך, הזדמנויות עם ציטוטים מאומתים וחיסכון בשקלים.
+2. **מפת AI לארגון:** מיפוי תהליכים בכל המחלקות, ציון התאמה שקוף לכל תהליך, המלצה על סוג הפתרון ותוכנית הטמעה בשלושה גלים.
 
 מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, מזהה מה קורה בשיחות, משרטט את התהליך כפי שהוא קורה בפועל, ומדרג איפה אוטומציה ו-AI יחסכו הכי הרבה זמן, בשקלים. כל ממצא מגיע עם ציטוט מהמקור, והכלי בודק אוטומטית שהציטוט באמת מופיע שם.
 
@@ -31,7 +35,10 @@
 | **פיילוט** | תוכנית של 4 עד 8 שבועות עם מדד הצלחה |
 | **שאלו את האנליסט** | שיחת המשך שמבוססת על הניתוח בלבד |
 | **מבחן דיוק** | סיווג שיחות מתויגות ומדידת accuracy, recall ו-precision, עם רשימת הטעויות |
+| **מפת AI לארגון** | טבלת תהליכים לפי מחלקה עם שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), ציון היתכנות בנוסחה גלויה, חיסכון חודשי, המלצה (אוטומציה, סוכן AI, עוזר עם אישור אדם, תמיכה בהחלטה, קודם לסדר נתונים), מפת בועות של היתכנות מול חיסכון ותוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude יציע את רשימת התהליכים |
 | **שיתוף** | דוח מנהלים של עמוד אחד (HTML), דוח מלא (Markdown), JSON, שמירה ב-Google Drive, טיוטת Gmail, וטיוטת workflow ל-n8n לכל הזדמנות |
+
+![מפת AI לארגון](docs/screenshots/org-map.png)
 
 ## ארכיטקטורה
 
@@ -116,5 +123,7 @@ docs/                 צילומי מסך ו-GIF
 - Quote verification against the text actually sent, with as-is and to-be process maps.
 - Built-in accuracy test (UI and `eval/run_eval.py`) with accuracy, per-label recall and precision.
 - Exports: one-page executive report (HTML), full report (Markdown), JSON, Google Drive doc, Gmail draft, and an n8n workflow draft per opportunity.
+
+- Organization-wide AI map: score any process on six criteria with a transparent formula, get a recommended solution type, a feasibility-vs-savings bubble map and a three-wave rollout plan; or describe the organization and let Claude propose the process inventory.
 
 Demo data is fictional. MIT License.

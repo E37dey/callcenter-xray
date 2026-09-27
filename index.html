@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="רנטגן למוקד: אבחון תהליכים ואיתור אוטומציות במוקדי שירות בעזרת Claude">
+<meta name="description" content="רנטגן למוקד: אבחון תהליכים ואיתור הזדמנויות AI ואוטומציה במוקדים ובארגון כולו, בעזרת Claude">
 <style>[hidden]{display:none!important}html,body{margin:0;height:100%}img{max-width:100%}</style>
 </head>
 <body>
@@ -338,12 +338,59 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
   .main .wrap{padding-inline:16px}
   .toasts{left:12px;right:12px}
 }
+
+/* ===== v5 org map + tracks ===== */
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.track{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(18,32,51,.04),0 10px 30px -14px rgba(18,32,51,.12);transition:border-color .15s,transform .15s}
+.track:hover{border-color:var(--accent);transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){.track{transition:none}.track:hover{transform:none}}
+.track .ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.track.b .ico{background:var(--violet-soft);color:var(--violet)}
+.track .ico svg{width:24px;height:24px}
+.track h3{font-size:17px;font-weight:700}
+.track p{font-size:14px;color:var(--muted);margin-top:4px}
+.track .go{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:700;font-size:14px;color:var(--accent)}
+.track.b .go{color:var(--violet)}
+.side .navlabel.second{margin-top:6px}
+.org-ico{background:var(--violet-soft)!important;color:var(--violet)!important}
+.orgtbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:1060px}
+.orgtbl th{position:sticky;top:0;background:var(--surface-2);font-size:11.5px;color:var(--muted);font-weight:700;text-align:right;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.orgtbl th abbr{text-decoration:none;cursor:help;border-bottom:1px dotted var(--muted)}
+.orgtbl td{padding:6px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.orgtbl tr:hover td{background:color-mix(in srgb,var(--accent-soft) 35%,transparent)}
+.orgtbl input,.orgtbl select{font:inherit;font-size:13px;background:transparent;border:1px solid transparent;border-radius:7px;padding:5px 6px;width:100%;color:var(--ink)}
+.orgtbl input:hover,.orgtbl select:hover{border-color:var(--line)}
+.orgtbl input:focus,.orgtbl select:focus{border-color:var(--accent);background:var(--surface);outline:none}
+.orgtbl input.num{font-family:"IBM Plex Mono",monospace;text-align:left;direction:ltr;width:76px}
+.orgtbl select.sc{width:46px;text-align:center;font-family:"IBM Plex Mono",monospace;padding:5px 2px;appearance:none;background:var(--sc-bg,transparent);border-radius:7px;font-weight:700}
+.orgtbl .feas{font-family:"IBM Plex Mono",monospace;font-weight:700;white-space:nowrap}
+.orgtbl .money{font-family:"Rubik",sans-serif;font-weight:700;color:var(--good);white-space:nowrap}
+.orgtbl .del{border:0;background:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px 6px;border-radius:6px}
+.orgtbl .del:hover{background:var(--crit-soft);color:var(--crit)}
+.tbl-scroll{overflow:auto;max-height:560px;border:1px solid var(--line-2);border-radius:12px}
+.rec{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.rec::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.legend2{display:flex;flex-wrap:wrap;gap:8px}
+.bubble-wrap{border:1px solid var(--line-2);border-radius:12px;background:var(--surface);padding:10px}
+.waves{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.wave{border:1px solid var(--line-2);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start;background:var(--surface-2)}
+.wave h4{margin:0;font-family:"Rubik",sans-serif;font-size:15px}
+.wave .t{font-size:12px;color:var(--muted)}
+.wave ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.wave li{background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;font-size:13.5px;display:grid;gap:2px}
+.wave li small{color:var(--muted)}
+.depts{display:flex;flex-wrap:wrap;gap:6px}
+.depts button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+.depts button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.formula{font-size:13px;color:var(--muted);display:grid;gap:4px}
+.formula code{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--surface-2);border-radius:6px;padding:1px 6px;direction:ltr;unicode-bidi:isolate}
+@media (max-width:980px){.tracks,.waves{grid-template-columns:1fr}}
 </style>
 
 <div class="app">
 <aside class="side" aria-label="ניווט">
   <a class="logo" href="#top"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>Call Center X-Ray</small></span></a>
-  <span class="navlabel">תהליך העבודה</span>
+  <span class="navlabel">ניתוח שיחות מוקד</span>
   <nav aria-label="שלבים">
     <a href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>מקורות<span class="n">01</span></a>
     <a href="#s-run"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>פרטיות וניתוח<span class="n">02</span></a>
@@ -351,6 +398,8 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
     <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>שיתוף<span class="n">05</span></a>
   </nav>
+  <span class="navlabel second">מיפוי ארגוני</span>
+  <nav aria-label="מפת ארגון"><a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">06</span></a></nav>
   <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
 </aside>
 <main class="main" id="top">
@@ -368,6 +417,10 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     </div>
     <div class="readout" aria-live="polite" id="readout"></div>
   </header>
+  <div class="tracks">
+    <a class="track" href="#s-sources"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/></svg></span><span><h3>ניתוח שיחות מוקד</h3><p>תמלולים, נהלים ותצפיות. מקבלים מפת תהליך, הזדמנויות עם ציטוטים, חיסכון בשקלים ופיילוט.</p><span class="go">להתחיל ←</span></span></a>
+    <a class="track b" href="#s-org"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><span><h3>מפת AI לכל הארגון</h3><p>מיפוי תהליכים בכל המחלקות, ציון התאמה שקוף לכל תהליך, והמלצה: אוטומציה, סוכן AI, עוזר עם אישור אדם, או לא עכשיו.</p><span class="go">למפת הארגון ←</span></span></a>
+  </div>
 
 
   <!-- 1. SOURCES -->
@@ -556,6 +609,31 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
         <div id="gmail-status" class="note"></div>
       </div>
     </div>
+  </section>
+
+  <!-- 6. ORG MAP -->
+  <section class="panel" id="s-org" aria-labelledby="h-org">
+    <div class="phead">
+      <div class="shead"><span class="ico org-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><div><span class="num">מסלול 2</span><h2 id="h-org">מפת AI לארגון: איפה כדאי להטמיע</h2></div></div>
+      <div class="row"><button class="btn ghost" id="org-demo">טעינת ארגון לדוגמה</button><button class="btn ghost" id="org-add">הוספת תהליך</button><button class="btn ghost danger" id="org-clear">ניקוי</button></div>
+    </div>
+    <p>ממפים את התהליכים בכל המחלקות ומדרגים כל אחד בשישה מדדים פשוטים. הכלי מחשב לכל תהליך ציון היתכנות, חיסכון חודשי וסוג פתרון מומלץ, ובונה תוכנית הטמעה בשלושה גלים. אפשר למלא ידנית, או לתאר את הארגון במילים ולתת ל-Claude להציע את רשימת התהליכים.</p>
+
+    <details class="shield" id="org-ai-box">
+      <summary class="row" style="list-style:none;cursor:pointer;justify-content:space-between"><b>זיהוי תהליכים עם Claude</b><span class="chip vio">תיאור חופשי ← רשימת תהליכים מדורגת</span></summary>
+      <div class="field" style="margin-top:10px"><label class="label" for="org-desc">תארו את הארגון: מחלקות, מה נעשה ידנית, כמויות בערך</label>
+        <textarea id="org-desc" placeholder="למשל: חברת מוקדים עם 400 עובדים ב-5 סניפים. גיוס של כ-60 נציגים בחודש, מסננים קורות חיים ידנית ומתאמים ראיונות בטלפון. המדריכים מכינים מצגות לכל לקוח חדש. מנהלי המוקד מוציאים דוחות מאקסל כל בוקר..."></textarea></div>
+      <div class="row"><button class="btn primary" id="org-ai-run">זיהוי תהליכים</button><label class="row small" style="gap:6px"><input type="checkbox" id="org-ai-append" checked> להוסיף לטבלה הקיימת</label><span class="note" id="org-ai-status"></span></div>
+    </details>
+
+    <div class="grid2" style="align-items:end">
+      <div class="depts" id="org-depts" role="group" aria-label="סינון לפי מחלקה"></div>
+      <div class="row" style="justify-content:flex-end"><label class="label" for="org-cost">עלות שעת עבודה ממוצעת (₪)</label><input id="org-cost" class="inp mono" type="number" min="0" value="70" style="width:90px"></div>
+    </div>
+    <div class="tbl-scroll"><table class="orgtbl" id="org-tbl"></table></div>
+    <div class="formula" id="org-formula"></div>
+
+    <div id="org-out"></div>
   </section>
 
   <footer>
@@ -1324,8 +1402,203 @@ $('to-gmail').onclick = async () => {
   finally{ b.disabled = false; }
 };
 
+
+/* ================= org AI map ================= */
+const CRIT = [
+  {k:'rep',  label:'חזרתיות',   tip:'כמה התהליך חוזר על עצמו באותה צורה (1 = כל פעם אחרת, 5 = זהה כל פעם)'},
+  {k:'rule', label:'כללים',     tip:'האם יש כללים ברורים שמכתיבים מה לעשות (5 = אם-אז מלא)'},
+  {k:'lang', label:'שפה וטקסט', tip:'כמה העבודה היא קריאה, כתיבה או שיחה (5 = כמעט רק טקסט) · מתאים ל-AI גנרטיבי'},
+  {k:'data', label:'נתונים',     tip:'האם המידע כבר דיגיטלי ונגיש במערכת (5 = הכול במערכת עם API)'},
+  {k:'judg', label:'שיקול דעת',  tip:'כמה נדרש שיקול דעת אנושי (5 = החלטה מורכבת לכל מקרה) · מוריד התאמה'},
+  {k:'risk', label:'רגישות',     tip:'השלכה של טעות: כסף, פרטיות, רגולציה (5 = רגיש מאוד) · מוריד היתכנות'}
+];
+const REC = {
+  auto:   {label:'אוטומציה (n8n / RPA)',      c:'var(--amber)',  bg:'var(--amber-soft)', share:.6},
+  agent:  {label:'סוכן AI',                   c:'var(--good)',   bg:'var(--good-soft)',  share:.45},
+  assist: {label:'עוזר AI עם אישור אדם',      c:'var(--accent)', bg:'var(--accent-soft)',share:.3},
+  support:{label:'AI לתמיכה בהחלטה',          c:'var(--violet)', bg:'var(--violet-soft)',share:.15},
+  data:   {label:'קודם לסדר נתונים',          c:'var(--muted)',  bg:'var(--surface-2)',  share:0}
+};
+const ORG_DEMO = [
+  ['מוקד ותפעול','סיכום ותיעוד שיחות ב-CRM',60000,0.7,5,4,5,4,2,2],
+  ['מוקד ותפעול','מענה לשאלות חוזרות של לקוחות',25000,3,5,3,5,4,2,3],
+  ['מוקד ותפעול','בקרת איכות שיחות',1200,12,4,3,5,4,3,2],
+  ['מוקד ותפעול','תכנון משמרות ושיבוץ נציגים',20,240,4,4,1,4,3,2],
+  ['גיוס ומשאבי אנוש','סינון ראשוני של קורות חיים',3000,4,5,3,5,4,3,4],
+  ['גיוס ומשאבי אנוש','תיאום ראיונות עבודה',900,8,5,5,2,4,1,1],
+  ['גיוס ומשאבי אנוש','קליטת עובד חדש: טפסים והרשאות',120,90,5,5,2,3,1,3],
+  ['הדרכה','תרגול שיחות לנציגים חדשים',120,600,4,2,5,3,4,2],
+  ['הדרכה','עדכון נהלים ומבחני ידע',40,120,3,3,5,4,3,2],
+  ['כספים ושכר','התאמת שעות נוכחות לשכר',450,6,5,5,1,5,2,4],
+  ['כספים ושכר','חשבוניות וגבייה מלקוחות עסקיים',60,45,5,5,2,5,2,3],
+  ['לקוחות עסקיים','דוחות ביצועים חודשיים ללקוחות',25,240,5,4,4,5,2,2],
+  ['לקוחות עסקיים','הצעות מחיר ומענה למכרזים',6,900,2,2,5,3,5,3],
+  ['הנהלה ו-BI','דשבורד יומי למנהלי המוקד',176,20,5,5,2,5,1,1],
+  ['IT','פתיחת משתמשים והרשאות',150,15,5,5,1,4,1,4]
+].map(r => ({dept:r[0], name:r[1], vol:r[2], min:r[3], rep:r[4], rule:r[5], lang:r[6], data:r[7], judg:r[8], risk:r[9]}));
+let org = { rows: [], dept: 'הכול', isDemo: true };
+const n01 = x => (Math.min(5, Math.max(1, +x || 1)) - 1) / 4;
+const clamp01 = x => Math.max(0, Math.min(1, x));
+function scoreRow(r){
+  const rep = n01(r.rep), rule = n01(r.rule), lang = n01(r.lang), data = n01(r.data), judg = n01(r.judg), risk = n01(r.risk);
+  const autoFit = clamp01(.35*rep + .35*rule + .3*data - .3*judg);
+  const genFit  = clamp01(.4*lang + .3*rep + .3*data - .15*judg);
+  let type;
+  if(data < .3) type = 'data';
+  else if(judg >= .75) type = 'support';
+  else if(autoFit >= genFit && rule >= .5) type = 'auto';
+  else if(risk >= .6) type = 'assist';
+  else type = 'agent';
+  const best = Math.max(autoFit, genFit);
+  const feas = Math.round(100 * best * (1 - .35*risk) * (type === 'data' ? .5 : 1));
+  const hours = (+r.vol || 0) * (+r.min || 0) / 60;
+  const savedH = hours * REC[type].share * best;
+  return { autoFit, genFit, type, feas, hours, savedH, ils: savedH * (+$('org-cost').value || 0) };
+}
+function orgScored(){ return org.rows.map((r, i) => ({ r, i, s: scoreRow(r) })); }
+function quadrant(x, med){ const hi = x.s.ils >= med; return x.s.feas >= 65 ? (hi ? 'start' : 'quick') : (hi ? 'strategic' : 'later'); }
+function saveOrg(){ try{ localStorage.setItem('xray-org', JSON.stringify({rows: org.rows, isDemo: org.isDemo, cost: $('org-cost').value})); }catch(e){} }
+function loadOrg(){ try{ const o = JSON.parse(localStorage.getItem('xray-org') || 'null'); if(o && Array.isArray(o.rows)){ org.rows = o.rows; org.isDemo = !!o.isDemo; if(o.cost) $('org-cost').value = o.cost; return true; } }catch(e){} return false; }
+function scColor(v){ return ['','var(--surface-2)','color-mix(in srgb,var(--accent) 12%,transparent)','color-mix(in srgb,var(--accent) 22%,transparent)','color-mix(in srgb,var(--accent) 34%,transparent)','color-mix(in srgb,var(--accent) 48%,transparent)'][+v||1]; }
+function renderOrgTable(){
+  const depts = ['הכול', ...new Set(org.rows.map(r => r.dept).filter(Boolean))];
+  if(!depts.includes(org.dept)) org.dept = 'הכול';
+  $('org-depts').innerHTML = depts.map(d => `<button type="button" aria-pressed="${d===org.dept}" data-d="${esc(d)}">${esc(d)}</button>`).join('');
+  $('org-depts').querySelectorAll('button').forEach(b => b.onclick = () => { org.dept = b.dataset.d; renderOrgTable(); });
+  const rows = orgScored().filter(x => org.dept === 'הכול' || x.r.dept === org.dept);
+  $('org-tbl').innerHTML = `<thead><tr><th>מחלקה</th><th>תהליך</th><th>המלצה</th><th>היתכנות</th><th>חיסכון בחודש</th><th><abbr title="כמה פעמים בחודש התהליך קורה">כמות בחודש</abbr></th><th><abbr title="כמה דקות עבודה לכל פעם">דק׳ לפעם</abbr></th>${CRIT.map(c => `<th><abbr title="${esc(c.tip)}">${c.label}</abbr></th>`).join('')}<th></th></tr></thead>
+  <tbody>${rows.map(({r,i,s}) => `<tr data-i="${i}">
+    <td><input data-f="dept" value="${esc(r.dept)}" aria-label="מחלקה" style="width:120px"></td>
+    <td><input data-f="name" value="${esc(r.name)}" aria-label="תהליך" style="min-width:210px" title="${esc(r.why||'')}"></td>
+    <td><span class="rec" style="color:${REC[s.type].c};background:${REC[s.type].bg}">${REC[s.type].label}</span></td>
+    <td class="feas" style="color:${s.feas>=65?'var(--good)':s.feas>=40?'var(--amber)':'var(--muted)'}">${s.feas}</td>
+    <td class="money">${s.ils ? ils(s.ils) : '—'}</td>
+    <td><input class="num" data-f="vol" type="number" min="0" value="${esc(r.vol)}" aria-label="כמות בחודש"></td>
+    <td><input class="num" data-f="min" type="number" min="0" step="0.1" value="${esc(r.min)}" aria-label="דקות לפעם" style="width:62px"></td>
+    ${CRIT.map(c => `<td><select class="sc" data-f="${c.k}" aria-label="${c.label}" style="--sc-bg:${scColor(r[c.k])}">${[1,2,3,4,5].map(v => `<option${+r[c.k]===v?' selected':''}>${v}</option>`).join('')}</select></td>`).join('')}
+    <td><button class="del" data-del="${i}" aria-label="מחיקת ${esc(r.name)}">×</button></td></tr>`).join('')}</tbody>`;
+  $('org-tbl').querySelectorAll('input,select').forEach(el => el.addEventListener('change', () => {
+    const i = +el.closest('tr').dataset.i, f = el.dataset.f; org.rows[i][f] = (el.type === 'number' || el.tagName === 'SELECT') ? +el.value : el.value; org.isDemo = false; saveOrg(); renderOrg(); }));
+  $('org-tbl').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { org.rows.splice(+b.dataset.del, 1); saveOrg(); renderOrg(); });
+  $('org-formula').innerHTML = `<details><summary style="cursor:pointer">איך מחושב הציון</summary><div style="display:grid;gap:4px;margin-top:6px">
+    <span>כל מדד מנורמל ל-0 עד 1. <code>התאמה לאוטומציה = 0.35·חזרתיות + 0.35·כללים + 0.3·נתונים − 0.3·שיקול דעת</code></span>
+    <span><code>התאמה ל-AI גנרטיבי = 0.4·שפה + 0.3·חזרתיות + 0.3·נתונים − 0.15·שיקול דעת</code></span>
+    <span><code>היתכנות = 100 × ההתאמה הגבוהה × (1 − 0.35·רגישות)</code>. נתונים לא דיגיטליים מורידים את ההיתכנות בחצי.</span>
+    <span>החיסכון: שעות בחודש (כמות × דקות) × חלק שניתן לחסוך לפי סוג הפתרון (אוטומציה 60%, סוכן 45%, עוזר עם אישור 30%, תמיכה בהחלטה 15%) × ההתאמה × עלות שעה.</span>
+    <span>המשקלים הם נקודת פתיחה שקופה לדיון, לא אמת מוחלטת. משנים ציון בטבלה והכול מתעדכן.</span></div></details>`;
+}
+function bubbleChart(list, med){
+  const W = 760, H = 380, L = 64, R = 20, T = 20, B = 46, w = W-L-R, h = H-T-B;
+  const maxI = Math.max(1, ...list.map(x => x.s.ils));
+  const X = f => L + f/100*w, Y = v => T + h - Math.sqrt(v/maxI)*h;
+  const yMed = Y(med);
+  let g = `<rect x="${X(65)}" y="${T}" width="${X(100)-X(65)}" height="${yMed-T}" fill="var(--good-soft)"/>
+    <line x1="${X(65)}" x2="${X(65)}" y1="${T}" y2="${T+h}" stroke="var(--line)" stroke-dasharray="4 4"/><line x1="${L}" x2="${L+w}" y1="${yMed}" y2="${yMed}" stroke="var(--line)" stroke-dasharray="4 4"/>
+    <rect x="${L}" y="${T}" width="${w}" height="${h}" fill="none" stroke="var(--line)"/>
+    <text x="${L+w-8}" y="${T+18}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--good)">להתחיל כאן</text>
+    <text x="${L+8}" y="${T+18}" font-size="12.5" font-weight="700" fill="var(--muted)">פרויקט אסטרטגי</text>
+    <text x="${L+w-8}" y="${T+h-10}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--muted)">שיפור מהיר</text>
+    <text x="${L+8}" y="${T+h-10}" font-size="12.5" font-weight="700" fill="var(--muted)">לא עכשיו</text>
+    <text x="${L}" y="${H-12}" font-size="12" fill="var(--muted)">היתכנות נמוכה</text><text x="${L+w}" y="${H-12}" text-anchor="end" font-size="12" fill="var(--muted)">היתכנות גבוהה</text>
+    ${[0,25,50,75,100].map(v => `<text x="${X(v)}" y="${T+h+16}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v}</text>`).join('')}
+    <text x="16" y="${T+h/2}" text-anchor="middle" font-size="12" fill="var(--muted)" transform="rotate(-90 16 ${T+h/2})">חיסכון חודשי</text>
+    <text x="${L-6}" y="${T+10}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${ils(maxI)}</text>`;
+  list.forEach((x, k) => { const cx = X(x.s.feas), cy = Y(x.s.ils), r = 7 + Math.sqrt(x.s.hours)/3;
+    g += `<g><title>${esc(x.r.name)} · ${esc(x.r.dept)} · היתכנות ${x.s.feas} · ${ils(x.s.ils)} בחודש</title><circle cx="${cx}" cy="${cy}" r="${Math.min(r,22)}" fill="${REC[x.s.type].c}" fill-opacity=".25" stroke="${REC[x.s.type].c}" stroke-width="1.5"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">${x.i+1}</text></g>`; });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="מפת תהליכים: היתכנות מול חיסכון" direction="ltr">${g}</svg>`;
+}
+function renderOrg(){
+  renderOrgTable();
+  const list = orgScored();
+  if(!list.length){ $('org-out').innerHTML = '<div class="msg">אין עדיין תהליכים. טענו ארגון לדוגמה, הוסיפו תהליך, או תארו את הארגון ל-Claude.</div>'; return; }
+  const vals = list.map(x => x.s.ils).sort((a,b) => a-b), med = vals[Math.floor(vals.length/2)] || 0;
+  const tot = list.reduce((n,x) => n + x.s.ils, 0), totH = list.reduce((n,x) => n + x.s.savedH, 0);
+  const q = {start:[], quick:[], strategic:[], later:[]}; list.forEach(x => q[quadrant(x, med)].push(x));
+  const byDept = {}; list.forEach(x => byDept[x.r.dept] = (byDept[x.r.dept]||0) + x.s.ils);
+  const deptList = Object.entries(byDept).sort((a,b) => b[1]-a[1]), maxD = Math.max(1, ...deptList.map(d => d[1]));
+  const top = [...list].sort((a,b) => b.s.ils*(b.s.feas/100) - a.s.ils*(a.s.feas/100)).slice(0,3);
+  const wave = (arr) => { arr.sort((a,b) => b.s.ils - a.s.ils); const more = arr.length - 5; return arr.slice(0,5).map(x => `<li><b>${esc(x.r.name)}</b><small>${esc(x.r.dept)} · ${REC[x.s.type].label} · ${ils(x.s.ils)} בחודש</small></li>`).join('') + (more > 0 ? `<li><small>ועוד ${more} תהליכים בטבלה</small></li>` : '') || '<li><small>אין תהליכים בגל הזה</small></li>'; };
+  const typeCount = {}; list.forEach(x => typeCount[x.s.type] = (typeCount[x.s.type]||0)+1);
+  $('org-out').innerHTML = `<div style="display:grid;gap:18px">
+    ${org.isDemo ? '<div class="banner"><span><b>ארגון לדוגמה:</b> חברת מיקור חוץ למוקדים עם כ-400 עובדים. המספרים להמחשה. שנו כל ערך בטבלה והמפה תתעדכן.</span></div>' : ''}
+    <div class="kpis">
+      <div class="kpi"><span class="label">פוטנציאל חיסכון בחודש</span><span class="n good mono">${ils(tot)}</span><span class="d">${nf.format(Math.round(totH))} שעות עבודה · ${(totH/182).toFixed(1)} משרות</span></div>
+      <div class="kpi"><span class="label">תהליכים שמופו</span><span class="n mono">${list.length}</span><span class="d">${deptList.length} מחלקות</span></div>
+      <div class="kpi"><span class="label">להתחיל כאן</span><span class="n mono">${q.start.length}</span><span class="d">היתכנות גבוהה וחיסכון גבוה</span></div>
+      <div class="kpi"><span class="label">דורשים הכנה</span><span class="n mono">${(typeCount.data||0) + (typeCount.support||0)}</span><span class="d">נתונים לא מוכנים או שיקול דעת כבד</span></div>
+    </div>
+    <div style="display:grid;gap:8px"><h3>שלושת המקומות הראשונים להטמיע AI</h3>
+      <div class="top3">${top.map((x,k) => `<div class="card"><span class="rank">${k+1} · ${esc(x.r.dept)}</span><b>${esc(x.r.name)}</b><span class="rec" style="justify-self:start;color:${REC[x.s.type].c};background:${REC[x.s.type].bg}">${REC[x.s.type].label}</span><span class="small muted">היתכנות ${x.s.feas}/100 · ${nf.format(Math.round(x.s.savedH))} שעות בחודש</span><span class="mono" style="color:var(--good);font-weight:700">${ils(x.s.ils)} בחודש</span></div>`).join('')}</div></div>
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:8px"><h3>מפת התהליכים</h3><div class="bubble-wrap">${bubbleChart(list, med)}</div>
+        <div class="legend2">${Object.entries(REC).filter(([k]) => typeCount[k]).map(([k,v]) => `<span class="rec" style="color:${v.c};background:${v.bg}">${v.label} · ${typeCount[k]}</span>`).join('')}</div>
+        <p class="note">כל עיגול הוא תהליך לפי המספר שלו בטבלה. גודל העיגול = שעות העבודה בחודש. הקו האופקי הוא החציון של החיסכון.</p></div>
+      <div style="display:grid;gap:8px"><h3>פוטנציאל לפי מחלקה</h3><div class="bars">${deptList.map(([d,v]) => `<div class="bar"><span>${esc(d)}</span><span class="t"><i style="width:${v/maxD*100}%;background:var(--violet)"></i></span><span class="v">${ils(v)}</span></div>`).join('')}</div></div>
+    </div>
+    <div style="display:grid;gap:8px"><h3>תוכנית הטמעה בשלושה גלים</h3>
+      <div class="waves">
+        <div class="wave"><h4>גל 1 · 0–3 חודשים</h4><span class="t">ניצחונות מהירים: היתכנות גבוהה, מתחילים בפיילוט אחד</span><ul>${wave([...q.start, ...q.quick])}</ul></div>
+        <div class="wave"><h4>גל 2 · 3–6 חודשים</h4><span class="t">פרויקטים אסטרטגיים: ערך גבוה, דורשים הכנה, נתונים או אישורים</span><ul>${wave(q.strategic)}</ul></div>
+        <div class="wave"><h4>גל 3 · אחרי זה</h4><span class="t">לא עכשיו: ערך נמוך או היתכנות נמוכה. בודקים שוב אחרי גל 1</span><ul>${wave(q.later)}</ul></div>
+      </div></div>
+    <div class="row"><button class="btn primary" id="org-brief">סיכום מנהלים עם Claude</button><button class="btn" id="org-csv">הורדת הטבלה (CSV)</button><button class="btn" id="org-md">הורדת דוח המפה</button><span class="note" id="org-st"></span></div>
+    <div id="org-brief-out"></div>
+  </div>`;
+  $('org-csv').onclick = () => save(`מפת-AI-${stamp()}.csv`, '﻿' + orgCsv(), $('org-st'), 'text/csv');
+  $('org-md').onclick = () => save(`מפת-AI-${stamp()}.md`, orgMd(q), $('org-st'), 'text/markdown');
+  $('org-brief').onclick = orgBrief;
+}
+function orgCsv(){
+  const head = ['מחלקה','תהליך','כמות בחודש','דקות לפעם', ...CRIT.map(c => c.label), 'היתכנות','שעות שנחסכות','חיסכון ₪','המלצה'];
+  const q = v => `"${String(v).replace(/"/g,'""')}"`;
+  return [head.map(q).join(','), ...orgScored().map(({r,s}) => [r.dept, r.name, r.vol, r.min, ...CRIT.map(c => r[c.k]), s.feas, Math.round(s.savedH), Math.round(s.ils), REC[s.type].label].map(q).join(','))].join('\n');
+}
+function orgMd(q){
+  const L = ['# מפת AI לארגון', '', `עלות שעה: ₪${$('org-cost').value}${org.isDemo ? ' · נתוני דוגמה' : ''}`, '', '| # | מחלקה | תהליך | היתכנות | ₪ בחודש | המלצה |', '|---|---|---|---|---|---|'];
+  orgScored().forEach(({r,s,i}) => L.push(`| ${i+1} | ${r.dept} | ${r.name} | ${s.feas} | ${nf.format(Math.round(s.ils))} | ${REC[s.type].label} |`));
+  const w = (t, arr) => { L.push('', `## ${t}`, ''); arr.forEach(x => L.push(`- ${x.r.name} (${x.r.dept}) · ${REC[x.s.type].label}`)); };
+  w('גל 1 · 0–3 חודשים', [...q.start, ...q.quick]); w('גל 2 · 3–6 חודשים', q.strategic); w('גל 3 · אחרי זה', q.later);
+  L.push('', 'הציונים מחושבים בנוסחה שקופה משישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות). המשקלים הם נקודת פתיחה לדיון.');
+  return L.join('\n');
+}
+async function orgBrief(){
+  const st = $('org-st'), out = $('org-brief-out');
+  if(!llmReady()){ st.textContent = LLM_ERR.no_llm; return; }
+  const rows = orgScored().map(({r,s}) => `${r.dept} | ${r.name} | ${r.vol}×${r.min} דק׳ | היתכנות ${s.feas} | ₪${Math.round(s.ils)} | ${REC[s.type].label}`).join('\n');
+  out.innerHTML = '<div class="msg"><span class="pulse" style="display:inline-block;margin-inline-end:8px"></span>Claude כותב סיכום מנהלים…</div>';
+  try{
+    const text = await llm.text([{role:'user', content:`אתה יועץ להטמעת AI בארגונים. כתוב סיכום מנהלים בעברית (עד 180 מילים) על בסיס מפת התהליכים הבאה: איפה להתחיל ולמה, מה הסיכונים, ומה צריך להכין (נתונים, אישורים, אנשים). בלי כותרות markdown, 3 פסקאות קצרות. אל תמציא מספרים שלא מופיעים כאן.\n\n${rows}`}], { onText: ({text}) => { out.innerHTML = `<div class="msg" style="white-space:pre-wrap">${esc(text)}</div>`; } });
+    out.innerHTML = `<div class="msg" style="white-space:pre-wrap">${esc(text)}</div>`; st.textContent = '';
+  }catch(e){ out.innerHTML = ''; st.textContent = errText(e); }
+}
+async function orgDetect(){
+  const st = $('org-ai-status'), desc = $('org-desc').value.trim();
+  if(!desc){ st.textContent = 'כתבו קודם תיאור קצר של הארגון.'; return; }
+  if(!llmReady()){ st.textContent = LLM_ERR.no_llm; return; }
+  const on = $('pii-on').checked, text = on ? redact(desc, {}, extraTerms()) : desc;
+  $('org-ai-run').disabled = true; st.textContent = 'Claude ממפה תהליכים… (כחצי דקה)';
+  try{
+    const res = await llm.json(`אתה אנליסט תהליכים שממפה איפה כדאי להטמיע AI ואוטומציה בארגון. מתוך התיאור, זהה 6 עד 15 תהליכים עבודה קונקרטיים, בכל המחלקות שמוזכרות או סבירות לארגון כזה. לכל תהליך העריך בזהירות:
+vol = כמה פעמים בחודש, min = דקות עבודה לכל פעם, ודרג 1-5: rep (חזרתיות), rule (כללים ברורים), lang (עבודה עם טקסט/שפה), data (מידע דיגיטלי ונגיש), judg (שיקול דעת נדרש), risk (רגישות/השלכת טעות). why = משפט קצר למה התהליך מועמד.
+החזר JSON בלבד: [{"dept":"","name":"","vol":0,"min":0,"rep":1,"rule":1,"lang":1,"data":1,"judg":1,"risk":1,"why":""}]
+
+תיאור הארגון:
+${text}`, { tier:'default' });
+    const rows = arr(res).filter(r => r && r.name).map(r => ({dept: String(r.dept||'כללי'), name: String(r.name), vol: Math.max(0, +r.vol||0), min: Math.max(0, +r.min||0), rep: clamp(+r.rep,1,5), rule: clamp(+r.rule,1,5), lang: clamp(+r.lang,1,5), data: clamp(+r.data,1,5), judg: clamp(+r.judg,1,5), risk: clamp(+r.risk,1,5), why: String(r.why||'')}));
+    if(!rows.length) throw {code:'invalid_json'};
+    org.rows = $('org-ai-append').checked && !org.isDemo ? [...org.rows, ...rows] : rows; org.isDemo = false; org.dept = 'הכול';
+    saveOrg(); renderOrg(); st.textContent = `נוספו ${rows.length} תהליכים. עברו על המספרים ותקנו לפי מה שאתם יודעים.`; toast(`זוהו ${rows.length} תהליכים`);
+  }catch(e){ st.textContent = errText(e); }
+  finally{ $('org-ai-run').disabled = false; }
+}
+$('org-ai-run').onclick = orgDetect;
+$('org-demo').onclick = () => { org.rows = ORG_DEMO.map(r => ({...r})); org.isDemo = true; org.dept = 'הכול'; saveOrg(); renderOrg(); };
+$('org-add').onclick = () => { org.rows.push({dept: org.dept !== 'הכול' ? org.dept : 'מחלקה', name:'תהליך חדש', vol:100, min:10, rep:3, rule:3, lang:3, data:3, judg:3, risk:3}); org.isDemo = false; saveOrg(); renderOrg(); const last = $('org-tbl').querySelector('tbody tr:last-child input[data-f="name"]'); if(last){ last.focus(); last.select(); } };
+$('org-clear').onclick = () => { org.rows = []; org.isDemo = false; saveOrg(); renderOrg(); };
+$('org-cost').addEventListener('input', () => { saveOrg(); renderOrg(); });
+
 /* ================= nav & boot ================= */
-const secIds = ['s-sources','s-run','s-results','s-eval','s-export'];
+const secIds = ['s-sources','s-run','s-results','s-eval','s-export','s-org'];
 if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
@@ -1338,6 +1611,7 @@ loadLocal();
 if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
 api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
 renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
+if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg();
 if(!INSIDE_CLAUDE){ $('keybox').hidden = false; $('tab-drive').hidden = true; }
 else (async () => {
   const [s, m, d] = await Promise.all(['sample','mcp','downloads'].map(n => window.claude.use(n).catch(() => null)));
