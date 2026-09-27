@@ -208,3 +208,10 @@ test.describe('exports', () => {
     expect(lines).toHaveLength(16);
   });
 });
+
+test('sidebar links scroll to their section', async ({ page }) => {
+  await open(page);
+  await page.click('.side nav a[href="#s-org"]');
+  await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-org').getBoundingClientRect().top))).toBeLessThan(60);
+  await expect(page.locator('.side nav a[href="#s-org"]')).toHaveClass(/on/);
+});
