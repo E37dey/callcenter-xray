@@ -228,8 +228,9 @@ test.describe('screens', () => {
     await expect(page.locator('#ov-next li')).toHaveCount(6);
   });
 
-  test('sidebar switches screens and marks the active one', async ({ page }) => {
+  test('sidebar lists every step and switches screens', async ({ page }) => {
     await open(page, { screens: true });
+    await expect(page.locator('.side nav a')).toHaveCount(11); // overview + 10 steps
     await page.click('.side nav a[href="#s-org"]');
     await expect(page.locator('#s-org')).toBeVisible();
     await expect(page.locator('#overview')).toBeHidden();
@@ -240,7 +241,7 @@ test.describe('screens', () => {
 
   test('call analysis has four steps in a sub-navigation', async ({ page }) => {
     await open(page, { screens: true });
-    await page.click('.side nav a[data-nav="calls"]');
+    await page.click('.side nav a[href="#s-results"]');
     const sub = page.locator('#subnav a');
     await expect(sub).toHaveCount(4);
     await expect(page.locator('#subnav a.on')).toContainText('תוצאות');
