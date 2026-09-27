@@ -19,7 +19,8 @@ async function mockClaude(page, text) {
   return bodies;
 }
 
-async function open(page) {
+async function open(page, { tour = false } = {}) {
+  if (!tour) await page.addInitScript(() => localStorage.setItem('xray-tour', 'done'));
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto('/index.html');
@@ -214,4 +215,103 @@ test('sidebar links scroll to their section', async ({ page }) => {
   await page.click('.side nav a[href="#s-org"]');
   await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-org').getBoundingClientRect().top))).toBeLessThan(60);
   await expect(page.locator('.side nav a[href="#s-org"]')).toHaveClass(/on/);
+});
+
+test.describe('guidance', () => {
+  test('first visit shows a tour that walks every step and closes', async ({ page }) => {
+    await open(page, { tour: true });
+    const tour = page.locator('#tour');
+    await expect(tour).toBeVisible();
+    await expect(page.locator('#tour-n')).toHaveText('1 / 8');
+    for (let i = 0; i < 7; i++) await page.click('#tour-next');
+    await expect(page.locator('#tour-next')).toHaveText('סיום');
+    await expect(page.locator('#s-export')).toHaveClass(/tour-hl/);
+    await page.click('#tour-next');
+    await expect(tour).toBeHidden();
+    await page.reload();
+    await page.waitForTimeout(1200);
+    await expect(tour).toBeHidden(); // remembered
+    await page.click('#tour-start');
+    await expect(tour).toBeVisible();
+  });
+
+  test('every step ends with a "what now" link to the next step', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('.nextbar')).toHaveCount(6);
+    await page.click('#s-results .nextbar a');
+    await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-eval').getBoundingClientRect().top))).toBeLessThan(60);
+  });
+});
+
+test.describe('saved analyses', () => {
+  test('save two states, compare old to new, load one back', async ({ page }) => {
+    await open(page);
+    await page.fill('#proj-name', 'לפני פיילוט');
+    await page.click('#proj-form button');
+    await page.fill('#p-calls', '24000');
+    await page.locator('#p-calls').dispatchEvent('input');
+    await page.fill('#proj-name', 'אחרי פיילוט');
+    await page.click('#proj-form button');
+    await expect(page.locator('#proj-list tbody tr')).toHaveCount(2);
+    for (const box of await page.locator('[data-sel]').all()) await box.check();
+    const cmp = page.locator('#proj-compare');
+    await expect(cmp).toContainText('השוואה: לפני פיילוט מול אחרי פיילוט');
+    await expect(cmp.locator('tbody tr').first().locator('td.up')).toContainText('+33%');
+    await page.click('#proj-list tr:has-text("לפני פיילוט") [data-load]');
+    await expect(page.locator('#p-calls')).toHaveValue('18000');
+  });
+
+  test('export and import round-trip', async ({ page }) => {
+    await open(page);
+    await page.fill('#proj-name', 'לייצוא');
+    await page.click('#proj-form button');
+    const json = await page.evaluate(() => JSON.stringify(projGet()));
+    await page.evaluate(() => localStorage.removeItem('xray-projects'));
+    await page.setInputFiles('#proj-import', { name: 'p.json', mimeType: 'application/json', buffer: Buffer.from(json) });
+    await expect(page.locator('#proj-list')).toContainText('לייצוא');
+  });
+});
+
+test.describe('combined deck', () => {
+  test('has seven slides covering both tracks', async ({ page }) => {
+    await open(page);
+    const html = await page.evaluate(() => deckReport());
+    expect((html.match(/<section/g) || []).length).toBe(7);
+    for (const s of ['התמונה בקצרה', 'מה קורה במוקד', 'שלוש ההזדמנויות המובילות במוקד', 'מפת AI לארגון', 'תוכנית בשלושה גלים', 'הנחות ושקיפות']) expect(html).toContain(s);
+    expect(html).toContain('חיסכון חודשי בשאר הארגון');
+  });
+});
+
+test.describe('recordings', () => {
+  test('transcribes an uploaded recording through a mocked Whisper API', async ({ page }) => {
+    await open(page);
+    let auth = '';
+    await page.route('https://api.openai.com/v1/audio/transcriptions', async (route) => {
+      auth = route.request().headers()['authorization'];
+      await route.fulfill({ status: 200, headers: { 'access-control-allow-origin': '*', 'content-type': 'text/plain' }, body: 'לקוח: האינטרנט לא עובד. נציג: אני בודק.' });
+    });
+    await page.click('[data-t="audio"]');
+    await page.fill('#stt-key', 'sk-test');
+    await page.click('#stt-save');
+    await page.setInputFiles('#audio-in', { name: 'call1.mp3', mimeType: 'audio/mpeg', buffer: Buffer.from('fake-audio') });
+    await expect(page.locator('#src-list')).toContainText('call1.mp3 (תמלול)');
+    expect(auth).toBe('Bearer sk-test');
+  });
+
+  test('asks for a key before sending audio', async ({ page }) => {
+    await open(page);
+    await page.click('[data-t="audio"]');
+    await page.setInputFiles('#audio-in', { name: 'call1.mp3', mimeType: 'audio/mpeg', buffer: Buffer.from('x') });
+    await expect(page.locator('#audio-status')).toContainText('הזינו קודם מפתח');
+  });
+
+  test('VTT captions are cleaned of timestamps', async ({ page }) => {
+    await open(page);
+    await page.click('[data-t="file"]');
+    const vtt = 'WEBVTT\n\n1\n00:00:01.000 --> 00:00:03.000\nלקוח: שלום\n\n2\n00:00:03.500 --> 00:00:05.000\nנציג: <v Agent>היי</v>\n';
+    await page.setInputFiles('#file-in', { name: 'call.vtt', mimeType: 'text/vtt', buffer: Buffer.from(vtt) });
+    await expect(page.locator('#src-list')).toContainText('call.vtt (כתוביות)');
+    const text = await page.evaluate(() => state.sources.find((s) => s.name.startsWith('call.vtt')).text);
+    expect(text).toBe('לקוח: שלום\nנציג: היי');
+  });
 });

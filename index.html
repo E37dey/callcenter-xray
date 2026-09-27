@@ -202,7 +202,8 @@ table.t td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabula
 .sugg{display:flex;gap:6px;flex-wrap:wrap}
 .sugg button{border:1px dashed var(--line);background:none;border-radius:999px;padding:3px 10px;font-size:13px;color:var(--accent);cursor:pointer}
 
-.exp{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.exp{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.exp .deck-card{grid-column:span 2;background:linear-gradient(135deg,var(--accent-soft),var(--surface))}
 .exp .card{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;align-content:start}
 footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4px}
 
@@ -399,21 +400,54 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 .ro-scen b{font-family:"IBM Plex Mono",monospace;font-size:13px;color:#FFFFFF}
 .opp .addmap{margin-inline-start:auto}
 @media (max-width:680px){.scen{grid-template-columns:1fr}.scen > div + div{border-inline-start:0;border-top:1px solid var(--line-2)}}
+
+/* ===== v7: guidance, projects, audio ===== */
+.nextbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px dashed var(--line);font-size:14px}
+.nextbar b{color:var(--accent)}
+.nextbar .btn{text-decoration:none}
+.tour-btn{display:flex;align-items:center;gap:10px;margin-top:8px;padding:9px 10px;border-radius:10px;border:1px dashed var(--line);background:none;color:var(--muted);font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-align:start}
+.tour-btn svg{width:19px;height:19px}
+.tour-btn:hover{color:var(--accent);border-color:var(--accent)}
+.tour{position:fixed;left:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;width:min(360px,calc(100vw - 32px));background:#0F1B28;color:#E8F1F8;border-radius:16px;padding:16px 18px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;gap:8px;animation:tin .25s ease-out}
+.tour h3{color:#FFFFFF;font-size:17px}
+.tour p{color:#B6C6D5;font-size:14px}
+.tour .tour-top{display:flex;justify-content:space-between;align-items:center}
+.tour .tour-n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#7FD3E6}
+.tour .tour-x{border:0;background:none;color:#9FB2C3;font-size:20px;cursor:pointer;line-height:1}
+.tour .btn.ghost{color:#DCE8F2;border-color:rgba(255,255,255,.2)}
+.tour .btn.primary{background:#4FB8D4;border-color:#4FB8D4;color:#081018}
+.tour-dots{display:flex;gap:5px}
+.tour-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2)}
+.tour-dots i.on{background:#7FD3E6;width:18px;border-radius:4px}
+.tour-hl{outline:3px solid var(--accent)!important;outline-offset:4px;border-radius:14px;transition:outline-color .2s}
+@media (prefers-reduced-motion: reduce){.tour{animation:none}.tour-hl{transition:none}}
+.proj-tbl td .row{flex-wrap:nowrap}
+.cmp td.up{color:var(--good);font-weight:700}
+.cmp td.down{color:var(--crit);font-weight:700}
+.src .chip.au{background:var(--good-soft);border-color:transparent;color:var(--good)}
+@media (max-width:980px){.tour-btn{display:none}.exp .deck-card{grid-column:auto}.exp{grid-template-columns:1fr}}
 </style>
 
 <div class="app">
 <aside class="side" aria-label="ניווט">
   <a class="logo" href="#top"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>Call Center X-Ray</small></span></a>
   <span class="navlabel">ניתוח שיחות מוקד</span>
-  <nav aria-label="שלבים">
+  <nav aria-label="ניתוח שיחות">
     <a href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>מקורות<span class="n">01</span></a>
     <a href="#s-run"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>פרטיות וניתוח<span class="n">02</span></a>
     <a href="#s-results" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>תוצאות<span class="n">03</span></a>
     <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
-    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>שיתוף<span class="n">05</span></a>
   </nav>
   <span class="navlabel second">מיפוי ארגוני</span>
-  <nav aria-label="מפת ארגון"><a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">06</span></a></nav>
+  <nav aria-label="מפת ארגון">
+    <a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">05</span></a>
+  </nav>
+  <span class="navlabel second">סיכום ושיתוף</span>
+  <nav aria-label="סיכום ושיתוף">
+    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">06</span></a>
+    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">07</span></a>
+  </nav>
+  <button class="tour-btn" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור מודרך</button>
   <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
 </aside>
 <main class="main" id="top">
@@ -462,6 +496,7 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     <div class="src-tabs" role="tablist" aria-label="הוספת מקור">
       <button role="tab" aria-selected="true" data-t="paste">הדבקת טקסט</button>
       <button role="tab" aria-selected="false" data-t="file">העלאת קבצים</button>
+      <button role="tab" aria-selected="false" data-t="audio">הקלטות</button>
       <button role="tab" aria-selected="false" data-t="drive" id="tab-drive">Google Drive</button>
     </div>
     <div data-p="paste" class="grid2" style="align-items:start">
@@ -490,6 +525,27 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
         <input id="file-in" type="file" multiple accept=".txt,.csv,.md,.json,.vtt,.srt,text/*" hidden>
       </div>
     </div>
+    <div data-p="audio" hidden class="grid2" style="align-items:start">
+      <div style="display:grid;gap:10px" id="audio-box">
+        <div class="drop" id="audio-drop"><span class="ico" style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>גררו לכאן הקלטות שיחה</b><span class="small">MP3, WAV, M4A, OGG, WEBM · עד 25MB לקובץ</span><label class="btn" for="audio-in">בחירת הקלטות</label><input id="audio-in" type="file" multiple accept="audio/*,.m4a,.mp3,.wav,.ogg,.webm" hidden></div>
+        <div class="keybox" id="stt-keys">
+          <div class="field"><label class="label" for="stt-key">מפתח לשירות התמלול</label><input id="stt-key" class="inp mono" type="password" autocomplete="off" dir="ltr" placeholder="sk-... / gsk_..."></div>
+          <div class="field"><label class="label" for="stt-provider">שירות</label><select id="stt-provider" class="inp"><option value="openai">OpenAI Whisper</option><option value="groq">Groq Whisper large-v3</option></select></div>
+          <button class="btn" id="stt-save" type="button">שמירה</button>
+        </div>
+        <div id="audio-status" class="note"></div>
+        <div id="audio-list" class="src-list"></div>
+      </div>
+      <div class="msg" id="audio-help">
+        <b>שלוש דרכים להכניס שיחות מוקלטות</b>
+        <ol style="margin:6px 0 0;padding-inline-start:18px;display:grid;gap:4px">
+          <li><b>כאן, בגרסה העצמאית של הכלי</b> (GitHub Pages): תמלול בעברית דרך Whisper עם מפתח שלכם. הקובץ נשלח רק לשירות התמלול.</li>
+          <li><b>במחשב, בלי לשלוח הקלטות החוצה:</b> הסקריפט <code dir="ltr">tools/transcribe.py</code> בריפו מתמלל תיקייה שלמה עם מודל עברי של ivrit.ai, ואז מעלים את קובצי הטקסט.</li>
+          <li><b>תמלול קיים:</b> מעלים קובצי VTT או SRT בלשונית "העלאת קבצים". חותמות הזמן מוסרות אוטומטית.</li>
+        </ol>
+        <p class="small" style="margin-top:8px">חשוב: תמלול שולח את הקול עצמו, והסתרת הפרטים המזהים מופעלת רק על הטקסט שחוזר. להקלטות רגישות עדיף הסקריפט המקומי.</p>
+      </div>
+    </div>
     <div data-p="drive" hidden class="grid2" style="align-items:start">
       <div style="display:grid;gap:8px">
         <form class="row" id="drive-form" style="flex-wrap:nowrap">
@@ -508,6 +564,7 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
       <div class="meter" aria-hidden="true"><i id="src-meter" style="width:0"></i></div>
       <div class="src-list" id="src-list"></div>
     </div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> כשהמקורות בפנים, בודקים שהפרטים המזהים מוסתרים ומריצים את הניתוח.</span><a class="btn primary sm" href="#s-run">לשלב 2 ←</a></div>
   </section>
 
   <!-- 2. RUN -->
@@ -545,6 +602,7 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
         <button class="btn" id="stop" hidden>עצירה</button>
       </div>
     </div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> אחרי שהניתוח מסתיים, עוברים על התוצאות. אפשר גם להסתכל קודם על תוצאות הדוגמה.</span><a class="btn primary sm" href="#s-results">לתוצאות ←</a></div>
   </section>
 
   <!-- 3. RESULTS -->
@@ -577,6 +635,7 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
         <div id="chat-status" class="note"></div>
       </div>
     </div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> בודקים כמה הכלי מדויק, ואז מכניסים את ההזדמנויות למפת הארגון (כפתור בלשונית "הזדמנויות").</span><a class="btn primary sm" href="#s-eval">למבחן הדיוק ←</a></div>
   </section>
 
   <!-- 4. EVAL -->
@@ -591,12 +650,57 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
       <span class="note" id="eval-status">פורמט CSV: עמודת טקסט ואחריה עמודת תווית, שורה לכל שיחה.</span>
     </div>
     <div id="eval-out"></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> ממפים את שאר הארגון: איפה עוד כדאי להטמיע AI, מעבר למוקד.</span><a class="btn primary sm" href="#s-org">למפת הארגון ←</a></div>
+  </section>
+
+  <!-- 6. ORG MAP -->
+  <section class="panel" id="s-org" aria-labelledby="h-org">
+    <div class="phead">
+      <div class="shead"><span class="ico org-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><div><span class="num">שלב 5 · מסלול 2</span><h2 id="h-org">מפת AI לארגון: איפה כדאי להטמיע</h2></div></div>
+      <div class="row"><button class="btn ghost" id="org-demo">טעינת ארגון לדוגמה</button><button class="btn ghost" id="org-add">הוספת תהליך</button><button class="btn ghost danger" id="org-clear">ניקוי</button></div>
+    </div>
+    <p>ממפים את התהליכים בכל המחלקות ומדרגים כל אחד בשישה מדדים פשוטים. הכלי מחשב לכל תהליך ציון היתכנות, חיסכון חודשי וסוג פתרון מומלץ, ובונה תוכנית הטמעה בשלושה גלים. אפשר למלא ידנית, או לתאר את הארגון במילים ולתת ל-Claude להציע את רשימת התהליכים.</p>
+
+    <details class="shield" id="org-ai-box">
+      <summary class="row" style="list-style:none;cursor:pointer;justify-content:space-between"><b>זיהוי תהליכים עם Claude</b><span class="chip vio">תיאור חופשי ← רשימת תהליכים מדורגת</span></summary>
+      <div class="field" style="margin-top:10px"><label class="label" for="org-desc">תארו את הארגון: מחלקות, מה נעשה ידנית, כמויות בערך</label>
+        <textarea id="org-desc" placeholder="למשל: חברת מוקדים עם 400 עובדים ב-5 סניפים. גיוס של כ-60 נציגים בחודש, מסננים קורות חיים ידנית ומתאמים ראיונות בטלפון. המדריכים מכינים מצגות לכל לקוח חדש. מנהלי המוקד מוציאים דוחות מאקסל כל בוקר..."></textarea></div>
+      <div class="row"><button class="btn primary" id="org-ai-run">זיהוי תהליכים</button><label class="row small" style="gap:6px"><input type="checkbox" id="org-ai-append" checked> להוסיף לטבלה הקיימת</label><span class="note" id="org-ai-status"></span></div>
+    </details>
+
+    <div class="grid2" style="align-items:end">
+      <div class="depts" id="org-depts" role="group" aria-label="סינון לפי מחלקה"></div>
+      <div class="row" style="justify-content:flex-end"><label class="label" for="org-cost">עלות שעת עבודה ממוצעת (₪)</label><input id="org-cost" class="inp mono" type="number" min="0" value="70" style="width:90px"></div>
+    </div>
+    <div class="tbl-scroll"><table class="orgtbl" id="org-tbl"></table></div>
+    <div class="formula" id="org-formula"></div>
+
+    <div id="org-out"></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> שומרים את המצב הנוכחי, כדי להשוות אחרי פיילוט או בין מוקדים.</span><a class="btn primary sm" href="#s-projects">לשמירה ←</a></div>
+  </section>
+
+  <!-- 6. PROJECTS -->
+  <section class="panel" id="s-projects" aria-labelledby="h-proj">
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><div><span class="num">שלב 6</span><h2 id="h-proj">ניתוחים שמורים והשוואה</h2></div></div>
+      <div class="row"><button class="btn ghost" id="proj-export">ייצוא כל הניתוחים</button><label class="btn ghost" for="proj-import">ייבוא</label><input id="proj-import" type="file" accept=".json" hidden></div></div>
+    <p>שומרים את המצב הנוכחי (ניתוח השיחות, מפת הארגון והמספרים) בשם, וחוזרים אליו אחר כך. מסמנים שני ניתוחים כדי להשוות: למשל לפני הפיילוט ואחריו, או שני מוקדים שונים.</p>
+    <form class="row" id="proj-form" style="flex-wrap:nowrap"><label for="proj-name" hidden>שם</label><input id="proj-name" class="inp" placeholder="שם לניתוח, למשל: מוקד תקלות, לפני פיילוט" style="max-width:420px"><button class="btn primary" type="submit">שמירת המצב הנוכחי</button></form>
+    <div id="proj-list"></div>
+    <div id="proj-compare"></div>
+    <p class="note">הניתוחים נשמרים בדפדפן הזה בלבד. כדי להעביר למחשב אחר: ייצוא, ואז ייבוא במחשב השני.</p>
+    <div class="nextbar"><span><b>מה עכשיו?</b> מורידים מצגת משולבת או דוח מנהלים, ושולחים למנהל.</span><a class="btn primary sm" href="#s-export">לדוחות ←</a></div>
   </section>
 
   <!-- 5. EXPORT -->
   <section class="panel" id="s-export" aria-labelledby="h-exp">
-    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 5</span><h2 id="h-exp">שיתוף והמשך עבודה</h2></div></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 7</span><h2 id="h-exp">דוחות ושיתוף</h2></div></div></div>
     <div class="exp">
+      <div class="card deck-card">
+        <h3>מצגת משולבת: מוקד וארגון</h3>
+        <p class="note">שבעה שקפים שמאחדים את שני המסלולים: תקציר, מה קורה במוקד, לפני ואחרי, מפת הארגון, תוכנית בשלושה גלים, פיילוט, והנחות. מעבר בין שקפים בחצים, והדפסה ל-PDF מהדפדפן.</p>
+        <div class="row"><button class="btn primary" id="dl-deck">הורדת המצגת</button></div>
+        <div id="deck-status" class="note"></div>
+      </div>
       <div class="card">
         <h3>דוח מנהלים, עמוד אחד</h3>
         <p class="note">קובץ HTML מעוצב: חיסכון, שלוש הזדמנויות עם ציטוטים, לפני ואחרי, פיילוט. נפתח בכל דפדפן ואפשר להדפיס ממנו PDF.</p>
@@ -625,31 +729,6 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     </div>
   </section>
 
-  <!-- 6. ORG MAP -->
-  <section class="panel" id="s-org" aria-labelledby="h-org">
-    <div class="phead">
-      <div class="shead"><span class="ico org-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><div><span class="num">מסלול 2</span><h2 id="h-org">מפת AI לארגון: איפה כדאי להטמיע</h2></div></div>
-      <div class="row"><button class="btn ghost" id="org-demo">טעינת ארגון לדוגמה</button><button class="btn ghost" id="org-add">הוספת תהליך</button><button class="btn ghost danger" id="org-clear">ניקוי</button></div>
-    </div>
-    <p>ממפים את התהליכים בכל המחלקות ומדרגים כל אחד בשישה מדדים פשוטים. הכלי מחשב לכל תהליך ציון היתכנות, חיסכון חודשי וסוג פתרון מומלץ, ובונה תוכנית הטמעה בשלושה גלים. אפשר למלא ידנית, או לתאר את הארגון במילים ולתת ל-Claude להציע את רשימת התהליכים.</p>
-
-    <details class="shield" id="org-ai-box">
-      <summary class="row" style="list-style:none;cursor:pointer;justify-content:space-between"><b>זיהוי תהליכים עם Claude</b><span class="chip vio">תיאור חופשי ← רשימת תהליכים מדורגת</span></summary>
-      <div class="field" style="margin-top:10px"><label class="label" for="org-desc">תארו את הארגון: מחלקות, מה נעשה ידנית, כמויות בערך</label>
-        <textarea id="org-desc" placeholder="למשל: חברת מוקדים עם 400 עובדים ב-5 סניפים. גיוס של כ-60 נציגים בחודש, מסננים קורות חיים ידנית ומתאמים ראיונות בטלפון. המדריכים מכינים מצגות לכל לקוח חדש. מנהלי המוקד מוציאים דוחות מאקסל כל בוקר..."></textarea></div>
-      <div class="row"><button class="btn primary" id="org-ai-run">זיהוי תהליכים</button><label class="row small" style="gap:6px"><input type="checkbox" id="org-ai-append" checked> להוסיף לטבלה הקיימת</label><span class="note" id="org-ai-status"></span></div>
-    </details>
-
-    <div class="grid2" style="align-items:end">
-      <div class="depts" id="org-depts" role="group" aria-label="סינון לפי מחלקה"></div>
-      <div class="row" style="justify-content:flex-end"><label class="label" for="org-cost">עלות שעת עבודה ממוצעת (₪)</label><input id="org-cost" class="inp mono" type="number" min="0" value="70" style="width:90px"></div>
-    </div>
-    <div class="tbl-scroll"><table class="orgtbl" id="org-tbl"></table></div>
-    <div class="formula" id="org-formula"></div>
-
-    <div id="org-out"></div>
-  </section>
-
   <footer>
     <span>רנטגן למוקד · נבנה על ידי איליה נודלמן</span>
     <span>נתוני הדוגמה בדויים. המספרים הם הערכות מתוך המקורות שנותחו, לא התחייבות.</span>
@@ -658,6 +737,12 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 </main>
 </div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="tour" id="tour" hidden role="dialog" aria-labelledby="tour-t" aria-describedby="tour-d">
+  <div class="tour-top"><span class="tour-n" id="tour-n"></span><button type="button" class="tour-x" id="tour-skip" aria-label="סגירת הסיור">×</button></div>
+  <h3 id="tour-t"></h3><p id="tour-d"></p>
+  <div class="tour-dots" id="tour-dots"></div>
+  <div class="row" style="justify-content:space-between"><button class="btn sm ghost" id="tour-prev" type="button">הקודם</button><button class="btn sm primary" id="tour-next" type="button">הבא</button></div>
+</div>
 
 <script>
 /* ================= demo data (fictional) ================= */
@@ -840,8 +925,8 @@ function renderPii(){
 }
 
 /* ================= money ================= */
-function roi(o){ const p = profile(), calls = p.calls * (+o.affected_calls_pct || 0) / 100, hrs = calls * (+o.seconds_saved_per_call || 0) / 3600; return { hrs, ils: hrs * p.cost, calls }; }
-function totals(a){ let hrs = 0, ils = 0; (a.opportunities||[]).forEach(o => { const r = roi(o); hrs += r.hrs; ils += r.ils; }); const p = profile(), totalHrs = p.calls * p.aht / 60; return { hrs, ils, share: totalHrs ? hrs / totalHrs : 0, fte: hrs / 182 }; }
+function roi(o, p = profile()){ const calls = p.calls * (+o.affected_calls_pct || 0) / 100, hrs = calls * (+o.seconds_saved_per_call || 0) / 3600; return { hrs, ils: hrs * p.cost, calls }; }
+function totals(a, p = profile()){ let hrs = 0, ils = 0; (a.opportunities||[]).forEach(o => { const r = roi(o, p); hrs += r.hrs; ils += r.ils; }); const totalHrs = p.calls * p.aht / 60; return { hrs, ils, share: totalHrs ? hrs / totalHrs : 0, fte: hrs / 182 }; }
 const ils = v => '₪' + nf.format(Math.round(v));
 /* savings scenarios: the model estimate is the optimistic bound; overlap between opportunities and partial adoption pull it down */
 const SCEN = { p: .4, r: .7, o: 1 };
@@ -859,14 +944,14 @@ function addSource(name, text, kind){
   state.sources.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name: name || 'מקור ללא שם', text, kind });
   renderSources(); saveLocal(); return true;
 }
-const KIND = { paste:'טקסט', file:'קובץ', drive:'Drive', demo:'דמו' };
+const KIND = { paste:'טקסט', file:'קובץ', drive:'Drive', demo:'דמו', audio:'הקלטה' };
 function renderSources(){
   const n = totalChars();
   $('src-size').textContent = `${nf.format(n)} / ${nf.format(MAX_CHARS)} תווים`;
   $('src-meter').style.width = Math.min(100, n / MAX_CHARS * 100) + '%';
   $('src-meter').style.background = n > MAX_CHARS ? 'var(--amber)' : 'var(--accent)';
   $('src-list').innerHTML = state.sources.length ? state.sources.map(s => `
-    <div class="src"><span class="chip ${s.kind==='drive'?'acc':s.kind==='demo'?'vio':''}">${KIND[s.kind]||''}</span>
+    <div class="src"><span class="chip ${s.kind==='drive'?'acc':s.kind==='demo'?'vio':s.kind==='audio'?'au':''}">${KIND[s.kind]||''}</span>
     <span class="name" title="${esc(s.name)}">${esc(s.name)}</span>
     <span class="size mono small muted">${nf.format(s.text.length)}</span>
     <button data-del="${s.id}" aria-label="הסרת ${esc(s.name)}">הסרה</button></div>`).join('')
@@ -883,7 +968,8 @@ document.querySelectorAll('.src-tabs button').forEach(b => b.onclick = () => {
 $('add-paste').onclick = () => { if(addSource($('paste-name').value.trim() || 'טקסט שהודבק', $('paste-text').value, 'paste')){ $('paste-text').value=''; $('paste-name').value=''; } };
 $('load-demo').onclick = () => { state.sources = state.sources.filter(s => s.kind !== 'demo'); DEMO_SOURCES.forEach(s => addSource(s.name, s.text, 'demo')); };
 $('clear-src').onclick = () => { state.sources = []; renderSources(); saveLocal(); };
-function readFiles(files){ [...files].forEach(f => { if(f.size > 3e6) return; const r = new FileReader(); r.onload = () => addSource(f.name, r.result, 'file'); r.readAsText(f); }); }
+function cleanCaptions(t){ return String(t).replace(/^WEBVTT.*$/m,'').split(/\r?\n/).filter(l => l.trim() && !/^\d+$/.test(l.trim()) && !/-->/.test(l) && !/^NOTE\b/.test(l)).map(l => l.replace(/<[^>]+>/g,'').trim()).join('\n'); }
+function readFiles(files){ [...files].forEach(f => { if(f.size > 3e6) return; const r = new FileReader(); r.onload = () => { const cap = /\.(vtt|srt)$/i.test(f.name); addSource(f.name + (cap ? ' (כתוביות)' : ''), cap ? cleanCaptions(r.result) : r.result, 'file'); }; r.readAsText(f); }); }
 $('file-in').onchange = e => readFiles(e.target.files);
 const drop = $('drop');
 ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
@@ -1463,7 +1549,7 @@ const ORG_DEMO = [
 let org = { rows: [], dept: 'הכול', isDemo: true };
 const n01 = x => (Math.min(5, Math.max(1, +x || 1)) - 1) / 4;
 const clamp01 = x => Math.max(0, Math.min(1, x));
-function scoreRow(r){
+function scoreRow(r, cost = +$('org-cost').value || 0){
   const rep = n01(r.rep), rule = n01(r.rule), lang = n01(r.lang), data = n01(r.data), judg = n01(r.judg), risk = n01(r.risk);
   const autoFit = clamp01(.35*rep + .35*rule + .3*data - .3*judg);
   const genFit  = clamp01(.4*lang + .3*rep + .3*data - .15*judg);
@@ -1477,7 +1563,7 @@ function scoreRow(r){
   const feas = Math.round(100 * best * (1 - .35*risk) * (type === 'data' ? .5 : 1));
   const hours = (+r.vol || 0) * (+r.min || 0) / 60;
   const savedH = hours * REC[type].share * best;
-  return { autoFit, genFit, type, feas, hours, savedH, ils: savedH * (+$('org-cost').value || 0) };
+  return { autoFit, genFit, type, feas, hours, savedH, ils: savedH * cost };
 }
 function orgScored(){ return org.rows.map((r, i) => ({ r, i, s: scoreRow(r) })); }
 function quadrant(x, med){ const hi = x.s.ils >= med; return x.s.feas >= 65 ? (hi ? 'start' : 'quick') : (hi ? 'strategic' : 'later'); }
@@ -1642,6 +1728,155 @@ function addOppsToOrg(idx){
   return added;
 }
 
+
+/* ================= audio transcription (standalone only) ================= */
+const STT = { openai: { url:'https://api.openai.com/v1/audio/transcriptions', model:'whisper-1' }, groq: { url:'https://api.groq.com/openai/v1/audio/transcriptions', model:'whisper-large-v3' } };
+let stt = { key: '', provider: 'openai' };
+function audioReady(){ return !INSIDE_CLAUDE; }
+async function transcribe(file){
+  const cfg = STT[stt.provider] || STT.openai, fd = new FormData();
+  fd.append('file', file, file.name); fd.append('model', cfg.model); fd.append('language', 'he'); fd.append('response_format', 'text');
+  let r; try{ r = await fetch(cfg.url, { method:'POST', headers:{ Authorization: 'Bearer ' + stt.key }, body: fd }); }catch(e){ throw {code:'net'}; }
+  if(!r.ok) throw {code: r.status === 401 ? 'key' : r.status === 413 ? 'big' : r.status === 429 ? 'rate' : 'up'};
+  const t = await r.text(); try{ const j = JSON.parse(t); return j.text || t; }catch(e){ return t; }
+}
+const STT_ERR = { key:'מפתח התמלול לא תקין.', big:'הקובץ גדול מדי לשירות (עד 25MB).', rate:'הגעתם למגבלת השירות. נסו שוב בעוד דקה.', net:'השירות לא נגיש מהדפדפן הזה.', up:'התמלול נכשל. נסו שוב.' };
+async function handleAudio(files){
+  const st = $('audio-status'), list = $('audio-list');
+  if(!audioReady()){ st.textContent = 'בתוך Claude הדף לא יכול לשלוח קבצי שמע לשירות תמלול. השתמשו בגרסת GitHub Pages, בסקריפט המקומי, או בקובצי VTT/SRT.'; return; }
+  if(!stt.key){ st.textContent = 'הזינו קודם מפתח לשירות התמלול.'; $('stt-key').focus(); return; }
+  for(const f of [...files]){
+    if(f.size > 25e6){ toast(`${f.name}: גדול מ-25MB`, 'err'); continue; }
+    const row = document.createElement('div'); row.className = 'src'; row.innerHTML = `<span class="chip au">הקלטה</span><span class="name"></span><span class="size mono small muted">מתמלל…</span><span></span>`; row.querySelector('.name').textContent = f.name; list.append(row);
+    try{ const text = await transcribe(f); addSource(f.name + ' (תמלול)', text, 'audio'); row.querySelector('.size').textContent = nf.format(text.length) + ' תווים ✓'; toast('התמלול נוסף למקורות'); }
+    catch(e){ row.querySelector('.size').textContent = 'נכשל'; st.textContent = STT_ERR[e.code] || STT_ERR.up; }
+  }
+}
+$('audio-in').onchange = e => handleAudio(e.target.files);
+(() => { const d = $('audio-drop'); ['dragenter','dragover'].forEach(ev => d.addEventListener(ev, e => { e.preventDefault(); d.classList.add('over'); })); ['dragleave','drop'].forEach(ev => d.addEventListener(ev, e => { e.preventDefault(); d.classList.remove('over'); })); d.addEventListener('drop', e => handleAudio(e.dataTransfer.files)); })();
+$('stt-save').onclick = () => { stt.key = $('stt-key').value.trim(); stt.provider = $('stt-provider').value; ssSet('xray-stt-key', stt.key); ssSet('xray-stt-provider', stt.provider); toast('מפתח התמלול נשמר ללשונית הזו'); };
+
+/* ================= saved analyses & comparison ================= */
+function projGet(){ try{ return JSON.parse(localStorage.getItem('xray-projects') || '[]'); }catch(e){ return []; } }
+function projSet(list){ try{ localStorage.setItem('xray-projects', JSON.stringify(list)); return true; }catch(e){ toast('לא ניתן לשמור בדפדפן הזה', 'err'); return false; } }
+let projSel = [];
+function snapshot(name){ return { id: Date.now().toString(36), name: name || ('ניתוח ' + new Date().toLocaleDateString('he-IL')), date: new Date().toISOString(), profile: profile(), analysis: state.analysis, sent: state.sent, isDemo: state.isDemo, org: { rows: org.rows, cost: +$('org-cost').value || 0, isDemo: org.isDemo } }; }
+function metrics(sn){
+  const a = sn.analysis, p = sn.profile, t = totals(a, p), v = (() => { const keep = state.sent; state.sent = sn.sent || (sn.isDemo ? demoSent() : null); const r = verifyAll(a); state.sent = keep; return r; })();
+  const orgRows = (sn.org && sn.org.rows) || [], cost = (sn.org && sn.org.cost) || 0;
+  const orgIls = orgRows.reduce((n, r) => n + scoreRow(r, cost).ils, 0);
+  return [
+    ['חיסכון במוקד, תרחיש סביר', t.ils * SCEN.r, 'ils', 1],
+    ['דקות בתהליך המרכזי, היום', sumSec(a.process.steps), 'clock', -1],
+    ['דקות בתהליך, אחרי', sumSec(a.to_be.steps), 'clock', -1],
+    ['הזדמנויות שזוהו', a.opportunities.length, 'n', 1],
+    ['ציטוטים שאומתו', v.total ? Math.round(v.ok / v.total * 100) : 0, 'pct', 1],
+    ['סנטימנט שלילי', +a.sentiment.negative_pct || 0, 'pct', -1],
+    ['תהליכים במפת הארגון', orgRows.length, 'n', 0],
+    ['חיסכון ארגוני, תרחיש סביר', orgIls * SCEN.r, 'ils', 1]
+  ];
+}
+const fmtM = (v, k) => k === 'ils' ? ils(v) : k === 'clock' ? clock(v) : k === 'pct' ? Math.round(v) + '%' : nf.format(v);
+function renderProjects(){
+  const list = projGet();
+  projSel = projSel.filter(id => list.some(p => p.id === id));
+  $('proj-list').innerHTML = list.length ? `<div class="tbl-wrap"><table class="t proj-tbl"><thead><tr><th>השוואה</th><th>שם</th><th>תאריך</th><th>סוג</th><th>חיסכון סביר במוקד</th><th>תהליכים במפה</th><th></th></tr></thead><tbody>${list.map(p => { const m = metrics(p); return `<tr><td><input type="checkbox" data-sel="${p.id}" ${projSel.includes(p.id)?'checked':''} aria-label="בחירה להשוואה"></td><td><b>${esc(p.name)}</b>${p.isDemo ? ' <span class="chip vio">דוגמה</span>' : ''}</td><td class="num">${new Date(p.date).toLocaleString('he-IL',{dateStyle:'short',timeStyle:'short'})}</td><td>${esc(p.profile.type)}</td><td class="num">${ils(m[0][1])}</td><td class="num">${m[6][1]}</td><td><div class="row"><button class="btn sm" data-load="${p.id}">טעינה</button><button class="btn sm ghost danger" data-pdel="${p.id}">מחיקה</button></div></td></tr>`; }).join('')}</tbody></table></div>` : '<div class="msg">עדיין אין ניתוחים שמורים. תנו שם ולחצו "שמירת המצב הנוכחי".</div>';
+  $('proj-list').querySelectorAll('[data-sel]').forEach(c => c.onchange = () => { projSel = c.checked ? [...projSel.filter(x => x !== c.dataset.sel), c.dataset.sel].slice(-2) : projSel.filter(x => x !== c.dataset.sel); renderProjects(); });
+  $('proj-list').querySelectorAll('[data-load]').forEach(b => b.onclick = () => loadProject(b.dataset.load));
+  $('proj-list').querySelectorAll('[data-pdel]').forEach(b => b.onclick = () => { projSet(projGet().filter(p => p.id !== b.dataset.pdel)); renderProjects(); toast('הניתוח נמחק'); });
+  const sel = projSel.map(id => list.find(p => p.id === id)).filter(Boolean).sort((x, y) => new Date(x.date) - new Date(y.date) || (x.id < y.id ? -1 : 1));
+  if(sel.length < 2){ $('proj-compare').innerHTML = list.length > 1 ? '<p class="note">סמנו שני ניתוחים כדי להשוות ביניהם.</p>' : ''; return; }
+  const [A, B] = sel, ma = metrics(A), mb = metrics(B);
+  $('proj-compare').innerHTML = `<div style="display:grid;gap:8px"><h3>השוואה: ${esc(A.name)} מול ${esc(B.name)}</h3><div class="tbl-wrap"><table class="t cmp"><thead><tr><th>מדד</th><th>${esc(A.name)}</th><th>${esc(B.name)}</th><th>שינוי</th></tr></thead><tbody>${ma.map((m, i) => { const a = m[1], b = mb[i][1], d = b - a, good = m[3] === 0 || d === 0 ? '' : (d * m[3] > 0 ? 'up' : 'down'); const dt = d === 0 ? '—' : (d > 0 ? '+' : '−') + fmtM(Math.abs(d), m[2]) + (a ? ` (${d > 0 ? '+' : '−'}${Math.abs(Math.round(d / a * 100))}%)` : ''); return `<tr><td>${m[0]}</td><td class="num">${fmtM(a, m[2])}</td><td class="num">${fmtM(b, m[2])}</td><td class="num ${good}">${dt}</td></tr>`; }).join('')}</tbody></table></div><p class="note">ירוק = שינוי לטובה. כדי למדוד פיילוט: שומרים ניתוח לפני, מריצים ניתוח על שיחות מאחרי הפיילוט, ומשווים.</p></div>`;
+}
+function loadProject(id){
+  const p = projGet().find(x => x.id === id); if(!p) return;
+  for(const k of ['type','calls','aht','cost','agents']) if(p.profile[k] != null) $('p-'+k).value = p.profile[k];
+  state.analysis = p.analysis; state.sent = p.sent || null; state.isDemo = !!p.isDemo; state.when = p.date; state.chat = [];
+  if(p.org){ org.rows = p.org.rows || []; org.isDemo = !!p.org.isDemo; if(p.org.cost) $('org-cost').value = p.org.cost; saveOrg(); }
+  saveLocal(); renderResults(); renderOrg(); toast(`נטען: ${p.name}`);
+  $('s-results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+$('proj-form').addEventListener('submit', e => { e.preventDefault(); const list = projGet(); list.unshift(snapshot($('proj-name').value.trim())); if(projSet(list.slice(0, 30))){ $('proj-name').value = ''; renderProjects(); toast('הניתוח נשמר'); } });
+$('proj-export').onclick = () => save(`ניתוחים-שמורים-${stamp()}.json`, JSON.stringify(projGet(), null, 2), $('deck-status'), 'application/json');
+$('proj-import').onchange = e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = () => { try{ const inc = JSON.parse(String(r.result)); if(!Array.isArray(inc)) throw 0; const have = projGet(), ids = new Set(have.map(p => p.id)); const add = inc.filter(p => p && p.id && p.analysis && !ids.has(p.id)); projSet([...add, ...have].slice(0, 30)); renderProjects(); toast(`יובאו ${add.length} ניתוחים`); }catch(err){ toast('הקובץ לא בפורמט הנכון', 'err'); } }; r.readAsText(f); };
+
+/* ================= combined deck (call center + organization) ================= */
+function deckReport(){
+  const a = state.analysis, p = profile(), t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  const ol = orgScored(), vals = ol.map(x => x.s.ils).sort((x, y) => x - y), med = vals[Math.floor(vals.length / 2)] || 0;
+  const orgTot = ol.reduce((n, x) => n + x.s.ils, 0), q = {start:[], quick:[], strategic:[], later:[]}; ol.forEach(x => q[quadrant(x, med)].push(x));
+  const topCall = [...a.opportunities].sort((x, y) => roi(y).ils - roi(x).ils).slice(0, 3);
+  const topOrg = [...ol].sort((x, y) => y.s.ils * (y.s.feas / 100) - x.s.ils * (x.s.feas / 100)).slice(0, 3);
+  const byDept = {}; ol.forEach(x => byDept[x.r.dept] = (byDept[x.r.dept] || 0) + x.s.ils); const depts = Object.entries(byDept).sort((x, y) => y[1] - x[1]).slice(0, 6), maxD = Math.max(1, ...depts.map(d => d[1]));
+  const maxI = Math.max(1, ...a.intents.map(i => +i.share_pct || 0));
+  const quote = o => { const ev = arr(o.evidence).find(e => findQuote(e)); return ev ? `<blockquote>"${esc(ev.quote)}"</blockquote>` : ''; };
+  const demo = state.isDemo || org.isDemo;
+  const list = (arr2) => arr2.sort((x, y) => y.s.ils - x.s.ils).slice(0, 5).map(x => `<li>${esc(x.r.name)} <span>${esc(x.r.dept)}</span></li>`).join('') || '<li><span>אין תהליכים בגל הזה</span></li>';
+  const slides = [
+    `<section class="cover"><div class="tag">תוכנית הטמעת AI${demo ? ' · נתוני דוגמה' : ''}</div><h1>מה באמת קורה בשיחות,<br><em>ואיפה AI יחסוך הכי הרבה</em></h1><p>${esc(p.type)} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים · ${ol.length} תהליכים ממופים בארגון</p><div class="foot">הוכן בכלי "רנטגן למוקד" · ${new Date().toLocaleDateString('he-IL')}</div></section>`,
+    `<section><h2>התמונה בקצרה</h2><div class="kpis"><div class="k g"><b>${ils(t.ils * SCEN.r)}</b><span>חיסכון חודשי במוקד, תרחיש סביר</span><small>${rng(t.ils)}</small></div><div class="k g"><b>${ils(orgTot * SCEN.r)}</b><span>חיסכון חודשי בשאר הארגון, תרחיש סביר</span><small>${rng(orgTot)}</small></div><div class="k"><b>${af ? clock(b) + ' ← ' + clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div><p class="lead">${esc(a.summary)}</p></section>`,
+    `<section><h2>מה קורה במוקד</h2><div class="two"><div><h3>למה מתקשרים</h3>${a.intents.map(i => `<div class="bar"><span>${esc(i.name)}</span><i style="width:${(+i.share_pct || 0) / maxI * 100}%"></i><em>${esc(i.share_pct)}%</em></div>`).join('')}</div><div><h3>חריגות מנוהל</h3><ul>${a.compliance.slice(0, 3).map(c => `<li><b>${esc(c.issue)}</b> <span>חומרה ${esc(c.severity)} · ${esc(c.count || '')}</span></li>`).join('')}</ul><h3>שאלות שחוזרות</h3><ul>${a.repeated_questions.slice(0, 3).map(r => `<li>"${esc(r.q)}" <span>${esc(r.count)} פעמים · ${r.has_procedure ? 'יש נוהל' : 'אין נוהל'}</span></li>`).join('')}</ul></div></div></section>`,
+    `<section><h2>שלוש ההזדמנויות המובילות במוקד</h2>${af ? `<div class="ba"><div><span>היום</span><i style="width:100%;background:#B86E00"></i><em>${clock(b)}</em></div><div><span>אחרי</span><i style="width:${Math.round(af / b * 100)}%;background:#1D7A4D"></i><em>${clock(af)}</em></div></div>` : ''}<div class="cards">${topCall.map((o, k) => `<div class="card"><small>${k + 1} · ${esc(o.category || '')}</small><b>${esc(o.title)}</b><p>${esc(o.description)}</p>${quote(o)}<strong>${roi(o).ils ? rng(roi(o).ils) + ' בחודש' : esc(o.roi_note || '')}</strong></div>`).join('')}</div></section>`,
+    `<section><h2>מפת AI לארגון: איפה להתחיל</h2><div class="two"><div class="cards col">${topOrg.map((x, k) => `<div class="card"><small>${k + 1} · ${esc(x.r.dept)}</small><b>${esc(x.r.name)}</b><p>${REC[x.s.type].label} · היתכנות ${x.s.feas}/100</p><strong>${rng(x.s.ils)} בחודש</strong></div>`).join('')}</div><div><h3>פוטנציאל לפי מחלקה</h3>${depts.map(([d, val]) => `<div class="bar"><span>${esc(d)}</span><i style="width:${val / maxD * 100}%;background:#5B4DB0"></i><em>${ils(val * SCEN.r)}</em></div>`).join('')}</div></div></section>`,
+    `<section><h2>תוכנית בשלושה גלים</h2><div class="waves"><div><h3>גל 1 · 0–3 חודשים</h3><ul>${list([...q.start, ...q.quick])}</ul></div><div><h3>גל 2 · 3–6 חודשים</h3><ul>${list(q.strategic)}</ul></div><div><h3>גל 3 · אחרי זה</h3><ul>${list(q.later)}</ul></div></div>${a.pilot ? `<div class="pilot"><b>פיילוט ראשון במוקד: ${esc(a.pilot.title)}</b><span>${arr(a.pilot.weeks).map(w => `${esc(w.week)}: ${esc(w.goal)}`).join(' · ')}</span><span><b>מדד הצלחה:</b> ${esc(a.pilot.success_metric)}</span></div>` : ''}</section>`,
+    `<section><h2>הנחות ושקיפות</h2><ul class="assume"><li><b>שלושה תרחישים:</b> אופטימי = הערכת המודל המלאה; סביר = 70% ממנה; פסימי = 40%. ההזדמנויות חופפות בחלקן והאימוץ לא מלא.</li><li><b>חיסכון במוקד:</b> שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעת נציג (₪${p.cost}).</li><li><b>מפת הארגון:</b> ציון היתכנות מנוסחה גלויה של שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), עלות שעה ₪${+$('org-cost').value || 0}.</li><li><b>ראיות:</b> כל ממצא במוקד מגובה בציטוט שנבדק אוטומטית מול טקסט המקור (${v.ok} מתוך ${v.total} אומתו).</li><li><b>פרטיות:</b> ת.ז, טלפונים, כרטיסי אשראי, מיילים ושמות הוסתרו בדפדפן לפני שהטקסט נשלח לניתוח.</li>${a.data_gaps.length ? `<li><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</li>` : ''}</ul></section>`
+  ];
+  return `<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>תוכנית הטמעת AI · מצגת</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&display=swap">
+<style>@page{size:1280px 720px;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#0A1520;font-family:Assistant,Arial,sans-serif;color:#122033}
+.deck{height:100vh;overflow-y:auto;scroll-snap-type:y mandatory}
+section{scroll-snap-align:start;width:min(1280px,100vw);aspect-ratio:16/9;max-height:100vh;margin:0 auto;background:#fff;padding:56px 64px;display:flex;flex-direction:column;gap:22px;position:relative;overflow:hidden;page-break-after:always;border-bottom:1px solid #0A1520}
+section::after{content:attr(data-n);position:absolute;bottom:22px;left:32px;font-size:13px;color:#8796A6;font-family:monospace}
+h1,h2,h3{font-family:Rubik,Arial,sans-serif;margin:0}h2{font-size:34px;color:#0A1520}h2::before{content:"";display:block;width:48px;height:5px;border-radius:3px;background:#0B6E8A;margin-bottom:14px}h3{font-size:18px;color:#0B6E8A;margin:4px 0 10px}
+.cover{background:radial-gradient(60% 90% at 10% 20%,rgba(79,184,212,.3),transparent 60%),#0A1520;color:#E8F1F8;justify-content:center}
+.cover .tag{color:#7FD3E6;font-weight:700;letter-spacing:.06em}.cover h1{font-size:58px;line-height:1.1;color:#fff}.cover h1 em{font-style:normal;color:#7FD3E6}.cover p{font-size:20px;color:#B6C6D5;margin:0}.cover .foot{position:absolute;bottom:40px;color:#9FB2C3}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.k{border:1px solid #D3DCE3;border-radius:16px;padding:18px;display:grid;gap:4px}.k b{font-family:Rubik,sans-serif;font-size:30px}.k.g b{color:#1D7A4D}.k span{font-size:14px;color:#5A6878}.k small{font-size:13px;color:#1D7A4D}
+.lead{font-size:21px;line-height:1.55;margin:0;max-width:1000px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1}
+.bar{display:grid;grid-template-columns:9em 1fr 4.5em;gap:12px;align-items:center;margin:8px 0;font-size:16px}.bar i{display:block;height:16px;border-radius:5px;background:#0B6E8A}.bar em{font-style:normal;color:#5A6878;font-family:monospace}
+ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}li{font-size:16px}li span{color:#5A6878;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.cards.col{grid-template-columns:1fr}.card{border:1px solid #D3DCE3;border-radius:16px;padding:16px;display:grid;gap:6px;align-content:start}.card small{color:#0B6E8A;font-weight:700}.card b{font-size:18px}.card p{margin:0;color:#394758;font-size:14.5px}.card strong{color:#1D7A4D;font-family:Rubik,sans-serif}
+blockquote{margin:0;padding:6px 12px;border-right:3px solid #1D7A4D;background:#F4F7F9;font-size:13.5px;color:#394758}
+.ba{display:grid;gap:8px;max-width:760px}.ba div{display:grid;grid-template-columns:4em 1fr 4.5em;gap:12px;align-items:center}.ba i{display:block;height:14px;border-radius:5px}.ba em{font-style:normal;font-family:monospace}
+.waves{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.waves>div{background:#F4F7F9;border-radius:16px;padding:16px}.waves li{background:#fff;border:1px solid #E3E9EE;border-radius:10px;padding:8px 10px;display:grid}
+.pilot{display:grid;gap:4px;padding:14px 18px;border-radius:14px;background:#DDF1E5;font-size:15px}
+.assume li{font-size:17px;line-height:1.5}
+.nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(10,21,32,.85);color:#fff;border-radius:999px;padding:6px 14px;font-size:13px}
+@media print{.deck{height:auto;overflow:visible}.nav{display:none}section{width:1280px;max-height:none}}
+@media (max-width:900px){section{aspect-ratio:auto;min-height:100vh;padding:28px 20px}.kpis,.cards,.waves,.two{grid-template-columns:1fr}.cover h1{font-size:36px}h2{font-size:26px}}
+</style></head><body><div class="deck" id="deck">${slides.map((sl, i) => sl.replace('<section', `<section data-n="${i + 1} / ${slides.length}"`)).join('')}</div><div class="nav">חצים או גלילה למעבר בין שקפים · Ctrl+P להדפסה ל-PDF</div>
+<script>const d=document.getElementById('deck'),ss=[...d.querySelectorAll('section')];document.addEventListener('keydown',e=>{const i=ss.findIndex(s=>s.getBoundingClientRect().top>=-5);let k=i<0?0:i;if(['ArrowLeft','ArrowDown','PageDown',' '].includes(e.key))k=Math.min(ss.length-1,k+1);else if(['ArrowRight','ArrowUp','PageUp'].includes(e.key))k=Math.max(0,k-1);else return;e.preventDefault();ss[k].scrollIntoView({behavior:'smooth'});});<\/script></body></html>`;
+}
+$('dl-deck').onclick = () => save(`מצגת-הטמעת-AI-${stamp()}.html`, deckReport(), $('deck-status'), 'text/html');
+
+/* ================= guided tour ================= */
+const TOUR = [
+  { sel:'.side', t:'שני מסלולים, סרגל אחד', d:'כאן עוברים בין השלבים. המסלול הראשון מנתח שיחות מוקד, והשני ממפה איפה כדאי להטמיע AI בכל הארגון.' },
+  { sel:'.readout', t:'השורה התחתונה, תמיד מול העיניים', d:'טווח החיסכון בשלושה תרחישים, זמן התהליך לפני ואחרי, וכמה ממצאים אומתו מול המקור. כרגע מוצגים נתוני דוגמה.' },
+  { sel:'#s-sources', t:'1. מכניסים חומר', d:'מדביקים תמלולים, מעלים קבצים או הקלטות, או מייבאים מ-Drive. אין לכם חומר? "טעינת נתוני דוגמה".' },
+  { sel:'#s-run .shield', t:'2. פרטיות לפני הכול', d:'ת.ז, טלפונים, כרטיסי אשראי ושמות מוסתרים כאן, בדפדפן, לפני שמשהו יוצא. אפשר לראות בדיוק מה נשלח.' },
+  { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
+  { sel:'#s-org', t:'מפת AI לארגון', d:'מדרגים תהליכים בכל המחלקות בשישה מדדים. הכלי ממליץ על סוג פתרון ובונה תוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude ימפה.' },
+  { sel:'#s-projects', t:'שומרים ומשווים', d:'שומרים ניתוח בשם ומשווים בין שניים: לפני ואחרי פיילוט, או מוקד מול מוקד.' },
+  { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail. בסוף כל שלב יש "מה עכשיו?" שמכוון הלאה.' }
+];
+let tourI = -1;
+function tourShow(i){
+  document.querySelectorAll('.tour-hl').forEach(e => e.classList.remove('tour-hl'));
+  if(i < 0 || i >= TOUR.length){ $('tour').hidden = true; tourI = -1; try{ localStorage.setItem('xray-tour','done'); }catch(e){} return; }
+  tourI = i; const st = TOUR[i], el = document.querySelector(st.sel);
+  $('tour').hidden = false; $('tour-n').textContent = `${i+1} / ${TOUR.length}`; $('tour-t').textContent = st.t; $('tour-d').textContent = st.d;
+  $('tour-dots').innerHTML = TOUR.map((_, k) => `<i class="${k===i?'on':''}"></i>`).join('');
+  $('tour-prev').disabled = i === 0; $('tour-next').textContent = i === TOUR.length - 1 ? 'סיום' : 'הבא';
+  if(el){ el.classList.add('tour-hl'); if(!el.classList.contains('side') && !el.closest('.side')) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: el.offsetHeight > innerHeight * .7 ? 'start' : 'center' }); }
+}
+$('tour-next').onclick = () => tourShow(tourI + 1);
+$('tour-prev').onclick = () => tourShow(tourI - 1);
+$('tour-skip').onclick = () => tourShow(-1);
+$('tour-start').onclick = () => tourShow(0);
+document.addEventListener('keydown', e => { if(tourI >= 0 && e.key === 'Escape') tourShow(-1); });
+
 /* ================= nav & boot ================= */
 /* in-page links: scroll by script so they work inside the Claude viewer frame too */
 document.addEventListener('click', e => {
@@ -1652,7 +1887,7 @@ document.addEventListener('click', e => {
   el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   document.querySelectorAll('.side nav a').forEach(x => x.classList.toggle('on', x === a));
 });
-const secIds = ['s-sources','s-run','s-results','s-eval','s-export','s-org'];
+const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-projects','s-export'];
 if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
@@ -1665,7 +1900,10 @@ loadLocal();
 if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
 api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
 renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
-if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg();
+if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects();
+stt.key = ssGet('xray-stt-key'); stt.provider = ssGet('xray-stt-provider') || 'openai'; $('stt-provider').value = stt.provider; if(stt.key) $('stt-key').value = stt.key;
+if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 'בתוך Claude אין אפשרות לשלוח שמע לשירות תמלול. ראו את שלוש הדרכים משמאל.'; }
+(() => { let seen = ''; try{ seen = localStorage.getItem('xray-tour') || ''; }catch(e){ seen = 'done'; } if(!seen) setTimeout(() => tourShow(0), 900); })();
 if(!INSIDE_CLAUDE){ $('keybox').hidden = false; $('tab-drive').hidden = true; }
 else (async () => {
   const [s, m, d] = await Promise.all(['sample','mcp','downloads'].map(n => window.claude.use(n).catch(() => null)));
