@@ -192,7 +192,7 @@ test.describe('organization AI map', () => {
 
   test('three-wave plan and department bars are rendered', async ({ page }) => {
     await open(page);
-    await expect(page.locator('.waves .wave')).toHaveCount(3);
+    await expect(page.locator('#org-out .waves .wave')).toHaveCount(3);
     await expect(page.locator('#org-out .bars .bar')).toHaveCount(7);
   });
 });
@@ -230,12 +230,15 @@ test.describe('screens', () => {
 
   test('sidebar lists every step and switches screens', async ({ page }) => {
     await open(page, { screens: true });
-    await expect(page.locator('.side nav a')).toHaveCount(11); // overview + 10 steps
+    await expect(page.locator('.side nav a')).toHaveCount(13); // overview + 10 steps + discovery + knowledge
     await page.click('.side nav a[href="#s-org"]');
     await expect(page.locator('#s-org')).toBeVisible();
     await expect(page.locator('#overview')).toBeHidden();
     await expect(page.locator('.side nav a[href="#s-org"]')).toHaveClass(/on/);
     await expect(page.locator('#tb-title')).toHaveText('מפת AI לארגון');
+    await expect(page.locator('#subnav a')).toHaveCount(2); // map + process discovery
+    await page.click('.side nav a[href="#s-kb"]');
+    await expect(page.locator('#s-kb')).toBeVisible();
     await expect(page.locator('#subnav')).toBeHidden();
   });
 
@@ -281,8 +284,8 @@ test.describe('guidance', () => {
     await open(page, { tour: true, screens: true });
     const tour = page.locator('#tour');
     await expect(tour).toBeVisible();
-    await expect(page.locator('#tour-n')).toHaveText('1 / 11');
-    for (let i = 0; i < 10; i++) await page.click('#tour-next');
+    await expect(page.locator('#tour-n')).toHaveText('1 / 13');
+    for (let i = 0; i < 12; i++) await page.click('#tour-next');
     await expect(page.locator('#tour-next')).toHaveText('סיום');
     await expect(page.locator('#s-export')).toHaveClass(/tour-hl/);
     await expect(page.locator('#s-export')).toBeVisible(); // the tour opens each step's screen
@@ -297,7 +300,7 @@ test.describe('guidance', () => {
 
   test('every step ends with a "what now" link to the next step', async ({ page }) => {
     await open(page, { screens: true });
-    await expect(page.locator('.nextbar')).toHaveCount(9);
+    await expect(page.locator('.nextbar')).toHaveCount(11);
     await page.evaluate(() => go('s-results'));
     await page.click('#s-results .nextbar a');
     await expect(page.locator('#s-eval')).toBeVisible();
@@ -656,13 +659,13 @@ test.describe('overview story', () => {
     await open(page, { screens: true });
     await page.evaluate(() => { document.getElementById('p-calls').value = '24000'; document.getElementById('p-calls').dispatchEvent(new Event('input')); insSave([{ title: 'שלי', detail: 'x', severity: 'low', area: 'org', at: new Date().toISOString() }]); });
     await page.check('#iv-mode');
-    await expect(page.locator('#iv-banner')).toContainText('מצב ראיון');
+    await expect(page.locator('#iv-banner')).toContainText('נתונים סינתטיים · מצב דמו');
     await expect(page.locator('#p-calls')).toHaveValue('18000');
     await expect(page.locator('#ov-ins .i')).toHaveCount(3);
     await page.reload();
     await expect(page.locator('#iv-mode')).toBeChecked(); // remembered
     await page.uncheck('#iv-mode');
-    await expect(page.locator('#iv-banner')).toBeEmpty();
+    await expect(page.locator('#iv-banner')).not.toContainText('מצב דמו');
     await expect(page.locator('#p-calls')).toHaveValue('24000');
     await expect(page.locator('#ov-ins')).toContainText('שלי');
   });
@@ -703,3 +706,245 @@ test.describe('audit regressions', () => {
   });
 });
 
+
+test.describe('process discovery and tool stack', () => {
+  test('each process shows as-is / to-be, a recommendation and a 7-layer stack', async ({ page }) => {
+    await open(page);
+    const procs = page.locator('#disc-list .proc');
+    await expect(procs).toHaveCount(6);
+    await expect(page.locator('#disc-status')).toContainText('נתונים סינתטיים');
+    const first = procs.first();
+    await expect(first.locator('.asis ol')).toHaveCount(2);
+    await expect(first.locator('.rec')).toBeVisible();
+    await expect(first.locator('.tstack tbody tr')).toHaveCount(7);
+    for (const layer of ['תזמור', 'סוכן / LLM', 'ידע', 'ערוצים', 'מערכות ליבה', 'זהות ואבטחה', 'מדידה']) await expect(first.locator('.tstack')).toContainText(layer);
+    await expect(first.locator('.tool.demo').first()).toContainText('נתמך בדמו');
+    await expect(first.locator('.tool.plan').first()).toContainText('טיוטה / לתכנון');
+    await expect(first.locator('.tool .tg').first()).toContainText(/חובה|רשות/);
+  });
+
+  test('a data-first process gets no automation stack', async ({ page }) => {
+    await open(page);
+    const d6 = page.locator('#disc-list .proc[data-pid="d6"]');
+    await expect(d6).toContainText('קודם לסדר נתונים');
+    await expect(d6.locator('[data-proc-n8n]')).toBeDisabled();
+  });
+
+  test('run demo, add to the org map, open in governance', async ({ page }) => {
+    await open(page);
+    const first = page.locator('#disc-list .proc').first();
+    await first.locator('[data-proc-demo]').click();
+    await expect(page.locator('#modal')).toBeVisible();
+    await expect(page.locator('#modal-f')).toContainText('הדגמה סינתטית');
+    await expect(page.locator('#pd-out')).toBeVisible({ timeout: 5000 });
+    await page.click('#modal-x');
+    const rows = await page.locator('#org-tbl tbody tr').count();
+    await first.locator('[data-proc-map]').click();
+    await expect(page.locator('#org-tbl tbody tr')).toHaveCount(rows + 1);
+    await expect(page.locator('#disc-list .proc').first()).toContainText('במפת הארגון ✓');
+    await page.locator('#disc-list .proc').first().locator('[data-proc-gov]').click();
+    await expect(page.locator('#gov-tbl tr.hl')).toHaveCount(1);
+  });
+
+  test('n8n draft downloads a local template without an API key', async ({ page }) => {
+    await open(page);
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.locator('#disc-list .proc').first().locator('[data-proc-n8n]').click()]);
+    const wf = JSON.parse(require('fs').readFileSync(await dl.path(), 'utf8'));
+    expect(wf.name).toContain('טיוטה');
+    expect(wf.nodes.length).toBeGreaterThanOrEqual(3);
+    expect(Object.keys(wf.connections).length).toBe(wf.nodes.length - 1);
+  });
+});
+
+test.describe('knowledge hub', () => {
+  test('answers from the procedures with a clickable, verified citation', async ({ page }) => {
+    await open(page);
+    await page.fill('#kb-q', 'עד איזה סכום נציג יכול לזכות חיוב כפול בלי אישור?');
+    await page.click('#kb-ask');
+    const ans = page.locator('#kb-out .kb-ans');
+    await expect(ans).toContainText('150');
+    await expect(ans).toContainText('מבוסס מקור');
+    await ans.locator('.cite').first().click();
+    await expect(page.locator('#src-mark')).toContainText('150');
+    await expect(page.locator('#modal-f')).toContainText('הציטוט נמצא בנוהל');
+  });
+
+  test('refuses a question with no source in the corpus', async ({ page }) => {
+    await open(page);
+    await page.fill('#kb-q', 'מה שעות הפעילות של הסניף בחיפה?');
+    await page.click('#kb-ask');
+    await expect(page.locator('#kb-out .kb-ans.refused')).toContainText('סירוב');
+    await expect(page.locator('#kb-out .cite')).toHaveCount(0);
+  });
+
+  test('personal details in the question are masked before anything is sent', async ({ page }) => {
+    await open(page);
+    const bodies = await mockClaude(page, JSON.stringify({ refuse: false, answer: 'עד 150', citations: [{ id: 'kb3#2', quote: 'נציג רשאי לזכות חיוב כפול עד 150 ש"ח בלי אישור.' }] }));
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.fill('#kb-q', 'תעודת הזהות שלי 039337423, עד כמה מזכים חיוב כפול?');
+    await page.click('#kb-ask');
+    await expect(page.locator('#kb-out')).toContainText('פרטים מזהים הוסתרו');
+    await expect(page.locator('#kb-out .cite')).toHaveCount(1);
+    expect(JSON.stringify(bodies[0])).not.toContain('039337423');
+  });
+
+  test('a Claude citation that is not in the passage is rejected', async ({ page }) => {
+    await open(page);
+    await mockClaude(page, JSON.stringify({ refuse: false, answer: 'עד 500', citations: [{ id: 'kb3#2', quote: 'נציג רשאי לזכות עד 500 ש"ח' }] }));
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.fill('#kb-q', 'עד כמה נציג רשאי לזכות חיוב כפול?');
+    await page.click('#kb-ask');
+    await expect(page.locator('#kb-out .kb-ans.refused')).toBeVisible();
+    await expect(page.locator('#kb-out')).not.toContainText('500');
+  });
+
+  test('uploaded procedures are indexed and linked', async ({ page }) => {
+    await open(page);
+    await page.fill('#kb-dept', 'לוגיסטיקה');
+    await page.setInputFiles('#kb-file', { name: 'נוהל החזרות.txt', mimeType: 'text/plain', buffer: Buffer.from('החזרת מוצר אפשרית עד 14 ימים מיום המסירה, באריזה המקורית.\nזיכוי על החזרה מבוצע תוך 5 ימי עסקים.') });
+    await expect(page.locator('#kb-docs tbody tr')).toHaveCount(1); // uploading replaces the demo set
+    await expect(page.locator('#kb-status')).not.toContainText('סינתטיים');
+    await page.fill('#kb-q', 'תוך כמה ימים אפשר להחזיר מוצר?');
+    await page.click('#kb-ask');
+    await expect(page.locator('#kb-out .kb-ans')).toContainText('14 ימים');
+  });
+});
+
+test.describe('agents: discovery, tool stack, knowledge', () => {
+  const runDemo = async (page, id) => {
+    await page.click(`[data-agent-demo="${id}"]`);
+    const ask = page.locator('#ag-trace .ask button.primary');
+    for (let i = 0; i < 20; i++) {
+      if (await page.locator('#ag-stop').isHidden()) break;
+      if (await ask.count()) await ask.first().click(); else await page.waitForTimeout(250);
+    }
+    await expect(page.locator('#ag-trace')).toContainText('הסוכן סיים');
+  };
+
+  test('seven agents, each with a demo run', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('#ag-cards .agent')).toHaveCount(7);
+    await expect(page.locator('[data-agent-demo]')).toHaveCount(7);
+  });
+
+  test('knowledge agent links a procedure after approval, and undo restores it', async ({ page }) => {
+    await open(page);
+    expect(await page.evaluate(() => discItems().find((p) => p.id === 'd3').kb)).toBe('');
+    await runDemo(page, 'kb');
+    expect(await page.evaluate(() => discItems().find((p) => p.id === 'd3').kb)).toBe('kb5');
+    await expect(page.locator('#ag-insights')).toContainText('150');
+    await page.click('#ag-undo');
+    expect(await page.evaluate(() => discItems().find((p) => p.id === 'd3').kb)).toBe('');
+  });
+
+  test('a rejected action changes nothing', async ({ page }) => {
+    await open(page);
+    await page.click('[data-agent-demo="disc"]');
+    const no = page.locator('#ag-trace .ask button:not(.primary):not(.ghost)');
+    for (let i = 0; i < 20; i++) {
+      if (await page.locator('#ag-stop').isHidden()) break;
+      if (await no.count()) await no.first().click(); else await page.waitForTimeout(250);
+    }
+    expect(await page.evaluate(() => discItems().length)).toBe(6);
+    await expect(page.locator('#ag-undo')).toBeHidden();
+  });
+
+  test('discovery and stack agents change the lists', async ({ page }) => {
+    await open(page);
+    await runDemo(page, 'disc');
+    expect(await page.evaluate(() => discItems().some((p) => p.name === 'טיפול בבקשת ניתוק ושימור' && p.inMap))).toBe(true);
+    await runDemo(page, 'stack');
+    await expect(page.locator('#ag-insights')).toContainText('סדר בנייה');
+  });
+});
+
+test.describe('demo without an API', () => {
+  test('analysis, analyst chat, accuracy test and policy all answer locally', async ({ page }) => {
+    await open(page);
+    let calls = 0;
+    await page.route('https://api.anthropic.com/v1/messages', (r) => { calls++; r.abort(); });
+    await expect(page.locator('#iv-banner')).toContainText('אין חיבור ל-AI');
+    await page.click('#run-demo');
+    await expect(page.locator('#run-state')).toContainText('הרצת הדמו הושלמה', { timeout: 6000 });
+    await showAll(page);
+    await page.click('.rtabs [data-r="chat"]');
+    await page.fill('#chat-in', 'מה הסיכונים הכי גדולים בפיילוט?');
+    await page.click('#chat-send');
+    await expect(page.locator('#chat-log .bubble.a')).toContainText('תשובת דמו מקומית');
+    await page.click('#eval-demo');
+    await expect(page.locator('#eval-out')).toContainText('מסווג מקומי');
+    await page.click('#gov-policy');
+    await expect(page.locator('#gov-policy-out')).toContainText('טיוטת דמו מקומית');
+    expect(calls).toBe(0);
+  });
+
+  test('interview mode never calls Claude, even with a key', async ({ page }) => {
+    await open(page);
+    let calls = 0;
+    await page.route('https://api.anthropic.com/v1/messages', (r) => { calls++; r.abort(); });
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.check('#iv-mode');
+    await page.click('#run');
+    await expect(page.locator('#run-state')).toContainText('הרצת הדמו הושלמה', { timeout: 6000 });
+    await showAll(page);
+    await page.click('.rtabs [data-r="chat"]');
+    await page.fill('#chat-in', 'איך להציג למנהל בדקה?');
+    await page.click('#chat-send');
+    await expect(page.locator('#chat-log .bubble.a').last()).toContainText('תשובת דמו מקומית');
+    await page.click('[data-agent="gov"]');
+    await expect(page.locator('#ag-title')).toContainText('דמו');
+    expect(calls).toBe(0);
+  });
+
+  test('a failed live analysis offers the local demo', async ({ page }) => {
+    await open(page);
+    await page.route('https://api.anthropic.com/v1/messages', (r) => r.fulfill({ status: 500, body: '{}', headers: { 'access-control-allow-origin': '*' } }));
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    await page.click('#run');
+    const fb = page.locator('#run-state .fb');
+    await expect(fb).toBeVisible({ timeout: 15000 });
+    await fb.click();
+    await expect(page.locator('#run-state')).toContainText('הרצת הדמו הושלמה', { timeout: 6000 });
+  });
+
+  test('interview mode swaps discovery and knowledge to demo sets and restores them', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.evaluate(() => { kbSave({ docs: [], isDemo: false }); renderKb(); });
+    await page.check('#iv-mode');
+    expect(await page.evaluate(() => kbLoad().docs.length)).toBe(5);
+    await page.uncheck('#iv-mode');
+    expect(await page.evaluate(() => kbLoad().docs.length)).toBe(0);
+  });
+});
+
+test.describe('overview hooks and the interview tour', () => {
+  test('overview shows the top 3 processes, a knowledge badge and a governance alert', async ({ page }) => {
+    await open(page, { screens: true });
+    await expect(page.locator('#ov-procs .p3')).toHaveCount(3);
+    await expect(page.locator('#ov-procs')).toContainText('סינתטיים');
+    await expect(page.locator('#ov-kb')).toContainText('5 נהלים');
+    await expect(page.locator('#ov-govalert')).toBeVisible();
+    await page.click('#ov-kb');
+    await expect(page.locator('#s-kb')).toBeVisible();
+  });
+
+  test('3-minute interview tour runs in demo mode with a timer', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.check('#iv-mode');
+    await page.click('#iv-tour');
+    await expect(page.locator('#tour-n')).toHaveText('1 / 9');
+    await expect(page.locator('#tour-timer')).toHaveText(/^[23]:\d\d$/);
+    for (let i = 0; i < 3; i++) await page.click('#tour-next');
+    await expect(page.locator('#s-disc')).toBeVisible();
+    await expect(page.locator('#s-disc .proc').first()).toHaveClass(/tour-hl/);
+    for (let i = 0; i < 5; i++) await page.click('#tour-next');
+    await expect(page.locator('#tour-next')).toHaveText('סיום');
+    await page.click('#tour-next');
+    await expect(page.locator('#tour')).toBeHidden();
+    await expect(page.locator('#tour-timer')).toBeHidden();
+  });
+});

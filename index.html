@@ -723,6 +723,87 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 .kc{cursor:default}.kc.click{cursor:pointer}.kc.click:hover{border-color:var(--kc)}
 @media (max-width:1100px){ .hero h1{font-size:23px} }
 
+
+/* ===== v17: demo banner, process discovery, tool stack, knowledge hub ===== */
+#s-disc{--ic:var(--c3)} #s-kb{--ic:var(--c6)}
+.side nav a[href="#s-disc"] svg{color:var(--c3)} .side nav a[href="#s-kb"] svg{color:var(--c6)}
+#iv-banner:empty{display:none}
+.iv-banner .row{gap:6px}
+.iv-banner.off{background:var(--surface-2);border-color:var(--line)}
+.lede{color:var(--ink-2);max-width:880px}
+
+/* discovery cards */
+.disc-list{display:grid;gap:10px}
+.proc{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--shadow-sm);overflow:hidden}
+.proc[open]{border-color:color-mix(in srgb,var(--c3) 45%,var(--line))}
+.proc>summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:14px 16px}
+.proc>summary::-webkit-details-marker{display:none}
+.proc>summary:hover{background:var(--surface-2)}
+.proc-h{display:grid;gap:6px;min-width:0}
+.proc-h b{font-size:15px}
+.proc-h .row{gap:6px}
+.proc-m{display:flex;gap:18px;flex:none}
+.proc-m span{display:grid;justify-items:end}
+.proc-m small{font-size:11.5px;color:var(--muted)}
+.proc-m b{font-family:var(--mono);font-size:16px}
+.proc-b{display:grid;gap:14px;padding:4px 16px 16px;border-top:1px solid var(--line-2)}
+.proc-b h4{font-size:13px;font-weight:700;color:var(--ink-2);margin:10px 0 6px}
+.asis{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.asis>div{background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r);padding:4px 14px 12px}
+.asis>div:last-child{border-inline-start:3px solid var(--c3)}
+.asis ol{margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:13.5px}
+.tstack .t td{vertical-align:top}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.tool{display:grid;gap:2px;min-width:170px;max-width:260px;padding:8px 10px;border-radius:var(--r);background:var(--surface-2);border:1px solid var(--line)}
+.tool.demo{border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+.tool.plan{border-style:dashed;border-color:color-mix(in srgb,var(--amber) 50%,transparent)}
+.tool b{font-size:13px}
+.tool small{font-size:12px;color:var(--muted);line-height:1.45}
+.tool .tg{font-size:11px;font-weight:600;margin-top:2px}
+.tool.demo .tg{color:var(--good)} .tool.plan .tg{color:var(--amber)}
+.order{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;padding:10px 12px;border-radius:var(--r);background:var(--surface-2);margin-top:10px}
+.order span{white-space:nowrap}
+.proc-meta{justify-content:space-between}
+
+/* demo run modal */
+.pdemo{display:grid;gap:12px}
+.pdemo .io{display:grid;gap:4px}
+
+/* knowledge hub */
+.kb-up{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.kb-ans{display:grid;gap:8px;padding:14px;border-radius:var(--r);background:var(--surface-2);border:1px solid var(--line-2);border-inline-start:3px solid var(--good);margin-top:10px}
+.kb-ans.refused{border-inline-start-color:var(--crit)}
+.kb-ans p{font-size:14px;line-height:1.7}
+.cites{display:flex;flex-wrap:wrap;gap:6px}
+.cite{border:1px solid var(--accent-line,var(--line));background:var(--surface);color:var(--accent);border-radius:999px;padding:3px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.cite:hover{background:var(--accent-soft)}
+.kb-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;color:var(--ink-2);text-decoration:none}
+.kb-badge:hover{border-color:var(--c6)}
+.kb-badge svg{color:var(--c6)}
+
+/* overview: top processes */
+.procs3{display:grid;gap:8px}
+.p3{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2)}
+.p3 b{display:block;font-size:14px}
+.p3 small{font-size:12px;color:var(--muted)}
+.p3 .v{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--good);white-space:nowrap}
+
+/* governance row highlight and the interview timer */
+tr.hl td{background:color-mix(in srgb,var(--c4) 16%,transparent)}
+#tour-timer{font-family:var(--mono);font-size:13px;font-weight:700;color:#7CCBDD;margin-inline-start:auto;margin-inline-end:10px}
+#tour-timer.late{color:#FB7185}
+
+@media (max-width:760px){
+  .asis{grid-template-columns:1fr}
+  .proc>summary{flex-direction:column;align-items:stretch}
+  .proc-m{justify-content:flex-start}
+  .proc-m span{justify-items:start}
+  .kb-up{grid-template-columns:1fr 1fr}
+  .p3{grid-template-columns:1fr auto}
+  .p3 .rec{display:none}
+  .tool{max-width:none;min-width:0;flex:1 1 100%}
+}
+#s-kb .oc>*,#s-disc .oc>*,.proc-b>*,.tstack{min-width:0}
 </style>
 
 <a class="skip" href="#top">דלג לתוכן</a>
@@ -738,6 +819,8 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
     <a href="#s-eval" data-nav="calls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
     <span class="navlabel">תוכנית, משילות ומדידה</span>
     <a href="#s-org" data-nav="org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">05</span></a>
+    <a href="#s-disc" data-nav="org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8M7.5 10.5h6M10.5 7.5v6"/></svg>זיהוי תהליכים וכלים<span class="n">5.1</span></a>
+    <a href="#s-kb" data-nav="kb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6M4 17a2 2 0 0 1 2-2h12"/></svg>מאגר ידע ארגוני<span class="n">5.2</span></a>
     <a href="#s-gov" data-nav="gov"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12h7M12 8.5v7"/></svg>משילות AI<span class="n">06</span></a>
     <a href="#s-roi" data-nav="roi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>ROI ומדדי הצלחה<span class="n">07</span></a>
     <a href="#s-agents" data-nav="agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg>סוכנים חכמים<span class="n">08</span></a>
@@ -754,8 +837,8 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 </header>
 <nav class="subnav" id="subnav" aria-label="שלבים" hidden></nav>
 <div class="wrap">
+  <div id="iv-banner" aria-live="polite"></div>
   <section class="ov" id="overview" aria-labelledby="ov-h1">
-    <div id="iv-banner"></div>
     <header class="hero">
       <div>
         <span class="eyebrow"><i></i>אבחון תהליכים מבוסס AI · מוקדי שירות ומכירות וכל הארגון</span>
@@ -769,12 +852,13 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
         <a class="track" href="#s-agents" style="--tc:var(--c7)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></span><span><b>לתת לסוכנים לסגור פערים</b><small>Claude עובר על כל הנתונים, מבצע פעולות באישורך ומביא תובנות</small><span class="why" id="why-ag"></span><span class="cta" id="cta-ag"></span></span><span class="go">‹</span></a>
       </div>
     </header>
-    <div class="ov-head"><div><h2>תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><a class="gov-alert" id="ov-govalert" href="#s-gov" hidden></a><span class="progress-pill" id="ov-prog"></span><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>מצגת: תצוגה והורדה</button></div></div>
+    <div class="ov-head"><div><h2>תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><a class="kb-badge" id="ov-kb" href="#s-kb" title="מאגר הידע הארגוני"></a><a class="gov-alert" id="ov-govalert" href="#s-gov" hidden></a><span class="progress-pill" id="ov-prog"></span><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>מצגת: תצוגה והורדה</button></div></div>
     <div class="readout" id="readout" aria-live="polite"></div>
     <div class="ov-main">
       <div class="oc big" style="--hc:var(--c3)"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results" data-rt="opp">כל ההזדמנויות</a></div><div id="ov-start"></div><div id="ov-opps"></div></div>
       <div class="oc big" style="--hc:var(--c4)"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
     </div>
+    <div class="oc" style="--hc:var(--c5)"><div class="oc-h"><h3>תהליכים מובילים להטמעה</h3><a href="#s-disc">לכל התהליכים וארגז הכלים</a></div><div id="ov-procs"></div></div>
     <div class="ov-sub3">
       <div class="oc compact" style="--hc:var(--c2)"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה</a></div><div id="ov-map"></div></div>
       <div class="oc compact" style="--hc:var(--c1)"><div class="oc-h"><h3>סיבות פנייה וסנטימנט</h3><a href="#s-results" data-rt="det">לזיהוי</a></div><div id="ov-int"></div></div>
@@ -915,6 +999,7 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
       </div>
       <div class="row">
         <button class="btn primary big" id="run">הרצת ניתוח</button>
+        <button class="btn" id="run-demo" type="button">הרץ דמו (בלי API)</button>
         <button class="btn" id="stop" hidden>עצירה</button>
       </div>
     </div>
@@ -960,6 +1045,7 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
     <p>לפני שסומכים על הכלי, בודקים אותו: הכלי מסווג שיחות שכבר ידוע מה הסיווג הנכון שלהן, ומודד כמה פעמים צדק. יש מאגר מובנה של שיחות דמו מתויגות, ואפשר להעלות מאגר משלכם.</p>
     <div class="row">
       <button class="btn primary" id="eval-run">הרצת מבחן</button>
+      <button class="btn" id="eval-demo" type="button">הרץ דמו (מסווג מקומי)</button>
       <label class="btn" for="eval-file">העלאת מאגר (CSV)</label>
       <input id="eval-file" type="file" accept=".csv,.txt" hidden>
       <button class="btn ghost" id="eval-reset" hidden>חזרה למאגר המובנה</button>
@@ -992,7 +1078,37 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
     <div class="formula" id="org-formula"></div>
 
     <div id="org-out"></div>
-    <div class="nextbar"><span><b>מה עכשיו?</b> לפני שמטמיעים: לכל שימוש ב-AI צריך בעלים, רמת סיכון ובקרות. זה שלב המשילות.</span><a class="btn primary sm" href="#s-gov">למשילות AI ←</a></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> מפרטים כל תהליך: איך הוא עובד היום ואחרי, ואילו כלים צריך כדי לבנות אותו.</span><a class="btn primary sm" href="#s-disc">לזיהוי תהליכים ←</a></div>
+  </section>
+
+  <!-- 5a. PROCESS DISCOVERY + TOOL STACK -->
+  <section class="panel" id="s-disc" aria-labelledby="h-disc">
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8M7.5 10.5h6M10.5 7.5v6"/></svg></span><div><span class="num">שלב 5 · הרחבה</span><h2 id="h-disc">זיהוי תהליכים להטמעה וארגז כלים</h2></div></div>
+      <div class="row"><button class="btn primary" id="disc-demo" type="button">הרץ דמו: 6 תהליכים</button><button class="btn ghost" id="disc-calls" type="button">זיהוי מתוך ניתוח השיחות</button></div></div>
+    <p class="lede">לכל תהליך: איך הוא עובד היום ואיך אחרי (As-Is / To-Be), סוג ההטמעה המומלץ, היתכנות, חיסכון בשקלים וסיכון. בפנים: ארגז הכלים לבנייה בשבע שכבות (תזמור, סוכן/LLM, ידע, ערוצים, מערכות ליבה, זהות ואבטחה, מדידה), עם חובה או רשות ומשפט למה. "נתמך בדמו" קיים בכלי הזה; "טיוטה / לתכנון" נדרש בפרויקט עצמו. ההיתכנות והחיסכון מחושבים באותה נוסחה של <a href="#s-org">מפת הארגון</a>, ואפשר גם <a href="#org-ai-box">לזהות תהליכים עם Claude מתיאור חופשי</a>.</p>
+    <div class="row" id="disc-status"></div>
+    <div class="depts disc-filter" id="disc-filter" role="group" aria-label="סינון תהליכים"></div>
+    <div class="disc-list" id="disc-list"></div>
+    <div class="oc"><div class="oc-h"><h3>היתכנות מול חיסכון</h3><span class="note">גודל הבועה: חיסכון חודשי</span></div><div class="bubble-wrap" id="disc-map"></div></div>
+    <div class="oc"><div class="oc-h"><h3>תוכנית בשלושה גלים</h3></div><div class="waves" id="disc-waves"></div></div>
+    <div id="disc-msg" class="note" aria-live="polite"></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> כל תהליך צריך נוהל: מאגר הידע עונה רק מתוך הנהלים, עם ציטוט.</span><a class="btn primary sm" href="#s-kb">למאגר הידע ←</a></div>
+  </section>
+
+  <!-- 5b. KNOWLEDGE HUB -->
+  <section class="panel" id="s-kb" aria-labelledby="h-kb">
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6M4 17a2 2 0 0 1 2-2h12"/></svg></span><div><span class="num">שלב 5 · ידע</span><h2 id="h-kb">מאגר ידע ארגוני: תשובות רק מתוך הנהלים</h2></div></div>
+      <div class="row"><button class="btn primary" id="kb-demo" type="button">הרץ דמו: 5 נהלים</button><button class="btn ghost danger" id="kb-clear" type="button">ריקון המאגר</button></div></div>
+    <p class="lede">מעלים נהלים (txt או md). הכלי מפרק אותם לקטעים עם מזהה, ועונה רק מתוך הקטעים: לכל תשובה ציטוט לחיץ שמודגש בתוך הנוהל. כשאין מקור, הכלי מסרב לענות. פרטים מזהים בשאלה מוסתרים לפני שליחה (לפי המתג בשלב 2). כל הנתונים נשארים בדפדפן.</p>
+    <div class="row" id="kb-status"></div>
+    <div class="oc"><div class="oc-h"><h3>שאלה למאגר</h3></div>
+      <form class="chat-form" id="kb-form"><label for="kb-q" hidden>שאלה</label><input id="kb-q" class="inp" placeholder="למשל: עד איזה סכום נציג יכול לזכות חיוב כפול בלי אישור?" autocomplete="off"><button class="btn primary" type="submit" id="kb-ask">שאלה</button></form>
+      <div class="sugg kb-suggest" id="kb-suggest"></div>
+      <div id="kb-out" aria-live="polite"></div></div>
+    <div class="oc"><div class="oc-h"><h3>הנהלים במאגר</h3></div>
+      <div class="kb-up"><div class="field"><label class="label" for="kb-dept">מחלקה</label><input id="kb-dept" class="inp" placeholder="שירות"></div><div class="field"><label class="label" for="kb-proc">תהליך</label><input id="kb-proc" class="inp" placeholder="זיכוי חיוב כפול"></div><div class="field"><label class="label" for="kb-ver">גרסה</label><input id="kb-ver" class="inp mono" placeholder="1.0" dir="ltr"></div><label class="btn" for="kb-file">העלאת נוהל (txt / md)</label><input id="kb-file" type="file" accept=".txt,.md,text/plain,text/markdown" multiple hidden></div>
+      <div id="kb-docs"></div></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> לכל שימוש ב-AI צריך בעלים, רמת סיכון ובקרות. זה שלב המשילות.</span><a class="btn primary sm" href="#s-gov">למשילות AI ←</a></div>
   </section>
 
   <!-- GOV -->
@@ -1111,7 +1227,7 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-t"><div class="modal-box"><div class="modal-h"><h3 id="modal-t"></h3><button class="modal-x" id="modal-x" type="button" aria-label="סגירה">×</button></div><div class="modal-b" id="modal-b"></div><div class="modal-f" id="modal-f"></div></div></div>
 <div class="tour" id="tour" hidden role="dialog" aria-labelledby="tour-t" aria-describedby="tour-d">
-  <div class="tour-top"><span class="tour-n" id="tour-n"></span><button type="button" class="tour-x" id="tour-skip" aria-label="סגירת הסיור">×</button></div>
+  <div class="tour-top"><span class="tour-n" id="tour-n"></span><span id="tour-timer" hidden aria-label="זמן שנותר לסיור"></span><button type="button" class="tour-x" id="tour-skip" aria-label="סגירת הסיור">×</button></div>
   <h3 id="tour-t"></h3><p id="tour-d"></p>
   <div class="tour-dots" id="tour-dots"></div>
   <div class="row" style="justify-content:space-between"><button class="btn sm ghost" id="tour-prev" type="button">הקודם</button><button class="btn sm primary" id="tour-next" type="button">הבא</button></div>
@@ -1823,14 +1939,14 @@ function renderEvalInfo(){
 $('eval-file').onchange = e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = () => { const rows = parseCsv(String(r.result)); if(rows.length < 3){ $('eval-status').textContent = 'לא נמצאו מספיק שורות. צריך לפחות 3 שורות של טקסט ותווית.'; return; } state.eval = { set: rows.slice(0, 200), custom: true }; $('eval-status').textContent = `נטענו ${Math.min(rows.length,200)} שיחות.`; $('eval-out').innerHTML = ''; renderEvalInfo(); }; r.readAsText(f); };
 $('eval-reset').onclick = () => { state.eval = { set: EVAL_BUILTIN, custom: false }; $('eval-out').innerHTML = ''; renderEvalInfo(); };
 $('eval-run').onclick = async () => {
-  if(!llmReady()){ $('eval-status').textContent = LLM_ERR.no_llm; return; }
+  const offline = evalOffline || useDemo(); evalOffline = false;
   const set = state.eval.set, labels = [...new Set(set.map(r => r.label))];
   const on = $('pii-on').checked, c = {}, extra = extraTerms();
   const items = set.map((r, i) => ({ id: i+1, text: on ? redact(r.text, c, extra) : r.text }));
-  $('eval-run').disabled = true; $('eval-status').textContent = `מסווג ${set.length} שיחות…`;
+  $('eval-run').disabled = true; $('eval-status').textContent = offline ? `מסווג ${set.length} שיחות במסווג המקומי…` : `מסווג ${set.length} שיחות…`;
   const t0 = Date.now();
   try{
-    const res = await llm.json(`סווג כל שיחה במוקד שירות לאחת מהקטגוריות הבאות בלבד: ${labels.map(l => `"${l}"`).join(', ')}.
+    const res = offline ? demoClassify(items, labels) : await llm.json(`סווג כל שיחה במוקד שירות לאחת מהקטגוריות הבאות בלבד: ${labels.map(l => `"${l}"`).join(', ')}.
 החזר JSON בלבד: מערך של {"id":מספר,"label":"קטגוריה"} לכל שיחה, באותו סדר.
 
 השיחות:
@@ -1844,7 +1960,7 @@ ${items.map(it => `${it.id}. ${it.text}`).join('\n')}`, { tier:'default' });
     $('eval-out').innerHTML = `<div style="display:grid;gap:14px">
       <div class="acc-grid">
         <svg class="ring" viewBox="0 0 132 132" role="img" aria-label="דיוק ${Math.round(acc*100)} אחוז"><circle cx="66" cy="66" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="14"/><circle cx="66" cy="66" r="${R}" fill="none" stroke="${acc>=.85?'var(--good)':acc>=.7?'var(--amber)':'var(--crit)'}" stroke-width="14" stroke-dasharray="${C*acc} ${C}" transform="rotate(-90 66 66)" stroke-linecap="round"/><text x="66" y="72" text-anchor="middle" font-size="26" font-weight="700" font-family="Rubik,sans-serif" fill="var(--ink)">${Math.round(acc*100)}%</text></svg>
-        <div style="display:grid;gap:6px"><h3>${ok} מתוך ${rows.length} סווגו נכון</h3><p class="note">נמדד עכשיו, ב-${Math.round((Date.now()-t0)/1000)} שניות, על ${state.eval.custom ? 'המאגר שהועלה' : 'המאגר המובנה (שיחות דמו)'}. תוצאה על שיחות אמיתיות של המוקד יכולה להיות שונה, ולכן מריצים את המבחן גם עליהן.</p></div>
+        <div style="display:grid;gap:6px"><h3>${ok} מתוך ${rows.length} סווגו נכון</h3>${offline ? '<span><span class="chip vio">מסווג מקומי לדוגמה (מילות מפתח), לא Claude</span> <span class="note">מילות המפתח נבנו מול המאגר המובנה, ולכן התוצאה עליו אופטימית. המבחן האמיתי הוא על מאגר שלכם.</span></span>' : ''}<p class="note">נמדד עכשיו, ב-${Math.round((Date.now()-t0)/1000)} שניות, על ${state.eval.custom ? 'המאגר שהועלה' : 'המאגר המובנה (שיחות דמו)'}. תוצאה על שיחות אמיתיות של המוקד יכולה להיות שונה, ולכן מריצים את המבחן גם עליהן.</p></div>
       </div>
       <div class="tbl-wrap"><table class="t"><thead><tr><th>קטגוריה</th><th>שיחות</th><th>זוהו נכון (recall)</th><th>דיוק הזיהוי (precision)</th></tr></thead><tbody>${per.map(p => `<tr><td>${esc(p.l)}</td><td class="num">${p.n}</td><td class="num">${Math.round(p.rec*100)}%</td><td class="num">${Math.round(p.prec*100)}%</td></tr>`).join('')}</tbody></table></div>
       ${rows.some(r => !r.ok) ? `<div style="display:grid;gap:6px"><h3>הטעויות</h3><div class="tbl-wrap"><table class="t"><thead><tr><th>שיחה</th><th>נכון</th><th>הכלי אמר</th></tr></thead><tbody>${rows.filter(r => !r.ok).map(r => `<tr><td>${esc(r.text)}</td><td>${esc(r.label)}</td><td>${esc(r.pred)}</td></tr>`).join('')}</tbody></table></div></div>` : '<div class="msg ok">אין טעויות במאגר הזה.</div>'}
@@ -2300,26 +2416,28 @@ const TOUR = [
   { sel:'#s-run .shield', t:'2. פרטיות לפני הכול', d:'ת.ז, טלפונים, כרטיסי אשראי ושמות מוסתרים כאן, בדפדפן, לפני שמשהו יוצא. אפשר לראות בדיוק מה נשלח.' },
   { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
   { sel:'#s-org', t:'מפת AI לארגון', d:'מדרגים תהליכים בכל המחלקות בשישה מדדים. הכלי ממליץ על סוג פתרון ובונה תוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude ימפה.' },
+  { sel:'#s-disc', t:'זיהוי תהליכים וארגז כלים', d:'לכל תהליך: לפני ואחרי, סוג ההטמעה, היתכנות, חיסכון וסיכון, וארגז כלים בשבע שכבות עם מה שנתמך בדמו ומה לתכנון.' },
+  { sel:'#s-kb', t:'מאגר ידע', d:'מעלים נהלים ושואלים. כל תשובה עם ציטוט לחיץ מתוך הנוהל, ובלי מקור הכלי מסרב.' },
   { sel:'#s-gov', t:'משילות AI', d:'לכל שימוש ב-AI: רמת סיכון, בעלים, סטטוס ובקרות חובה לפי הסיכון. מכאן גם יוצאת טיוטת מדיניות AI לארגון.' },
   { sel:'#s-roi', t:'ROI ומדדי הצלחה', d:'עלות הקמה ועלות חודשית לכל יוזמה, זמן החזר ו-ROI בשלושה תרחישים, וגרף תזרים עם נקודת איזון. מתחת: מדדי הצלחה עם בסיס, יעד ומצב בפועל.' },
   { sel:'#s-agents', t:'סוכנים חכמים', d:'סוכני Claude שקוראים את כל הנתונים, מבצעים פעולות בכלי ומביאים תובנות. כל פעולה מחכה לאישור שלכם, ואפשר לבטל הכול.' },
   { sel:'#s-projects', t:'שומרים ומשווים', d:'שומרים ניתוח בשם ומשווים בין שניים: לפני ואחרי פיילוט, או מוקד מול מוקד.' },
   { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail.' }
 ];
-let tourI = -1;
+let tourI = -1, tourSet = TOUR, tourTimer = null;
 function tourShow(i){
   document.querySelectorAll('.tour-hl').forEach(e => e.classList.remove('tour-hl'));
-  if(i < 0 || i >= TOUR.length){ $('tour').hidden = true; tourI = -1; try{ localStorage.setItem('xray-tour','done'); }catch(e){} return; }
-  tourI = i; const st = TOUR[i], el = document.querySelector(st.sel);
-  $('tour').hidden = false; $('tour-n').textContent = `${i+1} / ${TOUR.length}`; $('tour-t').textContent = st.t; $('tour-d').textContent = st.d;
-  $('tour-dots').innerHTML = TOUR.map((_, k) => `<i class="${k===i?'on':''}"></i>`).join('');
-  $('tour-prev').disabled = i === 0; $('tour-next').textContent = i === TOUR.length - 1 ? 'סיום' : 'הבא';
-  if(el){ const sec = secOf(el); if(sec && sec.hidden) go(sec.id); el.classList.add('tour-hl'); if(!el.classList.contains('side') && !el.closest('.side')) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: el.offsetHeight > innerHeight * .7 ? 'start' : 'center' }); }
+  if(i < 0 || i >= tourSet.length){ $('tour').hidden = true; tourI = -1; tourSet = TOUR; clearInterval(tourTimer); $('tour-timer').hidden = true; try{ localStorage.setItem('xray-tour','done'); }catch(e){} return; }
+  tourI = i; const st = tourSet[i]; let el = document.querySelector(st.sel);
+  $('tour').hidden = false; $('tour-n').textContent = `${i+1} / ${tourSet.length}`; $('tour-t').textContent = st.t; $('tour-d').textContent = st.d;
+  $('tour-dots').innerHTML = tourSet.map((_, k) => `<i class="${k===i?'on':''}"></i>`).join('');
+  $('tour-prev').disabled = i === 0; $('tour-next').textContent = i === tourSet.length - 1 ? 'סיום' : 'הבא';
+  if(el){ const sec = secOf(el); if(sec && sec.hidden){ go(sec.id); el = document.querySelector(st.sel) || el; } el.classList.add('tour-hl'); if(!el.classList.contains('side') && !el.closest('.side')) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: el.offsetHeight > innerHeight * .7 ? 'start' : 'center' }); }
 }
 $('tour-next').onclick = () => tourShow(tourI + 1);
 $('tour-prev').onclick = () => tourShow(tourI - 1);
 $('tour-skip').onclick = () => tourShow(-1);
-$('tour-start').onclick = () => tourShow(0);
+$('tour-start').onclick = () => { tourSet = TOUR; clearInterval(tourTimer); $('tour-timer').hidden = true; tourShow(0); };
 document.addEventListener('keydown', e => { if(tourI >= 0 && e.key === 'Escape') tourShow(-1); });
 
 
@@ -2639,7 +2757,8 @@ $('ins-clear').onclick = () => { insSave([]); renderInsights(); };
 const VIEWS = {
   overview:{ t:'סקירה', secs:[['overview','']] },
   calls:{ t:'ניתוח שיחות', secs:[['s-sources','מקורות'],['s-run','פרטיות והרצה'],['s-results','תוצאות'],['s-eval','מבחן דיוק']] },
-  org:{ t:'מפת AI לארגון', secs:[['s-org','']] },
+  org:{ t:'מפת AI לארגון', secs:[['s-org','מפת הארגון'],['s-disc','זיהוי תהליכים וכלים']] },
+  kb:{ t:'מאגר ידע ארגוני', secs:[['s-kb','']] },
   gov:{ t:'משילות AI', secs:[['s-gov','']] },
   roi:{ t:'ROI ומדדי הצלחה', secs:[['s-roi','']] },
   agents:{ t:'סוכנים חכמים', secs:[['s-agents','']] },
@@ -2703,14 +2822,21 @@ function ivSet(on){
   }
   ivUi(); ivRenderAll();
 }
-function ivUi(){ const on = lsGet('xray-mode') === 'interview'; $('iv-mode').checked = on; $('iv-label').classList.toggle('on', on);
-  $('iv-banner').innerHTML = on ? '<div class="iv-banner"><span><b>מצב ראיון.</b> נתוני דוגמה יציבים של מוקד בדוי, בלי תלות ב-API. העבודה שלכם שמורה בצד וחוזרת כשמכבים.</span><button class="btn sm" type="button" id="iv-off">חזרה למצב עבודה</button></div>' : '';
-  const off = $('iv-off'); if(off) off.onclick = () => ivSet(false); }
+let capsDone = !INSIDE_CLAUDE;
+function bannerUi(){
+  const on = lsGet('xray-mode') === 'interview', el = $('iv-banner');
+  if(on) el.innerHTML = '<div class="iv-banner"><span><b>נתונים סינתטיים · מצב דמו.</b> מוקד בדוי ונתונים יציבים. הניתוח, האנליסט, הסוכנים ומאגר הידע עונים מקומית, בלי Claude. העבודה שלכם שמורה בצד.</span><span class="row"><button class="btn sm primary" type="button" id="iv-tour">סיור ראיון 3 דק׳</button><button class="btn sm" type="button" id="iv-off">עצירת דמו</button></span></div>';
+  else if(capsDone && !llmReady()) el.innerHTML = `<div class="iv-banner off"><span><b>אין חיבור ל-AI כרגע.</b> כל שלב עובד עם "הרץ דמו" ונתונים סינתטיים. לניתוח חי: ${INSIDE_CLAUDE ? 'פתחו את הכלי בדפדפן במחשב' : 'הזינו מפתח API בשלב 2'}.</span></div>`;
+  else el.innerHTML = '';
+  const off = $('iv-off'); if(off) off.onclick = () => ivSet(false);
+  const t = $('iv-tour'); if(t) t.onclick = () => startIvTour();
+}
+function ivUi(){ const on = lsGet('xray-mode') === 'interview'; $('iv-mode').checked = on; $('iv-label').classList.toggle('on', on); bannerUi(); }
 $('iv-mode').onchange = e => ivSet(e.target.checked);
 ivUi();
 
 /* rail tooltips */
-document.querySelectorAll('.side nav a').forEach(a => a.title = a.textContent.replace(/\d+$/, '').trim());
+document.querySelectorAll('.side nav a').forEach(a => a.title = a.textContent.replace(/[\d.]+$/, '').trim());
 
 function startHere(a){
   const list = a.opportunities.map(o => ({ o, v: roi(o).ils * SCEN.r })).filter(x => x.v > 0);
@@ -2799,6 +2925,490 @@ function renderOverview(){
   else $('ov-cmp').innerHTML = `<div class="empty">שומרים את המצב לפני הפיילוט, ואחריו שוב. כאן תופיע ההשוואה. <a class="btn sm" href="#s-projects">לשמירת מצב</a></div>`;
 }
 
+/* ================= v17: demo data for knowledge, discovery, agents ================= */
+const DEMO_KB = [
+  { id:'kb1', name:'נוהל טיפול בתקלת גלישה', dept:'שירות ותמיכה', process:'תקלת אינטרנט', version:'3.2', text:
+`מטרת הנוהל: לפתור תקלות גלישה בשיחה הראשונה, בלי טכנאי כשאפשר.
+שלב 1: מאמתים את הלקוח לפי נוהל זיהוי ואימות לקוח, ובודקים במערכת אם יש תקלה אזורית פתוחה.
+אם יש תקלה אזורית, מעדכנים את הלקוח בזמן התיקון המשוער ולא פותחים קריאה נוספת.
+שלב 2: מבקשים מהלקוח לבדוק את נורית ה-DSL בראוטר. נורית אדומה או כבויה מעידה על בעיית קו.
+שלב 3: מבצעים איפוס מרחוק לראוטר מתוך מערכת הניטור. האיפוס לוקח עד 3 דקות.
+אם הבעיה נמשכת אחרי איפוס מרחוק, מבצעים בדיקת קו מרחוק ורושמים את התוצאה בכרטיס.
+שלב 4: טכנאי נשלח רק אם בדיקת הקו נכשלה או שהתקלה חזרה 3 פעמים ב-30 יום. במקרה של 3 חזרות אין צורך באישור ראש צוות.
+בכל שיחה נמסר ללקוח מספר פנייה, ומתועדת סיבת הפנייה מתוך הרשימה הסגורה במערכת.` },
+  { id:'kb2', name:'נוהל זיהוי ואימות לקוח', dept:'שירות ותמיכה', process:'זיהוי לקוח', version:'2.0', text:
+`זיהוי לקוח מתבצע לפי מספר תעודת זהות או מספר לקוח.
+אם הלקוח הקיש תעודת זהות ב-IVR, אין לבקש ממנו אותה שוב. הנציג מאמת בשאלה אחת בלבד: ארבע הספרות האחרונות של אמצעי התשלום או תאריך תחילת השירות.
+לקוח שנכשל באימות פעמיים מועבר לנציג בכיר ואין למסור לו מידע על החשבון.
+אסור לבקש מספר כרטיס אשראי מלא בשיחה. בקשה כזו מתועדת כחריגה.
+שינוי פרטי התקשרות מחייב אימות נוסף בקוד חד-פעמי שנשלח ב-SMS.` },
+  { id:'kb3', name:'נוהל זיכויים וחיובים כפולים', dept:'גבייה', process:'בירור חשבון', version:'1.4', text:
+`חיוב כפול מזוהה כשמופיעים שני חיובים זהים באותו חודש לאותו שירות.
+נציג רשאי לזכות חיוב כפול עד 150 ש"ח בלי אישור. זיכוי מעל 150 ש"ח מחייב אישור ראש צוות במערכת.
+הזיכוי מופיע בחשבונית הבאה, ובכרטיס האשראי תוך עד 10 ימי עסקים.
+לאחר הזיכוי נשלחת ללקוח הודעת SMS עם מספר הפנייה וסכום הזיכוי.
+חיוב כפול שחוזר פעמיים אצל אותו לקוח מועבר לבדיקת מחלקת הגבייה ולא מזוכה אוטומטית.` },
+  { id:'kb4', name:'נוהל שימור לקוח בבקשת ניתוק', dept:'שימור', process:'שימור לקוח', version:'2.1', text:
+`כל בקשת ניתוק מועברת למחלקת השימור ולא מטופלת בשירות.
+נציג השימור שואל על סיבת העזיבה ובודק את היסטוריית התקלות של הלקוח ב-90 הימים האחרונים.
+ללקוח עם 2 תקלות ומעלה ב-90 יום מותר להציע חודש חינם או שדרוג מהירות ללא עלות לשלושה חודשים.
+אסור להתנות את הניתוק בקבלת הצעה. אם הלקוח מתעקש, מבצעים ניתוק מסוף מחזור החיוב ושולחים אישור בכתב.
+שיחת שימור מתועדת עם סיבת העזיבה וההצעה שניתנה, לצורך דוח שימור חודשי.` },
+  { id:'kb5', name:'נוהל תיאום טכנאי ועדכון סטטוס', dept:'תפעול שטח', process:'תיאום טכנאי', version:'1.7', text:
+`ביקור טכנאי מתואם בחלון של 4 שעות: בוקר 8:00 עד 12:00 או צהריים 12:00 עד 16:00.
+יום לפני הביקור נשלחת ללקוח תזכורת ב-SMS או בוואטסאפ עם חלון ההגעה.
+ביום הביקור הטכנאי מתקשר ללקוח כ-30 דקות לפני ההגעה.
+שינוי מועד אפשרי עד השעה 18:00 ביום שלפני הביקור, בלי עלות.
+ביקור שהלקוח לא נכח בו מחויב בדמי ביקור של 99 ש"ח, אלא אם עודכן מראש.` }
+];
+
+/* six demo processes for the discovery screen (one of them "data first") */
+const DISC_DEMO = [
+  { id:'d1', name:'זיהוי ואימות לקוח בתחילת שיחה', dept:'שירות', trigger:'שיחה נכנסת', kb:'kb2',
+    asis:['הלקוח מקיש ת.ז ב-IVR','הנציג מבקש שוב ת.ז','חיפוש ידני ב-CRM','שאלת אימות','פתיחת כרטיס פנייה'],
+    tobe:['ת.ז מה-IVR עוברת אוטומטית','כרטיס הלקוח נפתח על המסך','הנציג שואל שאלת אימות אחת'],
+    row:{ vol:18000, min:.6, rep:5, rule:5, lang:1, data:5, judg:1, risk:3 }, systems:['CRM','IVR'], channels:['טלפוניה'], pii:true,
+    sample:{ in:'IVR: הוקשה ת.ז [ת.ז-1] · שיחה נכנסת 09:12', out:'כרטיס לקוח נפתח · 2 פניות פתוחות · הצעה לנציג: לאמת 4 ספרות אחרונות של אמצעי התשלום' } },
+  { id:'d2', name:'סיכום ותיעוד שיחה ב-CRM', dept:'שירות', trigger:'סוף שיחה', kb:'kb1',
+    asis:['הנציג כותב סיכום חופשי','בחירת סיבת פנייה מרשימה','העתקת פרטים לשדות','שמירה ידנית'],
+    tobe:['תמלול וסיכום אוטומטי','מילוי שדות מוצע','הנציג מאשר בלחיצה'],
+    row:{ vol:18000, min:.7, rep:5, rule:4, lang:5, data:4, judg:2, risk:2 }, systems:['CRM'], channels:['טלפוניה'], pii:true,
+    sample:{ in:'תמלול: "האינטרנט לא עובד מהבוקר, הנורה בראוטר אדומה… עשינו איפוס מרחוק…"', out:'סיבה: תקלת גלישה · פעולה: איפוס מרחוק · תוצאה: נפתר · מספר פנייה נמסר: כן · ממתין לאישור הנציג' } },
+  { id:'d3', name:'מענה לשאלות סטטוס טכנאי', dept:'תפעול שטח', trigger:'וואטסאפ / שיחה', kb:'',
+    asis:['הלקוח מתקשר לשאול מתי מגיע הטכנאי','הנציג פותח את מערכת הזימון','חיפוש ההזמנה','הקראת חלון ההגעה'],
+    tobe:['הודעה יזומה יום לפני','סוכן עונה בוואטסאפ מתוך מערכת הזימון','העברה לנציג בבקשת שינוי'],
+    row:{ vol:3000, min:3, rep:5, rule:4, lang:4, data:5, judg:1, risk:2 }, systems:['מערכת זימון טכנאים','CRM'], channels:['וואטסאפ','טלפוניה'], pii:true,
+    sample:{ in:'וואטסאפ: "מתי מגיע הטכנאי?"', out:'"הטכנאי מתואם למחר בחלון 8:00 עד 12:00, ויתקשר כ-30 דקות לפני ההגעה. לשינוי מועד כתבו שנה מועד." [נוהל תיאום טכנאי]' } },
+  { id:'d4', name:'זיכוי חיוב כפול', dept:'גבייה', trigger:'שיחה נכנסת', kb:'kb3',
+    asis:['בירור מול הלקוח','בדיקת החיובים במערכת','בקשת אישור מראש צוות','זיכוי ידני','שליחת SMS'],
+    tobe:['זיהוי אוטומטי של חיוב כפול','הצעת זיכוי לנציג לפי כלל ה-150 ש"ח','אישור ראש צוות רק מעל הסף'],
+    row:{ vol:900, min:8, rep:4, rule:5, lang:2, data:4, judg:2, risk:4 }, systems:['מערכת חיובים','CRM'], channels:['טלפוניה'], pii:true,
+    sample:{ in:'לקוח: "חייבו אותי פעמיים החודש"', out:'נמצאו 2 חיובים זהים של 119 ש"ח · מתחת לסף 150 ש"ח · הצעה: זיכוי מיידי ו-SMS · ממתין לאישור הנציג' } },
+  { id:'d5', name:'בקרת איכות שיחות', dept:'בקרת איכות', trigger:'הקלטה במערכת', kb:'kb1',
+    asis:['בחירת מדגם של 2% מהשיחות','האזנה מלאה','מילוי טופס בקרה','משוב לנציג'],
+    tobe:['בדיקה אוטומטית של 100% מהשיחות מול הנוהל','סימון חריגות עם ציטוט','מבקר מאשר ומשוב'],
+    row:{ vol:1200, min:12, rep:4, rule:3, lang:5, data:4, judg:3, risk:2 }, systems:['מערכת הקלטות','CRM'], channels:['טלפוניה'], pii:true,
+    sample:{ in:'שיחה 1182 · 6:40 דק׳', out:'חריגה: לא נמסר מספר פנייה (ציטוט: "טוב, תודה, יום טוב") · נוהל תקלת גלישה, שלב 4' } },
+  { id:'d6', name:'תחזית עומסים ושיבוץ נציגים', dept:'תפעול', trigger:'ידני, שבועי', kb:'',
+    asis:['ייצוא נתוני שיחות לאקסל','הערכה ידנית של עומס','שיבוץ במשמרות','תיקונים במהלך השבוע'],
+    tobe:['איחוד נתוני שיחות ונוכחות למקור אחד','אחר כך: תחזית עומסים אוטומטית'],
+    row:{ vol:20, min:240, rep:4, rule:4, lang:1, data:1, judg:3, risk:2 }, systems:['Excel','מערכת נוכחות'], channels:[], pii:false,
+    sample:{ in:'נתוני 8 שבועות מפוזרים ב-3 קבצי אקסל', out:'לא ניתן להריץ עדיין: חסר מקור נתונים אחד ונקי. מומלץ קודם לאחד את הנתונים.' } }
+];
+
+const IV_TOUR = [
+  { sel:'#ov-h1', t:'מה מצאנו, בשורה אחת', d:'הכותרת מחושבת מהניתוח: כמה שיחות, כמה הזדמנויות, מאיפה להתחיל, וכמה זה שווה בחודש בתרחיש הסביר.' },
+  { sel:'#kc-quotes', t:'אמון: כל ממצא עם ציטוט', d:'לוחצים על הכרטיס ורואים ציטוט מודגש בתוך השיחה המקורית. זה ההבדל מצ׳אט כללי.' },
+  { sel:'#ov-procs', t:'תהליכים מוכנים להטמעה', d:'שלושת התהליכים עם ההיתכנות והחיסכון הגבוהים, עם סוג הפתרון המומלץ.' },
+  { sel:'#s-disc .proc', t:'תהליך אחד מקצה לקצה', d:'לפני ואחרי, ארגז כלים לכל שכבה (מה נתמך ומה לתכנון), סיכון ו-PII. "הרץ דמו" מראה את התהליך עובד.' },
+  { sel:'#s-kb', t:'מאגר ידע עם ציטוטים', d:'שאלה על נוהל מקבלת תשובה עם ציטוט לחיץ. שאלה שאין לה מקור בנהלים מקבלת סירוב.' },
+  { sel:'#s-agents .agent', t:'סוכן שמשנה משהו, באישור', d:'"הרץ דמו" בסוכן: הוא קורא נתונים, מציע פעולה, מחכה לאישור, ואפשר לבטל הכול.' },
+  { sel:'#s-gov', t:'משילות', d:'לכל שימוש ב-AI: רמת סיכון, בעלים ובקרות. התרעה אדומה על שימושים בלי בקרות מלאות.' },
+  { sel:'#s-roi', t:'ROI ומדדי הצלחה', d:'זמן החזר ו-ROI בשלושה תרחישים, מאותן נוסחאות גלויות. מתחת: מדדים עם בסיס, יעד ובפועל.' },
+  { sel:'#ov-deck', t:'מצגת להנהלה', d:'תצוגה מקדימה של השקפים, ואז הורדה. כל שקף מסומן אם המספרים סינתטיים או מניתוח אמיתי.' }
+];
+
+/* ================= v17: demo mode, knowledge hub, process discovery, new agents ================= */
+const isIV = () => lsGet('xray-mode') === 'interview';
+const useDemo = () => isIV() || !llmReady();
+/* ================= knowledge hub ================= */
+const KB_STOP = new Set('של את על עם או גם כי אם לא יש אין זה זו הוא היא הם הן אני אנחנו מה מי איך למה כמה מתי איפה כל רק עד אחרי לפני בין כמו שלא אבל כדי יותר פחות האם צריך אפשר מותר לי לו לה להם שלי שלו'.split(' '));
+const kbNorm = w => w.replace(/[֑-ׇ]/g, '').toLowerCase();
+function kbTokens(t){
+  const out = [];
+  (String(t).match(/[א-תa-zA-Z0-9"׳״]+/g) || []).forEach(w => { w = kbNorm(w).replace(/["׳״]/g, ''); if(w.length < 2 || KB_STOP.has(w)) return;
+    out.push(w); if(/^[א-ת]/.test(w) && w.length > 3 && 'ובהלמשכ'.includes(w[0])){ const s = w.slice(1); if(!KB_STOP.has(s)) out.push(s); if(w.length > 4 && 'ובהלמשכ'.includes(w[1])) out.push(w.slice(2)); } });
+  return out;
+}
+function kbLoad(){ try{ const k = JSON.parse(lsGet('xray-kb') || 'null'); if(k && Array.isArray(k.docs)) return k; }catch(e){} return { docs: DEMO_KB.map(d => ({ ...d, kind:'demo' })), isDemo: true }; }
+function kbSave(k){ lsSet('xray-kb', JSON.stringify(k)); }
+function kbChunks(){
+  const out = [];
+  kbLoad().docs.forEach(d => { let i = 0; String(d.text).split(/\n+/).map(x => x.trim()).filter(x => x.length > 12).forEach(line => {
+    // long paragraphs split by sentence, so each chunk carries one claim
+    const parts = line.length > 320 ? line.split(/(?<=[.!?])\s+/) : [line];
+    const nt = kbTokens(d.name + ' ' + (d.process || ''));
+    parts.forEach(p => { i++; out.push({ id: `${d.id}#${i}`, doc: d, text: p, toks: [...kbTokens(p), ...nt] }); }); }); });
+  return out;
+}
+function kbSearch(q, k = 4){
+  const ch = kbChunks(), N = ch.length || 1, qt = [...new Set(kbTokens(q))]; if(!qt.length) return { hits: [], qt };
+  const df = {}; ch.forEach(c => new Set(c.toks).forEach(t => df[t] = (df[t] || 0) + 1));
+  const hits = ch.map(c => { let sc = 0; const m = new Set(); qt.forEach(t => { const tf = c.toks.filter(x => x === t).length; if(tf){ m.add(t); sc += Math.log(1 + N / df[t]) * (tf / (tf + 1.2)) * 2.2; } }); return { c, score: sc, matched: m }; })
+    .filter(h => h.score > 0).sort((a, b) => b.score - a.score).slice(0, k);
+  return { hits, qt };
+}
+const KB_MIN = 2.2;
+/* one set of tokens per question word, so a word's prefix variants count once */
+const kbWords = q => (String(q).match(/[א-תa-zA-Z0-9"׳״]+/g) || []).map(w => new Set(kbTokens(w))).filter(x => x.size);
+const kbHitWords = (W, toks) => { const T = new Set(toks); return W.filter(ws => [...ws].some(t => T.has(t))).length; };
+async function kbAnswer(q){
+  const on = $('pii-on').checked, qm = on ? redact(q, {}, extraTerms()) : q;
+  const { hits, qt } = kbSearch(qm, 5), best = hits[0];
+  const W = kbWords(qm), coverage = best ? kbHitWords(W, [...best.matched]) / Math.max(1, Math.min(W.length, 6)) : 0;
+  const refuse = { refused: true, answer: 'אין לי מקור במאגר הידע שעונה על השאלה הזו, ולכן לא אענה. אפשר להוסיף נוהל רלוונטי ולשאול שוב.', cites: [] };
+  const masked = on && qm !== q;
+  if(!best || best.score < KB_MIN || coverage < .34){ return { ...refuse, mode:'local', masked }; }
+  const top = hits.filter(h => h.score >= best.score * .55).slice(0, 3);
+  const sentText = c => on ? redact(c.text, {}, extraTerms()) : c.text;
+  if(!useDemo()){
+    try{
+      const res = await llm.json(`ענה על השאלה רק מתוך קטעי הנהלים למטה. לכל טענה צטט קטע מילה במילה עם המזהה שלו. אם הקטעים לא עונים על השאלה, החזר refuse=true. אל תוסיף ידע חיצוני. עברית קצרה.
+החזר JSON בלבד: {"refuse":false,"answer":"","citations":[{"id":"kb1#2","quote":"ציטוט מדויק מתוך הקטע"}]}
+
+שאלה: ${qm}
+
+קטעים:
+${hits.map(h => `[${h.c.id}] (${h.c.doc.name}) ${sentText(h.c)}`).join('\n')}`, { tier:'default' });
+      const byId = Object.fromEntries(hits.map(h => [h.c.id, h.c]));
+      // a citation counts only if the quote appears word for word in the passage that was sent
+      const cites = arr(res && res.citations).filter(c => c && byId[c.id] && normQ(c.quote).length > 6 && normQ(sentText(byId[c.id])).includes(normQ(c.quote))).map(c => ({ cid: c.id, quote: c.quote }));
+      if(!res || res.refuse || !cites.length) return { ...refuse, mode:'claude', masked };
+      return { refused: false, answer: String(res.answer || ''), cites, mode:'claude', masked };
+    }catch(e){ /* fall back to local retrieval below */ }
+  }
+  const qs = new Set(qt), sent = top.map(h => { const ss = h.c.text.split(/(?<=[.:])\s+/); const bestS = ss.map(s => ({ s, n: kbHitWords(W, kbTokens(s)) })).sort((a, b) => b.n - a.n)[0]; return { h, s: bestS && bestS.n ? bestS.s : h.c.text, n: bestS ? bestS.n : 0 }; }).filter((x, k, all) => k === 0 || x.n >= 2 || (x.n >= 1 && x.h.c.doc === all[0].h.c.doc));
+  return { refused: false, answer: sent.map(x => x.s).join(' '), cites: sent.map(x => ({ cid: x.h.c.id, quote: x.s })), mode:'local', masked };
+}
+function openKbDoc(cid, quote){
+  const [did] = String(cid).split('#'), d = kbLoad().docs.find(x => x.id === did); if(!d) return;
+  let t = d.text, k = quote ? t.indexOf(quote) : -1;
+  if(quote && k < 0 && normQ(t).includes(normQ(quote))){ t = normQ(t); quote = normQ(quote); k = t.indexOf(quote); }
+  openModal(`${d.name} · גרסה ${d.version || '—'}`, `<pre class="srcview">${k >= 0 ? esc(t.slice(0, k)) + '<mark id="src-mark">' + esc(quote) + '</mark>' + esc(t.slice(k + quote.length)) : esc(t)}</pre>`,
+    `<span>${quote ? (k >= 0 ? '<span class="chip good">הציטוט נמצא בנוהל ✓</span>' : '<span class="chip amb">הציטוט לא נמצא מילה במילה</span>') : ''} <span class="note">${esc(d.dept || '')} · תהליך: ${esc(d.process || '—')}</span></span><span class="note">${d.kind === 'demo' ? 'נוהל לדוגמה (סינתטי)' : 'נוהל שהועלה'}</span>`);
+  const mk = document.getElementById('src-mark'); if(mk) setTimeout(() => mk.scrollIntoView({ block:'center' }), 30);
+}
+document.addEventListener('click', e => { const c = e.target.closest('[data-cite]'); if(c){ e.preventDefault(); openKbDoc(c.dataset.cite, c.dataset.q || ''); return; } const d = e.target.closest('[data-kbdoc]'); if(d){ e.preventDefault(); if(curSec !== 's-kb') go('s-kb'); openKbDoc(d.dataset.kbdoc + '#1', ''); } });
+const KB_SUGG = ['עד איזה סכום נציג יכול לזכות חיוב כפול בלי אישור?','מתי שולחים טכנאי בתקלת גלישה?','מה מותר להציע ללקוח שמבקש להתנתק?','מה שעות הפעילות של הסניף בחיפה?'];
+function renderKb(){
+  const k = kbLoad(), ch = kbChunks(), D = discItems();
+  $('kb-status').innerHTML = `<span class="chip good">${k.docs.length} נהלים · ${ch.length} קטעים באינדקס</span>${k.isDemo || isIV() ? '<span class="chip vio">נהלי דוגמה (סינתטיים)</span>' : ''}`;
+  $('kb-docs').innerHTML = k.docs.length ? `<div class="tbl-wrap"><table class="t"><thead><tr><th>נוהל</th><th>מחלקה</th><th>תהליך</th><th>גרסה</th><th>קטעים</th><th>תהליכים מקושרים</th><th></th></tr></thead><tbody>${k.docs.map(d => { const n = ch.filter(c => c.doc.id === d.id).length, linked = D.filter(p => p.kb === d.id);
+    return `<tr><td><a href="#" data-kbdoc="${esc(d.id)}"><b>${esc(d.name)}</b></a></td><td>${esc(d.dept || '—')}</td><td>${esc(d.process || '—')}</td><td class="num">${esc(d.version || '—')}</td><td class="num">${n}</td><td>${linked.length ? linked.map(p => `<span class="chip acc">${esc(p.name)}</span>`).join(' ') : '<span class="note">—</span>'}</td><td><button class="del" data-kbdel="${esc(d.id)}" aria-label="הסרת ${esc(d.name)}">×</button></td></tr>`; }).join('')}</tbody></table></div>`
+    : '<div class="empty-state"><span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6"/></svg></span><b>המאגר ריק</b><p>העלו נהלים (txt או md), או טענו נהלי דוגמה כדי לראות איך זה עובד.</p></div>';
+  $('kb-docs').querySelectorAll('[data-kbdel]').forEach(b => b.onclick = () => { const k2 = kbLoad(); k2.docs = k2.docs.filter(d => d.id !== b.dataset.kbdel); k2.isDemo = k2.docs.every(d => d.kind === 'demo') && k2.docs.length > 0; kbSave(k2); renderKb(); });
+  $('kb-suggest').innerHTML = KB_SUGG.map(s => `<button type="button">${esc(s)}</button>`).join('');
+  $('kb-suggest').querySelectorAll('button').forEach(b => b.onclick = () => { $('kb-q').value = b.textContent; kbAsk(); });
+}
+async function kbAsk(){
+  const q = $('kb-q').value.trim(), out = $('kb-out'); if(!q) return;
+  out.innerHTML = '<div class="msg"><span class="pulse" style="display:inline-block;margin-inline-end:8px"></span>מחפש במאגר…</div>';
+  const r = await kbAnswer(q);
+  out.innerHTML = r.refused ? `<div class="kb-ans refused"><div class="row"><span class="chip crit">סירוב: אין מקור במאגר</span>${r.masked ? '<span class="chip amb">פרטים מזהים הוסתרו בשאלה</span>' : ''}</div><p>${esc(r.answer)}</p><span class="note">${r.mode === 'claude' ? 'Claude ענה רק מתוך הקטעים, ולא מצא מקור' : 'אחזור מקומי לא מצא קטע רלוונטי'}</span></div>`
+    : `<div class="kb-ans"><div class="row"><span class="chip good">מבוסס מקור</span>${r.masked ? '<span class="chip amb">פרטים מזהים הוסתרו בשאלה</span>' : ''}${kbLoad().isDemo ? '<span class="chip vio">מנהלי דוגמה (סינתטיים)</span>' : ''}<span class="note">${r.mode === 'claude' ? 'נוסח על ידי Claude, כל ציטוט נבדק מול הנוהל' : 'אחזור מקומי: המשפטים הרלוונטיים מתוך הנהלים'}</span></div><p>${esc(r.answer)}</p>
+      <div class="cites">${r.cites.map((c, i) => { const d = kbLoad().docs.find(x => x.id === c.cid.split('#')[0]); return `<button type="button" class="cite" data-cite="${esc(c.cid)}" data-q="${esc(c.quote)}"><b>[${i + 1}]</b> ${esc(d ? d.name : c.cid)} · קטע ${esc(c.cid.split('#')[1])}</button>`; }).join('')}</div></div>`;
+}
+$('kb-form').addEventListener('submit', e => { e.preventDefault(); kbAsk(); });
+$('kb-demo').onclick = () => { kbSave({ docs: DEMO_KB.map(d => ({ ...d, kind:'demo' })), isDemo: true }); renderKb(); $('kb-q').value = KB_SUGG[0]; kbAsk(); toast('נטענו 5 נהלי דוגמה'); };
+$('kb-clear').onclick = () => { kbSave({ docs: [], isDemo: false }); renderKb(); $('kb-out').innerHTML = ''; };
+$('kb-file').onchange = e => { const meta = { dept: $('kb-dept').value.trim(), process: $('kb-proc').value.trim(), version: $('kb-ver').value.trim() || '1.0' };
+  [...e.target.files].forEach(f => { if(f.size > 2e6) return; const r = new FileReader(); r.onload = () => { const k = kbLoad(); if(k.isDemo){ k.docs = []; k.isDemo = false; }
+    k.docs.push({ id: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name: f.name.replace(/\.(txt|md)$/i, ''), ...meta, text: String(r.result), kind:'upload' }); kbSave(k); renderKb(); }; r.readAsText(f); });
+  e.target.value = ''; };
+
+/* ================= process discovery + implementation stack ================= */
+function discLoad(){ try{ const d = JSON.parse(lsGet('xray-disc') || 'null'); if(d && Array.isArray(d.procs)) return d; }catch(e){} return { procs: DISC_DEMO.map(p => JSON.parse(JSON.stringify(p))), isDemo: true }; }
+function discSave(d){ lsSet('xray-disc', JSON.stringify(d)); }
+function discItems(){
+  return discLoad().procs.map(p => { const s = scoreRow(p.row), g = govAssess({ key:'disc|' + p.name, name:p.name, dept:p.dept, type:s.type, risk:+p.row.risk || 3, text:p.dept + ' ' + p.name });
+    const wave = p.wave || (s.type === 'data' ? 3 : s.feas >= 65 ? 1 : s.feas >= 45 ? 2 : 3);
+    return { ...p, s, g, wave, inMap: org.rows.some(r => r.name === p.name) }; });
+}
+const ST = { demo:'נתמך בדמו', plan:'טיוטה / לתכנון' };
+function stackFor(p){
+  const t = p.s.type, llmUse = ['agent','assist','support'].includes(t), L = [];
+  const it = (tool, why, req, status) => ({ tool, why, req, status });
+  if(t === 'data'){
+    L.push(['נתונים', [it('איחוד מקורות לטבלה אחת (Excel / DB)', 'בלי מקור נתונים אחד ונקי אין על מה לבנות אוטומציה', true, 'plan'), it('Power Query / ETL', 'ייבוא אוטומטי של הקבצים השבועיים', false, 'plan')]]);
+    L.push(['מדידה', [it('KPI בסיס ויעד', 'למדוד את איכות הנתונים לפני שבונים', true, 'demo')]]);
+    return L;
+  }
+  L.push(['תזמור', [it('n8n', 'מחבר בין המערכות ומריץ את הזרימה מקצה לקצה', true, 'demo'), it('Power Automate', 'חלופה אם הארגון על Microsoft 365', false, 'plan'), it('Make', 'חלופה ללא קוד לזרימות פשוטות', false, 'plan')]]);
+  L.push(['סוכן / LLM', llmUse ? [it('Claude API', t === 'assist' ? 'מנסח הצעה, והנציג מאשר לפני שמירה' : 'מבין שפה חופשית, מסכם ועונה', true, 'demo'), it('Copilot Studio', 'חלופה בסביבת Microsoft', false, 'plan')] : [it('לא נדרש', 'התהליך מבוסס כללים, בלי מודל שפה', false, 'demo')]]);
+  L.push(['ידע', p.kb || llmUse ? [it('מאגר ידע עם ציטוטים (RAG)', 'תשובות רק מתוך הנהלים, עם ציטוט לכל טענה', llmUse, 'demo'), it('SharePoint / Confluence', 'מקור הנהלים המקורי, סנכרון למאגר', false, 'plan')] : [it('לא נדרש', 'אין צורך בידע טקסטואלי', false, 'demo')]]);
+  L.push(['ערוצים', (p.channels.length ? p.channels : ['טלפוניה']).map(c => it(c === 'וואטסאפ' ? 'WhatsApp Business API' : c === 'טלפוניה' ? 'טלפוניה / IVR' : c, c === 'וואטסאפ' ? 'שיחה יזומה ומענה בוואטסאפ' : 'קבלת הטריגר מהשיחה ומסך הנציג', true, 'plan'))]);
+  L.push(['מערכות ליבה', p.systems.map(sy => it(sy + ' (API)', 'קריאה וכתיבה של הנתונים בתהליך', true, 'plan'))]);
+  L.push(['זהות ואבטחה', [it('הסתרת פרטים מזהים', 'לפני כל שליחה למודל', p.pii, 'demo'), it('אישור אדם ויומן פעולות לסוכן', 'כל פעולה מחכה לאישור, נרשמת, וניתנת לביטול', true, 'demo'), it('יומן ביקורת ארגוני', 'מי הריץ, איזה מודל, האם PII סונן', true, 'plan'), it('הרשאות לפי תפקיד', 'מי רשאי לאשר ולהעלות לייצור', true, 'plan'), it('SSO (Entra ID / Google)', 'כניסה ארגונית אחת', true, 'plan')]]);
+  L.push(['מדידה', [it('KPI בסיס ← יעד ← בפועל', 'מוכיח שהשיפור קרה', true, 'demo'), it('ROI וזמן החזר', 'החלטת השקעה', true, 'demo'), it('Wallboard למוקד', 'תצוגה חיה לראשי צוותים', false, 'plan')]]);
+  return L;
+}
+function buildOrder(p){
+  const t = p.s.type;
+  if(t === 'data') return ['לאחד את מקורות הנתונים', 'למדוד איכות נתונים', 'לחזור לזיהוי אחרי 4 שבועות'];
+  return ['לחבר את מערכת הליבה (קריאה בלבד)', t === 'auto' ? 'לבנות את הזרימה ב-n8n לפי הכללים' : 'לחבר Claude עם מאגר הידע והסתרת PII', t === 'assist' ? 'אישור נציג לפני כל שמירה' : 'פיילוט על 10% מהתנועה', 'להגדיר KPI בסיס ויעד', 'להרחיב אחרי 4 שבועות'];
+}
+function n8nTemplate(name, type, systems){
+  const sys = (systems && systems[0]) || 'CRM', llmUse = ['agent','assist','support'].includes(type);
+  const nodes = [
+    { id:'1', name:'Trigger', type:'n8n-nodes-base.webhook', typeVersion:2, position:[0,0], parameters:{ path:'x-ray-' + Date.now().toString(36).slice(-5), httpMethod:'POST' } },
+    { id:'2', name:`Read ${sys}`, type:'n8n-nodes-base.httpRequest', typeVersion:4, position:[240,0], parameters:{ method:'GET', url:`={{$env.CORE_API}}/customers/{{$json.customerId}}` } }
+  ];
+  if(llmUse) nodes.push({ id:'3', name:'Claude', type:'n8n-nodes-base.httpRequest', typeVersion:4, position:[480,0], parameters:{ method:'POST', url:'https://api.anthropic.com/v1/messages', sendHeaders:true, headerParameters:{ parameters:[{ name:'x-api-key', value:'={{$env.ANTHROPIC_API_KEY}}' },{ name:'anthropic-version', value:'2023-06-01' }] }, jsonBody:`={"model":"claude-sonnet-5","max_tokens":800,"messages":[{"role":"user","content":"${name}: {{$json.text}}"}]}` } });
+  if(type === 'assist') nodes.push({ id:'4', name:'Human approval', type:'n8n-nodes-base.wait', typeVersion:1, position:[720,0], parameters:{ resume:'webhook' } });
+  nodes.push({ id:'5', name:`Update ${sys}`, type:'n8n-nodes-base.httpRequest', typeVersion:4, position:[960,0], parameters:{ method:'PATCH', url:`={{$env.CORE_API}}/cases/{{$json.caseId}}` } });
+  const connections = {}; for(let i = 0; i < nodes.length - 1; i++) connections[nodes[i].name] = { main:[[{ node: nodes[i+1].name, type:'main', index:0 }]] };
+  return { name: `X-Ray · ${name} (טיוטה)`, nodes, connections, meta:{ note:'טיוטה מקומית: מלאו כתובות API ומפתחות לפני הפעלה' } };
+}
+let discView = { rec:'all', dept:'all' };
+function renderDisc(){
+  const D = discItems(), d = discLoad();
+  $('disc-status').innerHTML = `<span class="chip">${D.length} תהליכים</span>` + (d.isDemo || isIV() ? '<span class="chip vio">נתונים סינתטיים</span>' : '');
+  const recs = ['all', ...new Set(D.map(p => p.s.type))], depts = ['all', ...new Set(D.map(p => p.dept))];
+  $('disc-filter').innerHTML = recs.map(r => `<button type="button" data-fr="${r}" aria-pressed="${discView.rec === r}">${r === 'all' ? 'כל ההמלצות' : REC[r].label}</button>`).join('') + '<span class="sep"></span>' + depts.map(x => `<button type="button" data-fd="${esc(x)}" aria-pressed="${discView.dept === x}">${x === 'all' ? 'כל המחלקות' : esc(x)}</button>`).join('');
+  $('disc-filter').querySelectorAll('[data-fr]').forEach(b => b.onclick = () => { discView.rec = b.dataset.fr; renderDisc(); });
+  $('disc-filter').querySelectorAll('[data-fd]').forEach(b => b.onclick = () => { discView.dept = b.dataset.fd; renderDisc(); });
+  const list = D.filter(p => (discView.rec === 'all' || p.s.type === discView.rec) && (discView.dept === 'all' || p.dept === discView.dept)).sort((a, b) => a.wave - b.wave || b.s.feas * b.s.ils - a.s.feas * a.s.ils);
+  const kb = kbLoad().docs, TIERC = ['good','amb','crit'];
+  $('disc-list').innerHTML = list.length ? list.map((p, i) => { const L = stackFor(p), R = REC[p.s.type], doc = kb.find(x => x.id === p.kb);
+    return `<details class="proc" ${i === 0 ? 'open' : ''} data-pid="${esc(p.id)}"><summary><span class="proc-h"><b>${esc(p.name)}</b><span class="row"><span class="chip">${esc(p.dept)}</span><span class="chip">טריגר: ${esc(p.trigger)}</span><span class="chip acc">גל ${p.wave}</span><span class="rec" style="color:${R.c};background:${R.bg}">${R.label}</span><span class="chip ${TIERC[p.g.tier]}">${TIER[p.g.tier].t}</span>${p.pii ? '<span class="chip amb">נוגע ב-PII</span>' : ''}${p.inMap ? '<span class="chip good">במפת הארגון ✓</span>' : ''}</span></span>
+      <span class="proc-m"><span><small>היתכנות</small><b>${p.s.feas}</b></span><span><small>חיסכון בחודש, סביר</small><b>${p.s.ils ? ils(p.s.ils * SCEN.r) : '—'}</b></span></span></summary>
+      <div class="proc-b">
+        <div class="asis"><div><h4>היום (As-Is)</h4><ol>${p.asis.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div><div><h4>אחרי (To-Be) · ${R.label}</h4><ol class="tobe">${p.tobe.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div></div>
+        <div class="tstack"><h4>ארגז כלים לבנייה</h4><div class="tbl-wrap"><table class="t"><thead><tr><th>שכבה</th><th>כלים</th></tr></thead><tbody>${L.map(([layer, items]) => `<tr><td><b>${layer}</b></td><td><div class="tools">${items.map(x => `<span class="tool ${x.status}" title="${esc(x.why)}"><b>${esc(x.tool)}</b><small>${esc(x.why)}</small><span class="tg">${x.req ? 'חובה' : 'רשות'} · ${ST[x.status]}</span></span>`).join('')}</div></td></tr>`).join('')}</tbody></table></div>
+          <p class="note">"נתמך בדמו" = קיים בכלי הזה. "טיוטה / לתכנון" = נדרש בפרויקט עצמו, לא מחובר כאן.</p>
+          <div class="order"><b>סדר בנייה מומלץ:</b> ${buildOrder(p).map((x, k) => `<span>${k + 1}. ${esc(x)}</span>`).join('')}</div></div>
+        <div class="row proc-meta"><span class="note">נוהל מקושר: ${doc ? `<a href="#" data-kbdoc="${esc(doc.id)}">${esc(doc.name)}</a>` : 'אין'}</span><span class="note">נוסחת ההיתכנות: כמו במפת הארגון (6 מדדים, גלויה ב-05)</span></div>
+        <div class="row"><button class="btn primary sm" data-proc-demo="${esc(p.id)}" type="button">הרץ דמו</button><button class="btn sm" data-proc-map="${esc(p.id)}" type="button" ${p.inMap ? 'disabled' : ''}>${p.inMap ? 'במפת הארגון ✓' : 'הוספה למפת הארגון'}</button><button class="btn sm" data-proc-n8n="${esc(p.id)}" type="button" ${p.s.type === 'data' ? 'disabled title="קודם לסדר נתונים"' : ''}>טיוטת n8n</button><button class="btn sm" data-proc-gov="${esc(p.id)}" type="button" ${p.s.type === 'data' ? 'disabled' : ''}>פתיחה במשילות</button></div>
+      </div></details>`; }).join('')
+    : '<div class="empty-state"><b>אין תהליכים בסינון הזה</b><p>נקו את הסינון, טענו תהליכי דוגמה, או זהו תהליכים מתוך ניתוח השיחות.</p></div>';
+  const byId = id => D.find(p => p.id === id);
+  $('disc-list').querySelectorAll('[data-proc-demo]').forEach(b => b.onclick = () => procDemo(byId(b.dataset.procDemo)));
+  $('disc-list').querySelectorAll('[data-proc-map]').forEach(b => b.onclick = () => { procToMap(byId(b.dataset.procMap)); });
+  $('disc-list').querySelectorAll('[data-proc-n8n]').forEach(b => b.onclick = () => { const p = byId(b.dataset.procN8n); save(`n8n-${p.name.replace(/\s+/g, '-')}.json`, JSON.stringify(n8nTemplate(p.name, p.s.type, p.systems), null, 2), $('disc-msg'), 'application/json'); });
+  $('disc-list').querySelectorAll('[data-proc-gov]').forEach(b => b.onclick = () => { const p = byId(b.dataset.procGov); procToMap(p, true); go('s-gov'); setTimeout(() => { const tr = [...document.querySelectorAll('#gov-tbl tbody tr')].find(r => r.textContent.includes(p.name)); if(tr){ tr.classList.add('hl'); tr.scrollIntoView({ block:'center' }); } }, 60); });
+  // bubble map of the discovered processes
+  const bl = D.filter(p => p.s.ils > 0).map(p => ({ r:{ name:p.name, dept:p.dept }, s:p.s })), vals = bl.map(x => x.s.ils).sort((a, b) => a - b);
+  $('disc-map').innerHTML = bl.length ? bubbleChart(bl, vals[Math.floor(vals.length / 2)] || 0) : '';
+  $('disc-waves').innerHTML = [1,2,3].map(w => `<div class="wave"><h4>גל ${w}</h4><span class="t">${['0 עד 3 חודשים','3 עד 6 חודשים','6 עד 12 חודשים'][w-1]}</span><ul>${D.filter(p => p.wave === w).map(p => `<li><b>${esc(p.name)}</b><small>${REC[p.s.type].label} · ${p.s.ils ? ils(p.s.ils * SCEN.r) + ' בחודש' : 'אחרי סידור נתונים'}</small></li>`).join('') || '<li><small>אין</small></li>'}</ul></div>`).join('');
+}
+function procToMap(p, quiet){
+  if(!p || org.rows.some(r => r.name === p.name)) return false;
+  org.rows.push({ dept: p.dept, name: p.name, ...p.row, why: p.tobe.join(' · '), src:'disc' }); saveOrg(); renderOrg(); renderDisc();
+  if(!quiet) toast(`"${p.name}" נוסף למפת הארגון`); return true;
+}
+function procDemo(p){
+  if(!p) return;
+  const R = REC[p.s.type], steps = p.tobe;
+  openModal(`הרצת דמו · ${p.name}`, `<div class="pdemo"><div class="io"><span class="label">קלט</span><div class="msg">${esc(p.sample.in)}</div></div>
+    <ol class="trace" id="pd-trace">${steps.map((s, i) => `<li class="read" data-i="${i}" hidden><span class="k">${i + 1}</span><span>${esc(s)}</span></li>`).join('')}</ol>
+    <div class="io" id="pd-out" hidden><span class="label">פלט</span><div class="msg ok">${esc(p.sample.out)}</div></div></div>`,
+    `<span class="chip vio">הדגמה סינתטית · לא מחובר למערכות אמיתיות</span><span class="note">${R.label}${p.s.type === 'assist' ? ' · אדם מאשר לפני שמירה' : ''}</span>`);
+  const lis = [...document.querySelectorAll('#pd-trace li')]; let i = 0;
+  const tick = () => { if($('modal').hidden) return; if(i < lis.length){ lis[i].hidden = false; lis[i].className = 'done'; lis[i].querySelector('.k').textContent = '✓'; i++; setTimeout(tick, 380); } else { const o = $('pd-out'); if(o) o.hidden = false; } };
+  setTimeout(tick, 250);
+}
+function discFromAnalysis(){
+  const a = state.analysis, p = profile(), d = discLoad(); let n = 0;
+  if(d.isDemo){ d.procs = []; d.isDemo = false; }
+  a.opportunities.forEach(o => { if(d.procs.some(x => x.name === o.title)) return; const c = CAT_CRIT[o.category] || [4,3,4,3,3,3];
+    const steps = a.process.steps.filter(s => arr(o.step_ids).includes(s.id)).map(s => s.title);
+    const ch = /וואטסאפ|WhatsApp/i.test(JSON.stringify(o)) ? ['וואטסאפ','טלפוניה'] : ['טלפוניה'];
+    d.procs.push({ id:'c' + (++n) + Date.now().toString(36).slice(-3), name:o.title, dept:'מוקד', trigger:'שיחה', kb:'', src:'call',
+      asis: steps.length ? steps : ['הטיפול היום ידני (לפי מפת התהליך ב-03)'], tobe: arr(o.how).length ? arr(o.how).slice(0, 4) : [o.description],
+      row:{ vol: Math.round(p.calls * (+o.affected_calls_pct || 0) / 100), min: +o.seconds_saved_per_call ? Math.round(p.aht * 10) / 10 : 0, rep:c[0], rule:c[1], lang:c[2], data:c[3], judg:c[4], risk:c[5] },
+      systems: arr(o.tools).filter(t => !/n8n|make|claude/i.test(t)).slice(0, 3), channels: ch, pii: true,
+      sample:{ in: (arr(o.evidence)[0] || {}).quote || o.description, out: o.description } }); });
+  // link each process to the best-matching procedure
+  d.procs.forEach(x => { if(x.kb) return; const h = kbSearch(x.name, 1).hits[0]; if(h && h.score >= KB_MIN) x.kb = h.c.doc.id; });
+  if(state.isDemo) d.isDemo = true;
+  discSave(d); renderDisc(); toast(n ? `זוהו ${n} תהליכים מתוך ניתוח השיחות` : 'כל ההזדמנויות כבר נמצאות ברשימה');
+}
+$('disc-demo').onclick = () => { discSave({ procs: DISC_DEMO.map(p => JSON.parse(JSON.stringify(p))), isDemo: true }); discView = { rec:'all', dept:'all' }; renderDisc(); toast('נטענו 6 תהליכי דוגמה'); };
+$('disc-calls').onclick = discFromAnalysis;
+
+/* ================= agents: three new agents, tools, and deterministic demo runs ================= */
+AGENT_TOOLS.push(
+  { name:'get_discovery', read:true, label:() => 'קרא את התהליכים שזוהו', description:'Processes found for implementation: department, trigger, as-is and to-be steps, recommendation, feasibility, monthly saving, risk tier, wave, whether on the org map, and the implementation stack layers.',
+    run: () => discItems().map(p => ({ name:p.name, dept:p.dept, trigger:p.trigger, as_is:p.asis, to_be:p.tobe, recommendation:REC[p.s.type].label, feasibility:p.s.feas, monthly_saving: Math.round(p.s.ils), risk_tier:p.g.tier, wave:p.wave, on_org_map:p.inMap, procedure:p.kb || null, stack: stackFor(p).map(([l, it]) => ({ layer:l, tools: it.map(x => x.tool) })) })) },
+  { name:'search_knowledge', read:true, label:i => `חיפוש במאגר הידע: "${i.query}"`, description:'Search the procedures knowledge base. Returns the best matching passages with ids. Answer only from these passages and cite ids; if nothing relevant is returned, say there is no source.', inputSchema:{ type:'object', properties:{ query:{ type:'string' } }, required:['query'] },
+    run: i => kbSearch(String(i.query || ''), 4).hits.filter(h => h.score >= KB_MIN).map(h => ({ id:h.c.id, procedure:h.c.doc.name, text:h.c.text })) },
+  { name:'add_discovered_process', label:i => `הוספת תהליך להטמעה: "${i.name}"`, description:'Adds a process to the discovery list. Scores 1-5: repetitive, rules, language, data, judgment, risk. volume_per_month and minutes_per_case are numbers.', inputSchema:{ type:'object', properties:{ name:{type:'string'}, dept:{type:'string'}, trigger:{type:'string'}, as_is:{type:'array',items:{type:'string'}}, to_be:{type:'array',items:{type:'string'}}, volume_per_month:{type:'number'}, minutes_per_case:{type:'number'}, repetitive:{type:'number'}, rules:{type:'number'}, language:{type:'number'}, data:{type:'number'}, judgment:{type:'number'}, risk:{type:'number'}, systems:{type:'array',items:{type:'string'}}, channels:{type:'array',items:{type:'string'}}, personal_data:{type:'boolean'}, procedure:{type:'string'} }, required:['name','dept','as_is','to_be'] },
+    run: i => { const d = discLoad(); if(d.procs.some(p => p.name === i.name)) return 'already exists'; const c = v => clamp(+v || 3, 1, 5);
+      d.procs.push({ id:'a' + Date.now().toString(36), name:String(i.name).slice(0, 80), dept:String(i.dept || 'מוקד').slice(0, 40), trigger:String(i.trigger || 'שיחה').slice(0, 40), kb: String(i.procedure || ''), src:'agent', asis: arr(i.as_is).slice(0, 7).map(String), tobe: arr(i.to_be).slice(0, 5).map(String),
+        row:{ vol: Math.max(0, +i.volume_per_month || 0), min: Math.max(0, +i.minutes_per_case || 0), rep:c(i.repetitive), rule:c(i.rules), lang:c(i.language), data:c(i.data), judg:c(i.judgment), risk:c(i.risk) }, systems: arr(i.systems).slice(0, 3).map(String), channels: arr(i.channels).slice(0, 3).map(String), pii: !!i.personal_data,
+        sample:{ in:'קלט לדוגמה מהתהליך', out: arr(i.to_be).join(' ← ') } });
+      discSave(d); renderDisc(); return 'ok'; } },
+  { name:'add_process_to_map', label:i => `הוספת "${i.name}" למפת הארגון`, description:'Adds a discovered process (by exact name) to the organization AI map, so it enters governance and ROI.', inputSchema:{ type:'object', properties:{ name:{type:'string'} }, required:['name'] },
+    run: i => { const p = discItems().find(x => x.name === i.name) || discItems().find(x => x.name.includes(i.name)); if(!p) throw new Error('No discovered process with that name'); return procToMap(p, true) ? 'added' : 'already on the map'; } },
+  { name:'link_procedure', label:i => `קישור "${i.name}" לנוהל ${i.procedure}`, description:'Links a discovered process (exact name) to a procedure id from the knowledge base, for example kb5. Use only an id returned by search_knowledge.', inputSchema:{ type:'object', properties:{ name:{type:'string'}, procedure:{type:'string'} }, required:['name','procedure'] },
+    run: i => { const d = discLoad(), p = d.procs.find(x => x.name === i.name); if(!p) throw new Error('No discovered process with that name'); const doc = kbLoad().docs.find(x => x.id === String(i.procedure).split('#')[0]); if(!doc) throw new Error('No such procedure in the knowledge base'); p.kb = doc.id; discSave(d); renderDisc(); return 'linked to ' + doc.name; } },
+  { name:'set_process_wave', label:i => `גל ${i.wave} ל-"${i.name}"`, description:'Sets the rollout wave (1, 2 or 3) of a discovered process.', inputSchema:{ type:'object', properties:{ name:{type:'string'}, wave:{type:'number'} }, required:['name','wave'] },
+    run: i => { const d = discLoad(), p = d.procs.find(x => x.name === i.name) || d.procs.find(x => x.name.includes(i.name)); if(!p) throw new Error('No discovered process with that name'); p.wave = clamp(+i.wave, 1, 3); discSave(d); renderDisc(); return 'ok'; } }
+);
+AGENTS.push(
+  { id:'disc', name:'סוכן זיהוי תהליכים', icon:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M8 11h6"/>', desc:'סורק את ניתוח השיחות ואת מאגר הידע ומציע תהליכים נוספים להטמעה.', acts:'מוסיף תהליכים · מוסיף למפה · רושם תובנה', tools:['get_overview','get_opportunities','get_discovery','search_knowledge','add_discovered_process','add_process_to_map','add_insight'],
+    task:() => 'Read the call analysis, the discovered processes and search the knowledge base. Propose up to 2 additional processes worth implementing that are not yet in the discovery list, grounded in the data (cite the procedure id when relevant). Add each with add_discovered_process, add the strongest to the org map, and record one add_insight (area org). Finish with a short Hebrew summary.' },
+  { id:'stack', name:'סוכן ארגז כלים', icon:'<path d="M3 7h18v12H3z"/><path d="M8 7V5h8v2M3 12h18"/>', desc:'לכל תהליך מציע את שכבות הכלים וסדר הבנייה, וקובע גל הטמעה.', acts:'קובע גלים · רושם תובנה עם סדר בנייה', tools:['get_discovery','set_process_wave','add_insight'],
+    task:() => 'Read the discovered processes and their implementation stacks. Set waves: wave 1 for high feasibility and low risk, wave 3 for data-first. Use set_process_wave only where the wave should change. Record one add_insight (area cross) with the build order for the top wave-1 process (layers, what is supported in the demo vs planned). Finish with a short Hebrew summary.' },
+  { id:'kb', name:'סוכן ידע (RAG)', icon:'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>', desc:'בודק לכל תהליך אם יש נוהל, מקשר נוהל שנמצא, ועונה רק מתוך המאגר עם ציטוט. אין מקור: מסמן פער.', acts:'מקשר נהלים לתהליכים · רושם תובנות עם ציטוט', tools:['get_discovery','search_knowledge','link_procedure','add_insight'],
+    task:() => 'For each discovered process, search the knowledge base for the governing procedure. If a process has no procedure linked and a search returns a clearly matching one, link it with link_procedure. Record up to 3 add_insight items (area gov): for processes with a procedure, quote the exact rule that the automation must respect, with the passage id; for processes without any procedure, flag the gap. Never state a rule that does not appear in a returned passage. Finish with a short Hebrew summary.' }
+);
+if(!AG_KEYS.includes('xray-disc')) AG_KEYS.push('xray-disc');
+const _agRestore = agRestore;
+agRestore = function(o){ _agRestore(o); renderDisc(); };
+
+function demoScript(id){
+  const a = state.analysis, gi = govItems(), gm = govLoad(), it = roiItems(), D = discItems();
+  const notIn = a.opportunities.filter(o => !inOrg(o)).slice(0, 2);
+  const hiNoOwner = gi.filter(g => g.tier === 2 && !(gm[g.key] || {}).owner)[0];
+  const worst = it.filter(i => i.inc).sort((x, y) => (y.r.pay || 99) - (x.r.pay || 99))[0];
+  const top = D.filter(p => p.s.type !== 'data').sort((x, y) => y.s.feas * y.s.ils - x.s.feas * x.s.ils)[0];
+  const kbQ = q => { const h = kbSearch(q, 1).hits[0]; if(!h || h.score < KB_MIN) return null; const ss = h.c.text.split(/(?<=[.:])\s+/), qs = new Set(kbTokens(q)); return { id: h.c.id, name: h.c.doc.name, quote: ss.map(x => ({ x, n: kbTokens(x).filter(t => qs.has(t)).length })).sort((p, q2) => q2.n - p.n)[0].x }; };
+  const kRet = kbQ('שימור ניתוק הצעה תקלות חודש חינם'), kCred = kbQ('זיכוי חיוב כפול סף אישור ראש צוות');
+  const links = D.filter(p => !p.kb).map(p => { const h = kbSearch(p.name, 1).hits[0]; return h && h.score >= KB_MIN ? { p, doc: h.c.doc } : null; }).filter(Boolean);
+  const noProc = D.find(p => !p.kb && !links.some(l => l.p === p));
+  const S = {
+    insights: [['get_overview',{}],['get_opportunities',{}], ...notIn.map(o => ['add_opportunity_to_org_map',{ title:o.title }]),
+      ['add_insight',{ title:'שתי הזדמנויות מהמוקד נכנסו למפת הארגון', detail:`${notIn.map(o => '"' + o.title + '"').join(' ו-') || 'ההזדמנויות'} עכשיו במפה, ולכן נכנסות גם למלאי המשילות ולתיק ה-ROI. הצעד הבא: להגדיר להן בעלים.`, severity:'medium', area:'org' }]],
+    roi: [['get_roi',{}], ...(worst ? [['set_roi_inclusion',{ name:worst.name, include:false }]] : []), ['add_insight',{ title:'התיק מתמקד ביוזמות עם החזר מהיר', detail: worst ? `"${worst.name}" הוצאה מהתיק כי זמן ההחזר שלה הארוך ביותר. שאר היוזמות מחזירות את עצמן בפחות משנה.` : 'כל היוזמות בתיק מחזירות את עצמן בפחות משנה.', severity:'low', area:'roi' }]],
+    gov: [['get_governance',{}], ...(hiNoOwner ? [['set_governance',{ name:hiNoOwner.name, owner:'מנהל/ת המוקד', status:'בתכנון' }]] : []), ['add_insight',{ title:'שימוש בסיכון גבוה קיבל בעלים', detail: hiNoOwner ? `"${hiNoOwner.name}" בסיכון גבוה: הוגדר בעלים (מנהל/ת המוקד) וסטטוס "בתכנון". חסרים עדיין תסקיר השפעה ובדיקת הטיה.` : 'לכל השימושים בסיכון גבוה כבר יש בעלים.', severity:'high', area:'gov' }]],
+    kpi: [['get_kpis',{}],['add_kpi',{ name:'שיחות חוזרות תוך 7 ימים', unit:'%', direction:'down', baseline:18, target:12, source:'CRM' }],['add_insight',{ title:'נוסף מדד לשיחות חוזרות', detail:'אף מדד בתיק לא מודד אם הבעיה נפתרה בפעם הראשונה. נוסף "שיחות חוזרות תוך 7 ימים": בסיס 18%, יעד 12%.', severity:'medium', area:'kpi' }]],
+    disc: [['get_discovery',{}],['search_knowledge',{ query:'בקשת ניתוק שימור הצעה' }],['add_discovered_process',{ name:'טיפול בבקשת ניתוק ושימור', dept:'שימור', trigger:'שיחה נכנסת', as_is:['הנציג מעביר לשימור','בדיקה ידנית של היסטוריית תקלות','בחירת הצעה לפי שיקול דעת','תיעוד סיבת העזיבה'], to_be:['שליפה אוטומטית של תקלות 90 יום','הצעה מותרת לפי הנוהל מוצגת לנציג','תיעוד סיבה אוטומטי'], volume_per_month:1400, minutes_per_case:9, repetitive:4, rules:4, language:4, data:4, judgment:3, risk:3, systems:['CRM','מערכת חיובים'], channels:['טלפוניה'], personal_data:true, procedure:'kb4' }],['add_process_to_map',{ name:'טיפול בבקשת ניתוק ושימור' }],['add_insight',{ title:'תהליך חדש: שימור בבקשת ניתוק', detail: kRet ? `לפי ${kRet.name} (${kRet.id}): "${kRet.quote}" זה כלל ברור שאפשר להציג לנציג אוטומטית.` : 'אין במאגר נוהל שימור, ולכן ההצעה ללקוח נשארת בשיקול דעת הנציג.', severity:'medium', area:'org' }]],
+    stack: [['get_discovery',{}], ...(top ? [['set_process_wave',{ name:top.name, wave:1 }]] : []), ['add_insight',{ title:`סדר בנייה: ${top ? top.name : 'התהליך המוביל'}`, detail: top ? `${buildOrder(top).join(' ← ')}. נתמך כבר בדמו: ${stackFor(top).flatMap(([, x]) => x).filter(x => x.status === 'demo').map(x => x.tool).slice(0, 4).join(', ')}.` : 'אין תהליכים.', severity:'low', area:'cross' }]],
+    kb: [['get_discovery',{}], ...links.flatMap(l => [['search_knowledge',{ query:l.p.name }],['link_procedure',{ name:l.p.name, procedure:l.doc.id }]]), ['search_knowledge',{ query:'זיכוי חיוב כפול אישור ראש צוות' }],...(kCred ? [['add_insight',{ title:'כלל מחייב לאוטומציית הזיכוי', detail:`"${kCred.quote}" (${kCred.name}, ${kCred.id}). האוטומציה חייבת לאכוף את הכלל הזה.`, severity:'high', area:'gov' }]] : []), ...(noProc ? [['add_insight',{ title:`ל"${noProc.name}" אין נוהל`, detail:`לא נמצא במאגר נוהל לתהליך "${noProc.name}". לפני הטמעה צריך להגדיר מי מאשר ובאילו כללים.`, severity:'low', area:'gov' }]] : [])]
+  };
+  const FIN = { insights:'עברתי על המוקד ועל המפה, הוספתי שתי הזדמנויות למפה ורשמתי תובנה.', roi:'בניתי תיק עם החזר מהיר ורשמתי את ההחלטה.', gov:'הגדרתי בעלים לשימוש בסיכון גבוה, והשארתי את הסטטוס בתכנון.', kpi:'הוספתי מדד לשיחות חוזרות.', disc:'הצעתי תהליך שימור מבוסס נוהל והוספתי אותו למפה.', stack:'קבעתי גל וסדר בנייה לתהליך המוביל.', kb:'קישרתי נוהל לתהליך שחסר לו, ציטטתי כלל מחייב מהמאגר וסימנתי את התהליך שנשאר בלי נוהל.' };
+  return { steps: S[id] || [], fin: FIN[id] || 'הסוכן סיים.' };
+}
+async function runAgentDemo(a){
+  if(agentRun){ toast('סוכן אחר עדיין רץ', 'err'); return; }
+  agentRun = { name: a.name + ' · דמו', ctl: new AbortController(), snap: agSnapshot(), changed: false, demo: true };
+  $('ag-run').hidden = false; $('ag-title').textContent = agentRun.name; $('ag-trace').innerHTML = ''; $('ag-undo').hidden = true; $('ag-stop').hidden = false;
+  $('ag-run').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  const { steps, fin } = demoScript(a.id), sleep = ms => new Promise(r => setTimeout(r, ms));
+  traceAdd('think', 'הרצת דמו: תרחיש קבוע, בלי חיבור ל-AI. הפעולות אמיתיות בתוך הכלי, ואפשר לבטל אותן.');
+  try{
+    for(const [tool, input] of steps){ if(agentRun.ctl.signal.aborted) throw { code:'cancelled' }; await sleep(300);
+      try{ await execTool(tool, input, agentRun.ctl.signal); }catch(e){ if(agentRun.ctl.signal.aborted) throw { code:'cancelled' }; traceAdd('no', String(e.message || e)); } }
+    traceAdd('think', fin); traceAdd('done', 'הסוכן סיים.'); toast(`${a.name} סיים (דמו)`);
+  }catch(e){ traceAdd('no', 'הסוכן נעצר.'); }
+  finally{ $('ag-stop').hidden = true; const r = agentRun; agentRun = null; $('ag-undo').hidden = !r.changed; $('ag-undo').onclick = () => { agRestore(r.snap); $('ag-undo').hidden = true; traceAdd('no', 'כל השינויים של הסוכן בוטלו.'); toast('השינויים בוטלו'); }; }
+}
+const _runAgent = runAgent;
+runAgent = async function(name, task, toolNames){
+  const a = AGENTS.find(x => x.name === name);
+  if(a && useDemo()) return runAgentDemo(a);
+  if(!a && useDemo()){
+    const q = String(task), pick = /תקציב|ROI|תיק|החזר/.test(q) ? 'roi' : /משילות|בעלים|סיכון/.test(q) ? 'gov' : /מדד|KPI/.test(q) ? 'kpi' : /נוהל|ידע|מקור/.test(q) ? 'kb' : /כלים|גל|בנייה/.test(q) ? 'stack' : /תהליך|להטמיע/.test(q) ? 'disc' : 'insights';
+    toast('מצב דמו: מריץ את התרחיש הקרוב לבקשה'); return runAgentDemo(AGENTS.find(x => x.id === pick));
+  }
+  return _runAgent(name, task, toolNames);
+};
+const _renderAgents = renderAgents;
+renderAgents = function(){
+  _renderAgents();
+  $('ag-cards').querySelectorAll('.agent').forEach((card, i) => { const a = AGENTS[i]; if(!a) return; const b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm'; b.textContent = 'הרץ דמו'; b.dataset.agentDemo = a.id; b.onclick = () => runAgentDemo(a); card.append(b); });
+};
+
+/* ================= offline demo paths for every AI step ================= */
+function runDemoAnalysis(){
+  const t0 = Date.now(), phases = ['פרטים מזהים הוסתרו.','מזהה כוונות וסנטימנט…','משרטט את התהליך לפני ואחרי…','מדרג הזדמנויות ומאמת ציטוטים…'];
+  $('run').disabled = true;
+  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${phases[0]}</b><span class="eta">· הרצת דמו מקומית, בלי API</span></div><div class="scanbar" aria-hidden="true"></div>`;
+  let k = 0; const iv = setInterval(() => { k++; const ph = $('run-phase'); if(ph && phases[k]) ph.textContent = phases[k]; }, 550);
+  setTimeout(() => { clearInterval(iv);
+    state.analysis = JSON.parse(JSON.stringify(DEMO_ANALYSIS)); state.isDemo = true; state.sent = null; state.when = null; state.chat = [];
+    saveLocal(); renderResults(); renderSources();
+    const v = verifyAll(state.analysis);
+    $('run-state').innerHTML = `<div class="msg ok">הרצת הדמו הושלמה ב-${Math.round((Date.now() - t0) / 100) / 10} שניות. ${v.ok} מתוך ${v.total} ציטוטים נמצאו במקור. <span class="chip vio">נתונים סינתטיים</span></div>`; go('s-results'); }, 2300);
+}
+$('run-demo').onclick = runDemoAnalysis;
+/* when the live analysis fails, offer the local demo in one click */
+new MutationObserver(() => { const m = document.querySelector('#run-state .msg.err'); if(m && !m.querySelector('.fb')){ const b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm fb'; b.textContent = 'להציג במקום זה דמו מקומי'; b.style.marginInlineStart = '10px'; b.onclick = runDemoAnalysis; m.append(b); } }).observe($('run-state'), { childList:true, subtree:true });
+
+/* deterministic local classifier for the accuracy test */
+const EVAL_KW = { 'תקלה טכנית':['לא עובד','נורה','ראוטר','ממיר','איטי','נופל','אינטרנט','קליטה','לא נדלק','תקלה','wifi','טלוויזיה','גלישה'], 'בירור חשבון':['חייבו','חיוב','חשבונית','זיכוי','תשלום','כסף','אשראי','החזר','תוספת','שקל'], 'סטטוס טכנאי':['טכנאי','מגיע','ביקור','הגעה','חלון','לתאם'], 'בקשת ניתוק':['לבטל','ביטול','ניתוק','לנתק','מתנתק','עובר לחברה','לעזוב','יקר מדי'], 'שינוי חבילה':['שדרוג','לשדרג','חבילה','מגה','ערוצ','להקפיא','הקפאה'] };
+function demoClassify(items, labels){
+  const other = labels.find(l => /^(אחר|other)$/i.test(l));
+  return items.map(it => { let best = other || labels[0], bs = 0; labels.forEach(l => { if(l === other) return; const kw = EVAL_KW[l] || kbTokens(l); const sc = kw.reduce((n, w) => n + (it.text.includes(w) ? 1 : 0), 0); if(sc > bs){ bs = sc; best = l; } }); return { id: it.id, label: best }; });
+}
+let evalOffline = false;
+$('eval-demo').onclick = () => { evalOffline = true; $('eval-run').click(); };
+
+/* local answers for the analyst chat */
+function demoChatAnswer(q){
+  const a = state.analysis, top = [...a.opportunities].sort((x, y) => roi(y).ils - roi(x).ils), t = totals(a), o = top[0];
+  if(/מנהל|להציג|דקה/.test(q)) return `בדקה: "${o.title}". היום ${o.description} החיסכון הסביר כ-${ils(roi(o).ils * SCEN.r)} בחודש, והמאמץ ${o.effort} מתוך 5. פיילוט של 4 שבועות על צוות אחד, עם מדד: ${o.kpi || 'זמן טיפול ממוצע'}.`;
+  if(/סיכון|סיכונים/.test(q)) return `הסיכונים העיקריים: ${top.slice(0, 3).map(x => x.risk || 'אימוץ חלקי').filter(Boolean).join('; ')}. מקטינים אותם עם אישור נציג לפני שמירה, מבחן דיוק לפני עלייה, ובעלים לכל שימוש במלאי המשילות.`;
+  if(/נציגים|יגיבו|מכינים/.test(q)) return 'מציגים לנציגים את הכלי כחוסך עבודה ולא כמחליף: הם מאשרים כל סיכום, ומודדים את הזמן שחסכו. מתחילים עם 2 עד 3 נציגים מובילים שמדריכים את השאר.';
+  if(/חסר|לאסוף|נתונים/.test(q)) return `כדי לדייק חסר: ${a.data_gaps.join(' · ') || 'דוחות זמני טיפול לפי סיבת פנייה'}.`;
+  return `לפי הניתוח: ${a.summary} ההזדמנות המובילה היא "${o.title}", וטווח החיסכון ${rng(t.ils)} בחודש.`;
+}
+document.addEventListener('submit', e => {
+  if(e.target.id !== 'chat-form' || !useDemo()) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  const q = $('chat-in').value.trim(); if(!q) return;
+  $('chat-in').value = ''; state.chat.push({ role:'user', content:q }); state.chat.push({ role:'assistant', content: demoChatAnswer(q) + '\n\n(תשובת דמו מקומית, מבוססת על הניתוח)' }); renderChat();
+  $('chat-status').textContent = '';
+}, true);
+
+/* local policy draft */
+function demoPolicy(){
+  const gi = govItems(), hi = gi.filter(g => g.tier === 2);
+  return `# מדיניות שימוש בבינה מלאכותית (טיוטה לדוגמה)\n\n## מטרה ותחולה\nהמדיניות חלה על כל שימוש ב-AI בארגון: ${gi.length} שימושים במלאי.\n\n## עקרונות\n- פרטים מזהים מוסתרים לפני כל שליחה למודל.\n- כל ממצא מבוסס מקור וניתן לבדיקה.\n- אדם מאשר כל פעולה שמשנה נתוני לקוח.\n\n## תפקידים\n- בעלים לכל שימוש (תפקיד, לא שם).\n- ממונה הגנת פרטיות מאשר שימושים בסיכון גבוה.\n\n## שימושים בסיכון גבוה\n${hi.map(g => `- ${g.name}: נדרשים ${g.controls.map(c => c.t).slice(0, 3).join(', ')}`).join('\n') || '- אין כרגע'}\n\n## בקרה ומדידה\n- יומן ביקורת לכל הרצה ופעולה.\n- מבחן דיוק לפני עלייה לייצור, ומדידת KPI אחרי.\n\nטיוטה לעבודה, לא ייעוץ משפטי.`;
+}
+$('gov-policy').addEventListener('click', e => { if(!useDemo()) return;
+  e.preventDefault(); e.stopImmediatePropagation(); const text = demoPolicy(), out = $('gov-policy-out');
+  out.innerHTML = `<div style="display:grid;gap:8px"><div class="msg" style="white-space:pre-wrap;max-height:420px;overflow:auto">${esc(text)}</div><div class="row"><button class="btn primary sm" id="gov-policy-dl">הורדת הטיוטה (Markdown)</button><span class="chip vio">טיוטת דמו מקומית</span><span class="note" id="gov-policy-st"></span></div></div>`;
+  $('gov-policy-dl').onclick = () => save(`טיוטת-מדיניות-AI-${stamp()}.md`, text, $('gov-policy-st'), 'text/markdown'); }, true);
+/* org discovery with Claude: offline adds the demo organization */
+$('org-ai-run').addEventListener('click', e => { if(!useDemo()) return; e.preventDefault(); e.stopImmediatePropagation();
+  let n = 0; ORG_DEMO.forEach(r => { if(!org.rows.some(x => x.name === r.name)){ org.rows.push({ ...r }); n++; } }); saveOrg(); renderOrg();
+  $('org-ai-status').textContent = n ? `דמו מקומי: נוספו ${n} תהליכים לדוגמה (לא מתוך התיאור שלכם).` : 'דמו מקומי: תהליכי הדוגמה כבר בטבלה.'; }, true);
+/* n8n drafts: offline template */
+document.addEventListener('click', e => { const b = e.target.closest('[data-n8n]'); if(!b || !useDemo()) return; e.preventDefault(); e.stopImmediatePropagation();
+  const i = +b.dataset.n8n, o = state.analysis.opportunities[i], t = o.category === 'סוכן AI' ? 'agent' : o.category === 'אוטומציה' ? 'auto' : 'assist';
+  save(`n8n-${o.title.replace(/\s+/g, '-')}.json`, JSON.stringify(n8nTemplate(o.title, t, arr(o.tools).filter(x => !/n8n|make|claude/i.test(x))), null, 2), $('n8n-st-' + i), 'application/json'); }, true);
+
+/* ================= overview hooks ================= */
+function renderOverviewExtras(){
+  const D = discItems(), k = kbLoad(), ch = kbChunks().length;
+  $('ov-kb').innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/></svg>${k.docs.length} נהלים · ${ch} קטעים באינדקס`;
+  const top = D.filter(p => p.s.type !== 'data').sort((a, b) => b.s.feas * b.s.ils - a.s.feas * a.s.ils).slice(0, 3);
+  $('ov-procs').innerHTML = top.length ? `${discLoad().isDemo || isIV() ? '<span class="chip vio" style="justify-self:start">תהליכים לדוגמה (סינתטיים) · חיסכון בתרחיש סביר</span>' : '<span class="note">חיסכון בתרחיש סביר</span>'}<div class="procs3">${top.map(p => `<div class="p3"><div><b>${esc(p.name)}</b><small>${esc(p.dept)} · גל ${p.wave} · היתכנות ${p.s.feas}</small></div><span class="rec" style="color:${REC[p.s.type].c};background:${REC[p.s.type].bg}">${REC[p.s.type].label}</span><span class="v">${ils(p.s.ils * SCEN.r)}<small> בחודש</small></span><button class="btn sm proc-demo" type="button" data-proc-demo-ov="${esc(p.id)}">הרץ דמו</button></div>`).join('')}</div>`
+    : '<div class="empty">אין עדיין תהליכים מזוהים. <a class="btn sm" href="#s-disc">לזיהוי תהליכים</a></div>';
+  $('ov-procs').querySelectorAll('[data-proc-demo-ov]').forEach(b => b.onclick = () => procDemo(D.find(p => p.id === b.dataset.procDemoOv)));
+}
+const _renderOverview = renderOverview;
+renderOverview = function(){ _renderOverview(); renderOverviewExtras(); };
+
+
+
+/* ================= v17 glue: interview mode, tour, offline paths ================= */
+/* interview mode also swaps discovery and the knowledge base to their demo sets, and restores them after */
+const _ivSet = ivSet;
+ivSet = function(on){
+  if(on){ lsSet('xray-work-v17', JSON.stringify({ disc: lsGet('xray-disc'), kb: lsGet('xray-kb') })); lsSet('xray-disc', null); lsSet('xray-kb', null); }
+  else { let w = null; try{ w = JSON.parse(lsGet('xray-work-v17') || 'null'); }catch(e){} if(w){ lsSet('xray-disc', w.disc); lsSet('xray-kb', w.kb); } lsSet('xray-work-v17', null); }
+  discView = { rec:'all', dept:'all' }; $('kb-out').innerHTML = '';
+  _ivSet(on); renderDisc(); renderKb();
+};
+/* the banner also reflects the AI connection once it is known */
+const _setAiStatus = setAiStatus;
+setAiStatus = function(){ _setAiStatus(); bannerUi(); };
+
+/* 3-minute interview tour */
+let tourT0 = 0;
+function startIvTour(){
+  if(!isIV()) ivSet(true);
+  tourSet = IV_TOUR; tourT0 = Date.now(); clearInterval(tourTimer);
+  const tick = () => { const left = Math.max(0, 180 - Math.round((Date.now() - tourT0) / 1000)), el = $('tour-timer'); if(!el) return; el.hidden = false; el.textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`; el.classList.toggle('late', left < 30); };
+  tick(); tourTimer = setInterval(tick, 1000); tourShow(0);
+}
+
+/* in interview mode the analysis run is the local demo, never a live call */
+$('run').addEventListener('click', e => { if(!isIV()) return; e.preventDefault(); e.stopImmediatePropagation(); runDemoAnalysis(); }, true);
+
+/* org executive brief: local version computed from the map */
+function demoOrgBrief(){
+  const L = orgScored().filter(x => x.s.type !== 'data' && x.s.ils > 0).sort((a, b) => b.s.feas * b.s.ils - a.s.feas * a.s.ils), tot = L.reduce((n, x) => n + x.s.ils, 0), t3 = L.slice(0, 3);
+  if(!t3.length) return 'אין עדיין תהליכים עם חיסכון במפה. הוסיפו תהליכים או טענו ארגון לדוגמה.';
+  return `איפה להתחיל: ${t3.map(x => `"${x.r.name}" (${x.r.dept}, היתכנות ${x.s.feas}, ${ils(x.s.ils * SCEN.r)} בחודש בתרחיש סביר)`).join('; ')}.\n\nלמה: אלה התהליכים עם השילוב הגבוה ביותר של היתכנות וחיסכון, לפי הנוסחה הגלויה בטבלה. סך הפוטנציאל במפה: ${ils(tot * SCEN.r)} בחודש בתרחיש סביר.\n\nהצעד הבא: בעלים ומדד לכל אחד מהשלושה, ופיילוט של 4 שבועות על הראשון.`;
+}
+document.addEventListener('click', e => { if(!e.target.closest('#org-brief') || !useDemo()) return; e.preventDefault(); e.stopImmediatePropagation();
+  $('org-brief-out').innerHTML = `<div style="display:grid;gap:6px"><div class="msg" style="white-space:pre-wrap">${esc(demoOrgBrief())}</div><span><span class="chip vio">סיכום דמו מקומי, מחושב מהמפה</span></span></div>`; const st = $('org-st'); if(st) st.textContent = ''; }, true);
+
+
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); if(typeof renderRoi === 'function') renderRoi(); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
   const el = $('ai-status');
@@ -2810,7 +3420,7 @@ loadLocal();
 if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
 api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
 renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
-if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov(); renderRoi(); renderAgents(); renderInsights();
+if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov(); renderRoi(); renderAgents(); renderInsights(); renderDisc(); renderKb();
 stt.key = ssGet('xray-stt-key'); stt.provider = ssGet('xray-stt-provider') || 'openai'; $('stt-provider').value = stt.provider; if(stt.key) $('stt-key').value = stt.key;
 if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 'בתוך Claude אין אפשרות לשלוח שמע לשירות תמלול. ראו את שלוש הדרכים משמאל.'; }
 (() => { const h = (location.hash || '').slice(1); go(viewOf(h) ? h : 'overview', true); if(h) addEventListener('load', () => window.scrollTo(0, 0)); })();
@@ -2818,7 +3428,7 @@ if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 
 if(!INSIDE_CLAUDE){ $('keybox').hidden = false; $('tab-drive').hidden = true; }
 else (async () => {
   const [s, m, d] = await Promise.all(['sample','mcp','downloads'].map(n => window.claude.use(n).catch(() => null)));
-  caps = { sample: s, mcp: m, downloads: d };
+  caps = { sample: s, mcp: m, downloads: d }; capsDone = true;
   setAiStatus(); renderSources();
   if(typeof curSec !== 'undefined' && curSec === 'overview') renderOverview();
 })();
