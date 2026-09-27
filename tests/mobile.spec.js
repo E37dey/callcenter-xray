@@ -10,6 +10,8 @@ test('no horizontal page scroll at phone width', async ({ page }) => {
 
 test('navigation bar stays reachable on a phone', async ({ page }) => {
   await page.goto('/index.html');
-  await page.locator('#s-org').scrollIntoViewIfNeeded();
+  await page.click('.side nav a[href="#s-org"]');
+  await expect(page.locator('#s-org')).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await expect(page.locator('.side')).toBeInViewport();
 });

@@ -19,14 +19,18 @@ async function mockClaude(page, text) {
   return bodies;
 }
 
-async function open(page, { tour = false } = {}) {
+/** Open the app. Feature tests see every screen at once (screens: false);
+ *  navigation tests use the real one-screen-at-a-time app (screens: true). */
+async function open(page, { tour = false, screens = false } = {}) {
   if (!tour) await page.addInitScript(() => localStorage.setItem('xray-tour', 'done'));
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto('/index.html');
   await expect(page.locator('#readout')).toContainText('25/25');
+  if (!screens) await showAll(page);
   return errors;
 }
+const showAll = (page) => page.evaluate(() => Object.values(VIEWS).forEach((v) => v.secs.forEach(([id]) => { document.getElementById(id).hidden = false; })));
 
 const moneyText = (loc) => loc.innerText().then((t) => Number(t.replace(/[^\d]/g, '')));
 
@@ -34,7 +38,7 @@ test.describe('demo state', () => {
   test('loads with demo analysis and no script errors', async ({ page }) => {
     const errors = await open(page);
     await expect(page.locator('#demo-banner')).toBeVisible();
-    await expect(page.locator('#readout')).toContainText('בין');
+    await expect(page.locator('#readout')).toContainText('טווח');
     await expect(page.locator('.scen')).toHaveCount(2); // call-center summary + org map
     expect(errors).toEqual([]);
   });
@@ -210,22 +214,69 @@ test.describe('exports', () => {
   });
 });
 
-test('sidebar links scroll to their section', async ({ page }) => {
-  await open(page);
-  await page.click('.side nav a[href="#s-org"]');
-  await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-org').getBoundingClientRect().top))).toBeLessThan(60);
-  await expect(page.locator('.side nav a[href="#s-org"]')).toHaveClass(/on/);
+test.describe('screens', () => {
+  test('opens on the overview dashboard with one screen visible', async ({ page }) => {
+    await open(page, { screens: true });
+    await expect(page.locator('#overview')).toBeVisible();
+    for (const id of ['s-sources', 's-results', 's-org', 's-gov', 's-roi', 's-agents', 's-export']) await expect(page.locator('#' + id)).toBeHidden();
+    await expect(page.locator('#tb-title')).toHaveText('סקירה');
+    await expect(page.locator('#readout .kc')).toHaveCount(4);
+    await expect(page.locator('#ov-opps .ob')).toHaveCount(5);
+    await expect(page.locator('#ov-map svg')).toHaveCount(1);
+    await expect(page.locator('#ov-roi svg')).toHaveCount(1);
+    await expect(page.locator('#ov-gov')).toContainText('22');
+    await expect(page.locator('#ov-next li')).toHaveCount(6);
+  });
+
+  test('sidebar switches screens and marks the active one', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('.side nav a[href="#s-org"]');
+    await expect(page.locator('#s-org')).toBeVisible();
+    await expect(page.locator('#overview')).toBeHidden();
+    await expect(page.locator('.side nav a[href="#s-org"]')).toHaveClass(/on/);
+    await expect(page.locator('#tb-title')).toHaveText('מפת AI לארגון');
+    await expect(page.locator('#subnav')).toBeHidden();
+  });
+
+  test('call analysis has four steps in a sub-navigation', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('.side nav a[data-nav="calls"]');
+    const sub = page.locator('#subnav a');
+    await expect(sub).toHaveCount(4);
+    await expect(page.locator('#subnav a.on')).toContainText('תוצאות');
+    await sub.filter({ hasText: 'מבחן דיוק' }).click();
+    await expect(page.locator('#s-eval')).toBeVisible();
+    await expect(page.locator('#s-results')).toBeHidden();
+  });
+
+  test('dashboard cards link into their screens', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('#overview a[href="#s-gov"]');
+    await expect(page.locator('#s-gov')).toBeVisible();
+    await expect(page.locator('.side nav a[data-nav="gov"]')).toHaveClass(/on/);
+  });
+
+  test('explanations sit behind an info button', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('.side nav a[href="#s-roi"]');
+    const intro = page.locator('#s-roi > p.intro');
+    await expect(intro).toBeHidden();
+    await page.click('#s-roi .info-btn');
+    await expect(intro).toBeVisible();
+    await expect(page.locator('#s-roi .info-btn')).toHaveAttribute('aria-expanded', 'true');
+  });
 });
 
 test.describe('guidance', () => {
   test('first visit shows a tour that walks every step and closes', async ({ page }) => {
-    await open(page, { tour: true });
+    await open(page, { tour: true, screens: true });
     const tour = page.locator('#tour');
     await expect(tour).toBeVisible();
     await expect(page.locator('#tour-n')).toHaveText('1 / 11');
     for (let i = 0; i < 10; i++) await page.click('#tour-next');
     await expect(page.locator('#tour-next')).toHaveText('סיום');
     await expect(page.locator('#s-export')).toHaveClass(/tour-hl/);
+    await expect(page.locator('#s-export')).toBeVisible(); // the tour opens each step's screen
     await page.click('#tour-next');
     await expect(tour).toBeHidden();
     await page.reload();
@@ -236,10 +287,12 @@ test.describe('guidance', () => {
   });
 
   test('every step ends with a "what now" link to the next step', async ({ page }) => {
-    await open(page);
+    await open(page, { screens: true });
     await expect(page.locator('.nextbar')).toHaveCount(9);
+    await page.evaluate(() => go('s-results'));
     await page.click('#s-results .nextbar a');
-    await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-eval').getBoundingClientRect().top))).toBeLessThan(60);
+    await expect(page.locator('#s-eval')).toBeVisible();
+    await expect(page.locator('#s-results')).toBeHidden();
   });
 });
 
@@ -403,6 +456,7 @@ test.describe('ROI and KPIs', () => {
     await first.locator('[data-once]').fill('99000');
     await first.locator('[data-once]').dispatchEvent('change');
     await page.reload();
+    await showAll(page);
     expect(await count()).toBe(all - 1);
     expect(await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('xray-roi'))).some((o) => o.once === 99000))).toBe(true);
     await page.click('#roi-top');

@@ -15,44 +15,44 @@
 :root{
   --font:"IBM Plex Sans Hebrew","IBM Plex Sans","Segoe UI","Arial Hebrew",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#F8F9FB; --sunken:#EEF1F4;
-  --line:#DEE3E9; --line-2:#EBEEF2; --line-strong:#CBD2DB;
-  --ink:#0F1A2A; --ink-2:#354357; --muted:#5E6B7C; --faint:#8C97A5;
-  --accent:#0A6378; --accent-hover:#084F60; --accent-ink:#FFFFFF; --accent-soft:#E4F0F3; --accent-line:#A8CDD7;
+  --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#F9FAFB; --sunken:#F1F3F6;
+  --line:#E3E6EB; --line-2:#EEF0F3; --line-strong:#D0D5DD;
+  --ink:#101828; --ink-2:#344054; --muted:#667085; --faint:#98A2B3;
+  --accent:#3056D3; --accent-hover:#2445B0; --accent-ink:#FFFFFF; --accent-soft:#EEF2FD; --accent-line:#C3D0F6;
   --amber:#9A5A06; --amber-soft:#FDF3E1;
   --good:#0B7445; --good-soft:#E4F4EA;
   --crit:#B42318; --crit-soft:#FDECEA;
   --violet:#5A45B6; --violet-soft:#EFECFA;
   --mark:#FFEBA8;
-  --side-bg:#0E1726; --side-ink:#C4CDD9; --side-muted:#7D899B; --side-hover:#162235; --side-on:#1D2C43; --side-line:#1C2839; --side-acc:#7CCBDD;
-  --shadow-sm:0 1px 2px rgba(15,26,42,.05);
+  --side-bg:#FFFFFF; --side-ink:#344054; --side-muted:#98A2B3; --side-hover:#F2F4F7; --side-on:#EEF2FD; --side-line:#E3E6EB; --side-acc:#3056D3;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.03);
   --shadow-md:0 1px 2px rgba(15,26,42,.04),0 6px 16px -4px rgba(15,26,42,.10);
-  --ring:0 0 0 3px rgba(10,99,120,.18);
+  --ring:0 0 0 3px rgba(48,86,211,.16);
   --r-sm:6px; --r:8px; --r-lg:12px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --bg:#0A1018; --surface:#111924; --surface-2:#151F2B; --sunken:#0D141D;
+    --bg:#0B1017; --surface:#121922; --surface-2:#161E29; --sunken:#0E141C;
     --line:#233042; --line-2:#1B2634; --line-strong:#304055;
     --ink:#E6EBF1; --ink-2:#C1CBD7; --muted:#8F9CAD; --faint:#6A7789;
-    --accent:#5BB8CE; --accent-hover:#7BCADB; --accent-ink:#06121A; --accent-soft:#11303A; --accent-line:#245767;
+    --accent:#86A3FF; --accent-hover:#A5BBFF; --accent-ink:#0A1024; --accent-soft:#1A2447; --accent-line:#2E3E78;
     --amber:#F0A73A; --amber-soft:#30240F; --good:#4FC98A; --good-soft:#0F2D1E;
     --crit:#FF8070; --crit-soft:#381713; --violet:#A99BF4; --violet-soft:#221E42; --mark:#5A4712;
-    --side-bg:#070C13; --side-hover:#101926; --side-on:#172335; --side-line:#141E2B;
-    --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(91,184,206,.25);
+    --side-bg:#0E141D; --side-ink:#C1CBD7; --side-muted:#6A7789; --side-hover:#151E2A; --side-on:#1A2447; --side-line:#1B2634; --side-acc:#86A3FF;
+    --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(134,163,255,.25);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#0A1018; --surface:#111924; --surface-2:#151F2B; --sunken:#0D141D;
+  --bg:#0B1017; --surface:#121922; --surface-2:#161E29; --sunken:#0E141C;
   --line:#233042; --line-2:#1B2634; --line-strong:#304055;
   --ink:#E6EBF1; --ink-2:#C1CBD7; --muted:#8F9CAD; --faint:#6A7789;
-  --accent:#5BB8CE; --accent-hover:#7BCADB; --accent-ink:#06121A; --accent-soft:#11303A; --accent-line:#245767;
+  --accent:#86A3FF; --accent-hover:#A5BBFF; --accent-ink:#0A1024; --accent-soft:#1A2447; --accent-line:#2E3E78;
   --amber:#F0A73A; --amber-soft:#30240F; --good:#4FC98A; --good-soft:#0F2D1E;
   --crit:#FF8070; --crit-soft:#381713; --violet:#A99BF4; --violet-soft:#221E42; --mark:#5A4712;
-  --side-bg:#070C13; --side-hover:#101926; --side-on:#172335; --side-line:#141E2B;
-  --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(91,184,206,.25);
+  --side-bg:#0E141D; --side-ink:#C1CBD7; --side-muted:#6A7789; --side-hover:#151E2A; --side-on:#1A2447; --side-line:#1B2634; --side-acc:#86A3FF;
+  --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(134,163,255,.25);
 }
 
 /* ---------- base ---------- */
@@ -87,67 +87,114 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 
 /* ---------- app shell ---------- */
 .app{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100%}
-.side{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:2px;padding:16px 12px calc(16px + env(safe-area-inset-bottom,0px));background:var(--side-bg);color:var(--side-ink);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--side-line) transparent}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#F4F7FA;padding:4px 8px 16px;margin-bottom:4px;border-bottom:1px solid var(--side-line)}
-.logo .mark{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#0A6378;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
-.logo b{font-size:15.5px;font-weight:700;display:block;line-height:1.25;color:#F4F7FA}
+.side{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:2px;padding:16px 12px calc(16px + env(safe-area-inset-bottom,0px));background:var(--side-bg);border-inline-start:1px solid var(--side-line);color:var(--side-ink);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--side-line) transparent}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);padding:6px 8px 18px}
+.logo .mark{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#3056D3,#1B2F80);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.logo b{font-size:15.5px;font-weight:700;display:block;line-height:1.25;color:var(--ink)}
 .logo small{font-size:11.5px;color:var(--side-muted);display:block}
-.side .navlabel{font-size:11.5px;font-weight:600;color:var(--side-muted);padding:14px 10px 6px}
+.side .navlabel{font-size:11.5px;font-weight:600;color:var(--side-muted);padding:16px 10px 6px}
 .side nav{display:grid;gap:1px}
-.side nav a{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;text-decoration:none;color:var(--side-ink);font-weight:500;font-size:14px;transition:background .12s,color .12s}
+.side nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--side-ink);font-weight:500;font-size:14px;transition:background .12s,color .12s}
 .side nav a svg{width:17px;height:17px;flex:none;opacity:.75}
 .side nav a .n{margin-inline-start:auto;font-family:var(--mono);font-size:11px;color:var(--side-muted)}
-.side nav a:hover{background:var(--side-hover);color:#FFFFFF}
-.side nav a.on{background:var(--side-on);color:#FFFFFF}
+.side nav a:hover{background:var(--side-hover);color:var(--ink)}
+.side nav a.on{background:var(--side-on);color:var(--side-acc);font-weight:600}
 .side nav a.on svg{opacity:1;color:var(--side-acc)}
 .side nav a.on .n{color:var(--side-acc)}
 .tour-btn{display:flex;align-items:center;gap:10px;margin-top:12px;padding:7px 10px;border-radius:7px;border:1px solid var(--side-line);background:none;color:var(--side-ink);font:inherit;font-weight:500;font-size:14px;cursor:pointer;text-align:start}
 .tour-btn svg{width:17px;height:17px;opacity:.75}
 .tour-btn:hover{background:var(--side-hover);color:#FFFFFF}
-.side .card{margin-top:auto;border:1px solid var(--side-line);border-radius:10px;padding:12px;display:grid;gap:8px;background:rgba(255,255,255,.02);font-size:12.5px;color:var(--side-muted);line-height:1.5}
-.side .card b{color:#E8EDF3;font-size:12.5px}
-.side .chip{justify-self:start;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#E8EDF3;white-space:normal}
+.side .card{margin-top:auto;border:1px solid var(--side-line);border-radius:10px;padding:12px;display:grid;gap:8px;background:var(--surface-2);font-size:12.5px;color:var(--side-muted);line-height:1.5}
+.side .card b{color:var(--ink);font-size:12.5px}
+.side .chip{justify-self:start;white-space:normal}
 .side .chip::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--side-muted)}
 .side .chip.good::before{background:#4FC98A}
 .side .chip.amb::before{background:#F0A73A}
 .main{min-width:0}
-.main .wrap{max-width:1180px;margin:0 auto;padding-inline:32px;padding-block:28px 72px;display:grid;gap:20px}
+.main .wrap{max-width:1240px;margin:0 auto;padding-inline:32px;padding-block:24px 72px;display:grid;gap:20px}
 
-/* ---------- header ---------- */
-.hero{display:grid;gap:18px;padding-block:2px 4px}
-.hero-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px}
-.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-weight:500}
-.eyebrow i{width:3px;height:3px;border-radius:50%;background:var(--faint)}
-.hero h1{margin-top:6px}
-.hero .sub{color:var(--ink-2);max-width:70ch;margin-top:6px;font-size:15px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:8px}
-.readout{display:grid;grid-template-columns:1.55fr 1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
-.readout > div{background:var(--surface);padding:16px 18px;display:grid;gap:6px;align-content:start;min-width:0}
-.ro-l{font-size:12.5px;color:var(--muted);font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.ro-v{font-size:26px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums;color:var(--ink);letter-spacing:-.01em}
-.ro-v.good{color:var(--good)}
-.ro-s{font-size:12.5px;color:var(--muted)}
-.ro-scen{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;margin-top:4px}
-.ro-scen div{display:grid;padding:6px 10px;font-size:11.5px;color:var(--muted);line-height:1.4}
-.ro-scen div + div{border-inline-start:1px solid var(--line-2)}
-.ro-scen div.mid{background:var(--good-soft);color:var(--good)}
-.ro-scen b{font-size:13.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
-.ro-bars{display:grid;gap:5px;margin-top:6px}
-.ro-bars div{display:grid;grid-template-columns:2.8em 1fr;gap:8px;align-items:center;font-size:11.5px;color:var(--muted)}
-.ro-bars i{display:block;height:6px;border-radius:3px}
-.trust{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;margin:0;padding:0;font-size:13px;color:var(--muted)}
-.trust li{display:inline-flex;align-items:center;gap:6px}
-.trust svg{width:15px;height:15px;color:var(--good);flex:none}
+/* ---------- top bar & screens ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding-inline:32px;background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.tb-title{display:flex;align-items:center;gap:8px;min-width:0;font-size:14px;color:var(--muted)}
+.tb-title .sep{color:var(--faint)}
+.tb-title h1{font-size:15.5px;font-weight:600;color:var(--ink);margin:0;white-space:nowrap}
+.tb-actions{display:flex;align-items:center;gap:8px}
+.tb-actions .chip{display:none}
+.subnav{position:sticky;top:calc(60px + env(safe-area-inset-top,0px));z-index:19;display:flex;gap:2px;padding-inline:32px;background:var(--surface);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.subnav::-webkit-scrollbar{display:none}
+.subnav a{display:inline-flex;align-items:center;gap:8px;padding:12px 12px 11px;color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;border-bottom:2px solid transparent;white-space:nowrap}
+.subnav a:hover{color:var(--ink)}
+.subnav a i{font-style:normal;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:600;background:var(--sunken);color:var(--muted)}
+.subnav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.subnav a.on i{background:var(--accent);color:var(--accent-ink)}
+.info-btn{flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:600 12px/1 var(--font);cursor:pointer;display:inline-grid;place-items:center}
+.info-btn:hover,.info-btn[aria-expanded="true"]{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft)}
+.panel > p.intro{background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r);padding:12px 14px;font-size:13.5px;color:var(--ink-2);max-width:none}
+
+/* ---------- overview ---------- */
+.ov{display:grid;gap:20px}
+.ov-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px}
+.ov-head h2{font-size:24px;font-weight:600;letter-spacing:-.01em}
+.ov-head p{color:var(--muted);margin-top:4px;font-size:14px}
+.readout{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;display:grid;gap:10px;align-content:start;box-shadow:var(--shadow-sm);min-width:0}
+.kc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kc-l{font-size:13px;color:var(--muted);font-weight:500}
+.kc-ic{flex:none;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.kc-ic svg{width:17px;height:17px}
+.kc-v{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.kc-s{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.delta{font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--good-soft);color:var(--good);font-variant-numeric:tabular-nums}
+.delta.neu{background:var(--sunken);color:var(--ink-2)}
+.ov-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+.ov-grid{grid-template-areas:"opps roi" "map gov" "map ins" "next next"}
+.ov-grid > :nth-child(1){grid-area:opps} .ov-grid > :nth-child(2){grid-area:roi} .ov-grid > :nth-child(3){grid-area:map}
+.ov-grid > :nth-child(4){grid-area:gov} .ov-grid > :nth-child(5){grid-area:ins} .ov-grid > :nth-child(6){grid-area:next}
+.ov-grid .steps-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
+.oc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;display:grid;gap:14px;align-content:start;box-shadow:var(--shadow-sm);min-width:0}
+.oc-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.oc-h h3{font-size:14.5px}
+.oc-h a{font-size:13px;font-weight:500;text-decoration:none;color:var(--accent);white-space:nowrap}
+.oc-h a:hover{text-decoration:underline}
+.ob{display:grid;grid-template-columns:minmax(0,1fr) 110px 7.5em;gap:14px;align-items:center;padding-block:9px}
+.ob + .ob{border-top:1px solid var(--line-2)}
+.ob b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ob small{color:var(--muted);font-size:12px}
+.ob .t{height:6px;border-radius:3px;background:var(--sunken);overflow:hidden}
+.ob .t i{display:block;height:100%;border-radius:3px;background:var(--accent)}
+.ob .v{text-align:left;font-weight:600;font-variant-numeric:tabular-nums;font-size:13.5px}
+.tiers{display:grid;gap:10px}
+.tiers div{display:grid;grid-template-columns:6em 1fr 2.5em;gap:12px;align-items:center;font-size:13.5px}
+.tiers .t{height:8px;border-radius:4px;background:var(--sunken);overflow:hidden}
+.tiers .t i{display:block;height:100%;border-radius:4px}
+.tiers b{text-align:left;font-variant-numeric:tabular-nums}
+.ov-stat{display:flex;gap:20px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line-2);font-size:13px;color:var(--muted)}
+.ov-stat b{color:var(--ink);font-size:15px;margin-inline-end:4px;font-variant-numeric:tabular-nums}
+.ov-ins{display:grid;gap:10px}
+.ov-ins .i{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:13.5px}
+.ov-ins .i p{color:var(--muted);font-size:12.5px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ov-ins .s{width:8px;height:8px;border-radius:50%;margin-top:7px}
+.steps-list{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.steps-list li a{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13.5px}
+.steps-list li a:hover{background:var(--surface-2)}
+.steps-list .ck{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line-strong);display:grid;place-items:center;color:transparent}
+.steps-list .ck svg{width:12px;height:12px}
+.steps-list li.done .ck{background:var(--good);border-color:var(--good);color:#fff}
+.steps-list li.done span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-strong)}
+.steps-list .go{color:var(--faint)}
+.empty{display:grid;gap:10px;justify-items:start;padding:6px 0;color:var(--muted);font-size:13.5px}
 
 /* ---------- sections ---------- */
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:24px;display:grid;gap:16px;scroll-margin-top:16px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);padding:24px 28px;display:grid;gap:16px;scroll-margin-top:16px;min-width:0}
 .phead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
-.panel > .phead{padding-bottom:16px;border-bottom:1px solid var(--line-2)}
+.panel > .phead{padding-bottom:18px;border-bottom:1px solid var(--line-2)}
+.panel > .phead h2{font-size:20px}
 .shead{display:flex;align-items:center;gap:12px}
 .shead .ico{display:none}
-.shead .num{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
+.shead .num{display:none}
 .panel > p{color:var(--ink-2);max-width:82ch}
-.nextbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding-top:16px;margin-top:4px;border-top:1px solid var(--line-2);font-size:13.5px;color:var(--muted)}
+.nextbar{display:flex;justify-content:flex-end;padding-top:14px;border-top:1px solid var(--line-2)}
+.nextbar > span{display:none}
 .nextbar b{color:var(--ink)}
 .nextbar .btn.primary{background:var(--surface);color:var(--accent);border-color:var(--line-strong)}
 .nextbar .btn.primary:hover{background:var(--accent-soft);border-color:var(--accent-line)}
@@ -369,7 +416,6 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tier.h{background:var(--crit-soft);color:var(--crit)} .tier.m{background:var(--amber-soft);color:var(--amber)} .tier.l{background:var(--good-soft);color:var(--good)}
 .gov-tbl input.own,.gov-tbl select,.roi-tbl input,.kpi-tbl input,.kpi-tbl select{font:inherit;font-size:13px;height:32px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:0 8px;color:var(--ink)}
 .gov-tbl input.own{width:130px}
-.gov-tbl td:first-child{min-width:230px}.gov-tbl td:nth-child(3){max-width:260px}
 .gov-tbl details summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;white-space:nowrap}
 .gov-tbl details summary::-webkit-details-marker{display:none}
 .prog,.kprog{height:5px;border-radius:999px;background:var(--sunken);overflow:hidden;display:inline-block;vertical-align:middle}
@@ -457,7 +503,9 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .top3{grid-template-columns:1fr}
   .kpis{grid-template-columns:1fr 1fr}
   .readout{grid-template-columns:1fr 1fr}
-  .readout > div:first-child,.readout > div:last-child{grid-column:span 2}
+  .ov-grid{grid-template-columns:1fr;grid-template-areas:none}
+  .ov-grid > *{grid-area:auto!important}
+  .ov-grid .steps-list{grid-template-columns:1fr}
   .agents{grid-template-columns:1fr 1fr}
   .insights{grid-template-columns:1fr}
 }
@@ -465,8 +513,14 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .app{grid-template-columns:1fr}
   .side{position:sticky;top:0;z-index:30;height:auto;flex-direction:row;align-items:center;gap:8px;padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top,0px));overflow-x:auto;scrollbar-width:none}
   .side::-webkit-scrollbar{display:none}
+  .side{border-inline-start:0;border-bottom:1px solid var(--side-line)}
   .side .navlabel,.side .card,.logo small,.tour-btn{display:none}
-  .logo{border:0;padding:0 4px;margin:0}
+  .logo{padding:0 4px;margin:0}
+  .topbar{position:static;height:auto;min-height:52px;padding:10px 16px}
+  .subnav{position:static;padding-inline:16px}
+  .ov-grid{grid-template-columns:1fr;grid-template-areas:none}
+  .ov-grid > *{grid-area:auto!important}
+  .ov-grid .steps-list{grid-template-columns:1fr}
   .logo .mark{width:30px;height:30px}
   .logo b{font-size:14.5px;white-space:nowrap}
   .side nav{display:flex;gap:2px}
@@ -481,60 +535,56 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   h1{font-size:25px}
   .panel{padding:16px}
   .grid2,.run,.keybox,.acc-grid,.agents{grid-template-columns:1fr}
-  .kpis,.readout{grid-template-columns:1fr}
-  .readout > div:first-child,.readout > div:last-child{grid-column:auto}
+  .kpis{grid-template-columns:1fr}
+  .readout{grid-template-columns:1fr 1fr;gap:10px}
+  .kc{padding:14px}
+  .kc-v{font-size:22px}
+  .kc-ic{display:none}
+  .ob{grid-template-columns:minmax(0,1fr) 6.5em}
+  .ob .t{display:none}
   .scen{grid-template-columns:1fr}
   .bar{grid-template-columns:7.5em 1fr auto}
   .src{grid-template-columns:auto 1fr auto}
   .src .size{display:none}
-  .hero-actions .btn{flex:1}
 }
 </style>
 
 <div class="app">
 <aside class="side" aria-label="ניווט">
-  <a class="logo" href="#top"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>Call Center X-Ray</small></span></a>
-  <span class="navlabel">ניתוח שיחות מוקד</span>
-  <nav aria-label="ניתוח שיחות">
-    <a href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>מקורות<span class="n">01</span></a>
-    <a href="#s-run"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>פרטיות וניתוח<span class="n">02</span></a>
-    <a href="#s-results" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>תוצאות<span class="n">03</span></a>
-    <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
+  <a class="logo" href="#overview"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>סטודיו להטמעת AI</small></span></a>
+  <nav aria-label="ניווט ראשי">
+    <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>סקירה</a>
+    <span class="navlabel">אבחון</span>
+    <a href="#s-results" data-nav="calls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/></svg>ניתוח שיחות</a>
+    <a href="#s-org" data-nav="org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון</a>
+    <span class="navlabel">הטמעה</span>
+    <a href="#s-gov" data-nav="gov"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>משילות AI</a>
+    <a href="#s-roi" data-nav="roi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>ROI ומדדים</a>
+    <a href="#s-agents" data-nav="agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg>סוכנים חכמים</a>
+    <span class="navlabel">שיתוף</span>
+    <a href="#s-export" data-nav="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>דוחות ושמירה</a>
   </nav>
-  <span class="navlabel second">תוכנית, משילות ומדידה</span>
-  <nav aria-label="מפת ארגון">
-    <a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">05</span></a>
-    <a href="#s-gov"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12h7M12 8.5v7"/></svg>משילות AI<span class="n">06</span></a>
-    <a href="#s-roi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>ROI ומדדי הצלחה<span class="n">07</span></a>
-    <a href="#s-agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg>סוכנים חכמים<span class="n">08</span></a>
-  </nav>
-  <span class="navlabel second">סיכום ושיתוף</span>
-  <nav aria-label="סיכום ושיתוף">
-    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">09</span></a>
-    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">10</span></a>
-  </nav>
-  <button class="tour-btn" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור מודרך</button>
   <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
 </aside>
 <main class="main" id="top">
+<header class="topbar">
+  <div class="tb-title"><span>רנטגן למוקד</span><span class="sep">/</span><h1 id="tb-title">סקירה</h1></div>
+  <div class="tb-actions"><button class="btn ghost sm" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור</button><a class="btn primary sm" href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ניתוח חדש</a></div>
+</header>
+<nav class="subnav" id="subnav" aria-label="שלבים" hidden></nav>
 <div class="wrap">
-  <header class="hero">
-    <div class="hero-top">
-      <div>
-        <div class="eyebrow"><span>אבחון תהליכים ואוטומציה</span><i></i><span>מוקדי שירות ומכירות</span><i></i><span>וכל הארגון</span></div>
-        <h1>רנטגן למוקד</h1>
-        <p class="sub">מה באמת קורה בשיחות, ואיפה AI יחסוך הכי הרבה. מכניסים תמלולים, נהלים ותצפיות. מקבלים מפת תהליך, הזדמנויות עם ציטוטים מאומתים, חיסכון בשקלים ותוכנית הטמעה.</p>
-      </div>
-      <div class="hero-actions"><a class="btn" href="#s-org">מפת AI לארגון</a><a class="btn primary" href="#s-sources">ניתוח שיחות חדש</a></div>
+  <section class="ov" id="overview" aria-labelledby="h-ov">
+    <div class="ov-head"><div><h2 id="h-ov">תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>הורדת מצגת</button></div></div>
+    <div class="readout" id="readout" aria-live="polite"></div>
+    <div class="ov-grid">
+      <div class="oc"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results">כל ההזדמנויות</a></div><div id="ov-opps"></div></div>
+      <div class="oc"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
+      <div class="oc"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה המלאה</a></div><div id="ov-map"></div></div>
+      <div class="oc"><div class="oc-h"><h3>משילות AI</h3><a href="#s-gov">למלאי השימושים</a></div><div id="ov-gov"></div></div>
+      <div class="oc"><div class="oc-h"><h3>תובנות אחרונות</h3><a href="#s-agents">לסוכנים</a></div><div id="ov-ins"></div></div>
+      <div class="oc"><div class="oc-h"><h3>הצעדים הבאים</h3></div><ol class="steps-list" id="ov-next"></ol></div>
     </div>
-    <div class="readout" aria-live="polite" id="readout"></div>
-    <ul class="trust" aria-label="עקרונות">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>כל ממצא עם ציטוט שנבדק מול המקור</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>דיוק נמדד במבחן מובנה</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>כל פעולה של סוכן מחכה לאישור</li>
-    </ul>
-  </header>
+  </section>
 
   <!-- 1. SOURCES -->
   <section class="panel" id="s-sources" aria-labelledby="h-src">
@@ -1245,7 +1295,7 @@ $('run').onclick = async () => {
     saveLocal(); renderResults();
     const v = verifyAll(state.analysis); toast('הניתוח הושלם');
     $('run-state').innerHTML = `<div class="msg ok">הניתוח הושלם ב-${Math.round((Date.now()-t0)/1000)} שניות. ${v.total ? `${v.ok} מתוך ${v.total} ציטוטים נמצאו במקור מילה במילה.` : ''}</div>`;
-    $('s-results').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    go('s-results');
   }catch(e){
     const t = errText(e); $('run-state').innerHTML = t ? `<div class="msg err">${esc(t)}</div>` : '<div class="msg">הניתוח נעצר.</div>';
   }finally{
@@ -1282,13 +1332,14 @@ function evidenceHtml(evs){
 document.querySelectorAll('.rtabs button').forEach(b => b.onclick = () => showR(b.dataset.r));
 function showR(r){ document.querySelectorAll('.rtabs button').forEach(x => x.setAttribute('aria-selected', x.dataset.r === r)); document.querySelectorAll('[data-rp]').forEach(p => p.hidden = p.dataset.rp !== r); }
 function renderReadout(a){
-  const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps), mx = Math.max(b, af, 1);
-  $('readout').innerHTML = `<div><span class="ro-l"><span>חיסכון חודשי משוער</span><span class="chip ${state.isDemo ? 'vio' : 'good'}">${state.isDemo ? 'נתוני דוגמה' : 'ניתוח אחרון'}</span></span><b class="ro-v good">${rngK(t.ils)}</b>
-      <div class="ro-scen"><div><span>פסימי</span><b>${ils(t.ils*SCEN.p)}</b></div><div class="mid"><span>סביר</span><b>${ils(t.ils*SCEN.r)}</b></div><div><span>אופטימי</span><b>${ils(t.ils*SCEN.o)}</b></div></div></div>
-    <div><span class="ro-l">זמן בתהליך המרכזי</span><b class="ro-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b>
-      ${af ? `<div class="ro-bars"><div><span>היום</span><i style="width:100%;background:var(--amber)"></i></div><div><span>אחרי</span><i style="width:${Math.round(af/mx*100)}%;background:var(--good)"></i></div></div>` : '<span class="ro-s">דקות לשיחה</span>'}</div>
-    <div><span class="ro-l">ציטוטים שאומתו</span><b class="ro-v mono">${v.ok}/${v.total}</b><span class="ro-s">כל ממצא נבדק מול הטקסט המקורי</span></div>
-    <div><span class="ro-l">שעות נציג בחודש</span><b class="ro-v mono">${nf.format(Math.round(t.hrs*SCEN.r))}</b><span class="ro-s">בתרחיש הסביר · ${a.opportunities.length} הזדמנויות</span></div>`;
+  const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  const P = typeof roiItems === 'function' ? portfolio(roiItems(), 'r') : null;
+  const ic = d => '<span class="kc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg></span>';
+  $('readout').innerHTML = `
+    <div class="kc"><div class="kc-top"><span class="kc-l">חיסכון חודשי, תרחיש סביר</span>${ic('<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>')}</div><b class="kc-v">${ils(t.ils*SCEN.r)}</b><span class="kc-s">טווח: ${ils(t.ils*SCEN.p)} עד ${ils(t.ils)}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">ROI בשנה הראשונה</span>${ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>')}</div><b class="kc-v">${P ? fmtPct(P.roi12) : '—'}</b><span class="kc-s">${P ? `<span class="delta">החזר ב-${fmtPay(P.pay)}</span>${P.n} יוזמות בתיק` : ''}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">זמן בתהליך המרכזי</span>${ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>')}</div><b class="kc-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span class="kc-s">${af && b ? `<span class="delta">${Math.round((1-af/b)*100)}% פחות</span>אחרי האוטומציות` : 'דקות לשיחה'}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">ציטוטים שאומתו במקור</span>${ic('<path d="M4 12l5 5L20 6"/>')}</div><b class="kc-v mono">${v.ok}/${v.total}</b><span class="kc-s"><span class="delta ${v.total && v.ok === v.total ? '' : 'neu'}">${v.total ? Math.round(v.ok/v.total*100) : 0}%</span>כל ממצא נבדק מול הטקסט</span></div>`;
 }
 function renderResults(){
   const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0); if(typeof renderRoi === 'function' && $('roi-tbl')) setTimeout(renderRoi, 0);
@@ -1539,6 +1590,7 @@ ${items.map(it => `${it.id}. ${it.text}`).join('\n')}`, { tier:'default' });
     const ok = rows.filter(r => r.ok).length, acc = ok / rows.length;
     const per = labels.map(l => { const tp = rows.filter(r => r.label===l && r.ok).length, n = rows.filter(r => r.label===l).length, pn = rows.filter(r => r.pred===l).length; return { l, n, rec: n ? tp/n : 0, prec: pn ? tp/pn : 0 }; });
     const R = 54, C = 2*Math.PI*R;
+    state.eval.last = Date.now();
     $('eval-out').innerHTML = `<div style="display:grid;gap:14px">
       <div class="acc-grid">
         <svg class="ring" viewBox="0 0 132 132" role="img" aria-label="דיוק ${Math.round(acc*100)} אחוז"><circle cx="66" cy="66" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="14"/><circle cx="66" cy="66" r="${R}" fill="none" stroke="${acc>=.85?'var(--good)':acc>=.7?'var(--amber)':'var(--crit)'}" stroke-width="14" stroke-dasharray="${C*acc} ${C}" transform="rotate(-90 66 66)" stroke-linecap="round"/><text x="66" y="72" text-anchor="middle" font-size="26" font-weight="700" font-family="Rubik,sans-serif" fill="var(--ink)">${Math.round(acc*100)}%</text></svg>
@@ -1918,7 +1970,7 @@ function loadProject(id){
   if(p.org){ org.rows = p.org.rows || []; org.isDemo = !!p.org.isDemo; if(p.org.cost) $('org-cost').value = p.org.cost; saveOrg(); }
   if(p.gov) govSave(p.gov); if(p.roi) roiSave(p.roi); if(p.kpi) kpiSave(p.kpi); if(p.insights) insSave(p.insights); renderRoi(); renderInsights();
   saveLocal(); renderResults(); renderOrg(); toast(`נטען: ${p.name}`);
-  $('s-results').scrollIntoView({behavior:'smooth', block:'start'});
+  go('s-results');
 }
 $('proj-form').addEventListener('submit', e => { e.preventDefault(); const list = projGet(); list.unshift(snapshot($('proj-name').value.trim())); if(projSet(list.slice(0, 30))){ $('proj-name').value = ''; renderProjects(); toast('הניתוח נשמר'); } });
 $('proj-export').onclick = () => save(`ניתוחים-שמורים-${stamp()}.json`, JSON.stringify(projGet(), null, 2), $('deck-status'), 'application/json');
@@ -1979,8 +2031,8 @@ $('dl-deck').onclick = () => save(`מצגת-הטמעת-AI-${stamp()}.html`, deck
 
 /* ================= guided tour ================= */
 const TOUR = [
-  { sel:'.side', t:'שני מסלולים, סרגל אחד', d:'כאן עוברים בין השלבים. המסלול הראשון מנתח שיחות מוקד, והשני ממפה איפה כדאי להטמיע AI בכל הארגון.' },
-  { sel:'.readout', t:'השורה התחתונה, תמיד מול העיניים', d:'טווח החיסכון בשלושה תרחישים, זמן התהליך לפני ואחרי, וכמה ממצאים אומתו מול המקור. כרגע מוצגים נתוני דוגמה.' },
+  { sel:'.side', t:'כל המסכים במקום אחד', d:'מכאן עוברים בין המסכים: סקירה, ניתוח שיחות, מפת הארגון, משילות, ROI, סוכנים ודוחות.' },
+  { sel:'.readout', t:'השורה התחתונה', d:'חיסכון חודשי, ROI בשנה הראשונה, זמן התהליך לפני ואחרי, וכמה ממצאים אומתו מול המקור. כרגע מוצגים נתוני דוגמה.' },
   { sel:'#s-sources', t:'1. מכניסים חומר', d:'מדביקים תמלולים, מעלים קבצים או הקלטות, או מייבאים מ-Drive. אין לכם חומר? "טעינת נתוני דוגמה".' },
   { sel:'#s-run .shield', t:'2. פרטיות לפני הכול', d:'ת.ז, טלפונים, כרטיסי אשראי ושמות מוסתרים כאן, בדפדפן, לפני שמשהו יוצא. אפשר לראות בדיוק מה נשלח.' },
   { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
@@ -1989,7 +2041,7 @@ const TOUR = [
   { sel:'#s-roi', t:'ROI ומדדי הצלחה', d:'עלות הקמה ועלות חודשית לכל יוזמה, זמן החזר ו-ROI בשלושה תרחישים, וגרף תזרים עם נקודת איזון. מתחת: מדדי הצלחה עם בסיס, יעד ומצב בפועל.' },
   { sel:'#s-agents', t:'סוכנים חכמים', d:'סוכני Claude שקוראים את כל הנתונים, מבצעים פעולות בכלי ומביאים תובנות. כל פעולה מחכה לאישור שלכם, ואפשר לבטל הכול.' },
   { sel:'#s-projects', t:'שומרים ומשווים', d:'שומרים ניתוח בשם ומשווים בין שניים: לפני ואחרי פיילוט, או מוקד מול מוקד.' },
-  { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail. בסוף כל שלב יש "מה עכשיו?" שמכוון הלאה.' }
+  { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail.' }
 ];
 let tourI = -1;
 function tourShow(i){
@@ -1999,7 +2051,7 @@ function tourShow(i){
   $('tour').hidden = false; $('tour-n').textContent = `${i+1} / ${TOUR.length}`; $('tour-t').textContent = st.t; $('tour-d').textContent = st.d;
   $('tour-dots').innerHTML = TOUR.map((_, k) => `<i class="${k===i?'on':''}"></i>`).join('');
   $('tour-prev').disabled = i === 0; $('tour-next').textContent = i === TOUR.length - 1 ? 'סיום' : 'הבא';
-  if(el){ el.classList.add('tour-hl'); if(!el.classList.contains('side') && !el.closest('.side')) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: el.offsetHeight > innerHeight * .7 ? 'start' : 'center' }); }
+  if(el){ const sec = secOf(el); if(sec && sec.hidden) go(sec.id); el.classList.add('tour-hl'); if(!el.classList.contains('side') && !el.closest('.side')) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: el.offsetHeight > innerHeight * .7 ? 'start' : 'center' }); }
 }
 $('tour-next').onclick = () => tourShow(tourI + 1);
 $('tour-prev').onclick = () => tourShow(tourI - 1);
@@ -2317,18 +2369,94 @@ $('ag-stop').onclick = () => agentRun && agentRun.ctl.abort();
 $('ag-form').addEventListener('submit', e => { e.preventDefault(); const q = $('ag-q').value.trim(); if(!q) return; runAgent('בקשה חופשית', `${q}\n\nUse the tools to read what you need, act where the request asks, and record the key findings with add_insight. Finish with a short Hebrew summary.`, AGENT_TOOLS.map(t => t.name)); });
 $('ins-clear').onclick = () => { insSave([]); renderInsights(); };
 
-/* ================= nav & boot ================= */
-/* in-page links: scroll by script so they work inside the Claude viewer frame too */
+/* ================= screens (router) ================= */
+const VIEWS = {
+  overview:{ t:'סקירה', secs:[['overview','']] },
+  calls:{ t:'ניתוח שיחות', secs:[['s-sources','מקורות'],['s-run','פרטיות והרצה'],['s-results','תוצאות'],['s-eval','מבחן דיוק']] },
+  org:{ t:'מפת AI לארגון', secs:[['s-org','']] },
+  gov:{ t:'משילות AI', secs:[['s-gov','']] },
+  roi:{ t:'ROI ומדדי הצלחה', secs:[['s-roi','']] },
+  agents:{ t:'סוכנים חכמים', secs:[['s-agents','']] },
+  reports:{ t:'דוחות ושמירה', secs:[['s-export','דוחות ושיתוף'],['s-projects','ניתוחים שמורים']] }
+};
+const viewOf = id => Object.keys(VIEWS).find(v => VIEWS[v].secs.some(x => x[0] === id));
+let curSec = 'overview';
+function go(id, init){
+  const v = viewOf(id); if(!v) return false;
+  curSec = id;
+  Object.values(VIEWS).forEach(x => x.secs.forEach(([sid]) => { const el = $(sid); if(el) el.hidden = sid !== id; }));
+  const V = VIEWS[v], sn = $('subnav');
+  $('tb-title').textContent = V.t;
+  sn.hidden = V.secs.length < 2;
+  sn.innerHTML = V.secs.length > 1 ? V.secs.map(([sid, l], i) => `<a href="#${sid}" class="${sid === id ? 'on' : ''}"${sid === id ? ' aria-current="page"' : ''}><i>${i+1}</i>${l}</a>`).join('') : '';
+  document.querySelectorAll('.side nav a[data-nav]').forEach(a => { const on = a.dataset.nav === v; a.classList.toggle('on', on); on ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'); });
+  if(id === 'overview') renderOverview();
+  window.scrollTo(0, 0);
+  if(!init){ try{ history.replaceState(null, '', '#' + id); }catch(e){} }
+  return true;
+}
+function secOf(el){ let s = el; while(s && !(s.id && viewOf(s.id))) s = s.parentElement; return s; }
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]'); if(!a) return;
-  const id = a.getAttribute('href').slice(1), el = id === 'top' ? document.querySelector('.hero') : document.getElementById(id);
-  if(!el) return;
-  e.preventDefault();
-  el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-  document.querySelectorAll('.side nav a').forEach(x => x.classList.toggle('on', x === a));
+  const id = a.getAttribute('href').slice(1);
+  if(id === 'top'){ e.preventDefault(); go('overview'); return; }
+  const el = document.getElementById(id); if(!el) return;
+  const sec = secOf(el); if(!sec) return;
+  e.preventDefault(); go(sec.id);
+  if(sec !== el) el.scrollIntoView({ block:'center' });
 });
-const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-gov','s-roi','s-agents','s-projects','s-export'];
-if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
+$('ov-deck').onclick = () => $('dl-deck').click();
+
+/* intro paragraphs live behind an info button, so each screen opens clean */
+document.querySelectorAll('.panel').forEach(p => {
+  const intro = [...p.children].find(c => c.tagName === 'P' && !c.classList.contains('note')); if(!intro) return;
+  const head = p.querySelector('.phead .shead'); if(!head) return;
+  intro.classList.add('intro'); intro.hidden = true; intro.id = intro.id || p.id + '-intro';
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'info-btn'; b.textContent = 'i';
+  b.setAttribute('aria-label', 'הסבר על המסך'); b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', intro.id);
+  b.onclick = () => { intro.hidden = !intro.hidden; b.setAttribute('aria-expanded', String(!intro.hidden)); };
+  head.append(b);
+});
+
+function renderOverview(){
+  const a = state.analysis, p = profile();
+  renderReadout(a);
+  $('ov-sub').textContent = `${p.type} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים${state.isDemo ? ' · נתוני דוגמה' : ''}`;
+  // opportunities
+  const ranked = [...a.opportunities].map(o => ({ o, v: roi(o).ils * SCEN.r })).sort((x, y) => y.v - x.v).slice(0, 5), mx = Math.max(1, ...ranked.map(x => x.v));
+  $('ov-opps').innerHTML = ranked.length ? ranked.map(({o, v}) => `<div class="ob"><span><b>${esc(o.title)}</b><small>${esc(o.category || '')} · מאמץ ${o.effort}/5</small></span><span class="t"><i style="width:${Math.round(v/mx*100)}%"></i></span><span class="v">${v ? ils(v) : '—'}</span></div>`).join('')
+    : '<div class="empty">אין עדיין הזדמנויות. <a class="btn sm" href="#s-sources">להתחיל ניתוח</a></div>';
+  // roi
+  try{ $('ov-roi').innerHTML = roiChart(roiItems()); }catch(e){ $('ov-roi').innerHTML = ''; }
+  // org map
+  const list = orgScored();
+  if(list.length){ const vals = list.map(x => x.s.ils).sort((x, y) => x - y), med = vals[Math.floor(vals.length/2)] || 0; $('ov-map').innerHTML = bubbleChart(list, med); }
+  else $('ov-map').innerHTML = '<div class="empty">עוד לא מופו תהליכים. <a class="btn sm" href="#s-org">למפת הארגון</a></div>';
+  // governance
+  const gi = govItems(), gm = govLoad(), cnt = [0,1,2].map(t => gi.filter(g => g.tier === t).length), mxT = Math.max(1, ...cnt);
+  const noOwner = gi.filter(g => g.tier >= 1 && !(gm[g.key] || {}).owner).length;
+  const done = gi.reduce((n, g) => n + g.controls.filter(c => ((gm[g.key] || {}).done || {})[c.id]).length, 0), total = gi.reduce((n, g) => n + g.controls.length, 0);
+  const T = [['סיכון גבוה','var(--crit)',2],['בינוני','var(--amber)',1],['נמוך','var(--good)',0]];
+  $('ov-gov').innerHTML = `<div class="tiers">${T.map(([l, c, k]) => `<div><span>${l}</span><span class="t"><i style="width:${Math.round(cnt[k]/mxT*100)}%;background:${c}"></i></span><b>${cnt[k]}</b></div>`).join('')}</div>
+    <div class="ov-stat"><span><b>${gi.length}</b>שימושי AI במלאי</span><span><b>${noOwner}</b>בסיכון בינוני וגבוה בלי בעלים</span><span><b>${total ? Math.round(done/total*100) : 0}%</b>בקרות הושלמו</span></div>`;
+  // insights
+  const L = insLoad(), sevC = { high:'var(--crit)', medium:'var(--amber)', low:'var(--accent)' };
+  $('ov-ins').innerHTML = L.length ? `<div class="ov-ins">${L.slice(0, 4).map(x => `<div class="i"><span class="s" style="background:${sevC[x.severity] || 'var(--muted)'}"></span><span><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></span></div>`).join('')}</div>`
+    : '<div class="empty">עדיין אין תובנות. סוכן התובנות עובר על כל הנתונים ומחפש קשרים שלא רואים במבט ראשון. <a class="btn sm primary" href="#s-agents">להפעלת סוכן</a></div>';
+  // next steps
+  const kpis = kpiLoad(), hasActual = kpis.some(k => k.cur != null && k.cur !== '');
+  const steps = [
+    [!state.isDemo, 'לנתח שיחות אמיתיות מהמוקד', 's-sources'],
+    [!!state.eval && !!state.eval.last, 'להריץ מבחן דיוק על שיחות מתויגות', 's-eval'],
+    [!org.isDemo && org.rows.length > 0, 'למפות את התהליכים בארגון', 's-org'],
+    [gi.length > 0 && noOwner === 0, 'להגדיר בעלים לכל שימוש בסיכון בינוני וגבוה', 's-gov'],
+    [hasActual, 'למלא ערכים בפועל במדדי ההצלחה', 's-roi'],
+    [false, 'להוריד מצגת ולשלוח למנהל', 's-export']
+  ];
+  const ck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  $('ov-next').innerHTML = steps.map(([d, t, h]) => `<li class="${d ? 'done' : ''}"><a href="#${h}"><span class="ck">${ck}</span><span>${t}</span><span class="go">‹</span></a></li>`).join('');
+}
+
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); if(typeof renderRoi === 'function') renderRoi(); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
   const el = $('ai-status');
@@ -2343,6 +2471,7 @@ renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
 if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov(); renderRoi(); renderAgents(); renderInsights();
 stt.key = ssGet('xray-stt-key'); stt.provider = ssGet('xray-stt-provider') || 'openai'; $('stt-provider').value = stt.provider; if(stt.key) $('stt-key').value = stt.key;
 if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 'בתוך Claude אין אפשרות לשלוח שמע לשירות תמלול. ראו את שלוש הדרכים משמאל.'; }
+(() => { const h = (location.hash || '').slice(1); go(viewOf(h) ? h : 'overview', true); if(h) addEventListener('load', () => window.scrollTo(0, 0)); })();
 (() => { let seen = ''; try{ seen = localStorage.getItem('xray-tour') || ''; }catch(e){ seen = 'done'; } if(!seen) setTimeout(() => tourShow(0), 900); })();
 if(!INSIDE_CLAUDE){ $('keybox').hidden = false; $('tab-drive').hidden = true; }
 else (async () => {
