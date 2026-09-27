@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="רנטגן למוקד: אבחון תהליכים, איתור הזדמנויות AI ומשילות AI במוקדים ובארגון כולו, בעזרת Claude">
+<meta name="description" content="רנטגן למוקד: אבחון תהליכים, איתור הזדמנויות AI משילות AI, ROI ומדדים וסוכנים חכמים, במוקדים ובארגון כולו, בעזרת Claude">
 <style>[hidden]{display:none!important}html,body{margin:0;height:100%}img{max-width:100%}</style>
 </head>
 <body>
@@ -447,6 +447,50 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 .frameworks summary{cursor:pointer}
 .frameworks ul{margin:10px 0 6px;padding-inline-start:18px;display:grid;gap:6px;font-size:14px}
 .frameworks a{color:var(--accent)}
+
+/* ===== v10: ROI & KPI ===== */
+.roi-ico{background:var(--amber-soft)!important;color:var(--amber)!important}
+.roi-tbl input,.kpi-tbl input,.kpi-tbl select{font:inherit;font-size:13px;border:1px solid var(--line-2);background:var(--surface);border-radius:7px;padding:5px 7px;color:var(--ink)}
+.roi-tbl input.num,.kpi-tbl input.num{font-family:"IBM Plex Mono",monospace;width:96px;direction:ltr;text-align:left}
+.roi-tbl{min-width:1000px}.roi-tbl td:nth-child(2){min-width:220px}.kpi-tbl{min-width:980px}
+#s-roi .tbl-wrap{max-height:520px;overflow:auto;border:1px solid var(--line-2);border-radius:12px}
+#s-roi .tbl-wrap thead th{position:sticky;top:0;background:var(--surface-2);z-index:1}
+.roi-tbl tr.off td{opacity:.45}
+.roi-tbl td.pos{color:var(--good);font-weight:700} .roi-tbl td.neg{color:var(--crit);font-weight:700}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.st.ok{background:var(--good-soft);color:var(--good)} .st.warn{background:var(--amber-soft);color:var(--amber)} .st.bad{background:var(--crit-soft);color:var(--crit)} .st.na{background:var(--surface-2);color:var(--muted)}
+.kprog{width:90px;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;display:inline-block;vertical-align:middle}
+.kprog i{display:block;height:100%;background:var(--good)}
+
+/* ===== v11: agents ===== */
+.ag-ico{background:linear-gradient(135deg,var(--accent-soft),var(--violet-soft))!important;color:var(--violet)!important}
+.agents{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.agent{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start;background:var(--surface)}
+.agent .ai{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--surface-2);color:var(--accent)}
+.agent .ai svg{width:20px;height:20px}
+.agent b{font-family:"Rubik",sans-serif;font-size:15px}
+.agent p{font-size:13px;color:var(--muted)}
+.agent .acts{font-size:12px;color:var(--muted)}
+.agent .inp{padding:6px 8px;font-size:13px}
+.agent-free{display:grid;gap:6px}
+.ag-run{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;background:var(--surface-2)}
+.trace{list-style:none;margin:0;padding:0;display:grid;gap:6px;max-height:420px;overflow:auto}
+.trace li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;font-size:13.5px}
+.trace li .k{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700}
+.trace li.read .k{background:var(--accent-soft);color:var(--accent)}
+.trace li.act .k{background:var(--amber-soft);color:var(--amber)}
+.trace li.done .k{background:var(--good-soft);color:var(--good)}
+.trace li.no .k{background:var(--crit-soft);color:var(--crit)}
+.trace li.think .k{background:var(--violet-soft);color:var(--violet)}
+.trace li.think span{white-space:pre-wrap;color:var(--muted)}
+.trace .ask{display:flex;gap:6px;margin-top:6px}
+.insights{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ins{border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;display:grid;gap:4px;background:var(--surface);border-inline-start:4px solid var(--c,var(--line))}
+.ins.high{--c:var(--crit)} .ins.medium{--c:var(--amber)} .ins.low{--c:var(--accent)}
+.ins .top{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ins p{font-size:13.5px;color:var(--ink)}
+@media (max-width:1040px){.agents{grid-template-columns:1fr 1fr}.insights{grid-template-columns:1fr}}
+@media (max-width:680px){.agents{grid-template-columns:1fr}}
 </style>
 
 <div class="app">
@@ -459,15 +503,17 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
     <a href="#s-results" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>תוצאות<span class="n">03</span></a>
     <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
   </nav>
-  <span class="navlabel second">מיפוי ארגוני ומשילות</span>
+  <span class="navlabel second">תוכנית, משילות ומדידה</span>
   <nav aria-label="מפת ארגון">
     <a href="#s-org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg>מפת AI לארגון<span class="n">05</span></a>
     <a href="#s-gov"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M8.5 12h7M12 8.5v7"/></svg>משילות AI<span class="n">06</span></a>
+    <a href="#s-roi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>ROI ומדדי הצלחה<span class="n">07</span></a>
+    <a href="#s-agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg>סוכנים חכמים<span class="n">08</span></a>
   </nav>
   <span class="navlabel second">סיכום ושיתוף</span>
   <nav aria-label="סיכום ושיתוף">
-    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">07</span></a>
-    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">08</span></a>
+    <a href="#s-projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>ניתוחים שמורים<span class="n">09</span></a>
+    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>דוחות ושיתוף<span class="n">10</span></a>
   </nav>
   <button class="tour-btn" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור מודרך</button>
   <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
@@ -720,12 +766,46 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
       </ul>
       <p class="note">זו מסגרת עבודה לניהול סיכונים, לא ייעוץ משפטי. לפני עלייה לאוויר עם מידע אישי, מתייעצים עם הממונה על הגנת הפרטיות או עם עורך דין.</p>
     </details>
-    <div class="nextbar"><span><b>מה עכשיו?</b> שומרים את המצב הנוכחי, כדי להשוות אחרי פיילוט או בין מוקדים.</span><a class="btn primary sm" href="#s-projects">לשמירה ←</a></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> מחשבים החזר על ההשקעה ומגדירים מדדי הצלחה לפני שמתחילים.</span><a class="btn primary sm" href="#s-roi">ל-ROI ומדדים ←</a></div>
+  </section>
+
+  <!-- ROI -->
+  <section class="panel" id="s-roi" aria-labelledby="h-roi">
+    <div class="phead"><div class="shead"><span class="ico roi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><div><span class="num">שלב 7</span><h2 id="h-roi">ROI ומדדי הצלחה</h2></div></div>
+      <div class="seg" role="group" aria-label="תרחיש"><button type="button" data-sc="p" aria-pressed="false">פסימי</button><button type="button" data-sc="r" aria-pressed="true">סביר</button><button type="button" data-sc="o" aria-pressed="false">אופטימי</button></div></div>
+    <p>חיסכון הוא רק חצי מהתמונה. כאן מוסיפים את העלות: הקמה חד-פעמית ועלות חודשית (רישוי, API, תחזוקה). מקבלים לכל יוזמה ולתיק כולו נטו חודשי, זמן החזר ו-ROI לשנה. העלויות מוערכות אוטומטית לפי רמת המאמץ וסוג הפתרון, ואפשר לשנות כל מספר.</p>
+    <div class="kpis" id="roi-kpis"></div>
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:8px"><h3>תזרים מצטבר ל-24 חודשים</h3><div class="bubble-wrap" id="roi-chart"></div><p class="note">חודשיים ראשונים ב-50% מהחיסכון (הטמעה והרגלה). הקו המקווקו הוא נקודת האיזון.</p></div>
+      <div style="display:grid;gap:8px"><h3>איך מחושב</h3><div class="formula"><span><code>נטו חודשי = חיסכון חודשי בתרחיש − עלות חודשית</code></span><span><code>זמן החזר = עלות הקמה ÷ נטו חודשי</code></span><span><code>ROI לשנה = (12 × נטו חודשי − הקמה) ÷ הקמה</code></span><span>הערכת עלות הקמה לפי מאמץ: 1 = ₪15,000 · 2 = ₪30,000 · 3 = ₪60,000 · 4 = ₪100,000 · 5 = ₪180,000. עלות חודשית לפי סוג: אוטומציה ₪800, עוזר ₪1,500, סוכן ₪2,500, תמיכה בהחלטה ₪1,000.</span><span>הערכות פתיחה לדיון עם הספקים ועם IT, לא הצעת מחיר.</span></div></div>
+    </div>
+    <div class="row" style="justify-content:space-between"><h3>יוזמות בתיק</h3><div class="row"><button class="btn sm" id="roi-top">רק היוזמות עם החזר עד שנה</button><button class="btn sm ghost" id="roi-all">הכול</button></div></div>
+    <div class="tbl-wrap"><table class="t roi-tbl" id="roi-tbl"></table></div>
+
+    <div class="row" style="justify-content:space-between;margin-top:6px"><h3>מדדי הצלחה (KPI)</h3><div class="row"><button class="btn sm" id="kpi-add">הוספת מדד</button><button class="btn sm ghost" id="kpi-reset">חזרה למדדים המוצעים</button></div></div>
+    <p class="note">הבסיס והיעד מוצעים מתוך הניתוח. ממלאים "בפועל" במהלך הפיילוט, והסטטוס מתעדכן: בדרך ליעד, צריך תשומת לב, או בפיגור.</p>
+    <div class="tbl-wrap"><table class="t kpi-tbl" id="kpi-tbl"></table></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> תנו לסוכנים לעבור על כל הנתונים, להציע ולבצע שיפורים ולהביא תובנות.</span><a class="btn primary sm" href="#s-agents">לסוכנים ←</a></div>
+  </section>
+
+  <!-- AGENTS -->
+  <section class="panel" id="s-agents" aria-labelledby="h-ag">
+    <div class="phead"><div class="shead"><span class="ico ag-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></span><div><span class="num">שלב 8</span><h2 id="h-ag">סוכנים חכמים: פועלים בכלי ומביאים תובנות</h2></div></div>
+      <label class="switch"><input type="checkbox" id="ag-approve" checked> אישור שלי לפני כל פעולה</label></div>
+    <p>כל סוכן הוא Claude עם גישה לפונקציות של הכלי: הוא קורא את ניתוח השיחות, מפת הארגון, המשילות, ה-ROI והמדדים, מבצע פעולות (מוסיף למפה, בונה תיק השקעות, מגדיר בעלים, מוסיף מדדים) ורושם תובנות. כל צעד מופיע ביומן, כל פעולה מחכה לאישור שלכם כשהמתג דלוק, ואפשר לבטל בלחיצה את כל מה שהסוכן שינה.</p>
+    <div class="agents" id="ag-cards"></div>
+    <form class="agent-free" id="ag-form"><label class="label" for="ag-q">או בקשה חופשית לסוכן</label><div class="row" style="flex-wrap:nowrap"><input id="ag-q" class="inp" placeholder="למשל: בנה תיק לגל הראשון בתקציב של ₪120,000, ותוודא שלכל יוזמה בתיק יש בעלים ומדד" autocomplete="off"><button class="btn primary" type="submit">הפעלה</button></div></form>
+    <div class="ag-run" id="ag-run" hidden>
+      <div class="row" style="justify-content:space-between"><h3 id="ag-title"></h3><div class="row"><button class="btn sm" id="ag-stop" type="button">עצירה</button><button class="btn sm ghost danger" id="ag-undo" type="button" hidden>ביטול כל השינויים של הסוכן</button></div></div>
+      <ol class="trace" id="ag-trace"></ol>
+    </div>
+    <div style="display:grid;gap:8px"><div class="row" style="justify-content:space-between"><h3>תובנות</h3><button class="btn sm ghost" id="ins-clear" type="button">ניקוי</button></div><div class="insights" id="ag-insights"></div></div>
+    <div class="nextbar"><span><b>מה עכשיו?</b> שומרים את המצב אחרי עבודת הסוכנים, כדי להשוות בהמשך.</span><a class="btn primary sm" href="#s-projects">לשמירה ←</a></div>
   </section>
 
   <!-- 6. PROJECTS -->
   <section class="panel" id="s-projects" aria-labelledby="h-proj">
-    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><div><span class="num">שלב 7</span><h2 id="h-proj">ניתוחים שמורים והשוואה</h2></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><div><span class="num">שלב 9</span><h2 id="h-proj">ניתוחים שמורים והשוואה</h2></div></div>
       <div class="row"><button class="btn ghost" id="proj-export">ייצוא כל הניתוחים</button><label class="btn ghost" for="proj-import">ייבוא</label><input id="proj-import" type="file" accept=".json" hidden></div></div>
     <p>שומרים את המצב הנוכחי (ניתוח השיחות, מפת הארגון והמספרים) בשם, וחוזרים אליו אחר כך. מסמנים שני ניתוחים כדי להשוות: למשל לפני הפיילוט ואחריו, או שני מוקדים שונים.</p>
     <form class="row" id="proj-form" style="flex-wrap:nowrap"><label for="proj-name" hidden>שם</label><input id="proj-name" class="inp" placeholder="שם לניתוח, למשל: מוקד תקלות, לפני פיילוט" style="max-width:420px"><button class="btn primary" type="submit">שמירת המצב הנוכחי</button></form>
@@ -737,11 +817,11 @@ body{font-size:15.5px;-webkit-font-smoothing:antialiased}
 
   <!-- 5. EXPORT -->
   <section class="panel" id="s-export" aria-labelledby="h-exp">
-    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 8</span><h2 id="h-exp">דוחות ושיתוף</h2></div></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 10</span><h2 id="h-exp">דוחות ושיתוף</h2></div></div></div>
     <div class="exp">
       <div class="card deck-card">
         <h3>מצגת משולבת: מוקד וארגון</h3>
-        <p class="note">שמונה שקפים שמאחדים את שני המסלולים: תקציר, מה קורה במוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, משילות AI, והנחות. מעבר בין שקפים בחצים, והדפסה ל-PDF מהדפדפן.</p>
+        <p class="note">תשעה שקפים שמאחדים את שני המסלולים: תקציר, מה קורה במוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, ROI ומדדים, משילות AI, והנחות. מעבר בין שקפים בחצים, והדפסה ל-PDF מהדפדפן.</p>
         <div class="row"><button class="btn primary" id="dl-deck">הורדת המצגת</button></div>
         <div id="deck-status" class="note"></div>
       </div>
@@ -1213,7 +1293,7 @@ function renderReadout(a){
     <div class="ro-row"><div><b class="mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
 }
 function renderResults(){
-  const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0);
+  const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0); if(typeof renderRoi === 'function' && $('roi-tbl')) setTimeout(renderRoi, 0);
   $('demo-banner').hidden = !state.isDemo;
   $('res-when').textContent = state.isDemo ? 'נתוני דוגמה' : ('נותח ' + new Date(state.when).toLocaleString('he-IL', {dateStyle:'short', timeStyle:'short'}));
   renderSum(a); renderDet(a); renderProc(a); renderOpp(a); renderPilot(a); renderChatSugg();
@@ -1662,7 +1742,7 @@ function bubbleChart(list, med){
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="מפת תהליכים: היתכנות מול חיסכון" direction="ltr">${g}</svg>`;
 }
 function renderOrg(){
-  renderOrgTable(); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0);
+  renderOrgTable(); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0); if(typeof renderRoi === 'function' && $('roi-tbl')) setTimeout(renderRoi, 0);
   const list = orgScored();
   if(!list.length){ $('org-out').innerHTML = '<div class="msg">אין עדיין תהליכים. טענו ארגון לדוגמה, הוסיפו תהליך, או תארו את הארגון ל-Claude.</div>'; return; }
   const vals = list.map(x => x.s.ils).sort((a,b) => a-b), med = vals[Math.floor(vals.length/2)] || 0;
@@ -1804,7 +1884,7 @@ $('stt-save').onclick = () => { stt.key = $('stt-key').value.trim(); stt.provide
 function projGet(){ try{ return JSON.parse(localStorage.getItem('xray-projects') || '[]'); }catch(e){ return []; } }
 function projSet(list){ try{ localStorage.setItem('xray-projects', JSON.stringify(list)); return true; }catch(e){ toast('לא ניתן לשמור בדפדפן הזה', 'err'); return false; } }
 let projSel = [];
-function snapshot(name){ return { id: Date.now().toString(36), name: name || ('ניתוח ' + new Date().toLocaleDateString('he-IL')), date: new Date().toISOString(), profile: profile(), analysis: state.analysis, sent: state.sent, isDemo: state.isDemo, org: { rows: org.rows, cost: +$('org-cost').value || 0, isDemo: org.isDemo }, gov: govLoad() }; }
+function snapshot(name){ return { id: Date.now().toString(36), name: name || ('ניתוח ' + new Date().toLocaleDateString('he-IL')), date: new Date().toISOString(), profile: profile(), analysis: state.analysis, sent: state.sent, isDemo: state.isDemo, org: { rows: org.rows, cost: +$('org-cost').value || 0, isDemo: org.isDemo }, gov: govLoad(), roi: roiLoad(), kpi: kpiLoad(), insights: insLoad() }; }
 function metrics(sn){
   const a = sn.analysis, p = sn.profile, t = totals(a, p), v = (() => { const keep = state.sent; state.sent = sn.sent || (sn.isDemo ? demoSent() : null); const r = verifyAll(a); state.sent = keep; return r; })();
   const orgRows = (sn.org && sn.org.rows) || [], cost = (sn.org && sn.org.cost) || 0;
@@ -1838,7 +1918,7 @@ function loadProject(id){
   for(const k of ['type','calls','aht','cost','agents']) if(p.profile[k] != null) $('p-'+k).value = p.profile[k];
   state.analysis = p.analysis; state.sent = p.sent || null; state.isDemo = !!p.isDemo; state.when = p.date; state.chat = [];
   if(p.org){ org.rows = p.org.rows || []; org.isDemo = !!p.org.isDemo; if(p.org.cost) $('org-cost').value = p.org.cost; saveOrg(); }
-  if(p.gov) govSave(p.gov);
+  if(p.gov) govSave(p.gov); if(p.roi) roiSave(p.roi); if(p.kpi) kpiSave(p.kpi); if(p.insights) insSave(p.insights); renderRoi(); renderInsights();
   saveLocal(); renderResults(); renderOrg(); toast(`נטען: ${p.name}`);
   $('s-results').scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -1860,11 +1940,13 @@ function deckReport(){
   const list = (arr2) => arr2.sort((x, y) => y.s.ils - x.s.ils).slice(0, 5).map(x => `<li>${esc(x.r.name)} <span>${esc(x.r.dept)}</span></li>`).join('') || '<li><span>אין תהליכים בגל הזה</span></li>';
   const slides = [
     `<section class="cover"><div class="tag">תוכנית הטמעת AI${demo ? ' · נתוני דוגמה' : ''}</div><h1>מה באמת קורה בשיחות,<br><em>ואיפה AI יחסוך הכי הרבה</em></h1><p>${esc(p.type)} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים · ${ol.length} תהליכים ממופים בארגון</p><div class="foot">הוכן בכלי "רנטגן למוקד" · ${new Date().toLocaleDateString('he-IL')}</div></section>`,
-    `<section><h2>התמונה בקצרה</h2><div class="kpis"><div class="k g"><b>${ils(t.ils * SCEN.r)}</b><span>חיסכון חודשי במוקד, תרחיש סביר</span><small>${rng(t.ils)}</small></div><div class="k g"><b>${ils(orgTot * SCEN.r)}</b><span>חיסכון חודשי בשאר הארגון, תרחיש סביר</span><small>${rng(orgTot)}</small></div><div class="k"><b>${af ? clock(b) + ' ← ' + clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div><p class="lead">${esc(a.summary)}</p></section>`,
+    `<section><h2>התמונה בקצרה</h2><div class="kpis"><div class="k g"><b>${ils(t.ils * SCEN.r)}</b><span>חיסכון חודשי במוקד, תרחיש סביר</span><small>${rng(t.ils)}</small></div><div class="k g"><b>${ils(orgTot * SCEN.r)}</b><span>חיסכון חודשי בשאר הארגון, תרחיש סביר</span><small>${rng(orgTot)}</small></div><div class="k"><b>${af ? clock(b) + ' ← ' + clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div><p class="lead">${esc(a.summary)}</p>${(() => { const L = insLoad().slice(0, 3); return L.length ? `<h3>תובנות הסוכנים</h3><ul>${L.map(x => `<li><b>${esc(x.title)}</b> <span>${esc(x.detail)}</span></li>`).join('')}</ul>` : ''; })()}</section>`,
     `<section><h2>מה קורה במוקד</h2><div class="two"><div><h3>למה מתקשרים</h3>${a.intents.map(i => `<div class="bar"><span>${esc(i.name)}</span><i style="width:${(+i.share_pct || 0) / maxI * 100}%"></i><em>${esc(i.share_pct)}%</em></div>`).join('')}</div><div><h3>חריגות מנוהל</h3><ul>${a.compliance.slice(0, 3).map(c => `<li><b>${esc(c.issue)}</b> <span>חומרה ${esc(c.severity)} · ${esc(c.count || '')}</span></li>`).join('')}</ul><h3>שאלות שחוזרות</h3><ul>${a.repeated_questions.slice(0, 3).map(r => `<li>"${esc(r.q)}" <span>${esc(r.count)} פעמים · ${r.has_procedure ? 'יש נוהל' : 'אין נוהל'}</span></li>`).join('')}</ul></div></div></section>`,
     `<section><h2>שלוש ההזדמנויות המובילות במוקד</h2>${af ? `<div class="ba"><div><span>היום</span><i style="width:100%;background:#B86E00"></i><em>${clock(b)}</em></div><div><span>אחרי</span><i style="width:${Math.round(af / b * 100)}%;background:#1D7A4D"></i><em>${clock(af)}</em></div></div>` : ''}<div class="cards">${topCall.map((o, k) => `<div class="card"><small>${k + 1} · ${esc(o.category || '')}</small><b>${esc(o.title)}</b><p>${esc(o.description)}</p>${quote(o)}<strong>${roi(o).ils ? rng(roi(o).ils) + ' בחודש' : esc(o.roi_note || '')}</strong></div>`).join('')}</div></section>`,
     `<section><h2>מפת AI לארגון: איפה להתחיל</h2><div class="two"><div class="cards col">${topOrg.map((x, k) => `<div class="card"><small>${k + 1} · ${esc(x.r.dept)}</small><b>${esc(x.r.name)}</b><p>${REC[x.s.type].label} · היתכנות ${x.s.feas}/100</p><strong>${rng(x.s.ils)} בחודש</strong></div>`).join('')}</div><div><h3>פוטנציאל לפי מחלקה</h3>${depts.map(([d, val]) => `<div class="bar"><span>${esc(d)}</span><i style="width:${val / maxD * 100}%;background:#5B4DB0"></i><em>${ils(val * SCEN.r)}</em></div>`).join('')}</div></div></section>`,
     `<section><h2>תוכנית בשלושה גלים</h2><div class="waves"><div><h3>גל 1 · 0–3 חודשים</h3><ul>${list([...q.start, ...q.quick])}</ul></div><div><h3>גל 2 · 3–6 חודשים</h3><ul>${list(q.strategic)}</ul></div><div><h3>גל 3 · אחרי זה</h3><ul>${list(q.later)}</ul></div></div>${a.pilot ? `<div class="pilot"><b>פיילוט ראשון במוקד: ${esc(a.pilot.title)}</b><span>${arr(a.pilot.weeks).map(w => `${esc(w.week)}: ${esc(w.goal)}`).join(' · ')}</span><span><b>מדד הצלחה:</b> ${esc(a.pilot.success_metric)}</span></div>` : ''}</section>`,
+    (() => { const it = roiItems(), P = portfolio(it, 'r'), Pp = portfolio(it, 'p'), Po = portfolio(it, 'o'), K = kpiLoad().slice(0, 6);
+      return `<section><h2>ROI ומדדי הצלחה</h2><div class="kpis"><div class="k"><b>${ils(P.once)}</b><span>השקעה חד-פעמית · ${P.n} יוזמות</span></div><div class="k g"><b>${ils(P.net)}</b><span>נטו בחודש, תרחיש סביר</span></div><div class="k"><b>${fmtPay(P.pay)}</b><span>זמן החזר (פסימי: ${fmtPay(Pp.pay)} · אופטימי: ${fmtPay(Po.pay)})</span></div><div class="k g"><b>${fmtPct(P.roi12)}</b><span>ROI בשנה הראשונה</span></div></div><div class="two"><div><h3>היוזמות בתיק</h3><ul>${it.filter(i => i.inc).sort((a, b) => a.r.pay - b.r.pay).slice(0, 6).map(i => `<li><b>${esc(i.name)}</b> <span>החזר ${fmtPay(i.r.pay)} · נטו ${ils(i.r.net)} בחודש</span></li>`).join('')}</ul></div><div><h3>מדדי הצלחה</h3><ul>${K.map(k => `<li><b>${esc(k.name)}</b> <span>בסיס ${k.base ?? '—'} ← יעד ${k.target ?? '—'} ${esc(k.unit || '')}</span></li>`).join('')}</ul></div></div></section>`; })(),
     (() => { const gm = govLoad(), gi = govItems(), hi = gi.filter(g => g.tier === 2), tot = gi.reduce((n, g) => n + g.controls.length, 0), dn = gi.reduce((n, g) => n + g.controls.filter(c => (gm[g.key]?.done || {})[c.id]).length, 0);
       return `<section><h2>משילות AI: מי אחראי ואילו בקרות</h2><div class="kpis"><div class="k"><b>${gi.length}</b><span>שימושי AI במלאי</span></div><div class="k"><b style="color:#B42318">${hi.length}</b><span>בסיכון גבוה</span></div><div class="k"><b>${[0,1,2].map(t => gi.filter(g => g.tier === t).length).join(' / ')}</b><span>נמוך / בינוני / גבוה</span></div><div class="k"><b>${tot ? Math.round(dn / tot * 100) : 0}%</b><span>בקרות שהושלמו</span></div></div><div class="two"><div><h3>בסיכון גבוה: לפני עלייה לאוויר</h3><ul>${hi.slice(0, 5).map(g => `<li><b>${esc(g.name)}</b> <span>${esc(g.why.join(' · '))}</span></li>`).join('') || '<li><span>אין שימושים בסיכון גבוה</span></li>'}</ul></div><div><h3>בקרות חובה לסיכון גבוה</h3><ul>${CONTROLS.filter(c => ['dpia','client','hitl','acc','log','bias','review'].includes(c.id)).map(c => `<li><b>${esc(c.t)}</b> <span>${esc(c.d)}</span></li>`).join('')}</ul></div></div></section>`; })(),
     `<section><h2>הנחות ושקיפות</h2><ul class="assume"><li><b>שלושה תרחישים:</b> אופטימי = הערכת המודל המלאה; סביר = 70% ממנה; פסימי = 40%. ההזדמנויות חופפות בחלקן והאימוץ לא מלא.</li><li><b>חיסכון במוקד:</b> שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעת נציג (₪${p.cost}).</li><li><b>מפת הארגון:</b> ציון היתכנות מנוסחה גלויה של שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), עלות שעה ₪${+$('org-cost').value || 0}.</li><li><b>ראיות:</b> כל ממצא במוקד מגובה בציטוט שנבדק אוטומטית מול טקסט המקור (${v.ok} מתוך ${v.total} אומתו).</li><li><b>פרטיות:</b> ת.ז, טלפונים, כרטיסי אשראי, מיילים ושמות הוסתרו בדפדפן לפני שהטקסט נשלח לניתוח.</li><li><b>משילות:</b> רמת הסיכון נקבעת מרגישות, אוטונומיה, מגע בלקוח ומידע אישי; הבקרות מבוססות על חוק הגנת הפרטיות (תיקון 13), מדיניות ה-AI הישראלית, ISO/IEC 42001 ו-NIST AI RMF. זו מסגרת עבודה, לא ייעוץ משפטי.</li>${a.data_gaps.length ? `<li><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</li>` : ''}</ul></section>`
@@ -1906,6 +1988,8 @@ const TOUR = [
   { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
   { sel:'#s-org', t:'מפת AI לארגון', d:'מדרגים תהליכים בכל המחלקות בשישה מדדים. הכלי ממליץ על סוג פתרון ובונה תוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude ימפה.' },
   { sel:'#s-gov', t:'משילות AI', d:'לכל שימוש ב-AI: רמת סיכון, בעלים, סטטוס ובקרות חובה לפי הסיכון. מכאן גם יוצאת טיוטת מדיניות AI לארגון.' },
+  { sel:'#s-roi', t:'ROI ומדדי הצלחה', d:'עלות הקמה ועלות חודשית לכל יוזמה, זמן החזר ו-ROI בשלושה תרחישים, וגרף תזרים עם נקודת איזון. מתחת: מדדי הצלחה עם בסיס, יעד ומצב בפועל.' },
+  { sel:'#s-agents', t:'סוכנים חכמים', d:'סוכני Claude שקוראים את כל הנתונים, מבצעים פעולות בכלי ומביאים תובנות. כל פעולה מחכה לאישור שלכם, ואפשר לבטל הכול.' },
   { sel:'#s-projects', t:'שומרים ומשווים', d:'שומרים ניתוח בשם ומשווים בין שניים: לפני ואחרי פיילוט, או מוקד מול מוקד.' },
   { sel:'#s-export', t:'שולחים למנהל', d:'מצגת משולבת של שני המסלולים, דוח מנהלים של עמוד אחד, או שמירה ב-Drive וטיוטה ב-Gmail. בסוף כל שלב יש "מה עכשיו?" שמכוון הלאה.' }
 ];
@@ -2019,6 +2103,222 @@ $('gov-policy').onclick = async () => {
   }catch(e){ out.innerHTML = `<div class="msg err">${esc(errText(e) || 'הכתיבה נעצרה.')}</div>`; }
 };
 
+
+/* ================= ROI & KPI ================= */
+let roiScen = 'r';
+const ONCE = [0, 15000, 30000, 60000, 100000, 180000];
+const RUN = { auto: 800, assist: 1500, agent: 2500, support: 1000, data: 0 };
+function roiLoad(){ try{ return JSON.parse(localStorage.getItem('xray-roi') || '{}'); }catch(e){ return {}; } }
+function roiSave(m){ try{ localStorage.setItem('xray-roi', JSON.stringify(m)); }catch(e){} }
+function roiItems(){
+  const m = roiLoad(), items = [];
+  state.analysis.opportunities.forEach(o => { const r = roi(o), t = o.category === 'סוכן AI' ? 'agent' : o.category === 'אוטומציה' ? 'auto' : o.category === 'הדרכה' ? 'support' : 'assist'; items.push({ key:'call|' + o.title, name:o.title, dept:'מוקד', type:t, effort:o.effort, save:r.ils, note:o.roi_note || '' }); });
+  orgScored().forEach(({r, s: sc}) => { if(sc.type === 'data' || r.src === 'call') return; const eff = sc.feas >= 75 ? 2 : sc.feas >= 55 ? 3 : 4; items.push({ key:'org|' + r.dept + '|' + r.name, name:r.name, dept:r.dept, type:sc.type, effort:eff, save:sc.ils, note:'' }); });
+  return items.map(it => { const o = m[it.key] || {}; const once = o.once != null ? +o.once : ONCE[clamp(it.effort,1,5)], run = o.run != null ? +o.run : RUN[it.type] || 1000;
+    const calc = k => { const sv = it.save * SCEN[k], net = sv - run; return { sv, net, pay: net > 0 ? once / net : Infinity, roi12: once ? (12 * net - once) / once : 0 }; };
+    const inc = o.inc != null ? !!o.inc : calc('r').pay <= 12;
+    return { ...it, once, run, inc, p: calc('p'), r: calc('r'), o: calc('o') }; });
+}
+function portfolio(items, k){
+  const inc = items.filter(i => i.inc), once = inc.reduce((n, i) => n + i.once, 0), net = inc.reduce((n, i) => n + i[k].net, 0), sv = inc.reduce((n, i) => n + i[k].sv, 0), run = inc.reduce((n, i) => n + i.run, 0);
+  const cum = []; let c = -once; for(let mth = 1; mth <= 24; mth++){ c += (mth <= 2 ? sv * .5 : sv) - run; cum.push(c); }
+  const be = cum.findIndex(v => v >= 0);
+  return { n: inc.length, once, net, sv, run, pay: net > 0 ? once / net : Infinity, roi12: once ? (12 * net - once) / once : 0, cum, be: be < 0 ? null : be + 1 };
+}
+const fmtPay = m => !isFinite(m) ? 'לא מחזיר' : m < 1 ? 'פחות מחודש' : `${m < 10 ? m.toFixed(1) : Math.round(m)} חודשים`;
+const fmtPct = v => `${v >= 0 ? '' : '−'}${nf.format(Math.round(Math.abs(v) * 100))}%`;
+function roiChart(items){
+  const W = 560, H = 300, L = 64, R = 16, T = 16, B = 34, w = W-L-R, h = H-T-B;
+  const P = { p: portfolio(items,'p'), r: portfolio(items,'r'), o: portfolio(items,'o') };
+  const all = [...P.p.cum, ...P.o.cum, 0], lo = Math.min(...all), hi = Math.max(...all), span = (hi - lo) || 1;
+  const X = m => L + (m - 1) / 23 * w, Y = v => T + h - (v - lo) / span * h;
+  const path = cum => cum.map((v, i) => `${i ? 'L' : 'M'}${X(i+1).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  const col = { p:'var(--muted)', r:'var(--good)', o:'var(--accent)' };
+  let g = `<line x1="${L}" x2="${L+w}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--ink)" stroke-dasharray="5 4" stroke-width="1"/>`;
+  [1,6,12,18,24].forEach(m => g += `<text x="${X(m)}" y="${H-12}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${m}</text>`);
+  [lo, 0, hi].forEach(v => g += `<text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${v >= 0 ? '' : '−'}${nf.format(Math.round(Math.abs(v)/1000))}K</text>`);
+  ['p','o','r'].forEach(k => { g += `<path d="${path(P[k].cum)}" fill="none" stroke="${col[k]}" stroke-width="${k==='r'?2.5:1.5}"/>`; if(P[k].be) g += `<circle cx="${X(P[k].be)}" cy="${Y(P[k].cum[P[k].be-1])}" r="4" fill="${col[k]}"/>`; });
+  g += `<text x="${L+6}" y="${T+12}" font-size="11.5" fill="var(--muted)">₪ מצטבר (אלפים)</text><text x="${L+w}" y="${H-12}" text-anchor="end" font-size="11" fill="var(--muted)" dx="-24">חודש</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="תזרים מצטבר ל-24 חודשים בשלושה תרחישים" direction="ltr">${g}</svg><div class="legend"><span style="--c:var(--muted)">פסימי${P.p.be ? ' · איזון בחודש ' + P.p.be : ''}</span><span style="--c:var(--good)">סביר${P.r.be ? ' · איזון בחודש ' + P.r.be : ''}</span><span style="--c:var(--accent)">אופטימי${P.o.be ? ' · איזון בחודש ' + P.o.be : ''}</span></div>`;
+}
+function renderRoi(){
+  const items = roiItems(), P = portfolio(items, roiScen);
+  document.querySelectorAll('[data-sc]').forEach(b => b.setAttribute('aria-pressed', b.dataset.sc === roiScen));
+  $('roi-kpis').innerHTML = `
+    <div class="kpi"><span class="label">השקעה חד-פעמית</span><span class="n mono">${ils(P.once)}</span><span class="d">${P.n} יוזמות בתיק · ${ils(P.run)} בחודש להפעלה</span></div>
+    <div class="kpi"><span class="label">נטו בחודש</span><span class="n mono ${P.net > 0 ? 'good' : ''}">${ils(P.net)}</span><span class="d">חיסכון ${ils(P.sv)} פחות עלות הפעלה</span></div>
+    <div class="kpi"><span class="label">זמן החזר</span><span class="n mono">${fmtPay(P.pay)}</span><span class="d">בתרחיש ה${roiScen === 'p' ? 'פסימי' : roiScen === 'o' ? 'אופטימי' : 'סביר'}</span></div>
+    <div class="kpi"><span class="label">ROI בשנה הראשונה</span><span class="n mono ${P.roi12 > 0 ? 'good' : ''}">${fmtPct(P.roi12)}</span><span class="d">נטו שנתי מול ההשקעה</span></div>`;
+  $('roi-chart').innerHTML = roiChart(items);
+  const sorted = [...items].sort((a, b) => (a[roiScen].pay) - (b[roiScen].pay));
+  $('roi-tbl').innerHTML = `<thead><tr><th>בתיק</th><th>יוזמה</th><th>סוג</th><th>הקמה (₪)</th><th>בחודש (₪)</th><th>חיסכון בחודש</th><th>נטו בחודש</th><th>זמן החזר</th><th>ROI לשנה</th></tr></thead><tbody>${sorted.map(i => { const c = i[roiScen]; return `<tr data-k="${esc(i.key)}" class="${i.inc ? '' : 'off'}"><td><input type="checkbox" data-inc ${i.inc ? 'checked' : ''} aria-label="בתיק"></td><td><b>${esc(i.name)}</b><div class="why">${esc(i.dept)}</div></td><td><span class="rec" style="color:${REC[i.type].c};background:${REC[i.type].bg}">${REC[i.type].label}</span></td><td><input class="num" data-once type="number" min="0" step="1000" value="${Math.round(i.once)}" aria-label="עלות הקמה"></td><td><input class="num" data-run type="number" min="0" step="100" value="${Math.round(i.run)}" aria-label="עלות חודשית"></td><td class="num">${c.sv ? ils(c.sv) : esc(i.note || '—')}</td><td class="num ${c.net > 0 ? 'pos' : 'neg'}">${ils(c.net)}</td><td class="num">${fmtPay(c.pay)}</td><td class="num ${c.roi12 > 0 ? 'pos' : 'neg'}">${fmtPct(c.roi12)}</td></tr>`; }).join('')}</tbody>`;
+  const upd = (key, f) => { const m = roiLoad(); m[key] = m[key] || {}; f(m[key]); roiSave(m); renderRoi(); };
+  $('roi-tbl').querySelectorAll('tr[data-k]').forEach(tr => { const key = tr.dataset.k;
+    tr.querySelector('[data-inc]').onchange = e => upd(key, o => o.inc = e.target.checked);
+    tr.querySelector('[data-once]').onchange = e => upd(key, o => o.once = Math.max(0, +e.target.value || 0));
+    tr.querySelector('[data-run]').onchange = e => upd(key, o => o.run = Math.max(0, +e.target.value || 0)); });
+  renderKpi();
+}
+document.querySelectorAll('[data-sc]').forEach(b => b.onclick = () => { roiScen = b.dataset.sc; renderRoi(); });
+$('roi-top').onclick = () => { const m = roiLoad(); roiItems().forEach(i => { m[i.key] = m[i.key] || {}; m[i.key].inc = i.r.pay <= 12; }); roiSave(m); renderRoi(); };
+$('roi-all').onclick = () => { const m = roiLoad(); roiItems().forEach(i => { m[i.key] = m[i.key] || {}; m[i.key].inc = true; }); roiSave(m); renderRoi(); };
+
+function kpiSeed(){
+  const a = state.analysis, p = profile(), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  const saved = a.opportunities.reduce((n, o) => n + (+o.affected_calls_pct || 0) / 100 * (+o.seconds_saved_per_call || 0), 0) * SCEN.r / 60;
+  const tk = a.compliance.find(c => /מספר פנייה/.test(c.issue));
+  const tkBase = tk && /(\d+)\s*מתוך\s*(\d+)/.test(tk.count || '') ? (() => { const [, x, y] = tk.count.match(/(\d+)\s*מתוך\s*(\d+)/); return Math.round(x / y * 100); })() : null;
+  const neg = +a.sentiment.negative_pct || null;
+  const R = [
+    { id:'aht', name:'זמן טיפול ממוצע', unit:'דק׳', dir:-1, base:p.aht, target:+(p.aht - saved).toFixed(1), src:'פרופיל המוקד + ההזדמנויות' },
+    { id:'proc', name:'זמן בתהליך המרכזי', unit:'דק׳', dir:-1, base:+(b/60).toFixed(1), target: af ? +(af/60).toFixed(1) : null, src:'מפת התהליך' },
+    { id:'acw', name:'סיכומים אחידים ומלאים', unit:'%', dir:1, base:null, target:90, src:'בקרת איכות' },
+    { id:'adopt', name:'נציגים שמשתמשים בכלים', unit:'%', dir:1, base:0, target:80, src:'לוגים של המערכת' },
+    { id:'acc', name:'דיוק הסיווג של ה-AI', unit:'%', dir:1, base:null, target:90, src:'מבחן הדיוק' },
+    { id:'sav', name:'חיסכון חודשי בפועל', unit:'₪', dir:1, base:0, target:Math.round(totals(a).ils * SCEN.r), src:'שעות × עלות שעה' }
+  ];
+  if(tkBase != null) R.splice(3, 0, { id:'tk', name:'שיחות בלי מספר פנייה', unit:'%', dir:-1, base:tkBase, target:5, src:'חריגות מנוהל' });
+  if(neg) R.push({ id:'neg', name:'שיחות עם סנטימנט שלילי', unit:'%', dir:-1, base:neg, target:Math.max(0, Math.round(neg * .8)), src:'זיהוי סנטימנט' });
+  return R;
+}
+function kpiLoad(){ try{ const k = JSON.parse(localStorage.getItem('xray-kpi') || 'null'); return Array.isArray(k) ? k : kpiSeed(); }catch(e){ return kpiSeed(); } }
+function kpiSave(k){ try{ localStorage.setItem('xray-kpi', JSON.stringify(k)); }catch(e){} }
+function kpiStatus(k){
+  if(k.cur == null || k.cur === '' || k.base == null || k.base === '' || k.target == null || k.target === '') return { cls:'na', t:'אין עדיין נתון', pct:0 };
+  const span = (+k.target - +k.base); if(!span) return { cls:'ok', t:'ביעד', pct:1 };
+  const pct = Math.max(0, Math.min(1.2, (+k.cur - +k.base) / span));
+  return pct >= 1 ? { cls:'ok', t:'ביעד', pct:1 } : pct >= .6 ? { cls:'ok', t:'בדרך ליעד', pct } : pct >= .3 ? { cls:'warn', t:'צריך תשומת לב', pct } : { cls:'bad', t:'בפיגור', pct };
+}
+function renderKpi(){
+  const K = kpiLoad(), num = v => v == null || v === '' ? '' : v;
+  $('kpi-tbl').innerHTML = `<thead><tr><th>מדד</th><th>יחידה</th><th>כיוון רצוי</th><th>בסיס</th><th>יעד</th><th>בפועל</th><th>התקדמות</th><th>מקור הנתון</th><th></th></tr></thead><tbody>${K.map((k, i) => { const s2 = kpiStatus(k); return `<tr data-i="${i}"><td><input data-f="name" value="${esc(k.name)}" aria-label="מדד" style="min-width:190px"></td><td><input data-f="unit" value="${esc(k.unit || '')}" aria-label="יחידה" style="width:54px"></td><td><select data-f="dir" aria-label="כיוון"><option value="-1"${+k.dir < 0 ? ' selected' : ''}>לרדת ↓</option><option value="1"${+k.dir > 0 ? ' selected' : ''}>לעלות ↑</option></select></td><td><input class="num" data-f="base" type="number" step="any" value="${num(k.base)}" aria-label="בסיס"></td><td><input class="num" data-f="target" type="number" step="any" value="${num(k.target)}" aria-label="יעד"></td><td><input class="num" data-f="cur" type="number" step="any" value="${num(k.cur)}" placeholder="—" aria-label="בפועל"></td><td><span class="kprog"><i style="width:${Math.round(s2.pct * 100)}%"></i></span> <span class="st ${s2.cls}">${s2.t}</span></td><td class="why">${esc(k.src || '')}</td><td><button class="del" data-kdel="${i}" aria-label="מחיקת מדד">×</button></td></tr>`; }).join('')}</tbody>`;
+  $('kpi-tbl').querySelectorAll('tr[data-i]').forEach(tr => { const i = +tr.dataset.i;
+    tr.querySelectorAll('[data-f]').forEach(el => el.addEventListener('change', () => { const K2 = kpiLoad(), f = el.dataset.f; K2[i][f] = el.type === 'number' ? (el.value === '' ? null : +el.value) : f === 'dir' ? +el.value : el.value; kpiSave(K2); renderKpi(); })); });
+  $('kpi-tbl').querySelectorAll('[data-kdel]').forEach(b => b.onclick = () => { const K2 = kpiLoad(); K2.splice(+b.dataset.kdel, 1); kpiSave(K2); renderKpi(); });
+}
+$('kpi-add').onclick = () => { const K = kpiLoad(); K.push({ id:'c' + Date.now(), name:'מדד חדש', unit:'', dir:1, base:null, target:null, src:'' }); kpiSave(K); renderKpi(); };
+$('kpi-reset').onclick = () => { try{ localStorage.removeItem('xray-kpi'); }catch(e){} renderKpi(); toast('המדדים חזרו להצעה מתוך הניתוח'); };
+
+
+/* ================= smart agents ================= */
+const AREA = { call:'ניתוח שיחות', org:'מפת ארגון', gov:'משילות', roi:'ROI', kpi:'מדדים', cross:'חוצה מודולים' };
+const findOpp = t => state.analysis.opportunities.find(o => o.title === t) || state.analysis.opportunities.find(o => o.title.includes(t) || t.includes(o.title));
+const findRoi = n => { const it = roiItems(); return it.find(i => i.name === n) || it.find(i => i.name.includes(n) || n.includes(i.name)); };
+const findGov = n => { const it = govItems(); return it.find(i => i.name === n) || it.find(i => i.name.includes(n) || n.includes(i.name)); };
+const AGENT_TOOLS = [
+  { name:'get_overview', read:true, label:() => 'קרא את תמונת המצב', description:'Returns the call-center profile, analysis summary, savings range (pessimistic/realistic/optimistic, ILS per month), process minutes before/after, verified-quote ratio and counts per module.',
+    run: () => { const a = state.analysis, t = totals(a); return { profile: profile(), is_demo: state.isDemo, summary: a.summary, savings_monthly: { pessimistic: Math.round(t.ils*SCEN.p), realistic: Math.round(t.ils*SCEN.r), optimistic: Math.round(t.ils) }, process_minutes: { today: +(sumSec(a.process.steps)/60).toFixed(1), after: +(sumSec(a.to_be.steps)/60).toFixed(1) }, quotes: verifyAll(a), intents: a.intents, compliance: a.compliance.map(c => ({ issue:c.issue, severity:c.severity, count:c.count })), repeated_questions: a.repeated_questions, data_gaps: a.data_gaps, counts: { opportunities: a.opportunities.length, org_processes: org.rows.length, ai_uses: govItems().length, kpis: kpiLoad().length } }; } },
+  { name:'get_opportunities', read:true, label:() => 'קרא את ההזדמנויות במוקד', description:'Call-center automation opportunities with category, impact and effort (1-5), realistic monthly saving in ILS, and whether each is already on the org map.',
+    run: () => state.analysis.opportunities.map(o => ({ title:o.title, category:o.category, impact:o.impact, effort:o.effort, monthly_saving_realistic: Math.round(roi(o).ils*SCEN.r), in_org_map: inOrg(o) })) },
+  { name:'get_org_map', read:true, label:() => 'קרא את מפת הארגון', description:'Organization process map: each process with department, feasibility 0-100, recommended solution type and realistic monthly saving in ILS.',
+    run: () => orgScored().map(({r, s: sc}) => ({ name:r.name, dept:r.dept, feasibility:sc.feas, recommendation:REC[sc.type].label, monthly_saving_realistic: Math.round(sc.ils*SCEN.r) })) },
+  { name:'get_governance', read:true, label:() => 'קרא את מלאי המשילות', description:'AI-use register: risk tier (0 low,1 medium,2 high), reasons, owner, status and the titles of required controls that are still missing.',
+    run: () => { const m = govLoad(); return govItems().map(g => { const st = m[g.key] || {}, done = st.done || {}; return { name:g.name, dept:g.dept, tier:g.tier, reasons:g.why, owner: st.owner || '', status: st.status || 'הצעה', missing_controls: g.controls.filter(c => !done[c.id]).map(c => c.t) }; }); } },
+  { name:'get_roi', read:true, label:() => 'קרא את תיק ה-ROI', description:'Initiatives with one-time cost, monthly cost, realistic monthly net, payback months and whether included in the portfolio; plus portfolio totals for all three scenarios.',
+    run: () => { const it = roiItems(); const pf = k => { const P = portfolio(it, k); return { initiatives:P.n, one_time:Math.round(P.once), monthly_net:Math.round(P.net), payback_months: isFinite(P.pay) ? +P.pay.toFixed(1) : null, roi_12m_pct: Math.round(P.roi12*100), break_even_month:P.be }; };
+      return { initiatives: it.map(i => ({ name:i.name, dept:i.dept, included:i.inc, one_time:Math.round(i.once), monthly_cost:Math.round(i.run), monthly_net_realistic:Math.round(i.r.net), payback_months: isFinite(i.r.pay) ? +i.r.pay.toFixed(1) : null })), portfolio: { pessimistic: pf('p'), realistic: pf('r'), optimistic: pf('o') } }; } },
+  { name:'get_kpis', read:true, label:() => 'קרא את מדדי ההצלחה', description:'KPI list with unit, desired direction, baseline, target and current value.',
+    run: () => kpiLoad().map(k => ({ name:k.name, unit:k.unit, direction: +k.dir < 0 ? 'down' : 'up', baseline:k.base, target:k.target, current:k.cur ?? null, source:k.src })) },
+  { name:'add_opportunity_to_org_map', label:i => `הוספת "${i.title}" למפת הארגון`, description:'Adds a call-center opportunity (by exact title) to the organization map.', inputSchema:{ type:'object', properties:{ title:{ type:'string' } }, required:['title'] },
+    run: i => { const o = findOpp(String(i.title||'')); if(!o) throw new Error('No opportunity with that title'); const idx = state.analysis.opportunities.indexOf(o); const n = addOppsToOrg([idx]); return n ? 'added' : 'already on the map'; } },
+  { name:'set_roi_inclusion', label:i => `${i.include ? 'הכללת' : 'הוצאת'} "${i.name}" ${i.include ? 'בתיק' : 'מהתיק'}`, description:'Includes or excludes an initiative (by name) in the ROI portfolio.', inputSchema:{ type:'object', properties:{ name:{ type:'string' }, include:{ type:'boolean' } }, required:['name','include'] },
+    run: i => { const it = findRoi(String(i.name||'')); if(!it) throw new Error('No initiative with that name'); const m = roiLoad(); m[it.key] = m[it.key] || {}; m[it.key].inc = !!i.include; roiSave(m); renderRoi(); return 'ok'; } },
+  { name:'set_roi_costs', label:i => `עדכון עלויות "${i.name}"${i.one_time != null ? ` · הקמה ₪${nf.format(i.one_time)}` : ''}${i.monthly_cost != null ? ` · חודשי ₪${nf.format(i.monthly_cost)}` : ''}`, description:'Sets the one-time and/or monthly cost (ILS) of an initiative.', inputSchema:{ type:'object', properties:{ name:{ type:'string' }, one_time:{ type:'number' }, monthly_cost:{ type:'number' } }, required:['name'] },
+    run: i => { const it = findRoi(String(i.name||'')); if(!it) throw new Error('No initiative with that name'); const m = roiLoad(); m[it.key] = m[it.key] || {}; if(i.one_time != null) m[it.key].once = Math.max(0, +i.one_time); if(i.monthly_cost != null) m[it.key].run = Math.max(0, +i.monthly_cost); roiSave(m); renderRoi(); return 'ok'; } },
+  { name:'set_governance', label:i => `משילות "${i.name}"${i.owner ? ` · בעלים: ${i.owner}` : ''}${i.status ? ` · סטטוס: ${i.status}` : ''}`, description:'Sets the owner (a role, e.g. "מנהלת גיוס") and/or status of an AI use. Status must be one of: הצעה, בתכנון, בפיילוט, בייצור, מושהה.', inputSchema:{ type:'object', properties:{ name:{ type:'string' }, owner:{ type:'string' }, status:{ type:'string', enum: STATUS } }, required:['name'] },
+    run: i => { const g = findGov(String(i.name||'')); if(!g) throw new Error('No AI use with that name'); if(i.status && !STATUS.includes(i.status)) throw new Error('Invalid status'); const m = govLoad(); m[g.key] = m[g.key] || {}; if(i.owner) m[g.key].owner = String(i.owner).slice(0, 60); if(i.status) m[g.key].status = i.status; govSave(m); renderGov(); return 'ok'; } },
+  { name:'add_kpi', label:i => `הוספת מדד "${i.name}"`, description:'Adds a KPI. direction is "up" or "down". Use numbers for baseline/target when known.', inputSchema:{ type:'object', properties:{ name:{ type:'string' }, unit:{ type:'string' }, direction:{ type:'string', enum:['up','down'] }, baseline:{ type:'number' }, target:{ type:'number' }, source:{ type:'string' } }, required:['name','direction'] },
+    run: i => { const K = kpiLoad(); if(K.some(k => k.name === i.name)) return 'already exists'; K.push({ id:'a' + Date.now() + K.length, name:String(i.name).slice(0,80), unit:String(i.unit||''), dir: i.direction === 'down' ? -1 : 1, base: i.baseline ?? null, target: i.target ?? null, src:String(i.source||'הוצע על ידי סוכן') }); kpiSave(K); renderKpi(); return 'ok'; } },
+  { name:'add_insight', label:i => `תובנה: ${i.title}`, insight:true, description:'Records one insight for the user. severity: high|medium|low. area: call|org|gov|roi|kpi|cross. detail: 1-3 sentences in Hebrew, concrete, with numbers from the data and a recommended next step.', inputSchema:{ type:'object', properties:{ title:{ type:'string' }, detail:{ type:'string' }, severity:{ type:'string', enum:['high','medium','low'] }, area:{ type:'string', enum:Object.keys(AREA) } }, required:['title','detail','severity','area'] },
+    run: i => { const L = insLoad(); L.unshift({ title:String(i.title).slice(0,120), detail:String(i.detail).slice(0,600), severity: ['high','medium','low'].includes(i.severity) ? i.severity : 'medium', area: AREA[i.area] ? i.area : 'cross', at: new Date().toISOString(), agent: agentRun?.name || '' }); insSave(L.slice(0, 40)); renderInsights(); return 'recorded'; } }
+];
+const READ = AGENT_TOOLS.filter(t => t.read).map(t => t.name);
+const AGENTS = [
+  { id:'insights', name:'סוכן תובנות', icon:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>', desc:'עובר על כל המודולים ומחפש את מה שלא רואים במבט ראשון: קשרים בין ROI, סיכון, מדדים והזדמנויות.', acts:'קורא הכול · רושם תובנות · לא משנה נתונים', tools:[...READ, 'add_insight'],
+    task:() => 'Read all modules. Find 5 to 7 non-obvious, decision-relevant insights that connect modules (for example: an initiative with fast payback but high risk and no owner; an included initiative with no KPI; a high-value call-center opportunity not on the org map; data gaps that make the numbers weak; compliance issues that an opportunity would fix). Record each with add_insight. Do not change any data. Finish with a 2-sentence summary in Hebrew.' },
+  { id:'roi', name:'סוכן תיק השקעות', icon:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>', desc:'בונה תיק יוזמות שממקסם ROI לשנה בתוך תקציב ההקמה, ומסביר מה נכנס ולמה.', acts:'מכליל ומוציא יוזמות מהתיק · רושם תובנה', tools:['get_roi','get_governance','get_overview','set_roi_inclusion','add_insight'], budget:true,
+    task:b => `Build the ROI portfolio that maximizes 12-month ROI with total one-time cost at most ${b} ILS, using the realistic scenario. Prefer initiatives with payback under 12 months; avoid high-risk (tier 2) items that have no owner unless their value is exceptional, and say so. Use set_roi_inclusion for every initiative whose inclusion should change. Then record one add_insight (area roi) with the resulting investment, monthly net, payback and ROI, and a 3-sentence summary in Hebrew.` },
+  { id:'gov', name:'סוכן משילות', icon:'<path d="M12 3l8 4v5c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/>', desc:'מוודא שלכל שימוש בסיכון גבוה או בינוני יש בעלים וסטטוס, ומסמן בקרות קריטיות שחסרות.', acts:'מגדיר בעלים (תפקיד) וסטטוס · רושם תובנות', tools:['get_governance','get_roi','set_governance','add_insight'],
+    task:() => 'Review the AI-use register. For every high-risk (tier 2) and medium-risk (tier 1) use without an owner, set a sensible owner ROLE in Hebrew (for example: "מנהל/ת המוקד", "מנהל/ת גיוס", "ממונה הגנת פרטיות", "מנהל/ת כספים") and set status to "בתכנון" if it is still "הצעה". Never set status "בייצור". Record up to 3 add_insight items (area gov) about the most critical missing controls, naming the uses. Finish with a short Hebrew summary.' },
+  { id:'kpi', name:'סוכן מדדים', icon:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', desc:'מוודא שלכל יוזמה בתיק יש מדד הצלחה מדיד, עם בסיס ויעד מתוך הנתונים.', acts:'מוסיף מדדים · רושם תובנה', tools:['get_roi','get_kpis','get_overview','add_kpi','add_insight'],
+    task:() => 'For every initiative included in the ROI portfolio, make sure at least one measurable KPI covers it. Add missing KPIs with add_kpi (Hebrew name, unit, direction, and baseline/target numbers taken from the data when available; otherwise leave baseline empty). Do not duplicate existing KPIs. Record one add_insight (area kpi) listing what you added and why. Finish with a short Hebrew summary.' }
+];
+function insLoad(){ try{ return JSON.parse(localStorage.getItem('xray-insights') || '[]'); }catch(e){ return []; } }
+function insSave(L){ try{ localStorage.setItem('xray-insights', JSON.stringify(L)); }catch(e){} }
+function renderInsights(){
+  const L = insLoad(), sev = { high:'חשוב מאוד', medium:'חשוב', low:'לידיעה' };
+  $('ag-insights').innerHTML = L.length ? L.map(x => `<div class="ins ${esc(x.severity)}"><div class="top"><span class="chip ${x.severity==='high'?'crit':x.severity==='medium'?'amb':'acc'}">${sev[x.severity] || ''}</span><span class="chip">${esc(AREA[x.area] || '')}</span>${x.agent ? `<span class="small muted">${esc(x.agent)}</span>` : ''}</div><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></div>`).join('') : '<div class="msg">עדיין אין תובנות. הפעילו את "סוכן תובנות" או סוכן אחר.</div>';
+}
+function renderAgents(){
+  $('ag-cards').innerHTML = AGENTS.map(a => `<div class="agent"><span class="ai">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + a.icon + '</svg>'}</span><b>${a.name}</b><p>${a.desc}</p><span class="acts">${a.acts}</span>${a.budget ? '<div class="field"><label class="label" for="ag-budget">תקציב הקמה (₪)</label><input id="ag-budget" class="inp mono" type="number" min="0" step="10000" value="150000"></div>' : ''}<button class="btn primary sm" data-agent="${a.id}" type="button">הפעלה</button></div>`).join('');
+  $('ag-cards').querySelectorAll('[data-agent]').forEach(b => b.onclick = () => { const a = AGENTS.find(x => x.id === b.dataset.agent); runAgent(a.name, a.task(a.budget ? (+$('ag-budget').value || 0) : undefined), a.tools); });
+}
+let agentRun = null;
+const AG_KEYS = ['xray-org','xray-gov','xray-roi','xray-kpi','xray-insights'];
+function agSnapshot(){ const o = {}; AG_KEYS.forEach(k => { try{ o[k] = localStorage.getItem(k); }catch(e){} }); o.rows = JSON.parse(JSON.stringify(org.rows)); return o; }
+function agRestore(o){ AG_KEYS.forEach(k => { try{ o[k] == null ? localStorage.removeItem(k) : localStorage.setItem(k, o[k]); }catch(e){} }); org.rows = o.rows; renderOrg(); renderGov(); renderRoi(); renderInsights(); renderOpp(state.analysis); }
+function traceAdd(cls, text){ const li = document.createElement('li'); li.className = cls; li.innerHTML = `<span class="k">${cls==='read'?'ק':cls==='act'?'…':cls==='done'?'✓':cls==='no'?'×':'✦'}</span><span></span>`; li.lastChild.textContent = text; $('ag-trace').append(li); $('ag-trace').scrollTop = $('ag-trace').scrollHeight; return li; }
+function askApproval(li, signal){
+  if(!$('ag-approve').checked) return Promise.resolve(true);
+  return new Promise(res => { const box = document.createElement('div'); box.className = 'ask'; box.innerHTML = '<button class="btn sm primary" type="button">אישור</button><button class="btn sm" type="button">דחייה</button><button class="btn sm ghost" type="button">אישור לכל הפעולות</button>'; li.lastChild.append(box);
+    const [ok, no, all] = box.querySelectorAll('button'); const done = v => { box.remove(); res(v); };
+    ok.onclick = () => done(true); no.onclick = () => done(false); all.onclick = () => { $('ag-approve').checked = false; done(true); };
+    signal && signal.addEventListener('abort', () => done(false)); });
+}
+async function execTool(name, input, signal){
+  const t = AGENT_TOOLS.find(x => x.name === name); if(!t) throw new Error('Unknown tool');
+  input = input && typeof input === 'object' ? input : {};
+  if(t.read){ traceAdd('read', t.label(input)); return t.run(input); }
+  if(t.insight){ const r = t.run(input); traceAdd('done', t.label(input)); return r; }
+  const li = traceAdd('act', t.label(input));
+  const ok = await askApproval(li, signal);
+  if(!ok){ li.className = 'no'; li.querySelector('.k').textContent = '×'; throw new Error('The user rejected this action. Do not retry it; continue with other steps.'); }
+  const r = t.run(input); li.className = 'done'; li.querySelector('.k').textContent = '✓'; agentRun.changed = true; $('ag-undo').hidden = false; return r;
+}
+const AG_SYS = `You are an AI implementation analyst agent working INSIDE the "Call Center X-Ray" tool for an Israeli organization. You can call the page's functions to read data and take actions. Always read the data you need first. Be concrete: use the real names and numbers you read. Write every user-facing text (insights, owners, KPI names, summary) in simple Hebrew. Never invent data; if something is missing, say so. Governance: never set anything to production ("בייצור"); prefer "בתכנון".`;
+async function apiAgentLoop(task, tools, signal){
+  const messages = [{ role:'user', content: task }];
+  const spec = tools.map(t => ({ name:t.name, description:t.description, input_schema: t.inputSchema || { type:'object', properties:{} } }));
+  let finalText = '';
+  for(let round = 0; round < 12; round++){
+    let r; try{ r = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', signal, headers:{'content-type':'application/json','x-api-key':api.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body: JSON.stringify({ model: api.model, max_tokens: 4000, system: AG_SYS, tools: spec, messages }) }); }
+    catch(e){ throw { code: e && e.name === 'AbortError' ? 'cancelled' : 'upstream_error' }; }
+    if(!r.ok) throw { code: r.status === 401 ? 'bad_key' : r.status === 429 ? 'rate_limited' : 'upstream_error' };
+    const d = await r.json(), content = d.content || [];
+    const text = content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+    if(text) { finalText = text; traceAdd('think', text); }
+    const uses = content.filter(b => b.type === 'tool_use');
+    messages.push({ role:'assistant', content });
+    if(!uses.length) return finalText;
+    const results = [];
+    for(const u of uses){ let out, err = false; try{ out = await execTool(u.name, u.input, signal); }catch(e){ out = 'Error: ' + (e.message || e); err = true; } results.push({ type:'tool_result', tool_use_id:u.id, content: typeof out === 'string' ? out : JSON.stringify(out).slice(0, 30000), is_error: err }); }
+    messages.push({ role:'user', content: results });
+  }
+  return finalText;
+}
+async function runAgent(name, task, toolNames){
+  if(agentRun){ toast('סוכן אחר עדיין רץ', 'err'); return; }
+  if(!llmReady()){ toast(LLM_ERR.no_llm, 'err'); return; }
+  const tools = AGENT_TOOLS.filter(t => toolNames.includes(t.name));
+  if(caps.sample){ const lim = await caps.sample.limits().catch(() => null); if(!lim || !lim.tools){ toast('התצוגה הזו לא תומכת בסוכנים עם פעולות. נסו בדפדפן במחשב.', 'err'); return; } }
+  agentRun = { name, ctl: new AbortController(), snap: agSnapshot(), changed: false };
+  $('ag-run').hidden = false; $('ag-title').textContent = name; $('ag-trace').innerHTML = ''; $('ag-undo').hidden = true; $('ag-stop').hidden = false;
+  $('ag-run').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  const thinking = traceAdd('think', 'חושב…');
+  try{
+    let text;
+    if(caps.sample){
+      const { text: t } = await caps.sample(`${AG_SYS}\n\nTASK:\n${task}`, { signal: agentRun.ctl.signal, tools: tools.map(t => ({ name:t.name, description:t.description, inputSchema: t.inputSchema, execute: (input, ctx) => execTool(t.name, input, ctx.signal) })), onText: ({text}) => { thinking.lastChild.textContent = text.slice(-600); } });
+      text = t; thinking.lastChild.textContent = text;
+    } else { thinking.remove(); text = await apiAgentLoop(task, tools, agentRun.ctl.signal); }
+    traceAdd('done', 'הסוכן סיים.'); toast(`${name} סיים`);
+  }catch(e){ traceAdd('no', errText(e) || 'הסוכן נעצר.'); }
+  finally{ $('ag-stop').hidden = true; const r = agentRun; agentRun = null; $('ag-undo').hidden = !r.changed; $('ag-undo').onclick = () => { agRestore(r.snap); $('ag-undo').hidden = true; traceAdd('no', 'כל השינויים של הסוכן בוטלו.'); toast('השינויים בוטלו'); }; }
+}
+$('ag-stop').onclick = () => agentRun && agentRun.ctl.abort();
+$('ag-form').addEventListener('submit', e => { e.preventDefault(); const q = $('ag-q').value.trim(); if(!q) return; runAgent('בקשה חופשית', `${q}\n\nUse the tools to read what you need, act where the request asks, and record the key findings with add_insight. Finish with a short Hebrew summary.`, AGENT_TOOLS.map(t => t.name)); });
+$('ins-clear').onclick = () => { insSave([]); renderInsights(); };
+
 /* ================= nav & boot ================= */
 /* in-page links: scroll by script so they work inside the Claude viewer frame too */
 document.addEventListener('click', e => {
@@ -2029,9 +2329,9 @@ document.addEventListener('click', e => {
   el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   document.querySelectorAll('.side nav a').forEach(x => x.classList.toggle('on', x === a));
 });
-const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-gov','s-projects','s-export'];
+const secIds = ['s-sources','s-run','s-results','s-eval','s-org','s-gov','s-roi','s-agents','s-projects','s-export'];
 if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
-['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
+['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); if(typeof renderRoi === 'function') renderRoi(); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
   const el = $('ai-status');
   if(caps.sample){ el.className = 'chip good'; el.textContent = 'מחובר ל-Claude'; }
@@ -2042,7 +2342,7 @@ loadLocal();
 if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
 api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
 renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
-if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov();
+if(!loadOrg()) org.rows = ORG_DEMO.map(r => ({...r})); renderOrg(); renderProjects(); renderGov(); renderRoi(); renderAgents(); renderInsights();
 stt.key = ssGet('xray-stt-key'); stt.provider = ssGet('xray-stt-provider') || 'openai'; $('stt-provider').value = stt.provider; if(stt.key) $('stt-key').value = stt.key;
 if(INSIDE_CLAUDE){ $('stt-keys').hidden = true; $('audio-status').textContent = 'בתוך Claude אין אפשרות לשלוח שמע לשירות תמלול. ראו את שלוש הדרכים משמאל.'; }
 (() => { let seen = ''; try{ seen = localStorage.getItem('xray-tour') || ''; }catch(e){ seen = 'done'; } if(!seen) setTimeout(() => tourShow(0), 900); })();

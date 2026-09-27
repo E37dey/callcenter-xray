@@ -4,7 +4,7 @@
 
 [![tests](https://github.com/E37dey/callcenter-xray/actions/workflows/tests.yml/badge.svg)](https://github.com/E37dey/callcenter-xray/actions/workflows/tests.yml) ![license](https://img.shields.io/badge/license-MIT-blue) ![no build](https://img.shields.io/badge/build-none%20%C2%B7%20single%20file-0B6E8A)
 
-**אבחון תהליכים, איתור הזדמנויות AI ואוטומציה, ומשילות AI: במוקד השירות ובארגון כולו, בעזרת Claude.**
+**אבחון תהליכים, איתור הזדמנויות AI ואוטומציה, משילות AI, ROI ומדדי הצלחה, וסוכנים חכמים שפועלים בתוך הכלי: במוקד השירות ובארגון כולו, בעזרת Claude.**
 
 שני מסלולים:
 1. **ניתוח שיחות מוקד:** מתמלולים, נהלים ותצפיות אל מפת תהליך, הזדמנויות עם ציטוטים מאומתים וחיסכון בשקלים.
@@ -40,10 +40,12 @@
 | **מפת AI לארגון** | טבלת תהליכים לפי מחלקה עם שישה מדדים (חזרתיות, כללים, שפה, נתונים, שיקול דעת, רגישות), ציון היתכנות בנוסחה גלויה, חיסכון חודשי, המלצה (אוטומציה, סוכן AI, עוזר עם אישור אדם, תמיכה בהחלטה, קודם לסדר נתונים), מפת בועות של היתכנות מול חיסכון ותוכנית בשלושה גלים. אפשר לתאר את הארגון במילים ו-Claude יציע את רשימת התהליכים |
 | **תרחישי חיסכון** | החיסכון מוצג כטווח: פסימי (40% מהערכת המודל), סביר (70%) ואופטימי (100%), כי ההזדמנויות חופפות והאימוץ לא מלא |
 | **משילות AI** | מלאי של כל שימושי ה-AI שהומלצו. לכל שימוש: רמת סיכון (נמוך, בינוני, גבוה) לפי רגישות, אוטונומיה, מגע בלקוח ומידע אישי, עם נימוק גלוי; בעלים וסטטוס; רשימת בקרות חובה שנגזרת מהסיכון (עד 15 בקרות, למשל תסקיר השפעה, בדיקת הטיה, אדם בלולאה, גילוי ללקוח, מדיניות שמירה). התרעה על שימוש בייצור בלי כל הבקרות, ייצוא המלאי, וטיוטת מדיניות AI לארגון שנכתבת עם Claude. מבוסס על תיקון 13 לחוק הגנת הפרטיות, טיוטת הנחיית הרשות להגנת הפרטיות, מדיניות ה-AI הישראלית, ISO/IEC 42001 ו-NIST AI RMF (מסגרת עבודה, לא ייעוץ משפטי) |
-| **הדרכה בתוך הכלי** | סיור מודרך של שמונה צעדים בכניסה הראשונה (אפשר להפעיל שוב מסרגל הצד), ובסוף כל שלב "מה עכשיו?" עם קישור לשלב הבא |
+| **ROI ומדדי הצלחה** | תיק יוזמות עם עלות הקמה ועלות חודשית לכל יוזמה (הערכה אוטומטית לפי רמת המאמץ וסוג הפתרון, וניתנת לעריכה), נטו חודשי, זמן החזר ו-ROI לשנה בשלושת התרחישים, וגרף תזרים מצטבר ל-24 חודשים עם נקודת איזון. טבלת KPI שנבנית מהניתוח (זמן טיפול, זמן תהליך, שיחות בלי מספר פנייה, אימוץ, דיוק, חיסכון בפועל) עם בסיס, יעד, ערך בפועל וסטטוס התקדמות |
+| **סוכנים חכמים** | ארבעה סוכנים מוכנים (תובנות, תיק השקעות בתוך תקציב, משילות, מדדים) ובקשה חופשית. הסוכן מקבל פונקציות של הכלי כ-tools: קורא את הנתונים מכל המודולים, מבצע פעולות (הוספה למפה, הכללה בתיק, עדכון עלויות, בעלים וסטטוס, הוספת מדד) ורושם תובנות. כל פעולה מחכה לאישור (אפשר לכבות), כל צעד מופיע ביומן, ואפשר לבטל בלחיצה את כל מה שהסוכן שינה. הסוכן לא יכול להעביר שימוש לייצור |
+| **הדרכה בתוך הכלי** | סיור מודרך של 11 צעדים בכניסה הראשונה (אפשר להפעיל שוב מסרגל הצד), ובסוף כל שלב "מה עכשיו?" עם קישור לשלב הבא |
 | **הקלטות** | תמלול בעברית של קובצי שמע דרך Whisper (OpenAI או Groq) בגרסה העצמאית, סקריפט מקומי עם מודל ivrit.ai שלא שולח שמע החוצה, וקריאת VTT/SRT בלי חותמות זמן |
 | **ניתוחים שמורים** | שמירת המצב הנוכחי בשם, טעינה, ייצוא וייבוא, והשוואה בין שני ניתוחים (למשל לפני ואחרי פיילוט) עם שינוי באחוזים |
-| **מצגת משולבת** | שמונה שקפים שמאחדים את שני המסלולים: תקציר, המוקד, לפני ואחרי, מפת הארגון, שלושה גלים ופיילוט, משילות AI, הנחות. ניווט בחצים והדפסה ל-PDF |
+| **מצגת משולבת** | תשעה שקפים שמאחדים את שני המסלולים: תקציר (כולל תובנות הסוכנים), המוקד, ההזדמנויות המובילות, מפת הארגון, שלושה גלים ופיילוט, ROI ומדדים, משילות AI, הנחות. ניווט בחצים והדפסה ל-PDF |
 | **שיתוף** | דוח מנהלים של עמוד אחד (HTML), דוח מלא (Markdown), JSON, שמירה ב-Google Drive, טיוטת Gmail, וטיוטת workflow ל-n8n לכל הזדמנות |
 
 ![מפת AI לארגון](docs/screenshots/org-map.png)
@@ -54,6 +56,12 @@
 
 ![משילות AI](docs/screenshots/governance.png)
 
+![ROI ומדדי הצלחה](docs/screenshots/roi.png)
+
+![סוכנים חכמים](docs/screenshots/agents.png)
+
+> התובנות בצילום הן דוגמה להמחשת התצוגה, על נתוני הדמו.
+
 ## ארכיטקטורה
 
 ```mermaid
@@ -63,7 +71,9 @@ flowchart LR
     R --> P[בניית prompt<br/>סכמת JSON קבועה]
     V[אימות ציטוטים<br/>מול הטקסט שנשלח] --> UI[תצוגה<br/>מפות · מטריצה · ROI]
     UI --> X[ייצוא<br/>HTML · MD · JSON · n8n]
+    UI --> AG[סוכנים<br/>tools: קריאה · פעולה · תובנה]
   end
+  AG -. tool use .-> L
   P --> L{{Claude<br/>דרך Claude או מפתח API}}
   L --> J[JSON מובנה<br/>+ ולידציה] --> V
   S -. ייבוא .-> GD[(Google Drive)]
@@ -86,7 +96,7 @@ flowchart LR
 
 ## בדיקות אוטומטיות
 
-32 בדיקות Playwright רצות ב-GitHub Actions על כל שינוי, במחשב ובמסך טלפון:
+39 בדיקות Playwright רצות ב-GitHub Actions על כל שינוי, במחשב ובמסך טלפון:
 
 - **פרטיות:** ת.ז, טלפון, כרטיס, מייל ושם מוסתרים; מספרים שלא עוברים ספרת ביקורת או Luhn לא מוסתרים; מילים אישיות מוסתרות.
 - **ניתוח חי מול Claude מדומה:** הבקשה ל-API מיורטת, והבדיקה מוודאת שהטקסט שיצא מהדפדפן כבר מוסתר, שה-JSON עובר ולידציה, ושציטוט שהמודל "המציא" מסומן כלא נמצא.
@@ -95,7 +105,9 @@ flowchart LR
 - **ממשק:** מעבר לפני/אחרי, מבחן דיוק מול תשובות מדומות, ייצוא, ניווט בסרגל הצד, ואין גלילה אופקית בטלפון.
 - **הדרכה ושמירה:** הסיור עובר על כל השלבים ונזכר שנסגר; שמירה, השוואה מהישן לחדש, טעינה, ייצוא וייבוא.
 - **משילות:** כל שימוש נכנס למלאי עם רמת סיכון; סינון קורות חיים מסווג כגבוה ודורש תסקיר ובדיקת הטיה; בעלים, סטטוס ובקרות נשמרים ונספרים; טיוטת המדיניות נבנית מהמלאי.
-- **הקלטות ומצגת:** תמלול מול Whisper מדומה (כולל המפתח שנשלח), חסימה בלי מפתח, ניקוי VTT, ושבעת השקפים של המצגת.
+- **ROI ומדדים:** זמן ההחזר וה-ROI תואמים לנוסחה; הכללה והחרגה ועריכת עלויות משנות את הסכומים ונשמרות; סטטוס מדד לפי ההתקדמות מהבסיס ליעד בשני הכיוונים.
+- **סוכנים מול Claude מדומה:** לולאת tool use מלאה; הסוכן מקבל רק את הכלים שלו; שום דבר לא משתנה לפני אישור; פעולה שנדחתה לא מתבצעת והמודל מקבל על כך הודעה; ביטול מחזיר את כל השינויים.
+- **הקלטות ומצגת:** תמלול מול Whisper מדומה (כולל המפתח שנשלח), חסימה בלי מפתח, ניקוי VTT, ותשעת השקפים של המצגת.
 
 ```bash
 npm ci
@@ -162,7 +174,9 @@ docs/                 צילומי מסך ו-GIF
 - Exports: one-page executive report (HTML), full report (Markdown), JSON, Google Drive doc, Gmail draft, and an n8n workflow draft per opportunity.
 
 - AI governance register: risk tier per AI use (sensitivity, autonomy, customer-facing, personal data) with required controls, owners and status, a live-without-controls alert, CSV export and a Claude-drafted AI usage policy. Grounded in Israel's Privacy Protection Law Amendment 13, the draft PPA AI guideline, Israel's AI policy, ISO/IEC 42001 and NIST AI RMF.
-- Guided tour, 'what now' links at the end of every step, saved analyses with before/after comparison, a seven-slide combined deck, and Hebrew audio transcription (Whisper API in the standalone build, or a local ivrit.ai script).
+- ROI and KPIs: one-time and monthly cost per initiative, payback, 12-month ROI and a 24-month cumulative cash-flow chart in three scenarios; a KPI tracker seeded from the analysis with baseline, target, actual and status.
+- Smart agents: four preset agents (insights, budget-constrained ROI portfolio, governance, KPIs) plus free-form requests. Agents call the page's own functions as tools (read, act, record insight) through Claude tool use, with per-action approval, a visible trace and one-click undo.
+- Guided tour, 'what now' links at the end of every step, saved analyses with before/after comparison, a nine-slide combined deck, and Hebrew audio transcription (Whisper API in the standalone build, or a local ivrit.ai script).
 - Organization-wide AI map: score any process on six criteria with a transparent formula, get a recommended solution type, a feasibility-vs-savings bubble map and a three-wave rollout plan; or describe the organization and let Claude propose the process inventory.
 
 Demo data is fictional. MIT License.

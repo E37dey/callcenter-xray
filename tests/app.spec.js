@@ -222,8 +222,8 @@ test.describe('guidance', () => {
     await open(page, { tour: true });
     const tour = page.locator('#tour');
     await expect(tour).toBeVisible();
-    await expect(page.locator('#tour-n')).toHaveText('1 / 9');
-    for (let i = 0; i < 8; i++) await page.click('#tour-next');
+    await expect(page.locator('#tour-n')).toHaveText('1 / 11');
+    for (let i = 0; i < 10; i++) await page.click('#tour-next');
     await expect(page.locator('#tour-next')).toHaveText('סיום');
     await expect(page.locator('#s-export')).toHaveClass(/tour-hl/);
     await page.click('#tour-next');
@@ -237,7 +237,7 @@ test.describe('guidance', () => {
 
   test('every step ends with a "what now" link to the next step', async ({ page }) => {
     await open(page);
-    await expect(page.locator('.nextbar')).toHaveCount(7);
+    await expect(page.locator('.nextbar')).toHaveCount(9);
     await page.click('#s-results .nextbar a');
     await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('s-eval').getBoundingClientRect().top))).toBeLessThan(60);
   });
@@ -273,11 +273,12 @@ test.describe('saved analyses', () => {
 });
 
 test.describe('combined deck', () => {
-  test('has eight slides covering both tracks and governance', async ({ page }) => {
+  test('has nine slides covering both tracks, governance and ROI', async ({ page }) => {
     await open(page);
     const html = await page.evaluate(() => deckReport());
-    expect((html.match(/<section/g) || []).length).toBe(8);
+    expect((html.match(/<section/g) || []).length).toBe(9);
     expect(html).toContain('משילות AI');
+    expect(html).toContain('ROI ומדדי הצלחה');
     for (const s of ['התמונה בקצרה', 'מה קורה במוקד', 'שלוש ההזדמנויות המובילות במוקד', 'מפת AI לארגון', 'תוכנית בשלושה גלים', 'הנחות ושקיפות']) expect(html).toContain(s);
     expect(html).toContain('חיסכון חודשי בשאר הארגון');
   });
@@ -367,5 +368,149 @@ test.describe('AI governance', () => {
     await page.click('#gov-policy');
     await expect(page.locator('#gov-policy-out')).toContainText('מדיניות שימוש בבינה מלאכותית');
     expect(JSON.stringify(bodies[0])).toContain('סינון ראשוני של קורות חיים');
+  });
+});
+
+test.describe('ROI and KPIs', () => {
+  test('payback and 12-month ROI follow the cost and saving formulas', async ({ page }) => {
+    await open(page);
+    const r = await page.evaluate(() => {
+      const it = roiItems(), P = portfolio(it, 'r'), inc = it.filter((i) => i.inc);
+      const once = inc.reduce((n, i) => n + i.once, 0), net = inc.reduce((n, i) => n + i.r.net, 0);
+      return { n: P.n, nInc: inc.length, once: P.once, onceSum: once, pay: P.pay, payCalc: once / net, roi: P.roi12, roiCalc: (12 * net - once) / once, be: P.be,
+        allFast: inc.every((i) => i.r.pay <= 12), item: it[0] };
+    });
+    expect(r.n).toBe(r.nInc);
+    expect(r.once).toBe(r.onceSum);
+    expect(r.pay).toBeCloseTo(r.payCalc, 6);
+    expect(r.roi).toBeCloseTo(r.roiCalc, 6);
+    expect(r.allFast).toBe(true); // default portfolio = payback within a year
+    expect(r.be).toBeGreaterThan(0);
+    expect(r.item.r.net).toBeCloseTo(r.item.save * 0.7 - r.item.run, 6);
+  });
+
+  test('inclusion and cost edits change the totals and are saved', async ({ page }) => {
+    await open(page);
+    const count = () => page.evaluate(() => portfolio(roiItems(), 'r').n);
+    const n0 = await count();
+    await page.click('#roi-all');
+    const all = await page.evaluate(() => roiItems().length);
+    expect(await count()).toBe(all);
+    const row = page.locator('#roi-tbl tbody tr').first();
+    await row.locator('[data-inc]').uncheck();
+    expect(await count()).toBe(all - 1);
+    const first = page.locator('#roi-tbl tbody tr').first();
+    await first.locator('[data-once]').fill('99000');
+    await first.locator('[data-once]').dispatchEvent('change');
+    await page.reload();
+    expect(await count()).toBe(all - 1);
+    expect(await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('xray-roi'))).some((o) => o.once === 99000))).toBe(true);
+    await page.click('#roi-top');
+    expect(await count()).toBeLessThanOrEqual(all);
+    expect(n0).toBeGreaterThan(0);
+  });
+
+  test('KPI status reads progress from baseline to target in either direction', async ({ page }) => {
+    await open(page);
+    const s = await page.evaluate(() => [
+      kpiStatus({ base: 10, target: 5, cur: 6 }).t, // 80% of the way down
+      kpiStatus({ base: 10, target: 5, cur: 9 }).t, // 20%
+      kpiStatus({ base: 0, target: 80, cur: 30 }).t, // 37.5% up
+      kpiStatus({ base: 10, target: 5, cur: 4 }).t, // past target
+      kpiStatus({ base: 10, target: 5 }).t,
+    ]);
+    expect(s).toEqual(['בדרך ליעד', 'בפיגור', 'צריך תשומת לב', 'ביעד', 'אין עדיין נתון']);
+  });
+
+  test('KPIs are seeded from the analysis and an actual value updates the status', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('#kpi-tbl tbody tr').first().locator('[data-f="name"]')).toHaveValue('זמן טיפול ממוצע');
+    const row = page.locator('#kpi-tbl tbody tr').first();
+    const base = Number(await row.locator('[data-f="base"]').inputValue());
+    const target = Number(await row.locator('[data-f="target"]').inputValue());
+    await row.locator('[data-f="cur"]').fill(String(target));
+    await row.locator('[data-f="cur"]').dispatchEvent('change');
+    await expect(page.locator('#kpi-tbl tbody tr').first()).toContainText('ביעד');
+    expect(base).toBeGreaterThan(target);
+    await page.click('#kpi-add');
+    await expect(page.locator('#kpi-tbl tbody tr').last().locator('[data-f="name"]')).toHaveValue('מדד חדש');
+  });
+});
+
+/** Answer Anthropic API calls with a fixed sequence of content arrays (tool_use loop). */
+async function mockAgent(page, turns) {
+  const bodies = [];
+  await page.route(API, async (route) => {
+    bodies.push(route.request().postDataJSON());
+    const content = turns[Math.min(bodies.length - 1, turns.length - 1)];
+    await route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'application/json', 'access-control-allow-origin': '*' },
+      body: JSON.stringify({ content, stop_reason: content.some((b) => b.type === 'tool_use') ? 'tool_use' : 'end_turn' }),
+    });
+  });
+  return bodies;
+}
+
+test.describe('smart agents', () => {
+  const setup = async (page) => {
+    await open(page);
+    const name = await page.evaluate(() => roiItems().find((i) => i.inc).name);
+    const bodies = await mockAgent(page, [
+      [{ type: 'text', text: 'קורא את התיק' }, { type: 'tool_use', id: 't1', name: 'get_roi', input: {} }],
+      [
+        { type: 'tool_use', id: 't2', name: 'set_roi_inclusion', input: { name, include: false } },
+        { type: 'tool_use', id: 't3', name: 'add_insight', input: { title: 'תובנת בדיקה', detail: 'פרט בדיקה עם מספר 5.', severity: 'high', area: 'roi' } },
+      ],
+      [{ type: 'text', text: 'סיכום: הוצאתי יוזמה אחת מהתיק.' }],
+    ]);
+    await page.fill('#api-key', 'sk-ant-test');
+    await page.click('#api-save');
+    const included = () => page.evaluate((n) => roiItems().find((i) => i.name === n).inc, name);
+    return { name, bodies, included };
+  };
+
+  test('agent reads, asks before acting, records an insight, and undo restores everything', async ({ page }) => {
+    const { bodies, included } = await setup(page);
+    await page.click('[data-agent="roi"]');
+    const ask = page.locator('#ag-trace .ask');
+    await expect(ask).toBeVisible();
+    expect(await included()).toBe(true); // nothing changes before approval
+    await ask.getByText('אישור', { exact: true }).click();
+    await expect(page.locator('#ag-trace')).toContainText('הסוכן סיים');
+    expect(await included()).toBe(false);
+    await expect(page.locator('#ag-insights')).toContainText('תובנת בדיקה');
+    await expect(page.locator('#ag-trace')).toContainText('סיכום: הוצאתי יוזמה אחת מהתיק.');
+    // The model only gets the tools this agent is allowed to use, and tool results go back.
+    const names = bodies[0].tools.map((t) => t.name);
+    expect(names).toContain('set_roi_inclusion');
+    expect(names).not.toContain('add_kpi');
+    const res = bodies[1].messages.at(-1).content[0];
+    expect(res.type).toBe('tool_result');
+    expect(res.tool_use_id).toBe('t1');
+    expect(res.content).toContain('portfolio');
+    await page.click('#ag-undo');
+    expect(await included()).toBe(true);
+    await expect(page.locator('#ag-insights')).not.toContainText('תובנת בדיקה');
+  });
+
+  test('a rejected action is not applied and the model is told', async ({ page }) => {
+    const { bodies, included } = await setup(page);
+    await page.click('[data-agent="roi"]');
+    await page.locator('#ag-trace .ask').getByText('דחייה', { exact: true }).click();
+    await expect(page.locator('#ag-trace')).toContainText('הסוכן סיים');
+    expect(await included()).toBe(true);
+    const res = bodies[2].messages.at(-1).content.find((b) => b.tool_use_id === 't2');
+    expect(res.is_error).toBe(true);
+    expect(res.content).toContain('rejected');
+  });
+
+  test('without approval mode the agent acts directly', async ({ page }) => {
+    const { included } = await setup(page);
+    await page.uncheck('#ag-approve');
+    await page.click('[data-agent="roi"]');
+    await expect(page.locator('#ag-trace')).toContainText('הסוכן סיים');
+    expect(await included()).toBe(false);
+    await expect(page.locator('#ag-undo')).toBeVisible();
   });
 });
