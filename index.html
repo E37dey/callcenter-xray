@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="רנטגן למוקד: אבחון תהליכים ואיתור אוטומציות במוקדי שירות בעזרת Claude">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>רנטגן למוקד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#EDF1F4; --surface:#FFFFFF; --surface-2:#F4F7F9; --line:#D3DCE3; --line-2:#E3E9EE;
+  --ink:#122033; --muted:#5A6878; --accent:#0B6E8A; --accent-ink:#FFFFFF; --accent-soft:#DDEFF4;
+  --amber:#B86E00; --amber-soft:#FCEFD9; --good:#1D7A4D; --good-soft:#DDF1E5;
+  --crit:#B42318; --crit-soft:#FDE3E0; --violet:#5B4DB0; --violet-soft:#E9E6F8;
+  --mark:#FFE9A8; --shadow:0 1px 2px rgba(18,32,51,.06),0 6px 20px rgba(18,32,51,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0C1219; --surface:#141C26; --surface-2:#19232F; --line:#293646; --line-2:#212C39;
+    --ink:#E3EAF1; --muted:#95A4B4; --accent:#4FB8D4; --accent-ink:#081018; --accent-soft:#16323D;
+    --amber:#F0A73A; --amber-soft:#3A2B12; --good:#5CC990; --good-soft:#153426;
+    --crit:#FF7C6D; --crit-soft:#431C18; --violet:#A99CF2; --violet-soft:#27224A; --mark:#5A4712; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0C1219; --surface:#141C26; --surface-2:#19232F; --line:#293646; --line-2:#212C39;
+  --ink:#E3EAF1; --muted:#95A4B4; --accent:#4FB8D4; --accent-ink:#081018; --accent-soft:#16323D;
+  --amber:#F0A73A; --amber-soft:#3A2B12; --good:#5CC990; --good-soft:#153426;
+  --crit:#FF7C6D; --crit-soft:#431C18; --violet:#A99CF2; --violet-soft:#27224A; --mark:#5A4712; --shadow:none;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:15px;line-height:1.55;direction:rtl}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:22px 56px;display:grid;gap:18px}
+h1,h2,h3{font-family:"Rubik","Assistant",Arial,sans-serif;margin:0;text-wrap:balance}
+h1{font-size:28px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:18px;font-weight:700}
+h3{font-size:15px;font-weight:500}
+p{margin:0}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 2px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.label{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+button,input,select,textarea{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.top{display:grid;gap:14px}
+.brand{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand p{color:var(--muted);max-width:68ch;margin-top:4px}
+.film{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.film i{display:inline-block;width:22px;height:8px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--accent) 0 3px,transparent 3px 6px)}
+.trust{display:flex;flex-wrap:wrap;gap:6px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.steps a{display:grid;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.steps a b{font-family:"Rubik",sans-serif;font-weight:500;font-size:14px}
+.steps a span{font-size:12.5px;color:var(--muted)}
+.steps a.on{border-color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px;display:grid;gap:14px;scroll-margin-top:12px}
+.phead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.phead .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);display:block}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.btn{border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.big{padding:12px 20px;font-size:15.5px}
+.btn.ghost{background:none}
+.btn.sm{padding:4px 10px;font-size:13px}
+.btn.danger{color:var(--crit)}
+.btn:disabled{opacity:.45;cursor:default}
+.field{display:grid;gap:4px}
+.field input,.field select,textarea,.inp{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%;min-width:0}
+textarea{min-height:130px;resize:vertical;line-height:1.5}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.acc{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.chip.amb{background:var(--amber-soft);border-color:transparent;color:var(--amber)}
+.chip.crit{background:var(--crit-soft);border-color:transparent;color:var(--crit)}
+.chip.good{background:var(--good-soft);border-color:transparent;color:var(--good)}
+.chip.vio{background:var(--violet-soft);border-color:transparent;color:var(--violet)}
+.note{font-size:13px;color:var(--muted)}
+.msg{font-size:13.5px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.msg.warn{background:var(--amber-soft);border-color:transparent}
+.msg.err{background:var(--crit-soft);border-color:transparent}
+.msg.ok{background:var(--good-soft);border-color:transparent}
+
+.profile{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:10px}
+.src-tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.src-tabs button{border:0;background:none;padding:8px 12px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.src-tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.src-list{display:grid;gap:6px}
+.src{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line-2);border-radius:9px;background:var(--surface-2);font-size:14px}
+.src .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src button{border:0;background:none;color:var(--muted);cursor:pointer;font-size:13px;font-weight:700}
+.meter{height:8px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-2);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent)}
+.drive-results{display:grid;gap:6px;max-height:260px;overflow-y:auto}
+.drive-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line-2);border-radius:9px;font-size:14px}
+.drop{border:1.5px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted);display:grid;gap:8px;justify-items:center}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+
+.shield{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;background:linear-gradient(0deg,var(--surface),var(--surface)) padding-box}
+.switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-weight:700}
+.switch input{appearance:none;width:40px;height:22px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:background .2s}
+.switch input::after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:right .2s}
+.switch input:checked{background:var(--good)}
+.switch input:checked::after{right:21px}
+@media (prefers-reduced-motion: reduce){.switch input,.switch input::after{transition:none}}
+.pii-counts{display:flex;flex-wrap:wrap;gap:6px}
+.preview{font-size:13px;white-space:pre-wrap;max-height:240px;overflow:auto;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:10px}
+.tok{background:var(--good-soft);color:var(--good);border-radius:4px;padding:0 3px;font-weight:700;font-family:"IBM Plex Mono",monospace;font-size:12px}
+
+.run{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.progress{display:grid;gap:6px}
+.stream{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);max-height:70px;overflow:hidden;direction:ltr;text-align:left;white-space:pre-wrap;mask-image:linear-gradient(to bottom,transparent,#000 40%)}
+.pulse{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:pl 1.2s ease-in-out infinite}
+@keyframes pl{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.pulse{animation:none}}
+.keybox{display:grid;grid-template-columns:1fr 12em auto;gap:8px;align-items:end}
+
+.banner{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:var(--violet-soft);font-size:14px}
+.rtabs{display:flex;gap:4px;flex-wrap:wrap;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:4px}
+.rtabs button{border:0;background:none;border-radius:8px;padding:8px 14px;font-weight:700;color:var(--muted);cursor:pointer}
+.rtabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);outline:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:2px;background:var(--surface)}
+.kpi .n{font-family:"Rubik",sans-serif;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .n.good{color:var(--good)}
+.kpi .d{font-size:12.5px;color:var(--muted)}
+.lead{font-size:16.5px;max-width:75ch}
+.top3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.top3 .card{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px;align-content:start}
+.top3 .card .rank{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent)}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(8em,11em) 1fr auto;gap:10px;align-items:center;font-size:14px}
+.bar .t{height:14px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+.bar .v{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.stack{display:flex;height:16px;border-radius:5px;overflow:hidden}
+.stack i{display:block;height:100%}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px;background:var(--c)}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.list li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px 12px;border-radius:10px;background:var(--surface-2);font-size:14px}
+.list li .ev{grid-column:2 / -1}
+.sev{width:10px;height:10px;border-radius:50%;margin-top:6px}
+.scroll-x{overflow-x:auto;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2)}
+.scroll-x svg{display:block}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{border:0;background:var(--surface-2);padding:6px 14px;font-weight:700;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.compare{display:grid;gap:8px}
+.compare .bar{grid-template-columns:5.5em 1fr 6em}
+.opps{display:grid;gap:10px}
+.opp{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.opp > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px}
+.opp > summary::-webkit-details-marker{display:none}
+.opp .idx{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:13px;background:var(--accent-soft);color:var(--accent)}
+.opp .money{text-align:left;font-family:"Rubik",sans-serif;font-weight:700;color:var(--good);white-space:nowrap}
+.opp .money small{display:block;font-family:"Assistant",sans-serif;font-weight:600;font-size:12px;color:var(--muted)}
+.opp .body{padding:12px 14px 14px;display:grid;gap:12px;border-top:1px solid var(--line-2)}
+.opp ol{margin:0;padding-inline-start:20px;display:grid;gap:3px;font-size:14px}
+.dots{display:inline-flex;gap:3px;vertical-align:middle}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent)}
+.sortbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+
+.evs{display:grid;gap:6px}
+.evq{border-inline-start:3px solid var(--line);background:var(--surface-2);border-radius:8px}
+.evq.ok{border-inline-start-color:var(--good)}
+.evq.bad{border-inline-start-color:var(--amber)}
+.evq > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:8px;padding:8px 10px;font-size:13.5px;align-items:start}
+.evq > summary::-webkit-details-marker{display:none}
+.evq .ctx{padding:0 10px 10px;font-size:13px;color:var(--muted);white-space:pre-wrap}
+
+.pilot{display:grid;gap:10px}
+.week{display:grid;grid-template-columns:5.5em 1fr;gap:12px;align-items:start;padding:10px 12px;border-radius:10px;background:var(--surface-2)}
+.week b{font-family:"Rubik",sans-serif;font-weight:500;color:var(--accent)}
+.code{font-family:"IBM Plex Mono",monospace;font-size:12px;direction:ltr;text-align:left;white-space:pre;overflow:auto;max-height:260px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:10px}
+
+.acc-grid{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.ring{width:132px;height:132px}
+.tbl-wrap{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th,table.t td{padding:7px 10px;border-bottom:1px solid var(--line-2);text-align:right;vertical-align:top}
+table.t th{font-size:12px;color:var(--muted);font-weight:700}
+table.t td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.chat{display:grid;gap:10px;max-height:460px;overflow-y:auto;padding:4px}
+.bubble{padding:10px 13px;border-radius:12px;font-size:14.5px;white-space:pre-wrap;max-width:88%}
+.bubble.u{background:var(--accent-soft);justify-self:start}
+.bubble.a{background:var(--surface-2);border:1px solid var(--line-2);justify-self:end}
+.chat-form{display:grid;grid-template-columns:1fr auto;gap:8px}
+.sugg{display:flex;gap:6px;flex-wrap:wrap}
+.sugg button{border:1px dashed var(--line);background:none;border-radius:999px;padding:3px 10px;font-size:13px;color:var(--accent);cursor:pointer}
+
+.exp{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.exp .card{border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;align-content:start}
+footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4px}
+
+@media (max-width:1040px){
+  .profile{grid-template-columns:1fr 1fr}
+  .profile .field:first-child{grid-column:1 / -1}
+  .top3{grid-template-columns:1fr}
+  .exp{grid-template-columns:1fr 1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:680px){
+  .wrap{padding-inline:16px}
+  h1{font-size:23px}
+  .steps{grid-template-columns:1fr 1fr}
+  .grid2,.run,.exp,.keybox,.acc-grid{grid-template-columns:1fr}
+  .bar{grid-template-columns:7.5em 1fr auto}
+  .src{grid-template-columns:auto 1fr auto}
+  .src .size{display:none}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div>
+        <span class="film"><i></i>אבחון תהליכים מבוסס AI למוקדי שירות ומכירות</span>
+        <h1>רנטגן למוקד</h1>
+        <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude מזהה מה קורה בשיחות ומשרטט את התהליך בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, ותוכנית פיילוט.</p>
+      </div>
+      <div class="trust" aria-label="עקרונות">
+        <span class="chip good">פרטים מזהים מוסתרים לפני שליחה</span>
+        <span class="chip acc">כל ממצא עם ציטוט מאומת</span>
+        <span class="chip vio">דיוק נמדד, לא מובטח</span>
+      </div>
+    </div>
+    <nav class="steps" aria-label="שלבים">
+      <a href="#s-sources"><b>1 · מקורות</b><span>תמלולים, נהלים, Drive</span></a>
+      <a href="#s-run"><b>2 · ניתוח</b><span>הסתרה וניתוח</span></a>
+      <a href="#s-results" class="on"><b>3 · תוצאות</b><span>זיהוי, תהליך, הזדמנויות</span></a>
+      <a href="#s-eval"><b>4 · מבחן דיוק</b><span>כמה הכלי צודק</span></a>
+      <a href="#s-export"><b>5 · שיתוף</b><span>דוח, Drive, Gmail, n8n</span></a>
+    </nav>
+  </header>
+
+  <!-- 1. SOURCES -->
+  <section class="panel" id="s-sources" aria-labelledby="h-src">
+    <div class="phead">
+      <div><span class="num">שלב 1</span><h2 id="h-src">מה מנתחים</h2></div>
+      <div class="row"><button class="btn ghost" id="load-demo">טעינת נתוני דוגמה</button><button class="btn ghost danger" id="clear-src">ניקוי מקורות</button></div>
+    </div>
+    <div class="profile">
+      <div class="field"><label class="label" for="p-type">סוג הפעילות</label>
+        <select id="p-type">
+          <option>מוקד שירות לקוחות (שיחות נכנסות)</option>
+          <option>מוקד מכירות (שיחות יוצאות)</option>
+          <option>מוקד שימור לקוחות</option>
+          <option>מוקד תיאום פגישות</option>
+          <option>מוקד תמיכה טכנית</option>
+        </select></div>
+      <div class="field"><label class="label" for="p-calls">שיחות בחודש</label><input id="p-calls" type="number" min="0" step="100" value="18000" class="mono"></div>
+      <div class="field"><label class="label" for="p-aht">זמן טיפול ממוצע (דק׳)</label><input id="p-aht" type="number" min="0" step="0.1" value="5.5" class="mono"></div>
+      <div class="field"><label class="label" for="p-cost">עלות שעת נציג (₪)</label><input id="p-cost" type="number" min="0" step="1" value="55" class="mono"></div>
+      <div class="field"><label class="label" for="p-agents">מספר נציגים</label><input id="p-agents" type="number" min="0" step="1" value="45" class="mono"></div>
+    </div>
+    <p class="note">המספרים משמשים לחישוב החיסכון. עלות שעה כוללת שכר ועלויות מעסיק.</p>
+
+    <div class="src-tabs" role="tablist" aria-label="הוספת מקור">
+      <button role="tab" aria-selected="true" data-t="paste">הדבקת טקסט</button>
+      <button role="tab" aria-selected="false" data-t="file">העלאת קבצים</button>
+      <button role="tab" aria-selected="false" data-t="drive" id="tab-drive">Google Drive</button>
+    </div>
+    <div data-p="paste" class="grid2" style="align-items:start">
+      <div class="field">
+        <label class="label" for="paste-name">שם המקור</label>
+        <input id="paste-name" class="inp" placeholder="למשל: תמלולי שיחות, שבוע 39">
+        <label class="label" for="paste-text" style="margin-top:6px">טקסט</label>
+        <textarea id="paste-text" placeholder="הדביקו תמלולים, נוהל, או הערות מישיבה ליד נציגים. כל פורמט עובד."></textarea>
+        <div class="row"><button class="btn primary" id="add-paste">הוספה למקורות</button></div>
+      </div>
+      <div class="msg">
+        <b>מה כדאי להכניס</b>
+        <ul style="margin:6px 0 0;padding-inline-start:18px;display:grid;gap:3px">
+          <li>תמלולים של 10–50 שיחות אמיתיות</li>
+          <li>הערות מישיבה ליד נציגים: מה עשו, כמה זמן, איפה נתקעו</li>
+          <li>הנהלים שהנציגים עובדים לפיהם</li>
+          <li>דוחות מהמערכת: סיבות פנייה, זמני טיפול, שיחות חוזרות</li>
+        </ul>
+      </div>
+    </div>
+    <div data-p="file" hidden>
+      <div class="drop" id="drop">
+        <b>גררו לכאן קבצי טקסט</b>
+        <span class="small">‎.txt ‎.csv ‎.md ‎.json ‎.vtt ‎.srt</span>
+        <label class="btn" for="file-in">בחירת קבצים</label>
+        <input id="file-in" type="file" multiple accept=".txt,.csv,.md,.json,.vtt,.srt,text/*" hidden>
+      </div>
+    </div>
+    <div data-p="drive" hidden class="grid2" style="align-items:start">
+      <div style="display:grid;gap:8px">
+        <form class="row" id="drive-form" style="flex-wrap:nowrap">
+          <label for="drive-q" hidden>חיפוש</label>
+          <input id="drive-q" class="inp" placeholder="חיפוש ב-Drive, למשל: נוהל, תמלול">
+          <button class="btn primary" type="submit">חיפוש</button>
+        </form>
+        <div id="drive-status" class="note">מחפשים מסמכים ב-Google Drive ומייבאים אותם כמקור. הקבצים נקראים בהרשאה שלכם ולא נשמרים בדף.</div>
+        <div class="drive-results" id="drive-results"></div>
+      </div>
+      <div class="msg">Google Docs, Sheets, PDF ו-Word נתמכים. בפעם הראשונה תתבקשו לאשר גישה ל-Drive.</div>
+    </div>
+
+    <div style="display:grid;gap:8px">
+      <div class="phead"><span class="label">מקורות בניתוח</span><span class="small muted mono" id="src-size"></span></div>
+      <div class="meter" aria-hidden="true"><i id="src-meter" style="width:0"></i></div>
+      <div class="src-list" id="src-list"></div>
+    </div>
+  </section>
+
+  <!-- 2. RUN -->
+  <section class="panel" id="s-run" aria-labelledby="h-run">
+    <div class="phead"><div><span class="num">שלב 2</span><h2 id="h-run">הגנה על פרטיות וניתוח</h2></div><span class="chip" id="ai-status">בודק חיבור…</span></div>
+
+    <div class="shield">
+      <div class="phead">
+        <label class="switch"><input type="checkbox" id="pii-on" checked> הסתרת פרטים מזהים לפני השליחה ל-AI</label>
+        <span class="note">רץ בדפדפן. רק הטקסט המוסתר יוצא מהמחשב.</span>
+      </div>
+      <div class="pii-counts" id="pii-counts"></div>
+      <div class="grid2" style="align-items:end">
+        <div class="field"><label class="label" for="pii-extra">מילים נוספות להסתרה (שמות, חברות), מופרדות בפסיק</label><input id="pii-extra" class="inp" placeholder="למשל: דנה, יוסי כהן, שם הלקוח העסקי"></div>
+        <details><summary class="btn sm" style="list-style:none;display:inline-block">תצוגה מקדימה של מה שנשלח</summary><div class="preview" id="pii-preview" style="margin-top:8px"></div></details>
+      </div>
+      <p class="note">מזוהים אוטומטית: תעודת זהות (עם בדיקת ספרת ביקורת), טלפון, כרטיס אשראי (בדיקת Luhn), מייל, חשבון בנק (IBAN) ושם אחרי "קוראים לי" או "שמי". זיהוי אוטומטי לא מושלם: כדאי לעבור על התצוגה המקדימה.</p>
+    </div>
+
+    <div id="keybox" hidden style="display:grid;gap:8px">
+      <div class="msg">הדף פתוח מחוץ ל-Claude. כדי להריץ ניתוח חי, הזינו מפתח API של Anthropic. המפתח נשמר רק בלשונית הזו ונשלח רק ל-api.anthropic.com.</div>
+      <div class="keybox">
+        <div class="field"><label class="label" for="api-key">מפתח API</label><input id="api-key" class="inp mono" type="password" autocomplete="off" dir="ltr" placeholder="sk-ant-..."></div>
+        <div class="field"><label class="label" for="api-model">מודל</label><select id="api-model" class="inp mono" dir="ltr"><option value="claude-sonnet-5">claude-sonnet-5</option><option value="claude-opus-5-5">claude-opus-5-5</option><option value="claude-haiku-4-5-20251001">claude-haiku-4-5</option></select></div>
+        <button class="btn" id="api-save">שמירה</button>
+      </div>
+    </div>
+
+    <div class="run">
+      <div class="progress" id="run-state">
+        <p>Claude מחזיר: זיהוי כוונות וסנטימנט, חריגות מנוהל, מפת תהליך לפני ואחרי, הזדמנויות לאוטומציה עם ציטוטים ותוכנית פיילוט. בדרך כלל דקה עד שתיים.</p>
+      </div>
+      <div class="row">
+        <button class="btn primary big" id="run">הרצת ניתוח</button>
+        <button class="btn" id="stop" hidden>עצירה</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. RESULTS -->
+  <section class="panel" id="s-results" aria-labelledby="h-res">
+    <div class="phead"><div><span class="num">שלב 3</span><h2 id="h-res">תוצאות</h2></div><span class="chip" id="res-when"></span></div>
+    <div class="banner" id="demo-banner"><span><b>ניתוח לדוגמה.</b> תוצאה על נתוני דמו של מוקד תמיכה לספק אינטרנט. הריצו ניתוח על המקורות שלכם כדי לקבל תוצאה אמיתית.</span></div>
+    <div class="rtabs" role="tablist" aria-label="תוצאות">
+      <button role="tab" data-r="sum" aria-selected="true">תמונת מצב</button>
+      <button role="tab" data-r="det" aria-selected="false">זיהוי</button>
+      <button role="tab" data-r="proc" aria-selected="false">מפת תהליך</button>
+      <button role="tab" data-r="opp" aria-selected="false">הזדמנויות</button>
+      <button role="tab" data-r="pilot" aria-selected="false">פיילוט</button>
+      <button role="tab" data-r="chat" aria-selected="false">שאלו את האנליסט</button>
+    </div>
+    <div data-rp="sum" id="r-sum"></div>
+    <div data-rp="det" id="r-det" hidden></div>
+    <div data-rp="proc" id="r-proc" hidden></div>
+    <div data-rp="opp" id="r-opp" hidden></div>
+    <div data-rp="pilot" id="r-pilot" hidden></div>
+    <div data-rp="chat" id="r-chat" hidden>
+      <div style="display:grid;gap:10px">
+        <p class="note">שאלו על הניתוח: למה הזדמנות מדורגת גבוה, איך להציג אותה למנהל, מה הסיכונים. התשובות מבוססות רק על הניתוח והמקורות.</p>
+        <div class="sugg" id="chat-sugg"></div>
+        <div class="chat" id="chat-log" aria-live="polite"></div>
+        <form class="chat-form" id="chat-form">
+          <label for="chat-in" hidden>שאלה</label>
+          <input id="chat-in" class="inp" placeholder="שאלה על הניתוח" autocomplete="off">
+          <button class="btn primary" type="submit" id="chat-send">שליחה</button>
+        </form>
+        <div id="chat-status" class="note"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. EVAL -->
+  <section class="panel" id="s-eval" aria-labelledby="h-eval">
+    <div class="phead"><div><span class="num">שלב 4</span><h2 id="h-eval">מבחן דיוק</h2></div><span class="chip" id="eval-size"></span></div>
+    <p>לפני שסומכים על הכלי, בודקים אותו: הכלי מסווג שיחות שכבר ידוע מה הסיווג הנכון שלהן, ומודד כמה פעמים צדק. יש מאגר מובנה של שיחות דמו מתויגות, ואפשר להעלות מאגר משלכם.</p>
+    <div class="row">
+      <button class="btn primary" id="eval-run">הרצת מבחן</button>
+      <label class="btn" for="eval-file">העלאת מאגר (CSV)</label>
+      <input id="eval-file" type="file" accept=".csv,.txt" hidden>
+      <button class="btn ghost" id="eval-reset" hidden>חזרה למאגר המובנה</button>
+      <span class="note" id="eval-status">פורמט CSV: עמודת טקסט ואחריה עמודת תווית, שורה לכל שיחה.</span>
+    </div>
+    <div id="eval-out"></div>
+  </section>
+
+  <!-- 5. EXPORT -->
+  <section class="panel" id="s-export" aria-labelledby="h-exp">
+    <div class="phead"><div><span class="num">שלב 5</span><h2 id="h-exp">שיתוף והמשך עבודה</h2></div></div>
+    <div class="exp">
+      <div class="card">
+        <h3>דוח מנהלים, עמוד אחד</h3>
+        <p class="note">קובץ HTML מעוצב: חיסכון, שלוש הזדמנויות עם ציטוטים, לפני ואחרי, פיילוט. נפתח בכל דפדפן ואפשר להדפיס ממנו PDF.</p>
+        <div class="row"><button class="btn primary" id="dl-exec">הורדת דוח מנהלים</button></div>
+        <div id="exec-status" class="note"></div>
+      </div>
+      <div class="card">
+        <h3>דוח מלא ונתונים</h3>
+        <p class="note">הדוח המלא (Markdown) או הנתונים הגולמיים (JSON) לעבודה בכלים אחרים.</p>
+        <div class="row"><button class="btn" id="dl-md">דוח מלא</button><button class="btn" id="dl-json">JSON</button></div>
+        <div id="dl-status" class="note"></div>
+      </div>
+      <div class="card">
+        <h3>שמירה ב-Google Drive</h3>
+        <p class="note">מסמך Google Docs חדש עם הדוח המלא, בתיקייה הראשית שלכם.</p>
+        <div class="row"><button class="btn primary" id="to-drive">שמירה כמסמך</button></div>
+        <div id="drive-save-status" class="note"></div>
+      </div>
+      <div class="card">
+        <h3>טיוטת מייל ב-Gmail</h3>
+        <p class="note">טיוטה עם תמונת המצב ושלוש ההזדמנויות. שום דבר לא נשלח.</p>
+        <div class="field"><label class="label" for="mail-to">נמען</label><input id="mail-to" class="inp mono" type="email" placeholder="manager@example.com" dir="ltr"></div>
+        <div class="row"><button class="btn primary" id="to-gmail">יצירת טיוטה</button></div>
+        <div id="gmail-status" class="note"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>רנטגן למוקד · נבנה על ידי איליה נודלמן</span>
+    <span>נתוני הדוגמה בדויים. המספרים הם הערכות מתוך המקורות שנותחו, לא התחייבות.</span>
+  </footer>
+</div>
+
+<script>
+/* ================= demo data (fictional) ================= */
+const DEMO_SOURCES = [
+ {name:'הערות מישיבה ליד נציגים · 3 ימים, 42 שיחות', text:
+`מוקד תמיכה, ספק אינטרנט (דמו). ישבתי ליד 5 נציגים, 3 משמרות בוקר. 42 שיחות נצפו.
+חלוקת פניות: תקלת אינטרנט 14, בירור חשבון 10, מתי מגיע טכנאי 9, בקשת ניתוק 5, אחר 4.
+- IVR עם 4 רמות. הלקוחות מקישים ת.ז בתפריט, ואז הנציג שואל שוב ת.ז וכתובת (בערך 30-40 שניות כל פעם).
+- פתיחת כרטיס לקוח: הנציג עובר בין 3 מסכים (CRM, מערכת חיוב, מערכת קווים). 15-25 שניות.
+- חיפוש נוהל: הנוהל הוא PDF של 60 עמודים. ראיתי נציגים מחפשים 30-60 שניות, ופעמיים שאלו ראש צוות בצ'אט.
+- איפוס ראוטר מרחוק דורש כניסה למערכת הקווים והקלדה ידנית של מספר ציוד. לוקח כדקה.
+- טכנאי ללא עלות: צריך אישור ראש צוות, הנציג שם את הלקוח בהמתנה 1-2 דקות.
+- בסוף שיחה הנציג כותב סיכום חופשי ב-CRM. 30-60 שניות. כל נציג כותב אחרת, חלק כותבים רק "טופל".
+- 9 מתוך 42 שיחות לא נמסר ללקוח מספר פנייה.
+- שיחות "מתי מגיע הטכנאי": הנציג מקריא מהמערכת את חלון ההגעה. לפי ראש הצוות כ-20% מהשיחות בשבוע הן בירור סטטוס כזה.
+- פעם אחת לקוח הקריא מספר כרטיס אשראי בקו הרגיל והנציג רשם אותו.
+- שאלות שחזרו ואין עליהן נוהל: "אפשר להקפיא מנוי?" (4 פעמים), "יש הנחה לחיילים?" (3).
+- נציגה חדשה (שבוע שני) התקשתה בשיחת ניתוק וביקשה עזרה, הלקוח התעצבן.`},
+ {name:'תמלולים לדוגמה · 4 שיחות', text:
+`שיחה 1 (תקלה, 7:40 דק'): לקוח: שלום, קוראים לי דנה לוי, האינטרנט נופל כל ערב כבר שבוע, נמאס לי. נציג: אני מבין, אפשר ת.ז? לקוח: 039337423. נציג: [חיפוש 40 שנ'] אני מאפס לך את הראוטר מרחוק. לקוח: עשיתם את זה כבר פעמיים. נציג: אז אני צריך אישור לטכנאי, רגע בהמתנה. [המתנה 1:30] נציג: אושר, טכנאי ביום חמישי 8-12. לקוח: תתקשרו אליי ל-052-4418830. (לא נמסר מספר פנייה)
+שיחה 2 (סטטוס טכנאי, 2:50 דק'): לקוח: רציתי לדעת מתי מגיע הטכנאי. נציג: ת.ז בבקשה. הטכנאי מגיע מחר בין 12 ל-16. לקוח: תודה. (הלקוח אמר שהתקשר גם אתמול לאותה שאלה)
+שיחה 3 (ניתוק, 9:10 דק'): לקוח: אני רוצה להתנתק, מצאתי הצעה ב-89 ש"ח. נציג: למה? לקוח: מחיר. נציג: אני יכול לתת 15% הנחה. לקוח: לא מספיק. נציג: רגע, אבדוק עם ראש צוות [המתנה 2:00] נציג: 25% לשנה. לקוח: טוב. (הנציג לא בירר אם יש גם בעיית שירות)
+שיחה 4 (חשבון, 4:05 דק'): לקוח: החשבון עלה החודש ב-40 ש"ח. תחייבו מעכשיו את הכרטיס 4580 1234 5678 9015 ושלחו קבלה ל-dana.levi@example.com. נציג: [רושם את מספר הכרטיס] בסדר.`},
+ {name:'קטע מנוהל · טיפול בתקלת גלישה', text:
+`נוהל T-12 טיפול בתקלת גלישה: 1. אימות לקוח (ת.ז + כתובת). 2. בדיקת קו במערכת הקווים. 3. איפוס מרחוק. 4. אם התקלה חזרה 3 פעמים בחודש: טכנאי ללא עלות באישור ראש צוות. 5. מסירת מספר פנייה ללקוח. 6. תיעוד בשדה "סיכום" ב-CRM.
+נוהל R-4 בקשת ניתוק: לברר סיבה לפני הצעה. הצעת שימור עד 20% ללא אישור, מעל 20% באישור ראש צוות.`}
+];
+const E = (source, quote) => ({source, quote});
+const DEMO_ANALYSIS = {
+ summary:'במוקד התמיכה כ-40% מזמן השיחה הולך על עבודה ידנית שלא דורשת שיקול דעת: זיהוי לקוח כפול, חיפוש בנוהל ארוך, מעבר בין 3 מסכים וכתיבת סיכום חופשי. כחמישית מהשיחות הן בירור סטטוס טכנאי שאפשר לענות עליו אוטומטית. שלוש הפעולות עם התמורה הגבוהה והמאמץ הנמוך: סיכום שיחה אוטומטי, זיהוי לקוח לפי ה-IVR ועוזר ידע על הנהלים.',
+ calls_analyzed:42,
+ intents:[
+  {name:'תקלת אינטרנט',share_pct:33,avg_handle_sec:430,note:'הארוכות ביותר, בגלל חיפוש נוהל והמתנה לאישור טכנאי'},
+  {name:'בירור חשבון',share_pct:24,avg_handle_sec:310,note:'רוב השאלות חוזרות על עצמן'},
+  {name:'מתי מגיע טכנאי',share_pct:21,avg_handle_sec:170,note:'מידע שכבר קיים במערכת; חלק מהלקוחות מתקשרים שוב'},
+  {name:'בקשת ניתוק',share_pct:12,avg_handle_sec:550,note:'הצעות שימור לא עקביות בין נציגים'},
+  {name:'אחר',share_pct:10,avg_handle_sec:240,note:''}
+ ],
+ sentiment:{negative_pct:31,neutral_pct:52,positive_pct:17},
+ compliance:[
+  {issue:'לא נמסר ללקוח מספר פנייה',severity:'בינונית',count:'9 מתוך 42',evidence:[E(1,'9 מתוך 42 שיחות לא נמסר ללקוח מספר פנייה'),E(3,'5. מסירת מספר פנייה ללקוח')]},
+  {issue:'פרטי כרטיס אשראי נאמרו ונרשמו בקו רגיל',severity:'גבוהה',count:'2 מקרים',evidence:[E(1,'פעם אחת לקוח הקריא מספר כרטיס אשראי בקו הרגיל והנציג רשם אותו'),E(2,'[רושם את מספר הכרטיס]')]},
+  {issue:'הצעת שימור לפני בירור סיבה מלאה',severity:'נמוכה',count:'שיחה 3',evidence:[E(2,'הנציג לא בירר אם יש גם בעיית שירות'),E(3,'לברר סיבה לפני הצעה')]}
+ ],
+ repeated_questions:[
+  {q:'מתי מגיע הטכנאי?',count:9,has_procedure:true},
+  {q:'למה החשבון עלה החודש?',count:7,has_procedure:true},
+  {q:'אפשר להקפיא מנוי?',count:4,has_procedure:false},
+  {q:'יש הנחה לחיילים?',count:3,has_procedure:false}
+ ],
+ process:{name:'טיפול בתקלת גלישה, מקצה לקצה',steps:[
+  {id:'s1',title:'תפריט IVR והקשת ת.ז',actor:'לקוח',type:'wait',duration_sec:50,pain:'4 רמות תפריט',evidence:[E(1,'IVR עם 4 רמות')]},
+  {id:'s2',title:'זיהוי לקוח ידני מחדש',actor:'נציג',type:'manual',duration_sec:35,pain:'הלקוח כבר הקיש ת.ז',evidence:[E(1,'הלקוחות מקישים ת.ז בתפריט, ואז הנציג שואל שוב ת.ז וכתובת')]},
+  {id:'s3',title:'פתיחת כרטיס ב-3 מערכות',actor:'מערכת',type:'system',duration_sec:20,pain:'מעבר בין 3 מסכים',evidence:[E(1,'הנציג עובר בין 3 מסכים (CRM, מערכת חיוב, מערכת קווים)')]},
+  {id:'s4',title:'בירור התקלה עם הלקוח',actor:'נציג',type:'manual',duration_sec:70,pain:null},
+  {id:'s5',title:'חיפוש בנוהל PDF',actor:'נציג',type:'manual',duration_sec:45,pain:'נוהל של 60 עמודים',evidence:[E(1,'הנוהל הוא PDF של 60 עמודים'),E(2,'[חיפוש 40 שנ\']')]},
+  {id:'s6',title:'בדיקת קו ואיפוס מרחוק',actor:'מערכת',type:'system',duration_sec:60,pain:'הקלדה ידנית של מספר ציוד',evidence:[E(1,'דורש כניסה למערכת הקווים והקלדה ידנית של מספר ציוד')]},
+  {id:'s7',title:'נפתר?',actor:'נציג',type:'decision',duration_sec:5,pain:null},
+  {id:'s8',title:'אישור טכנאי ללא עלות',actor:'ראש צוות',type:'wait',duration_sec:90,pain:'הלקוח בהמתנה',evidence:[E(1,'צריך אישור ראש צוות, הנציג שם את הלקוח בהמתנה 1-2 דקות'),E(2,'אז אני צריך אישור לטכנאי, רגע בהמתנה')]},
+  {id:'s9',title:'כתיבת סיכום חופשי ב-CRM',actor:'נציג',type:'manual',duration_sec:45,pain:'סיכומים לא אחידים',evidence:[E(1,'כל נציג כותב אחרת, חלק כותבים רק "טופל"')]},
+  {id:'s10',title:'המתנה לטכנאי בלי עדכון',actor:'לקוח',type:'wait',duration_sec:0,pain:'מתקשר שוב לברר סטטוס',evidence:[E(2,'הלקוח אמר שהתקשר גם אתמול לאותה שאלה')]}
+ ]},
+ to_be:{note:'אותו תהליך אחרי ארבע האוטומציות הראשונות. הנציג עדיין מנהל את השיחה ומאשר כל פעולה.',steps:[
+  {id:'t1',title:'IVR מקוצר והקשת ת.ז',actor:'לקוח',type:'wait',duration_sec:30,pain:null},
+  {id:'t2',title:'זיהוי ופתיחת כרטיס אוטומטית',actor:'מערכת',type:'system',duration_sec:3,pain:null},
+  {id:'t3',title:'בירור התקלה עם הלקוח',actor:'נציג',type:'manual',duration_sec:70,pain:null},
+  {id:'t4',title:'עוזר ידע מציג את הנוהל',actor:'מערכת',type:'system',duration_sec:8,pain:null},
+  {id:'t5',title:'איפוס מרחוק בלחיצה',actor:'מערכת',type:'system',duration_sec:30,pain:null},
+  {id:'t6',title:'אישור טכנאי לפי כלל',actor:'מערכת',type:'system',duration_sec:2,pain:null},
+  {id:'t7',title:'סיכום אוטומטי, הנציג מאשר',actor:'נציג',type:'manual',duration_sec:8,pain:null},
+  {id:'t8',title:'עדכון סטטוס יזום בוואטסאפ',actor:'מערכת',type:'system',duration_sec:0,pain:null}
+ ]},
+ opportunities:[
+  {title:'סיכום שיחה ותיעוד אוטומטי ב-CRM',category:'סיכום ותיעוד',step_ids:['s9'],description:'תמלול השיחה, סיכום בפורמט אחיד ומילוי שדות CRM (סיבה, תוצאה, המשך טיפול). הנציג מאשר בלחיצה.',how:['חיבור התמלול למודל שפה','תבנית סיכום אחידה לפי סוג פנייה','כתיבה לשדות ה-CRM דרך API','אישור נציג לפני שמירה'],tools:['תמלול','Claude API','CRM API','n8n'],affected_calls_pct:100,seconds_saved_per_call:40,effort:2,impact:5,confidence:'גבוהה',risk:'דיוק התמלול בעברית; בודקים על 200 שיחות לפני עלייה לאוויר',kpi:'זמן אחרי שיחה, אחידות סיכומים',evidence:[E(1,'כל נציג כותב אחרת, חלק כותבים רק "טופל"'),E(1,'בסוף שיחה הנציג כותב סיכום חופשי ב-CRM. 30-60 שניות.')]},
+  {title:'זיהוי לקוח אוטומטי מה-IVR',category:'אוטומציה',step_ids:['s2','s3'],description:'הת.ז שהוקשה ב-IVR עוברת למסך הנציג, והכרטיס נפתח מראש בשלוש המערכות.',how:['העברת נתוני IVR למסך הנציג','פתיחת כרטיס אוטומטית לפי ת.ז','שאלת אימות אחת במקום שתיים'],tools:['IVR','CRM','n8n / Make'],affected_calls_pct:85,seconds_saved_per_call:35,effort:2,impact:4,confidence:'גבוהה',risk:'תלות בספק ה-IVR',kpi:'זמן עד תחילת טיפול',evidence:[E(1,'הלקוחות מקישים ת.ז בתפריט, ואז הנציג שואל שוב ת.ז וכתובת')]},
+  {title:'עוזר ידע לנציג על הנהלים',category:'עוזר ידע RAG',step_ids:['s5'],description:'הנציג שואל בשפה חופשית ומקבל תשובה מהנוהל המאושר עם מספר סעיף. אם אין נוהל, העוזר אומר את זה.',how:['איסוף ועדכון הנהלים','בניית מאגר חיפוש','ממשק שאלה-תשובה במסך הנציג','דיווח שבועי על שאלות בלי נוהל'],tools:['RAG','Claude','מאגר נהלים'],affected_calls_pct:40,seconds_saved_per_call:35,effort:3,impact:5,confidence:'בינונית',risk:'נהלים לא מעודכנים; דורש בעלים לתוכן',kpi:'זמן חיפוש, פניות לראש צוות',evidence:[E(1,'ראיתי נציגים מחפשים 30-60 שניות, ופעמיים שאלו ראש צוות בצ\'אט')]},
+  {title:'עדכון סטטוס טכנאי בוואטסאפ',category:'סוכן AI',step_ids:['s10'],description:'הודעה יזומה עם חלון ההגעה, ובוט שעונה על "מתי מגיע הטכנאי" בלי נציג.',how:['חיבור למערכת התיאום','הודעה יזומה יום לפני ובבוקר ההגעה','בוט שעונה על שאלות סטטוס ומעביר לנציג כשצריך'],tools:['WhatsApp Business API','n8n','Claude'],affected_calls_pct:15,seconds_saved_per_call:170,effort:3,impact:4,confidence:'בינונית',risk:'צריך אישור בעל המוקד להודעות יזומות',kpi:'שיחות סטטוס חוזרות',evidence:[E(1,'לפי ראש הצוות כ-20% מהשיחות בשבוע הן בירור סטטוס כזה'),E(2,'הלקוח אמר שהתקשר גם אתמול לאותה שאלה')]},
+  {title:'אישור טכנאי לפי כלל, בלי המתנה',category:'אוטומציה',step_ids:['s7','s8'],description:'המערכת בודקת אם התקלה חזרה 3 פעמים בחודש ומאשרת טכנאי אוטומטית. ראש הצוות מקבל רק חריגים.',how:['כלל עסקי במערכת','תיעוד אוטומטי של האישור','דוח חריגים יומי לראש הצוות'],tools:['n8n','מערכת הקווים','CRM'],affected_calls_pct:12,seconds_saved_per_call:90,effort:2,impact:3,confidence:'גבוהה',risk:'צריך הסכמה של בעל המוקד על הכלל',kpi:'זמן המתנה בשיחה',evidence:[E(3,'4. אם התקלה חזרה 3 פעמים בחודש: טכנאי ללא עלות באישור ראש צוות.')]},
+  {title:'בקרת איכות על 100% מהשיחות',category:'בקרת איכות',step_ids:['s9'],description:'בדיקה אוטומטית של כל שיחה מול הצ\'קליסט: מספר פנייה, אימות, אמפתיה, פרטי אשראי. משוב אישי לנציג.',how:['הגדרת צ\'קליסט לכל סוג פנייה','ציון אוטומטי לכל שיחה, עם ציטוט','דוח שבועי לנציג ולראש הצוות'],tools:['תמלול','Claude','דשבורד'],affected_calls_pct:100,seconds_saved_per_call:6,effort:3,impact:4,confidence:'בינונית',risk:'חשש של נציגים; להציג ככלי ליווי ולא ענישה',kpi:'חריגות מנוהל, זמן בקרה ידנית',evidence:[E(1,'9 מתוך 42 שיחות לא נמסר ללקוח מספר פנייה')]},
+  {title:'סימולטור שיחות לנציגים חדשים',category:'הדרכה',step_ids:[],description:'לקוח וירטואלי שמתרגל עם הנציג שיחות ניתוק ותקלה לפני העלייה לקו.',how:['תרחישים מתוך שיחות אמיתיות','משוב אוטומטי אחרי כל תרגול','שילוב בחודש הראשון של הקליטה'],tools:['Claude','ממשק תרגול'],affected_calls_pct:0,seconds_saved_per_call:0,effort:3,impact:3,confidence:'בינונית',risk:'',kpi:'זמן עד עצמאות, עזיבה בחודשים הראשונים',roi_note:'החיסכון בזמן ההכשרה ובעזיבה, לא בזמן שיחה',evidence:[E(1,'נציגה חדשה (שבוע שני) התקשתה בשיחת ניתוק וביקשה עזרה')]}
+ ],
+ pilot:{title:'סיכום אוטומטי + עוזר ידע במוקד התקלות',why:'שתי הפעולות לא משנות את השיחה מול הלקוח, קל למדוד אותן, ויחד הן חוסכות כ-75 שניות בשיחת תקלה.',weeks:[
+  {week:'שבוע 1',goal:'איסוף 200 שיחות ו-10 נהלים, הגדרת תבנית סיכום עם ראשי הצוותים'},
+  {week:'שבוע 2–3',goal:'בנייה ובדיקה על שיחות מוקלטות, בלי נציגים'},
+  {week:'שבוע 4–5',goal:'5 נציגים מובילים משתמשים בכלי, משוב יומי'},
+  {week:'שבוע 6',goal:'השוואה לקבוצת ביקורת והחלטה על הרחבה'}],
+  success_metric:'ירידה של 30 שניות לפחות בזמן טיפול ממוצע, ו-90% סיכומים אחידים'},
+ data_gaps:['אין נתוני זמן המתנה בתור','נצפו רק משמרות בוקר','אין נתון על שיחות חוזרות תוך 7 ימים']
+};
+const EVAL_LABELS = ['תקלה טכנית','בירור חשבון','סטטוס טכנאי','בקשת ניתוק','שינוי חבילה','אחר'];
+const EVAL_BUILTIN = [
+ {text:'האינטרנט לא עובד מהבוקר, הנורה בראוטר אדומה',label:'תקלה טכנית'},
+ {text:'למה חייבו אותי פעמיים החודש? אני רואה שני חיובים באשראי',label:'בירור חשבון'},
+ {text:'הזמנתי טכנאי לשבוע הבא, רציתי לוודא שהוא באמת מגיע ביום שלישי',label:'סטטוס טכנאי'},
+ {text:'אני עובר לחברה אחרת, תבטלו לי את המנוי מסוף החודש',label:'בקשת ניתוק'},
+ {text:'אני רוצה לשדרג לחבילה של 1000 מגה, כמה זה יעלה?',label:'שינוי חבילה'},
+ {text:'הממיר לא נדלק מאז ההפסקה חשמל אתמול',label:'תקלה טכנית'},
+ {text:'קיבלתי חשבונית עם תוספת של 30 שקל ואף אחד לא הודיע לי',label:'בירור חשבון'},
+ {text:'הטכנאי היה אמור להגיע בין 8 ל-12 וכבר אחת, איפה הוא?',label:'סטטוס טכנאי'},
+ {text:'אני במילואים חודשיים, אפשר להקפיא את המנוי?',label:'שינוי חבילה'},
+ {text:'המחיר שלכם יקר מדי, אם לא תורידו לי אני מתנתק',label:'בקשת ניתוק'},
+ {text:'רציתי לעדכן כתובת למשלוח חשבוניות',label:'אחר'},
+ {text:'הגלישה איטית נורא בערבים, בבדיקת מהירות יוצא 20 מגה במקום 500',label:'תקלה טכנית'},
+ {text:'אני רוצה להוריד את ערוצי הספורט מהחבילה',label:'שינוי חבילה'},
+ {text:'מה שעות הפעילות של המוקד בחגים?',label:'אחר'},
+ {text:'החזר שהבטחתם לי בחודש שעבר עדיין לא נכנס',label:'בירור חשבון'},
+ {text:'אמרו לי שיתקשרו לתאם טכנאי ואף אחד לא התקשר',label:'סטטוס טכנאי'}
+];
+
+/* ================= helpers & state ================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = new Intl.NumberFormat('he-IL');
+const MAX_CHARS = 24000;
+const INSIDE_CLAUDE = !!(window.claude && window.claude.use);
+let state = { sources: [], analysis: DEMO_ANALYSIS, sent: null, isDemo: true, when: null, chat: [], eval: { set: EVAL_BUILTIN, custom: false } };
+let caps = { sample: null, mcp: null, downloads: null };
+let api = { key: '', model: 'claude-sonnet-5' };
+let sortBy = 'money', procView = 'before';
+
+function ssGet(k){ try{ return sessionStorage.getItem(k) || ''; }catch(e){ return ''; } }
+function ssSet(k, v){ try{ sessionStorage.setItem(k, v); }catch(e){} }
+function loadLocal(){
+  try{
+    const s = JSON.parse(localStorage.getItem('xray-v2') || 'null');
+    if(s && s.analysis){ state.analysis = s.analysis; state.isDemo = !!s.isDemo; state.when = s.when || null; state.sent = s.sent || null; }
+    if(s && Array.isArray(s.sources)) state.sources = s.sources;
+    if(s && s.profile) for(const k of ['type','calls','aht','cost','agents']) if(s.profile[k] != null) $('p-'+k).value = s.profile[k];
+    if(s && typeof s.piiExtra === 'string') $('pii-extra').value = s.piiExtra;
+    if(s && s.piiOn === false) $('pii-on').checked = false;
+  }catch(e){}
+}
+function saveLocal(){
+  try{ localStorage.setItem('xray-v2', JSON.stringify({analysis: state.analysis, isDemo: state.isDemo, when: state.when, sent: state.sent, sources: state.sources, profile: profile(), piiExtra: $('pii-extra').value, piiOn: $('pii-on').checked})); }catch(e){}
+}
+function profile(){ return { type: $('p-type').value, calls: +$('p-calls').value || 0, aht: +$('p-aht').value || 0, cost: +$('p-cost').value || 0, agents: +$('p-agents').value || 0 }; }
+
+/* ================= PII redaction ================= */
+function isIsraeliId(s){ s = s.replace(/\D/g,''); if(s.length < 8 || s.length > 9) return false; s = s.padStart(9,'0'); let t = 0; for(let i=0;i<9;i++){ let d = +s[i] * (i % 2 + 1); t += d > 9 ? d - 9 : d; } return t % 10 === 0; }
+function luhn(s){ s = s.replace(/\D/g,''); if(s.length < 13 || s.length > 19) return false; let t = 0; for(let i=0;i<s.length;i++){ let d = +s[s.length-1-i]; if(i % 2){ d *= 2; if(d > 9) d -= 9; } t += d; } return t % 10 === 0; }
+const PII_RULES = [
+  {k:'email', label:'מייל', re:/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g},
+  {k:'iban', label:'חשבון בנק', re:/\bIL\d{2}(?:[ -]?\d{4}){4}[ -]?\d{3}\b/gi},
+  {k:'card', label:'כרטיס אשראי', re:/(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)/g, test: luhn},
+  {k:'id', label:'ת.ז', re:/(?<!\d)\d{8,9}(?!\d)/g, test: isIsraeliId},
+  {k:'phone', label:'טלפון', re:/(?<!\d)(?:\+972[- ]?|0)(?:5\d|[23489]|7\d)[- ]?\d{3}[- ]?\d{4}(?!\d)/g},
+  {k:'name', label:'שם', re:/(קוראים לי|שמי|השם שלי|שם מלא:?|מדבר(?:ת)? עם)\s+([א-ת][א-ת'"׳-]+(?:\s[א-ת][א-ת'"׳-]+)?)/g, group:2}
+];
+function redact(text, counters, extra){
+  let out = text;
+  const add = k => { counters[k] = (counters[k] || 0) + 1; return counters[k]; };
+  const label = k => (PII_RULES.find(r => r.k === k) || {label:'פרט'}).label;
+  for(const r of PII_RULES){
+    out = out.replace(r.re, (m, ...g) => {
+      if(r.group){ const who = g[r.group-1]; return m.replace(who, `[${label(r.k)}-${add(r.k)}]`); }
+      if(r.test && !r.test(m)) return m;
+      return `[${label(r.k)}-${add(r.k)}]`;
+    });
+  }
+  (extra || []).forEach(w => { if(w.length < 2) return; const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'g'); out = out.replace(re, () => `[מוסתר-${add('extra')}]`); });
+  return out;
+}
+function extraTerms(){ return $('pii-extra').value.split(/[,،]/).map(s => s.trim()).filter(Boolean); }
+function preparedSources(){
+  const on = $('pii-on').checked, counters = {}, extra = extraTerms();
+  const per = Math.floor(MAX_CHARS / Math.max(1, state.sources.length)), total = totalChars();
+  const list = state.sources.map(s => { let t = total > MAX_CHARS ? s.text.slice(0, per) : s.text; if(on) t = redact(t, counters, extra); return {name: s.name, text: t}; });
+  return { list, counters, on };
+}
+function renderPii(){
+  const { list, counters, on } = preparedSources();
+  const names = {email:'מייל', iban:'חשבון בנק', card:'כרטיס אשראי', phone:'טלפון', id:'ת.ז', name:'שם', extra:'מילים שהוגדרו'};
+  const keys = Object.keys(counters);
+  $('pii-counts').innerHTML = !on ? '<span class="chip crit">ההסתרה כבויה: הטקסט יישלח כמו שהוא</span>'
+    : keys.length ? '<span class="label" style="align-self:center">יוסתרו:</span>' + keys.map(k => `<span class="chip good">${counters[k]} × ${names[k] || k}</span>`).join('')
+    : '<span class="chip">לא נמצאו פרטים מזהים במקורות</span>';
+  const prev = list.map((s,i) => `### מקור ${i+1}: ${s.name}\n${s.text}`).join('\n\n').slice(0, 5000);
+  $('pii-preview').innerHTML = esc(prev).replace(/\[(?:[^\]\[]{1,20})-\d+\]/g, m => `<span class="tok">${m}</span>`);
+}
+
+/* ================= money ================= */
+function roi(o){ const p = profile(), calls = p.calls * (+o.affected_calls_pct || 0) / 100, hrs = calls * (+o.seconds_saved_per_call || 0) / 3600; return { hrs, ils: hrs * p.cost, calls }; }
+function totals(a){ let hrs = 0, ils = 0; (a.opportunities||[]).forEach(o => { const r = roi(o); hrs += r.hrs; ils += r.ils; }); const p = profile(), totalHrs = p.calls * p.aht / 60; return { hrs, ils, share: totalHrs ? hrs / totalHrs : 0, fte: hrs / 182 }; }
+const ils = v => '₪' + nf.format(Math.round(v));
+function fmtSec(s){ s = Math.round(+s||0); if(!s) return '–'; const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')} דק׳` : `${r} שנ׳`; }
+const sumSec = steps => (steps||[]).reduce((n,s) => n + (+s.duration_sec||0), 0);
+
+/* ================= sources ================= */
+const totalChars = () => state.sources.reduce((n, s) => n + s.text.length, 0);
+function addSource(name, text, kind){
+  text = String(text || '').trim(); if(!text) return false;
+  state.sources.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name: name || 'מקור ללא שם', text, kind });
+  renderSources(); saveLocal(); return true;
+}
+const KIND = { paste:'טקסט', file:'קובץ', drive:'Drive', demo:'דמו' };
+function renderSources(){
+  const n = totalChars();
+  $('src-size').textContent = `${nf.format(n)} / ${nf.format(MAX_CHARS)} תווים`;
+  $('src-meter').style.width = Math.min(100, n / MAX_CHARS * 100) + '%';
+  $('src-meter').style.background = n > MAX_CHARS ? 'var(--amber)' : 'var(--accent)';
+  $('src-list').innerHTML = state.sources.length ? state.sources.map(s => `
+    <div class="src"><span class="chip ${s.kind==='drive'?'acc':s.kind==='demo'?'vio':''}">${KIND[s.kind]||''}</span>
+    <span class="name" title="${esc(s.name)}">${esc(s.name)}</span>
+    <span class="size mono small muted">${nf.format(s.text.length)}</span>
+    <button data-del="${s.id}" aria-label="הסרת ${esc(s.name)}">הסרה</button></div>`).join('')
+    + (n > MAX_CHARS ? `<div class="msg warn">המקורות ארוכים מהמגבלה של ניתוח אחד. ינותחו ${nf.format(MAX_CHARS)} התווים הראשונים, בחלוקה שווה בין המקורות.</div>` : '')
+    : '<div class="msg">עדיין אין מקורות. הדביקו טקסט, העלו קבצים, ייבאו מ-Drive, או לחצו "טעינת נתוני דוגמה".</div>';
+  $('src-list').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { state.sources = state.sources.filter(s => s.id !== b.dataset.del); renderSources(); saveLocal(); });
+  $('run').disabled = !state.sources.length || !llmReady();
+  renderPii();
+}
+document.querySelectorAll('.src-tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.src-tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.querySelectorAll('[data-p]').forEach(p => p.hidden = p.dataset.p !== b.dataset.t);
+});
+$('add-paste').onclick = () => { if(addSource($('paste-name').value.trim() || 'טקסט שהודבק', $('paste-text').value, 'paste')){ $('paste-text').value=''; $('paste-name').value=''; } };
+$('load-demo').onclick = () => { state.sources = state.sources.filter(s => s.kind !== 'demo'); DEMO_SOURCES.forEach(s => addSource(s.name, s.text, 'demo')); };
+$('clear-src').onclick = () => { state.sources = []; renderSources(); saveLocal(); };
+function readFiles(files){ [...files].forEach(f => { if(f.size > 3e6) return; const r = new FileReader(); r.onload = () => addSource(f.name, r.result, 'file'); r.readAsText(f); }); }
+$('file-in').onchange = e => readFiles(e.target.files);
+const drop = $('drop');
+['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => readFiles(e.dataTransfer.files));
+$('pii-on').onchange = () => { renderPii(); saveLocal(); };
+$('pii-extra').oninput = () => { renderPii(); saveLocal(); };
+
+/* ================= connectors ================= */
+function mcpMessage(e, server){
+  const c = e && e.code;
+  if(c === 'server_not_connected' || c === 'server_not_found') return `${server} לא מחובר. מחברים אותו ב-claude.ai, בהגדרות, תחת Connectors.`;
+  if(c === 'needs_reauth') return `צריך לחבר מחדש את ${server} ב-claude.ai, בהגדרות, תחת Connectors.`;
+  if(c === 'selection_required') return `יש יותר מחיבור אחד של ${server}. בחרו אחד בחלון שנפתח.`;
+  if(c === 'not_in_manifest' || c === 'not_granted' || c === 'consent_required') return `לא אושרה לדף גישה ל-${server}. אפשר לאשר בפעם הבאה שתתבקשו.`;
+  if(c === 'blocked_by_policy' || c === 'approval_required') return `הארגון חוסם את הפעולה הזו ב-${server}.`;
+  if(c === 'server_unavailable') return `${server} לא זמין כרגע. נסו שוב בעוד רגע.`;
+  if(c === 'tool_error') return `${server} החזיר שגיאה: ${e.message || ''}`;
+  return `הפעולה ב-${server} לא הצליחה. נסו שוב.`;
+}
+const noConnector = s => `החיבור ל-${s} זמין כשהכלי פתוח בתוך Claude.`;
+function typeLabel(m){ m = String(m||''); if(m.includes('document')) return 'מסמך'; if(m.includes('spreadsheet')) return 'גיליון'; if(m.includes('presentation')) return 'מצגת'; if(m.includes('pdf')) return 'PDF'; if(m.includes('word')) return 'Word'; return 'קובץ'; }
+async function driveSearch(q){
+  const st = $('drive-status'), out = $('drive-results');
+  if(!caps.mcp){ st.textContent = noConnector('Google Drive'); return; }
+  const safe = q.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+  const query = safe ? `title contains '${safe}' or fullText contains '${safe}'` : `mimeType != 'application/vnd.google-apps.folder'`;
+  st.textContent = 'מחפש…'; out.innerHTML = '';
+  try{
+    const res = await caps.mcp.callTool('Google Drive','search_files',{query, pageSize:12, excludeContentSnippets:true});
+    const files = ((res.payload && res.payload.files) || []).filter(f => !String(f.mimeType||'').includes('folder'));
+    st.textContent = files.length ? `נמצאו ${files.length} קבצים. לחצו "ייבוא" כדי להוסיף כמקור.` : 'לא נמצאו קבצים. נסו מילה אחרת.';
+    out.innerHTML = files.map(f => `<div class="drive-item"><span><b>${esc(f.title)}</b><br><span class="small muted">${esc(typeLabel(f.mimeType))}${f.modifiedTime ? ' · ' + esc(String(f.modifiedTime).slice(0,10)) : ''}</span></span><button class="btn" data-fid="${esc(f.id)}" data-ft="${esc(f.title)}">ייבוא</button></div>`).join('');
+    out.querySelectorAll('[data-fid]').forEach(b => b.onclick = () => driveImport(b));
+  }catch(e){ st.textContent = mcpMessage(e, 'Google Drive'); }
+}
+async function driveImport(b){
+  b.disabled = true; b.textContent = 'מייבא…';
+  try{
+    const res = await caps.mcp.callTool('Google Drive','read_file_content',{fileId: b.dataset.fid});
+    const p = res.payload; const text = typeof p === 'string' ? p : (p && (p.fileContent || p.content || p.text)) || '';
+    if(!text.trim()) throw {code:'tool_error', message:'הקובץ ריק או שלא ניתן לקרוא אותו'};
+    addSource(b.dataset.ft, text, 'drive'); b.textContent = 'יובא ✓';
+  }catch(e){ b.disabled = false; b.textContent = 'ייבוא'; $('drive-status').textContent = mcpMessage(e, 'Google Drive'); }
+}
+$('drive-form').addEventListener('submit', e => { e.preventDefault(); driveSearch($('drive-q').value.trim()); });
+
+/* ================= LLM adapter: Claude inside the page, or API key outside ================= */
+function llmReady(){ return !!caps.sample || !!api.key; }
+function parseJsonLoose(t){
+  try{ return JSON.parse(t); }catch(e){}
+  const f = t.match(/```(?:json)?\s*([\s\S]*?)```/); if(f){ try{ return JSON.parse(f[1]); }catch(e){} }
+  const i = t.search(/[\[{]/), j = Math.max(t.lastIndexOf('}'), t.lastIndexOf(']'));
+  if(i >= 0 && j > i){ try{ return JSON.parse(t.slice(i, j+1)); }catch(e){} }
+  throw {code:'invalid_json', text: t};
+}
+async function apiCall(messages, signal, maxTokens){
+  let r;
+  try{
+    r = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', signal,
+      headers:{'content-type':'application/json','x-api-key':api.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify({ model: api.model, max_tokens: maxTokens || 16000, messages }) });
+  }catch(e){ throw {code: e && e.name === 'AbortError' ? 'cancelled' : 'upstream_error'}; }
+  if(!r.ok){ throw {code: r.status === 401 ? 'bad_key' : r.status === 429 ? 'rate_limited' : r.status === 400 ? 'bad_request_api' : 'upstream_error', message: await r.text().catch(()=> '')}; }
+  const d = await r.json(); return (d.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+}
+const llm = {
+  async json(prompt, o = {}){
+    if(caps.sample) return caps.sample.json(prompt, { modelTier: o.tier || 'default', signal: o.signal, onText: o.onText });
+    if(api.key) return parseJsonLoose(await apiCall([{role:'user', content: prompt}], o.signal));
+    throw {code:'no_llm'};
+  },
+  async text(turns, o = {}){
+    if(caps.sample) return (await caps.sample(turns, { cache:false, signal: o.signal, onText: o.onText })).text;
+    if(api.key){ const t = await apiCall(turns, o.signal, 4000); o.onText && o.onText({text: t}); return t; }
+    throw {code:'no_llm'};
+  }
+};
+const LLM_ERR = {
+  not_granted:'לא אושר לדף להשתמש ב-Claude. אפשר לאשר בטעינה הבאה.', sampling_disabled:'Claude לא זמין לחשבון הזה.',
+  rate_limited:'הגעתם למגבלת שימוש זמנית. נסו שוב בעוד כמה דקות.', session_expired:'צריך להתחבר מחדש ל-Claude.',
+  prompt_too_large:'המקורות ארוכים מדי. הסירו חלק מהם ונסו שוב.', invalid_json:'התשובה לא הגיעה במבנה הנכון. הריצו שוב.',
+  refused:'Claude סירב לנתח את התוכן הזה. בדקו את המקורות.', empty_completion:'לא התקבלה תשובה. נסו עם פחות מקורות.',
+  bad_key:'מפתח ה-API לא תקין.', bad_request_api:'הבקשה נדחתה. בדקו את המודל שנבחר.', no_llm:'אין חיבור ל-AI: פתחו את הכלי ב-Claude או הזינו מפתח API.',
+  upstream_error:'הייתה תקלה זמנית בחיבור. נסו שוב.'
+};
+const errText = e => (e && e.code === 'cancelled') ? '' : (LLM_ERR[e && e.code] || LLM_ERR.upstream_error);
+$('api-save').onclick = () => { api.key = $('api-key').value.trim(); api.model = $('api-model').value; ssSet('xray-key', api.key); ssSet('xray-model', api.model); setAiStatus(); renderSources(); };
+
+/* ================= analysis ================= */
+function analysisPrompt(prep){
+  const p = profile();
+  const corpus = prep.list.map((s, i) => `### מקור ${i+1}: ${s.name}\n${s.text}`).join('\n\n');
+  return `אתה אנליסט תהליכים עסקיים ומומחה להטמעת AI ואוטומציה במוקדי שירות ומכירות בישראל.
+משימה: לנתח את המקורות למטה (תמלולי שיחות, נהלים, הערות תצפית) ולהחזיר אבחון.
+
+פרופיל הפעילות: ${p.type}. ${p.calls} שיחות בחודש, זמן טיפול ממוצע ${p.aht} דקות, ${p.agents} נציגים.
+
+כללים:
+- להתבסס רק על המקורות. כשצריך להעריך מספר, להעריך בזהירות ולסמן confidence נמוכה או בינונית.
+- evidence: ציטוטים קצרים (עד 20 מילים) שמועתקים מילה במילה מהמקור, כולל סימני פיסוק, עם מספר המקור. אסור לנסח מחדש ציטוט. הציטוטים ייבדקו אוטומטית מול המקור.
+- טקסט בסוגריים מרובעים כמו [ת.ז-1] הוא פרט מזהה שהוסתר. אל תנסה לשחזר אותו.
+- מה שחסר במקורות כדי לדייק: data_gaps.
+- כל הטקסט בעברית פשוטה וקצרה.
+- process.steps: התהליך המרכזי כפי שהוא קורה בפועל, 6 עד 12 צעדים לפי הסדר. actor אחד מתוך: "לקוח","נציג","מערכת","ראש צוות","גורם חיצוני". type אחד מתוך: "manual","system","wait","decision". pain: משפט קצר או null. לכל צעד עם pain לצרף evidence.
+- to_be.steps: אותו תהליך אחרי יישום ההזדמנויות המובילות, באותו מבנה (id מתחיל ב-t, pain=null).
+- opportunities: 5 עד 8, מהחשובה לפחות חשובה. category אחת מתוך: "סיכום ותיעוד","אוטומציה","עוזר ידע RAG","סוכן AI","בקרת איכות","הדרכה". affected_calls_pct = אחוז השיחות בחודש שההזדמנות נוגעת בהן (0-100). seconds_saved_per_call = שניות שנחסכות בכל שיחה כזו (אם ההזדמנות מבטלת שיחה, זמן השיחה כולו). effort ו-impact בין 1 ל-5. tools: כלים קונקרטיים (למשל n8n, Make, CRM API, WhatsApp Business API, Claude). אם החיסכון אינו בזמן שיחה: seconds_saved_per_call=0 והסבר ב-roi_note.
+- pilot: פיילוט אחד של 4 עד 8 שבועות על ההזדמנויות עם התמורה הגבוהה והסיכון הנמוך.
+
+החזר JSON בלבד, במבנה הזה:
+{"summary":"2-3 משפטים","calls_analyzed":0,
+"intents":[{"name":"","share_pct":0,"avg_handle_sec":0,"note":""}],
+"sentiment":{"negative_pct":0,"neutral_pct":0,"positive_pct":0},
+"compliance":[{"issue":"","severity":"גבוהה|בינונית|נמוכה","count":"","evidence":[{"source":1,"quote":""}]}],
+"repeated_questions":[{"q":"","count":0,"has_procedure":true}],
+"process":{"name":"","steps":[{"id":"s1","title":"עד 5 מילים","actor":"נציג","type":"manual","duration_sec":0,"pain":null,"evidence":[]}]},
+"to_be":{"note":"","steps":[{"id":"t1","title":"","actor":"מערכת","type":"system","duration_sec":0,"pain":null}]},
+"opportunities":[{"title":"","category":"","step_ids":["s1"],"description":"","how":[""],"tools":[""],"affected_calls_pct":0,"seconds_saved_per_call":0,"effort":1,"impact":1,"confidence":"גבוהה|בינונית|נמוכה","risk":"","kpi":"","roi_note":"","evidence":[{"source":1,"quote":""}]}],
+"pilot":{"title":"","why":"","weeks":[{"week":"שבוע 1","goal":""}],"success_metric":""},
+"data_gaps":[""]}
+
+המקורות:
+${corpus}`;
+}
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, isFinite(v) ? Math.round(v) : lo));
+const arr = v => Array.isArray(v) ? v : [];
+function validate(a){
+  if(!a || typeof a !== 'object') throw {code:'invalid_json'};
+  a.intents = arr(a.intents); a.compliance = arr(a.compliance); a.repeated_questions = arr(a.repeated_questions);
+  a.process = a.process && Array.isArray(a.process.steps) ? a.process : {name:'', steps:[]};
+  a.to_be = a.to_be && Array.isArray(a.to_be.steps) ? a.to_be : {note:'', steps:[]};
+  a.opportunities = arr(a.opportunities).filter(o => o && o.title);
+  a.opportunities.forEach(o => { o.effort = clamp(+o.effort,1,5); o.impact = clamp(+o.impact,1,5); o.affected_calls_pct = clamp(+o.affected_calls_pct||0,0,100); o.seconds_saved_per_call = Math.max(0, +o.seconds_saved_per_call||0); o.how = arr(o.how); o.tools = arr(o.tools); o.step_ids = arr(o.step_ids); o.evidence = arr(o.evidence); });
+  a.compliance.forEach(c => c.evidence = Array.isArray(c.evidence) ? c.evidence : (c.evidence ? [{source:0, quote:String(c.evidence)}] : []));
+  a.process.steps.forEach(s => s.evidence = arr(s.evidence));
+  a.sentiment = a.sentiment || {}; a.data_gaps = arr(a.data_gaps);
+  if(!a.opportunities.length && !a.process.steps.length) throw {code:'invalid_json'};
+  return a;
+}
+let runCtl = null, runTimer = null;
+$('run').onclick = async () => {
+  if(!llmReady() || !state.sources.length) return;
+  const prep = preparedSources();
+  runCtl = new AbortController(); const t0 = Date.now();
+  $('run').disabled = true; $('stop').hidden = false;
+  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${prep.on ? 'פרטים מזהים הוסתרו. ' : ''}Claude קורא את המקורות…</b><span class="mono small muted" id="run-el">0 שנ׳</span></div><div class="stream" id="run-stream"></div>`;
+  runTimer = setInterval(() => { const el = $('run-el'); if(el) el.textContent = Math.round((Date.now()-t0)/1000) + ' שנ׳'; }, 1000);
+  try{
+    const a = await llm.json(analysisPrompt(prep), { tier:'complex', signal: runCtl.signal,
+      onText: ({text}) => { const ph = $('run-phase'); if(ph) ph.textContent = `כותב את האבחון… ${nf.format(text.length)} תווים`; const s = $('run-stream'); if(s) s.textContent = text.slice(-400); } });
+    state.analysis = validate(a); state.sent = prep.list; state.isDemo = false; state.when = new Date().toISOString(); state.chat = [];
+    saveLocal(); renderResults();
+    const v = verifyAll(state.analysis);
+    $('run-state').innerHTML = `<div class="msg ok">הניתוח הושלם ב-${Math.round((Date.now()-t0)/1000)} שניות. ${v.total ? `${v.ok} מתוך ${v.total} ציטוטים נמצאו במקור מילה במילה.` : ''}</div>`;
+    $('s-results').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }catch(e){
+    const t = errText(e); $('run-state').innerHTML = t ? `<div class="msg err">${esc(t)}</div>` : '<div class="msg">הניתוח נעצר.</div>';
+  }finally{
+    clearInterval(runTimer); $('stop').hidden = true; $('run').disabled = !state.sources.length || !llmReady();
+  }
+};
+$('stop').onclick = () => runCtl && runCtl.abort();
+
+/* ================= evidence verification ================= */
+const normQ = s => String(s||'').replace(/[״"“”]/g,'"').replace(/[׳'‘’`]/g,"'").replace(/[–—]/g,'-').replace(/\s+/g,' ').trim();
+function sentSources(){ return state.sent || (state.isDemo ? demoSent() : state.sources.map(s => ({name:s.name, text:s.text}))); }
+let _demoSent = null;
+function demoSent(){ if(!_demoSent){ const c = {}; _demoSent = DEMO_SOURCES.map(s => ({name:s.name, text: redact(s.text, c, [])})); } return _demoSent; }
+function findQuote(ev){
+  const srcs = sentSources(), q = normQ(ev.quote); if(q.length < 4) return null;
+  const order = [ (+ev.source||0) - 1, ...srcs.map((_,i) => i) ];
+  for(const i of order){ const s = srcs[i]; if(!s) continue; const t = normQ(s.text), k = t.indexOf(q); if(k >= 0) return { i, name: s.name, before: t.slice(Math.max(0, k-160), k), match: t.slice(k, k+q.length), after: t.slice(k+q.length, k+q.length+160), cut0: k > 160, cut1: k+q.length+160 < t.length }; }
+  return null;
+}
+function verifyAll(a){
+  let ok = 0, total = 0;
+  const each = evs => arr(evs).forEach(ev => { total++; if(findQuote(ev)) ok++; });
+  a.opportunities.forEach(o => each(o.evidence)); a.compliance.forEach(c => each(c.evidence)); a.process.steps.forEach(s => each(s.evidence));
+  return { ok, total };
+}
+function evidenceHtml(evs){
+  evs = arr(evs); if(!evs.length) return '';
+  return `<div class="evs"><span class="label">ראיות מהמקורות</span>${evs.map(ev => { const f = findQuote(ev);
+    return `<details class="evq ${f?'ok':'bad'}"><summary><span>"${esc(ev.quote)}"</span><span class="chip ${f?'good':'amb'}">${f ? 'נמצא במקור ✓' : 'לא נמצא מילה במילה'}</span></summary>
+      <div class="ctx">${f ? `<b>${esc(f.name)}</b>\n${f.cut0?'…':''}${esc(f.before)}<mark>${esc(f.match)}</mark>${esc(f.after)}${f.cut1?'…':''}` : 'הציטוט לא נמצא בטקסט שנשלח לניתוח. ייתכן שנוסח מחדש: כדאי לבדוק את הטענה ידנית.'}</div></details>`; }).join('')}</div>`;
+}
+
+/* ================= results ================= */
+document.querySelectorAll('.rtabs button').forEach(b => b.onclick = () => showR(b.dataset.r));
+function showR(r){ document.querySelectorAll('.rtabs button').forEach(x => x.setAttribute('aria-selected', x.dataset.r === r)); document.querySelectorAll('[data-rp]').forEach(p => p.hidden = p.dataset.rp !== r); }
+function renderResults(){
+  const a = state.analysis;
+  $('demo-banner').hidden = !state.isDemo;
+  $('res-when').textContent = state.isDemo ? 'נתוני דוגמה' : ('נותח ' + new Date(state.when).toLocaleString('he-IL', {dateStyle:'short', timeStyle:'short'}));
+  renderSum(a); renderDet(a); renderProc(a); renderOpp(a); renderPilot(a); renderChatSugg();
+}
+function renderSum(a){
+  const t = totals(a), p = profile(), v = verifyAll(a);
+  const ranked = [...a.opportunities].sort((x,y) => roi(y).ils - roi(x).ils).slice(0,3);
+  const b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  $('r-sum').innerHTML = `<div style="display:grid;gap:16px">
+    <p class="lead">${esc(a.summary)}</p>
+    <div class="kpis">
+      <div class="kpi"><span class="label">חיסכון אפשרי בחודש</span><span class="n good mono">${ils(t.ils)}</span><span class="d">${nf.format(Math.round(t.hrs))} שעות נציג · ${t.fte.toFixed(1)} משרות</span></div>
+      <div class="kpi"><span class="label">זמן בתהליך המרכזי</span><span class="n mono">${af ? fmtSec(b) + ' ← ' + fmtSec(af) : fmtSec(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
+      <div class="kpi"><span class="label">הזדמנויות שזוהו</span><span class="n mono">${a.opportunities.length}</span><span class="d">${a.opportunities.filter(o=>o.effort<=2&&o.impact>=4).length} מהן ניצחונות מהירים</span></div>
+      <div class="kpi"><span class="label">ציטוטים שאומתו במקור</span><span class="n mono ${v.total && v.ok===v.total?'good':''}">${v.ok}/${v.total}</span><span class="d">כל ממצא נבדק מול הטקסט</span></div>
+    </div>
+    <div style="display:grid;gap:10px"><h3>שלוש ההזדמנויות המובילות</h3>
+      <div class="top3">${ranked.map((o,i) => { const r = roi(o); return `<div class="card"><span class="rank">${i+1} · ${esc(o.category||'')}</span><b>${esc(o.title)}</b><p class="small muted">${esc(o.description)}</p><span class="mono" style="color:var(--good);font-weight:700">${r.ils ? ils(r.ils)+' בחודש' : esc(o.roi_note || 'חיסכון מחוץ לזמן השיחה')}</span></div>`; }).join('')}</div>
+    </div>
+    ${a.data_gaps.length ? `<div class="msg warn"><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</div>` : ''}
+    <p class="note">החישוב: שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעה. שינוי המספרים בשלב 1 מעדכן אותו מיד. חלק מההזדמנויות חופפות, ולכן הסכום הוא גבול עליון.</p>
+  </div>`;
+}
+function renderDet(a){
+  const maxS = Math.max(1, ...a.intents.map(i => +i.share_pct||0)), s = a.sentiment;
+  const sevC = v => v==='גבוהה'?'var(--crit)':v==='בינונית'?'var(--amber)':'var(--muted)';
+  $('r-det').innerHTML = `<div style="display:grid;gap:18px">
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:10px"><h3>למה מתקשרים${a.calls_analyzed ? ` · ${esc(a.calls_analyzed)} שיחות נותחו` : ''}</h3>
+        <div class="bars">${a.intents.map(i => `<div class="bar"><span>${esc(i.name)}</span><span class="t"><i style="width:${(+i.share_pct||0)/maxS*100}%"></i></span><span class="v">${esc(i.share_pct)}% · ${fmtSec(i.avg_handle_sec)}</span></div>`).join('')}</div>
+        <div class="note">האחוז הוא חלק מהשיחות; הזמן הוא זמן טיפול ממוצע בסוג הזה.</div>
+        ${a.intents.filter(i=>i.note).map(i => `<div class="small"><b>${esc(i.name)}:</b> <span class="muted">${esc(i.note)}</span></div>`).join('')}
+      </div>
+      <div style="display:grid;gap:8px"><h3>מצב רוח הלקוחות</h3>
+        <div class="stack"><i style="width:${+s.positive_pct||0}%;background:var(--good)"></i><i style="width:${+s.neutral_pct||0}%;background:var(--line)"></i><i style="width:${+s.negative_pct||0}%;background:var(--crit)"></i></div>
+        <div class="legend"><span style="--c:var(--good)">חיובי ${esc(s.positive_pct??'–')}%</span><span style="--c:var(--line)">ניטרלי ${esc(s.neutral_pct??'–')}%</span><span style="--c:var(--crit)">שלילי ${esc(s.negative_pct??'–')}%</span></div>
+        <h3 style="margin-top:10px">שאלות שחוזרות על עצמן</h3>
+        <ul class="list">${a.repeated_questions.map(q => `<li><span class="chip ${q.has_procedure?'good':'amb'}">${q.has_procedure?'יש נוהל':'אין נוהל'}</span><span>"${esc(q.q)}"</span><span class="mono small muted">${esc(q.count)} פעמים</span></li>`).join('')}</ul>
+        <p class="note">שאלה שחוזרת ויש לה נוהל מתאימה לעוזר ידע או לבוט. שאלה בלי נוהל היא נוהל שצריך לכתוב.</p>
+      </div>
+    </div>
+    <div style="display:grid;gap:8px"><h3>חריגות מנוהל וסיכונים</h3>
+      <ul class="list">${a.compliance.map(c => `<li><span class="sev" style="background:${sevC(c.severity)}"></span><span><b>${esc(c.issue)}</b> <span class="muted small">· חומרה ${esc(c.severity)}</span></span><span class="chip">${esc(c.count||'')}</span><div class="ev">${evidenceHtml(c.evidence)}</div></li>`).join('') || '<li><span></span><span class="muted">לא זוהו חריגות</span><span></span></li>'}</ul>
+    </div>
+  </div>`;
+}
+
+/* process map (swimlanes, right to left) */
+function wrapText(t, n){ const w = String(t||'').split(/\s+/), out = []; let cur = ''; w.forEach(x => { if((cur+' '+x).trim().length > n && cur){ out.push(cur); cur = x; } else cur = (cur+' '+x).trim(); }); if(cur) out.push(cur); return out.slice(0,3); }
+function laneSvg(steps, oppByStep, label){
+  const order = ['לקוח','נציג','מערכת','ראש צוות','גורם חיצוני'];
+  const rank = x => { const i = order.indexOf(x); return i < 0 ? 99 : i; };
+  const actors = [...new Set(steps.map(s => s.actor || 'נציג'))].sort((x,y) => rank(x) - rank(y));
+  const colW = 138, laneH = 108, labelW = 92, top = 20, bw = 120, bh = 68;
+  const W = labelW + steps.length * colW + 20, H = top + actors.length * laneH + 40;
+  const X = i => W - labelW - (i + 0.5) * colW, Y = act => top + actors.indexOf(act || 'נציג') * laneH + laneH/2;
+  const col = { manual:'var(--amber)', system:'var(--accent)', wait:'var(--muted)', decision:'var(--violet)' };
+  let g = '';
+  actors.forEach((act, k) => { const y = top + k*laneH;
+    g += `<rect x="0" y="${y}" width="${W}" height="${laneH}" fill="${k%2?'var(--surface-2)':'var(--surface)'}"/><text x="${W-12}" y="${y+laneH/2+5}" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)">${esc(act)}</text><line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line)"/>`; });
+  g += `<line x1="${W-labelW}" x2="${W-labelW}" y1="${top}" y2="${top+actors.length*laneH}" stroke="var(--line)"/>`;
+  for(let i=1;i<steps.length;i++){ const x1 = X(i-1)-bw/2, y1 = Y(steps[i-1].actor), x2 = X(i)+bw/2, y2 = Y(steps[i].actor), mx = (x1+x2)/2;
+    g += `<path d="M${x1} ${y1} H${mx} V${y2} H${x2+2}" fill="none" stroke="var(--muted)" stroke-width="1.25" marker-end="url(#ar)"/>`; }
+  steps.forEach((s,i) => { const x = X(i), y = Y(s.actor), c = col[s.type] || 'var(--muted)', lines = wrapText(s.title, 15);
+    g += `<rect x="${x-bw/2}" y="${y-bh/2}" width="${bw}" height="${bh}" rx="${s.type==='decision'?20:9}" fill="var(--surface)" stroke="${c}" stroke-width="${s.pain?2:1.25}" ${s.type==='wait'?'stroke-dasharray="5 4"':''}/>`;
+    lines.forEach((l,j) => g += `<text x="${x}" y="${y - (lines.length-1)*8 + j*16 + 4}" text-anchor="middle" font-size="12.5" fill="var(--ink)">${esc(l)}</text>`);
+    if(+s.duration_sec) g += `<text x="${x}" y="${y+bh/2+14}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">${fmtSec(s.duration_sec)}</text>`;
+    if(s.pain) g += `<circle cx="${x+bw/2-6}" cy="${y-bh/2+6}" r="9" fill="var(--crit)"/><text x="${x+bw/2-6}" y="${y-bh/2+10}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">!</text>`;
+    (oppByStep[s.id]||[]).slice(0,3).forEach((n,j) => g += `<rect x="${x-bw/2+2+j*24}" y="${y-bh/2-10}" width="22" height="18" rx="5" fill="var(--good)"/><text x="${x-bw/2+13+j*24}" y="${y-bh/2+3}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${n}</text>`);
+    g += `<text x="${x}" y="${top-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">${i+1}</text>`; });
+  g += `<text x="${W-12}" y="${H-12}" text-anchor="end" font-size="12" fill="var(--muted)">כתום: ידני · כחול: מערכת · מקווקו: המתנה · סגול: החלטה · ! נקודת כאב · ירוק: מספר ההזדמנות</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(label)}" direction="ltr"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>${g}</svg>`;
+}
+function renderProc(a){
+  const steps = a.process.steps, tb = a.to_be.steps;
+  if(!steps.length){ $('r-proc').innerHTML = '<div class="msg">לא התקבלה מפת תהליך.</div>'; return; }
+  const oppByStep = {}; a.opportunities.forEach((o,i) => o.step_ids.forEach(id => (oppByStep[id] = oppByStep[id] || []).push(i+1)));
+  const cur = procView === 'after' && tb.length ? tb : steps;
+  const b = sumSec(steps), af = sumSec(tb), mx = Math.max(b, af, 1);
+  const manual = steps.filter(s => s.type==='manual'||s.type==='wait').reduce((n,s)=>n+(+s.duration_sec||0),0);
+  const pains = steps.filter(s => s.pain);
+  $('r-proc').innerHTML = `<div style="display:grid;gap:14px">
+    <div class="phead"><h3>${esc(a.process.name || 'התהליך בפועל')}</h3>
+      <div class="row">${tb.length ? `<div class="seg" role="group" aria-label="תצוגה"><button data-pv="before" aria-pressed="${procView!=='after'}">לפני</button><button data-pv="after" aria-pressed="${procView==='after'}">אחרי</button></div>` : ''}
+      <span class="chip amb">${b ? Math.round(manual/b*100) : 0}% מהזמן היום ידני או בהמתנה</span></div></div>
+    ${tb.length ? `<div class="compare"><div class="bar"><span>היום</span><span class="t"><i style="width:${b/mx*100}%;background:var(--amber)"></i></span><span class="v">${fmtSec(b)}</span></div><div class="bar"><span>אחרי</span><span class="t"><i style="width:${af/mx*100}%;background:var(--good)"></i></span><span class="v">${fmtSec(af)}</span></div>${a.to_be.note ? `<p class="note">${esc(a.to_be.note)}</p>` : ''}</div>` : ''}
+    <div class="scroll-x">${laneSvg(cur, procView==='after' ? {} : oppByStep, procView==='after' ? 'התהליך אחרי האוטומציות' : 'התהליך היום')}</div>
+    ${procView !== 'after' ? `<div style="display:grid;gap:8px"><h3>נקודות הכאב</h3><ul class="list">${pains.map(s => `<li><span class="sev" style="background:var(--crit)"></span><span><b>${esc(s.title)}</b> · ${esc(s.pain)}</span><span class="small muted">${(oppByStep[s.id]||[]).map(n=>'הזדמנות '+n).join(', ')}</span><div class="ev">${evidenceHtml(s.evidence)}</div></li>`).join('')}</ul></div>` : ''}
+  </div>`;
+  $('r-proc').querySelectorAll('[data-pv]').forEach(x => x.onclick = () => { procView = x.dataset.pv; renderProc(state.analysis); });
+}
+
+/* opportunities */
+const CAT = {'סיכום ותיעוד':'acc','אוטומציה':'amb','עוזר ידע RAG':'vio','סוכן AI':'good','בקרת איכות':'crit','הדרכה':''};
+const dots = n => `<span class="dots" aria-label="${n} מתוך 5">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</span>`;
+function matrix(a){
+  const W = 560, H = 360, L = 50, T = 20, R = 20, B = 44, w = W-L-R, h = H-T-B;
+  const px = e => L + (e-0.5)/5*w, py = im => T + h - (im-0.5)/5*h;
+  let g = `<rect x="${L}" y="${T}" width="${w/2}" height="${h/2}" fill="var(--good-soft)"/>
+    <text x="${L+10}" y="${T+20}" font-size="12.5" font-weight="700" fill="var(--good)">ניצחונות מהירים</text>
+    <text x="${L+w-10}" y="${T+20}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--muted)">פרויקטים אסטרטגיים</text>
+    <text x="${L+10}" y="${T+h-10}" font-size="12.5" font-weight="700" fill="var(--muted)">שיפורים קטנים</text>
+    <text x="${L+w-10}" y="${T+h-10}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--muted)">לדחות</text>
+    <rect x="${L}" y="${T}" width="${w}" height="${h}" fill="none" stroke="var(--line)"/><line x1="${L+w/2}" x2="${L+w/2}" y1="${T}" y2="${T+h}" stroke="var(--line)"/><line x1="${L}" x2="${L+w}" y1="${T+h/2}" y2="${T+h/2}" stroke="var(--line)"/>
+    <text x="${L}" y="${H-14}" font-size="12" fill="var(--muted)">מאמץ נמוך</text><text x="${L+w}" y="${H-14}" text-anchor="end" font-size="12" fill="var(--muted)">מאמץ גבוה</text>
+    <text x="16" y="${T+h/2}" text-anchor="middle" font-size="12" fill="var(--muted)" transform="rotate(-90 16 ${T+h/2})">השפעה</text>`;
+  const seen = {};
+  a.opportunities.forEach((o,i) => { const k = o.effort+'-'+o.impact, n = seen[k] = (seen[k]||0)+1;
+    const x = px(o.effort) + [0,28,-28,56,-56][(n-1)%5], y = py(o.impact) + (n>5?14:0);
+    g += `<g><title>${esc(o.title)}</title><circle cx="${x}" cy="${y}" r="13" fill="var(--accent)"/><text x="${x}" y="${y+4.5}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent-ink)">${i+1}</text></g>`; });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px;display:block;margin-inline:auto" role="img" aria-label="מטריצת השפעה מול מאמץ" direction="ltr">${g}</svg>`;
+}
+function renderOpp(a){
+  const list = a.opportunities.map((o,i) => ({o, i, r: roi(o)}));
+  const sorted = [...list].sort((x,y) => sortBy==='money' ? y.r.ils - x.r.ils : sortBy==='quick' ? (y.o.impact - y.o.effort) - (x.o.impact - x.o.effort) : x.i - y.i);
+  $('r-opp').innerHTML = `<div style="display:grid;gap:16px">
+    <div class="grid2" style="align-items:center">
+      <div class="scroll-x" style="padding:8px;background:var(--surface)">${matrix(a)}</div>
+      <div style="display:grid;gap:8px"><h3>איך לקרוא</h3><p class="small muted">כל עיגול הוא הזדמנות לפי המספר שלה. ברבע הירוק (השפעה גבוהה, מאמץ נמוך) מתחילים. הסכום בכל כרטיס מחושב מהמספרים בשלב 1, ולכל הזדמנות יש ציטוטים מהמקורות.</p>
+        <div class="sortbar"><span class="label">מיון:</span>
+          <button class="btn sm ${sortBy==='money'?'primary':''}" data-sort="money">לפי חיסכון</button>
+          <button class="btn sm ${sortBy==='quick'?'primary':''}" data-sort="quick">ניצחונות מהירים</button>
+          <button class="btn sm ${sortBy==='orig'?'primary':''}" data-sort="orig">לפי המספר</button></div></div>
+    </div>
+    <div class="opps">${sorted.map(({o,i,r}) => `<details class="opp"${i===0?' open':''}>
+      <summary><span class="idx">${i+1}</span><span style="display:grid;gap:4px"><b>${esc(o.title)}</b><span class="row small"><span class="chip ${CAT[o.category]||''}">${esc(o.category||'')}</span><span class="muted">השפעה ${dots(o.impact)}</span><span class="muted">מאמץ ${dots(o.effort)}</span><span class="muted">ודאות ${esc(o.confidence||'–')}</span></span></span>
+      <span class="money">${r.ils ? ils(r.ils) : '—'}<small>${r.ils ? nf.format(Math.round(r.hrs)) + ' שעות בחודש' : 'מחוץ לזמן שיחה'}</small></span></summary>
+      <div class="body">
+        <p>${esc(o.description)}</p>
+        <div class="grid2" style="align-items:start">
+          <div style="display:grid;gap:10px"><div><span class="label">איך מיישמים</span><ol>${o.how.map(h=>`<li>${esc(h)}</li>`).join('')}</ol></div>${evidenceHtml(o.evidence)}</div>
+          <div style="display:grid;gap:8px">
+            <div><span class="label">כלים</span><div class="row" style="margin-top:4px">${o.tools.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div></div>
+            <div class="small"><span class="label">החישוב</span><br><span class="mono">${nf.format(Math.round(r.calls))} שיחות × ${esc(o.seconds_saved_per_call)} שנ׳ × ₪${profile().cost}</span>${o.roi_note?`<br><span class="muted">${esc(o.roi_note)}</span>`:''}</div>
+            ${o.kpi?`<div class="small"><span class="label">מה מודדים</span><br>${esc(o.kpi)}</div>`:''}
+            ${o.risk?`<div class="small"><span class="label">סיכון</span><br>${esc(o.risk)}</div>`:''}
+          </div>
+        </div>
+        <div class="row"><button class="btn sm" data-n8n="${i}">טיוטת workflow ל-n8n</button><span class="note" id="n8n-st-${i}"></span></div>
+        <div id="n8n-out-${i}"></div>
+      </div></details>`).join('')}</div>
+  </div>`;
+  $('r-opp').querySelectorAll('[data-sort]').forEach(b => b.onclick = () => { sortBy = b.dataset.sort; renderOpp(state.analysis); });
+  $('r-opp').querySelectorAll('[data-n8n]').forEach(b => b.onclick = () => makeN8n(+b.dataset.n8n, b));
+}
+async function makeN8n(i, btn){
+  const o = state.analysis.opportunities[i], st = $('n8n-st-'+i), out = $('n8n-out-'+i);
+  if(!llmReady()){ st.textContent = LLM_ERR.no_llm; return; }
+  btn.disabled = true; st.textContent = 'Claude בונה את ה-workflow… (כחצי דקה)';
+  try{
+    const wf = await llm.json(`Build an importable n8n workflow JSON for this call-center automation. Use real n8n node types (e.g. n8n-nodes-base.webhook, n8n-nodes-base.httpRequest, n8n-nodes-base.set, n8n-nodes-base.if, n8n-nodes-base.code). For the LLM step use n8n-nodes-base.httpRequest to https://api.anthropic.com/v1/messages. Use placeholder URLs like https://crm.example.com and credential names only, no secrets. Node names may be in Hebrew. 4-9 nodes. Add one n8n-nodes-base.stickyNote explaining in Hebrew what to configure.
+Reply with only the workflow JSON: {"name":"","nodes":[{"parameters":{},"name":"","type":"","typeVersion":1,"position":[0,0]}],"connections":{},"settings":{}}
+
+Automation: ${o.title}
+What it does: ${o.description}
+Steps: ${o.how.join(' | ')}
+Tools: ${o.tools.join(', ')}`, { tier:'default' });
+    if(!wf || !Array.isArray(wf.nodes)) throw {code:'invalid_json'};
+    const txt = JSON.stringify(wf, null, 2);
+    st.textContent = `${wf.nodes.length} צמתים. מייבאים ב-n8n דרך Import from File.`;
+    out.innerHTML = `<div class="row" style="margin-bottom:8px"><button class="btn primary sm" id="n8n-dl-${i}">הורדת JSON</button><button class="btn sm" id="n8n-cp-${i}">העתקה</button><span class="note" id="n8n-m-${i}"></span></div><div class="code">${esc(txt)}</div>`;
+    $('n8n-dl-'+i).onclick = () => save(`n8n-${i+1}.json`, txt, $('n8n-m-'+i), 'application/json');
+    $('n8n-cp-'+i).onclick = () => copy(txt, $('n8n-m-'+i));
+  }catch(e){ st.textContent = errText(e); }
+  finally{ btn.disabled = false; }
+}
+function renderPilot(a){
+  const p = a.pilot || {};
+  $('r-pilot').innerHTML = `<div class="pilot"><h3 style="font-size:17px">${esc(p.title||'')}</h3><p>${esc(p.why||'')}</p>
+    ${arr(p.weeks).map(w => `<div class="week"><b>${esc(w.week)}</b><span>${esc(w.goal)}</span></div>`).join('')}
+    ${p.success_metric ? `<div class="msg ok"><b>מדד הצלחה:</b> ${esc(p.success_metric)}</div>` : ''}</div>`;
+}
+
+/* chat */
+const SUGG = ['איך להציג את ההזדמנות הראשונה למנהל המוקד בדקה?','מה הסיכונים הכי גדולים בפיילוט?','איך הנציגים יגיבו, ואיך מכינים אותם?','מה עוד צריך לאסוף כדי לדייק את המספרים?'];
+function renderChatSugg(){
+  $('chat-sugg').innerHTML = SUGG.map(s => `<button type="button">${esc(s)}</button>`).join('');
+  $('chat-sugg').querySelectorAll('button').forEach(b => b.onclick = () => { $('chat-in').value = b.textContent; $('chat-form').requestSubmit(); });
+  renderChat();
+}
+function renderChat(){ const log = $('chat-log'); log.innerHTML = state.chat.map(m => `<div class="bubble ${m.role==='user'?'u':'a'}">${esc(m.content)}</div>`).join(''); log.scrollTop = log.scrollHeight; }
+$('chat-form').addEventListener('submit', async e => {
+  e.preventDefault(); const q = $('chat-in').value.trim(); if(!q) return;
+  if(!llmReady()){ $('chat-status').textContent = LLM_ERR.no_llm; return; }
+  $('chat-in').value = ''; state.chat.push({role:'user', content:q}); renderChat();
+  const log = $('chat-log'), b = document.createElement('div'); b.className = 'bubble a'; b.textContent = 'חושב…'; log.append(b); log.scrollTop = log.scrollHeight;
+  $('chat-send').disabled = true;
+  const p = profile(), src = sentSources().map((s,i) => `### מקור ${i+1}: ${s.name}\n${s.text}`).join('\n\n').slice(0, 6000);
+  const ctx = `אתה האנליסט שכתב את האבחון הבא למוקד (${p.type}, ${p.calls} שיחות בחודש, עלות שעה ${p.cost} ש"ח). ענה בעברית, קצר ומעשי, בלי markdown כבד. התבסס רק על האבחון והמקורות; אם אין מידע, אמור זאת.\n\nהאבחון:\n${JSON.stringify(state.analysis).slice(0, 16000)}\n\nקטע מהמקורות (פרטים מזהים מוסתרים):\n${src}`;
+  try{
+    const text = await llm.text([{role:'user', content: ctx}, ...state.chat.slice(-8)], { onText: ({text}) => { b.textContent = text; log.scrollTop = log.scrollHeight; } });
+    b.textContent = text; state.chat.push({role:'assistant', content:text}); $('chat-status').textContent = '';
+  }catch(err){ if(err.text) b.textContent = err.text; else b.remove(); $('chat-status').textContent = errText(err); state.chat.pop(); }
+  finally{ $('chat-send').disabled = false; }
+});
+
+/* ================= accuracy test ================= */
+function parseCsv(t){
+  const rows = [];
+  t.split(/\r?\n/).forEach((line, n) => {
+    if(!line.trim()) return;
+    let cells = [], cur = '', q = false;
+    for(let i=0;i<line.length;i++){ const c = line[i]; if(c === '"'){ if(q && line[i+1] === '"'){ cur += '"'; i++; } else q = !q; } else if(c === ',' && !q){ cells.push(cur); cur = ''; } else cur += c; }
+    cells.push(cur);
+    if(cells.length < 2) return;
+    const label = cells.pop().trim(), text = cells.join(',').trim();
+    if(n === 0 && /^(label|תווית|סיווג)$/i.test(label)) return;
+    if(text && label) rows.push({text, label});
+  });
+  return rows;
+}
+function renderEvalInfo(){
+  const s = state.eval.set, labels = [...new Set(s.map(r => r.label))];
+  $('eval-size').textContent = `${s.length} שיחות · ${labels.length} קטגוריות${state.eval.custom ? ' · מאגר שהועלה' : ' · מאגר מובנה'}`;
+  $('eval-reset').hidden = !state.eval.custom;
+}
+$('eval-file').onchange = e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = () => { const rows = parseCsv(String(r.result)); if(rows.length < 3){ $('eval-status').textContent = 'לא נמצאו מספיק שורות. צריך לפחות 3 שורות של טקסט ותווית.'; return; } state.eval = { set: rows.slice(0, 200), custom: true }; $('eval-status').textContent = `נטענו ${Math.min(rows.length,200)} שיחות.`; $('eval-out').innerHTML = ''; renderEvalInfo(); }; r.readAsText(f); };
+$('eval-reset').onclick = () => { state.eval = { set: EVAL_BUILTIN, custom: false }; $('eval-out').innerHTML = ''; renderEvalInfo(); };
+$('eval-run').onclick = async () => {
+  if(!llmReady()){ $('eval-status').textContent = LLM_ERR.no_llm; return; }
+  const set = state.eval.set, labels = [...new Set(set.map(r => r.label))];
+  const on = $('pii-on').checked, c = {}, extra = extraTerms();
+  const items = set.map((r, i) => ({ id: i+1, text: on ? redact(r.text, c, extra) : r.text }));
+  $('eval-run').disabled = true; $('eval-status').textContent = `מסווג ${set.length} שיחות…`;
+  const t0 = Date.now();
+  try{
+    const res = await llm.json(`סווג כל שיחה במוקד שירות לאחת מהקטגוריות הבאות בלבד: ${labels.map(l => `"${l}"`).join(', ')}.
+החזר JSON בלבד: מערך של {"id":מספר,"label":"קטגוריה"} לכל שיחה, באותו סדר.
+
+השיחות:
+${items.map(it => `${it.id}. ${it.text}`).join('\n')}`, { tier:'default' });
+    const got = {}; arr(res).forEach(r => { if(r && r.id != null) got[+r.id] = String(r.label||'').trim(); });
+    const rows = set.map((r, i) => ({ ...r, pred: got[i+1] || '—', ok: (got[i+1] || '') === r.label }));
+    const ok = rows.filter(r => r.ok).length, acc = ok / rows.length;
+    const per = labels.map(l => { const tp = rows.filter(r => r.label===l && r.ok).length, n = rows.filter(r => r.label===l).length, pn = rows.filter(r => r.pred===l).length; return { l, n, rec: n ? tp/n : 0, prec: pn ? tp/pn : 0 }; });
+    const R = 54, C = 2*Math.PI*R;
+    $('eval-out').innerHTML = `<div style="display:grid;gap:14px">
+      <div class="acc-grid">
+        <svg class="ring" viewBox="0 0 132 132" role="img" aria-label="דיוק ${Math.round(acc*100)} אחוז"><circle cx="66" cy="66" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="14"/><circle cx="66" cy="66" r="${R}" fill="none" stroke="${acc>=.85?'var(--good)':acc>=.7?'var(--amber)':'var(--crit)'}" stroke-width="14" stroke-dasharray="${C*acc} ${C}" transform="rotate(-90 66 66)" stroke-linecap="round"/><text x="66" y="72" text-anchor="middle" font-size="26" font-weight="700" font-family="Rubik,sans-serif" fill="var(--ink)">${Math.round(acc*100)}%</text></svg>
+        <div style="display:grid;gap:6px"><h3>${ok} מתוך ${rows.length} סווגו נכון</h3><p class="note">נמדד עכשיו, ב-${Math.round((Date.now()-t0)/1000)} שניות, על ${state.eval.custom ? 'המאגר שהועלה' : 'המאגר המובנה (שיחות דמו)'}. תוצאה על שיחות אמיתיות של המוקד יכולה להיות שונה, ולכן מריצים את המבחן גם עליהן.</p></div>
+      </div>
+      <div class="tbl-wrap"><table class="t"><thead><tr><th>קטגוריה</th><th>שיחות</th><th>זוהו נכון (recall)</th><th>דיוק הזיהוי (precision)</th></tr></thead><tbody>${per.map(p => `<tr><td>${esc(p.l)}</td><td class="num">${p.n}</td><td class="num">${Math.round(p.rec*100)}%</td><td class="num">${Math.round(p.prec*100)}%</td></tr>`).join('')}</tbody></table></div>
+      ${rows.some(r => !r.ok) ? `<div style="display:grid;gap:6px"><h3>הטעויות</h3><div class="tbl-wrap"><table class="t"><thead><tr><th>שיחה</th><th>נכון</th><th>הכלי אמר</th></tr></thead><tbody>${rows.filter(r => !r.ok).map(r => `<tr><td>${esc(r.text)}</td><td>${esc(r.label)}</td><td>${esc(r.pred)}</td></tr>`).join('')}</tbody></table></div></div>` : '<div class="msg ok">אין טעויות במאגר הזה.</div>'}
+    </div>`;
+    $('eval-status').textContent = '';
+  }catch(e){ $('eval-status').textContent = errText(e) || 'המבחן נעצר.'; }
+  finally{ $('eval-run').disabled = false; }
+};
+
+/* ================= export ================= */
+function mdReport(){
+  const a = state.analysis, p = profile(), t = totals(a), L = [];
+  L.push(`# רנטגן למוקד: אבחון תהליכים ואוטומציה`, '', `${p.type} · ${nf.format(p.calls)} שיחות בחודש · זמן טיפול ממוצע ${p.aht} דק׳ · ${p.agents} נציגים${state.isDemo ? ' · **נתוני דוגמה**' : ''}`, '');
+  L.push(`## תמונת מצב`, '', a.summary || '', '', `- חיסכון אפשרי בחודש: ${ils(t.ils)} (${nf.format(Math.round(t.hrs))} שעות נציג, ${t.fte.toFixed(1)} משרות). ההזדמנויות חופפות בחלקן, ולכן זה גבול עליון.`);
+  const b = sumSec(a.process.steps), af = sumSec(a.to_be.steps); if(af) L.push(`- זמן בתהליך המרכזי: ${fmtSec(b)} היום, ${fmtSec(af)} אחרי האוטומציות`);
+  L.push('', `## הזדמנויות`, '', `| # | הזדמנות | סוג | השפעה | מאמץ | שעות בחודש | ₪ בחודש |`, `|---|---|---|---|---|---|---|`);
+  a.opportunities.forEach((o,i) => { const r = roi(o); L.push(`| ${i+1} | ${o.title} | ${o.category||''} | ${o.impact}/5 | ${o.effort}/5 | ${Math.round(r.hrs)} | ${r.ils ? nf.format(Math.round(r.ils)) : (o.roi_note||'—')} |`); });
+  L.push('');
+  a.opportunities.forEach((o,i) => { L.push(`### ${i+1}. ${o.title}`, '', o.description || '', ''); o.how.forEach((h,j) => L.push(`${j+1}. ${h}`)); L.push('', `כלים: ${o.tools.join(', ')}`); if(o.kpi) L.push(`מדד: ${o.kpi}`); if(o.risk) L.push(`סיכון: ${o.risk}`); arr(o.evidence).forEach(ev => L.push(`> "${ev.quote}" (${findQuote(ev) ? 'אומת במקור' : 'לא אומת'})`)); L.push(''); });
+  L.push(`## מה קורה בשיחות`, ''); a.intents.forEach(i => L.push(`- ${i.name}: ${i.share_pct}% מהשיחות, ${fmtSec(i.avg_handle_sec)}${i.note ? ' · ' + i.note : ''}`));
+  L.push('', `סנטימנט: חיובי ${a.sentiment.positive_pct ?? '–'}%, ניטרלי ${a.sentiment.neutral_pct ?? '–'}%, שלילי ${a.sentiment.negative_pct ?? '–'}%`, '');
+  if(a.compliance.length){ L.push(`### חריגות מנוהל`, ''); a.compliance.forEach(c => L.push(`- (${c.severity}) ${c.issue} · ${c.count||''}`)); L.push(''); }
+  if(a.repeated_questions.length){ L.push(`### שאלות חוזרות`, ''); a.repeated_questions.forEach(q => L.push(`- "${q.q}" · ${q.count} פעמים · ${q.has_procedure ? 'יש נוהל' : 'אין נוהל'}`)); L.push(''); }
+  L.push(`## התהליך היום: ${a.process.name||''}`, ''); a.process.steps.forEach((s,i) => L.push(`${i+1}. ${s.title} (${s.actor}, ${fmtSec(s.duration_sec)})${s.pain ? ' · כאב: ' + s.pain : ''}`));
+  if(a.to_be.steps.length){ L.push('', `## התהליך אחרי`, ''); a.to_be.steps.forEach((s,i) => L.push(`${i+1}. ${s.title} (${s.actor}, ${fmtSec(s.duration_sec)})`)); }
+  if(a.pilot){ L.push('', `## פיילוט מוצע: ${a.pilot.title||''}`, '', a.pilot.why||'', ''); arr(a.pilot.weeks).forEach(w => L.push(`- ${w.week}: ${w.goal}`)); L.push('', `מדד הצלחה: ${a.pilot.success_metric||''}`); }
+  if(a.data_gaps.length){ L.push('', `## מה חסר כדי לדייק`, ''); a.data_gaps.forEach(d => L.push(`- ${d}`)); }
+  L.push('', '---', 'הוכן בכלי "רנטגן למוקד". פרטים מזהים הוסתרו לפני הניתוח. המספרים הם הערכות מתוך המקורות.');
+  return L.join('\n');
+}
+function execReport(){
+  const a = state.analysis, p = profile(), t = totals(a), v = verifyAll(a);
+  const top = [...a.opportunities].sort((x,y) => roi(y).ils - roi(x).ils).slice(0,3);
+  const b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  const q = o => { const ev = arr(o.evidence).find(e => findQuote(e)); return ev ? `<blockquote>"${esc(ev.quote)}"</blockquote>` : ''; };
+  return `<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>אבחון מוקד · דוח מנהלים</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&display=swap">
+<style>@page{size:A4;margin:14mm}*{box-sizing:border-box}body{margin:0;background:#fff;color:#122033;font-family:Assistant,Arial,sans-serif;font-size:13.5px;line-height:1.5}.page{max-width:190mm;margin:0 auto;padding:18px}h1,h2{font-family:Rubik,Arial,sans-serif;margin:0}h1{font-size:24px}h2{font-size:15px;margin:16px 0 8px;color:#0B6E8A}.meta{color:#5A6878;font-size:12.5px;margin:4px 0 12px}.lead{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.k{border:1px solid #D3DCE3;border-radius:10px;padding:10px}.k b{display:block;font-family:Rubik,sans-serif;font-size:21px}.k.g b{color:#1D7A4D}.k span{font-size:11.5px;color:#5A6878}.opp{border:1px solid #D3DCE3;border-radius:10px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto;gap:4px 12px}.opp .m{font-family:Rubik,sans-serif;font-weight:700;color:#1D7A4D;white-space:nowrap}.opp p{margin:0;grid-column:1/-1;color:#394758}blockquote{grid-column:1/-1;margin:2px 0 0;padding:4px 10px;border-right:3px solid #1D7A4D;background:#F4F7F9;color:#394758;font-size:12.5px}.bars div{display:grid;grid-template-columns:4.5em 1fr 5em;gap:8px;align-items:center;margin:4px 0}.bars i{display:block;height:12px;border-radius:3px}.wk{display:grid;grid-template-columns:5.5em 1fr;gap:8px;margin:3px 0}.wk b{color:#0B6E8A}.foot{margin-top:14px;padding-top:8px;border-top:1px solid #D3DCE3;font-size:11px;color:#5A6878}.demo{display:inline-block;background:#E9E6F8;color:#5B4DB0;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700}</style></head><body><div class="page">
+<h1>אבחון תהליכים ואוטומציה במוקד</h1>
+<div class="meta">${esc(p.type)} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים · ${new Date().toLocaleDateString('he-IL')} ${state.isDemo ? '<span class="demo">נתוני דוגמה</span>' : ''}</div>
+<p class="lead">${esc(a.summary)}</p>
+<div class="kpis"><div class="k g"><b>${ils(t.ils)}</b><span>חיסכון אפשרי בחודש (גבול עליון)</span></div><div class="k"><b>${nf.format(Math.round(t.hrs))}</b><span>שעות נציג בחודש</span></div><div class="k"><b>${af ? fmtSec(b)+' ← '+fmtSec(af) : fmtSec(b)}</b><span>זמן בתהליך המרכזי</span></div><div class="k"><b>${v.ok}/${v.total}</b><span>ממצאים עם ציטוט מאומת</span></div></div>
+<h2>שלוש ההזדמנויות המובילות</h2>
+${top.map((o,i) => `<div class="opp"><b>${i+1}. ${esc(o.title)}</b><span class="m">${roi(o).ils ? ils(roi(o).ils)+' בחודש' : esc(o.roi_note||'')}</span><p>${esc(o.description)}</p>${q(o)}</div>`).join('')}
+${af ? `<h2>לפני ואחרי</h2><div class="bars"><div><span>היום</span><i style="width:100%;background:#B86E00"></i><span>${fmtSec(b)}</span></div><div><span>אחרי</span><i style="width:${Math.round(af/b*100)}%;background:#1D7A4D"></i><span>${fmtSec(af)}</span></div></div>` : ''}
+${a.pilot ? `<h2>פיילוט מוצע: ${esc(a.pilot.title)}</h2>${arr(a.pilot.weeks).map(w => `<div class="wk"><b>${esc(w.week)}</b><span>${esc(w.goal)}</span></div>`).join('')}<p><b>מדד הצלחה:</b> ${esc(a.pilot.success_metric)}</p>` : ''}
+<div class="foot">הוכן בכלי "רנטגן למוקד" על ידי איליה נודלמן. פרטים מזהים הוסתרו לפני הניתוח. המספרים הם הערכות מתוך המקורות שנותחו${a.data_gaps.length ? '; חסר כדי לדייק: ' + a.data_gaps.map(esc).join(', ') : ''}.</div>
+</div></body></html>`;
+}
+async function save(filename, data, el, mime){
+  if(caps.downloads){
+    try{ await caps.downloads.save({filename, data}); el.textContent = 'נשמר.'; }
+    catch(e){ el.textContent = e.code === 'declined' ? 'ההורדה בוטלה.' : e.code === 'rate_limited' ? 'חלון הורדה כבר פתוח.' : 'ההורדה לא זמינה כאן.'; }
+    return;
+  }
+  if(INSIDE_CLAUDE){ el.textContent = 'ההורדה לא זמינה בתצוגה הזו.'; return; }
+  try{ const u = URL.createObjectURL(new Blob([data], {type: (mime || 'text/plain') + ';charset=utf-8'})); const l = document.createElement('a'); l.href = u; l.download = filename; document.body.append(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 2000); el.textContent = 'הקובץ ירד.'; }
+  catch(e){ el.textContent = 'ההורדה לא זמינה כאן.'; }
+}
+function copy(text, el){ try{ navigator.clipboard.writeText(text).then(() => el.textContent = 'הועתק.', () => el.textContent = 'לא ניתן להעתיק כאן.'); }catch(e){ el.textContent = 'לא ניתן להעתיק כאן.'; } }
+const stamp = () => new Date().toISOString().slice(0,10);
+$('dl-exec').onclick = () => save(`דוח-מנהלים-${stamp()}.html`, execReport(), $('exec-status'), 'text/html');
+$('dl-md').onclick = () => save(`רנטגן-למוקד-${stamp()}.md`, mdReport(), $('dl-status'), 'text/markdown');
+$('dl-json').onclick = () => save(`רנטגן-למוקד-${stamp()}.json`, JSON.stringify({profile: profile(), analysis: state.analysis}, null, 2), $('dl-status'), 'application/json');
+$('to-drive').onclick = async () => {
+  const st = $('drive-save-status'), b = $('to-drive');
+  if(!caps.mcp){ st.textContent = noConnector('Google Drive'); return; }
+  b.disabled = true; st.textContent = 'שומר…';
+  try{
+    const res = await caps.mcp.callTool('Google Drive','create_file',{title:`רנטגן למוקד · ${stamp()}`, textContent: mdReport(), contentMimeType:'text/markdown'});
+    const f = res.payload || {}; const url = f.viewUrl || f.webViewLink || '';
+    st.innerHTML = url ? `נשמר. <a href="${esc(url)}" target="_blank" rel="noopener">פתיחת המסמך</a>` : 'נשמר ב-Drive.';
+  }catch(e){ st.textContent = mcpMessage(e, 'Google Drive'); }
+  finally{ b.disabled = false; }
+};
+$('to-gmail').onclick = async () => {
+  const st = $('gmail-status'), b = $('to-gmail'), to = $('mail-to').value.trim();
+  if(!caps.mcp){ st.textContent = noConnector('Gmail'); return; }
+  if(to && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){ st.textContent = 'כתובת המייל לא תקינה.'; return; }
+  const a = state.analysis, t = totals(a), top = [...a.opportunities].sort((x,y)=>roi(y).ils-roi(x).ils).slice(0,3);
+  const html = `<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6"><p>שלום,</p><p>מצורף סיכום קצר של אבחון התהליכים במוקד${state.isDemo?' (על נתוני דוגמה)':''}.</p><p>${esc(a.summary)}</p><p><b>חיסכון אפשרי:</b> עד כ-${ils(t.ils)} בחודש (${nf.format(Math.round(t.hrs))} שעות נציג).</p><p><b>שלוש ההזדמנויות המובילות:</b></p><ol>${top.map(o=>`<li><b>${esc(o.title)}</b>: ${esc(o.description)} (${roi(o).ils?ils(roi(o).ils)+' בחודש':esc(o.roi_note||'')})</li>`).join('')}</ol>${a.pilot?`<p><b>פיילוט מוצע:</b> ${esc(a.pilot.title)}. מדד הצלחה: ${esc(a.pilot.success_metric)}</p>`:''}<p>אשמח לעבור על זה יחד.</p><p>איליה</p></div>`;
+  const text = `שלום,\n\nסיכום אבחון התהליכים במוקד${state.isDemo?' (נתוני דוגמה)':''}:\n${a.summary}\n\nחיסכון אפשרי: עד כ-${ils(t.ils)} בחודש.\n\nההזדמנויות המובילות:\n${top.map((o,i)=>`${i+1}. ${o.title}`).join('\n')}\n\nאיליה`;
+  b.disabled = true; st.textContent = 'יוצר טיוטה…';
+  try{
+    const input = {subject:'אבחון תהליכים ואוטומציה במוקד', htmlBody: html, body: text}; if(to) input.to = [to];
+    const res = await caps.mcp.callTool('Gmail','create_draft', input);
+    const d = res.payload || {}; st.innerHTML = d.viewUrl ? `הטיוטה מוכנה. <a href="${esc(d.viewUrl)}" target="_blank" rel="noopener">פתיחה ב-Gmail</a>` : 'הטיוטה מוכנה ב-Gmail.';
+  }catch(e){ st.textContent = mcpMessage(e, 'Gmail'); }
+  finally{ b.disabled = false; }
+};
+
+/* ================= nav & boot ================= */
+const secIds = ['s-sources','s-run','s-results','s-eval','s-export'];
+if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.steps a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
+['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
+function setAiStatus(){
+  const el = $('ai-status');
+  if(caps.sample){ el.className = 'chip good'; el.textContent = 'מחובר ל-Claude'; }
+  else if(api.key){ el.className = 'chip good'; el.textContent = 'מחובר עם מפתח API · ' + api.model; }
+  else { el.className = 'chip amb'; el.textContent = INSIDE_CLAUDE ? 'ניתוח חי לא זמין בתצוגה הזו' : 'צריך מפתח API'; }
+}
+loadLocal();
+if(!state.sources.length) DEMO_SOURCES.forEach(s => state.sources.push({id:'demo'+Math.random().toString(36).slice(2,7), name:s.name, text:s.text, kind:'demo'}));
+api.key = ssGet('xray-key'); api.model = ssGet('xray-model') || api.model; $('api-model').value = api.model; if(api.key) $('api-key').value = api.key;
+renderSources(); renderResults(); renderEvalInfo(); setAiStatus();
+if(!INSIDE_CLAUDE){ $('keybox').hidden = false; $('tab-drive').hidden = true; }
+else (async () => {
+  const [s, m, d] = await Promise.all(['sample','mcp','downloads'].map(n => window.claude.use(n).catch(() => null)));
+  caps = { sample: s, mcp: m, downloads: d };
+  setAiStatus(); renderSources();
+})();
+</script>
+
+</body>
+</html>
