@@ -223,35 +223,104 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
   .src{grid-template-columns:auto 1fr auto}
   .src .size{display:none}
 }
+
+/* ===== v3 visual layer ===== */
+.hero{position:relative;overflow:hidden;border-radius:20px;background:#0A1520;color:#E8F1F8;padding:34px 34px 30px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:center;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 90% at 12% 20%,rgba(79,184,212,.28),transparent 60%),
+  radial-gradient(40% 60% at 90% 110%,rgba(91,77,176,.25),transparent 70%),
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/28px 28px}
+.hero .film{color:#7FD3E6}
+.hero .film i{background:repeating-linear-gradient(90deg,#7FD3E6 0 3px,transparent 3px 6px)}
+.hero h1{font-size:46px;line-height:1.05;margin-top:10px;color:#FFFFFF;letter-spacing:-.02em}
+.hero h1 span{color:#7FD3E6}
+.hero p{color:#B6C6D5;max-width:60ch;margin-top:12px;font-size:15.5px}
+.hero .trust{margin-top:16px}
+.hero .trust .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#DCE8F2}
+.hero .trust .chip::before{content:"";width:7px;height:7px;border-radius:50%;background:#5CC990}
+.readout{position:relative;border:1px solid rgba(127,211,230,.35);border-radius:16px;background:rgba(8,20,32,.72);padding:18px 18px 14px;display:grid;gap:12px;overflow:hidden;backdrop-filter:blur(4px)}
+.readout::after{content:"";position:absolute;inset:0 0 auto 0;height:40%;background:linear-gradient(180deg,rgba(127,211,230,0),rgba(127,211,230,.14),rgba(127,211,230,0));animation:scan 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes scan{0%{transform:translateY(-100%)}60%,100%{transform:translateY(260%)}}
+.readout .rh{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;letter-spacing:.06em;color:#7FD3E6}
+.readout .rh .live{display:inline-flex;align-items:center;gap:6px;color:#9FB2C3;font-weight:600;letter-spacing:0}
+.readout .rh .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#5CC990;box-shadow:0 0 0 3px rgba(92,201,144,.2)}
+.ro-main{display:grid;gap:2px}
+.ro-main b{font-family:"Rubik",sans-serif;font-size:40px;line-height:1.1;color:#FFFFFF;font-variant-numeric:tabular-nums}
+.ro-main span{font-size:13px;color:#9FB2C3}
+.ro-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ro-row div{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;display:grid;gap:2px}
+.ro-row b{font-family:"Rubik",sans-serif;font-size:19px;color:#FFFFFF;font-variant-numeric:tabular-nums}
+.ro-row span{font-size:12px;color:#9FB2C3}
+.ro-bars{display:grid;gap:5px}
+.ro-bars div{display:grid;grid-template-columns:3.4em 1fr;gap:8px;align-items:center;font-size:11.5px;color:#9FB2C3}
+.ro-bars i{display:block;height:7px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){.readout::after{animation:none;opacity:0}}
+
+.navbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;align-items:center;padding:8px;border-radius:14px;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:var(--shadow);overflow-x:auto;scrollbar-width:none}
+.navbar::-webkit-scrollbar{display:none}
+.navbar a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:700;font-size:14px;padding:7px 12px;border-radius:9px}
+.navbar a i{font-style:normal;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted)}
+.navbar a:hover{color:var(--ink)}
+.navbar a.on{background:var(--accent-soft);color:var(--accent)}
+.navbar a.on i{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.navbar .spacer{flex:1}
+.navbar .chip{flex:none}
+
+.panel{border-radius:18px;padding:22px;border-color:var(--line-2)}
+.shead{display:flex;align-items:center;gap:12px}
+.shead .ico{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.shead .ico svg{width:22px;height:22px}
+.shead .num{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);display:block;letter-spacing:.04em}
+.shead h2{font-size:20px}
+.btn{transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+.btn.primary:hover{box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 35%,transparent);transform:translateY(-1px)}
+@media (prefers-reduced-motion: reduce){.btn{transition:none}.btn.primary:hover{transform:none}}
+.kpi{border-radius:14px;position:relative}
+.kpi .ic{position:absolute;top:12px;left:12px;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--surface-2);color:var(--muted)}
+.kpi .ic svg{width:16px;height:16px}
+.scanbar{position:relative;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.scanbar::after{content:"";position:absolute;top:0;bottom:0;width:30%;border-radius:999px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:sb 1.6s ease-in-out infinite}
+@keyframes sb{from{right:-30%}to{right:100%}}
+@media (prefers-reduced-motion: reduce){.scanbar::after{animation:none;right:35%}}
+.donut{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.donut .legend{display:grid;gap:6px}
+.opp{border-radius:14px;transition:border-color .15s}
+.opp[open]{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.cat-ic{display:inline-grid;place-items:center;width:18px;height:18px}
+.cat-ic svg{width:14px;height:14px}
+@media (max-width:980px){.hero{grid-template-columns:1fr;padding:26px}.hero h1{font-size:36px}}
+@media (max-width:680px){.hero{padding:22px 18px;border-radius:16px}.hero h1{font-size:30px}.ro-main b{font-size:32px}.panel{padding:16px}}
 </style>
 
 <div class="wrap">
-  <header class="top">
-    <div class="brand">
-      <div>
-        <span class="film"><i></i>אבחון תהליכים מבוסס AI למוקדי שירות ומכירות</span>
-        <h1>רנטגן למוקד</h1>
-        <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude מזהה מה קורה בשיחות ומשרטט את התהליך בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, ותוכנית פיילוט.</p>
-      </div>
+  <header class="hero">
+    <div>
+      <span class="film"><i></i>אבחון תהליכים מבוסס AI · מוקדי שירות ומכירות</span>
+      <h1>רנטגן <span>למוקד</span></h1>
+      <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude משרטט את התהליך כפי שהוא קורה בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, ותוכנית פיילוט.</p>
       <div class="trust" aria-label="עקרונות">
-        <span class="chip good">פרטים מזהים מוסתרים לפני שליחה</span>
-        <span class="chip acc">כל ממצא עם ציטוט מאומת</span>
-        <span class="chip vio">דיוק נמדד, לא מובטח</span>
+        <span class="chip">פרטים מזהים מוסתרים לפני שליחה</span>
+        <span class="chip">כל ממצא עם ציטוט מאומת</span>
+        <span class="chip">דיוק נמדד, לא מובטח</span>
       </div>
     </div>
-    <nav class="steps" aria-label="שלבים">
-      <a href="#s-sources"><b>1 · מקורות</b><span>תמלולים, נהלים, Drive</span></a>
-      <a href="#s-run"><b>2 · ניתוח</b><span>הסתרה וניתוח</span></a>
-      <a href="#s-results" class="on"><b>3 · תוצאות</b><span>זיהוי, תהליך, הזדמנויות</span></a>
-      <a href="#s-eval"><b>4 · מבחן דיוק</b><span>כמה הכלי צודק</span></a>
-      <a href="#s-export"><b>5 · שיתוף</b><span>דוח, Drive, Gmail, n8n</span></a>
-    </nav>
+    <div class="readout" aria-live="polite" id="readout"></div>
   </header>
+  <nav class="navbar" aria-label="שלבים">
+    <a href="#s-sources"><i>1</i>מקורות</a>
+    <a href="#s-run"><i>2</i>פרטיות וניתוח</a>
+    <a href="#s-results" class="on"><i>3</i>תוצאות</a>
+    <a href="#s-eval"><i>4</i>מבחן דיוק</a>
+    <a href="#s-export"><i>5</i>שיתוף</a>
+    <span class="spacer"></span>
+    <span class="chip" id="ai-status">בודק חיבור…</span>
+  </nav>
 
   <!-- 1. SOURCES -->
   <section class="panel" id="s-sources" aria-labelledby="h-src">
     <div class="phead">
-      <div><span class="num">שלב 1</span><h2 id="h-src">מה מנתחים</h2></div>
+      <div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span><div><span class="num">שלב 1</span><h2 id="h-src">מה מנתחים</h2></div></div>
       <div class="row"><button class="btn ghost" id="load-demo">טעינת נתוני דוגמה</button><button class="btn ghost danger" id="clear-src">ניקוי מקורות</button></div>
     </div>
     <div class="profile">
@@ -323,7 +392,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 
   <!-- 2. RUN -->
   <section class="panel" id="s-run" aria-labelledby="h-run">
-    <div class="phead"><div><span class="num">שלב 2</span><h2 id="h-run">הגנה על פרטיות וניתוח</h2></div><span class="chip" id="ai-status">בודק חיבור…</span></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div><span class="num">שלב 2</span><h2 id="h-run">הגנה על פרטיות וניתוח</h2></div></div></div>
 
     <div class="shield">
       <div class="phead">
@@ -360,7 +429,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 
   <!-- 3. RESULTS -->
   <section class="panel" id="s-results" aria-labelledby="h-res">
-    <div class="phead"><div><span class="num">שלב 3</span><h2 id="h-res">תוצאות</h2></div><span class="chip" id="res-when"></span></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><span class="num">שלב 3</span><h2 id="h-res">תוצאות</h2></div></div><span class="chip" id="res-when"></span></div>
     <div class="banner" id="demo-banner"><span><b>ניתוח לדוגמה.</b> תוצאה על נתוני דמו של מוקד תמיכה לספק אינטרנט. הריצו ניתוח על המקורות שלכם כדי לקבל תוצאה אמיתית.</span></div>
     <div class="rtabs" role="tablist" aria-label="תוצאות">
       <button role="tab" data-r="sum" aria-selected="true">תמונת מצב</button>
@@ -392,7 +461,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 
   <!-- 4. EVAL -->
   <section class="panel" id="s-eval" aria-labelledby="h-eval">
-    <div class="phead"><div><span class="num">שלב 4</span><h2 id="h-eval">מבחן דיוק</h2></div><span class="chip" id="eval-size"></span></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span><div><span class="num">שלב 4</span><h2 id="h-eval">מבחן דיוק</h2></div></div><span class="chip" id="eval-size"></span></div>
     <p>לפני שסומכים על הכלי, בודקים אותו: הכלי מסווג שיחות שכבר ידוע מה הסיווג הנכון שלהן, ומודד כמה פעמים צדק. יש מאגר מובנה של שיחות דמו מתויגות, ואפשר להעלות מאגר משלכם.</p>
     <div class="row">
       <button class="btn primary" id="eval-run">הרצת מבחן</button>
@@ -406,7 +475,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 
   <!-- 5. EXPORT -->
   <section class="panel" id="s-export" aria-labelledby="h-exp">
-    <div class="phead"><div><span class="num">שלב 5</span><h2 id="h-exp">שיתוף והמשך עבודה</h2></div></div>
+    <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><div><span class="num">שלב 5</span><h2 id="h-exp">שיתוף והמשך עבודה</h2></div></div></div>
     <div class="exp">
       <div class="card">
         <h3>דוח מנהלים, עמוד אחד</h3>
@@ -805,7 +874,7 @@ $('run').onclick = async () => {
   const prep = preparedSources();
   runCtl = new AbortController(); const t0 = Date.now();
   $('run').disabled = true; $('stop').hidden = false;
-  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${prep.on ? 'פרטים מזהים הוסתרו. ' : ''}Claude קורא את המקורות…</b><span class="mono small muted" id="run-el">0 שנ׳</span></div><div class="stream" id="run-stream"></div>`;
+  $('run-state').innerHTML = `<div class="row"><span class="pulse"></span><b id="run-phase">${prep.on ? 'פרטים מזהים הוסתרו. ' : ''}Claude קורא את המקורות…</b><span class="mono small muted" id="run-el">0 שנ׳</span></div><div class="scanbar" aria-hidden="true"></div><div class="stream" id="run-stream"></div>`;
   runTimer = setInterval(() => { const el = $('run-el'); if(el) el.textContent = Math.round((Date.now()-t0)/1000) + ' שנ׳'; }, 1000);
   try{
     const a = await llm.json(analysisPrompt(prep), { tier:'complex', signal: runCtl.signal,
@@ -850,8 +919,15 @@ function evidenceHtml(evs){
 /* ================= results ================= */
 document.querySelectorAll('.rtabs button').forEach(b => b.onclick = () => showR(b.dataset.r));
 function showR(r){ document.querySelectorAll('.rtabs button').forEach(x => x.setAttribute('aria-selected', x.dataset.r === r)); document.querySelectorAll('[data-rp]').forEach(p => p.hidden = p.dataset.rp !== r); }
+function renderReadout(a){
+  const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps), mx = Math.max(b, af, 1);
+  $('readout').innerHTML = `<div class="rh"><span>קריאה מהניתוח</span><span class="live">${state.isDemo ? 'נתוני דוגמה' : 'ניתוח אחרון'}</span></div>
+    <div class="ro-main"><b class="mono">${ils(t.ils)}</b><span>חיסכון אפשרי בחודש · ${nf.format(Math.round(t.hrs))} שעות נציג</span></div>
+    ${af ? `<div class="ro-bars"><div><span>היום</span><i style="width:100%;background:#F0A73A"></i></div><div><span>אחרי</span><i style="width:${Math.round(af/mx*100)}%;background:#5CC990"></i></div></div>` : ''}
+    <div class="ro-row"><div><b>${af ? fmtSec(b)+' ← '+fmtSec(af) : fmtSec(b)}</b><span>זמן בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
+}
 function renderResults(){
-  const a = state.analysis;
+  const a = state.analysis; renderReadout(a);
   $('demo-banner').hidden = !state.isDemo;
   $('res-when').textContent = state.isDemo ? 'נתוני דוגמה' : ('נותח ' + new Date(state.when).toLocaleString('he-IL', {dateStyle:'short', timeStyle:'short'}));
   renderSum(a); renderDet(a); renderProc(a); renderOpp(a); renderPilot(a); renderChatSugg();
@@ -863,10 +939,10 @@ function renderSum(a){
   $('r-sum').innerHTML = `<div style="display:grid;gap:16px">
     <p class="lead">${esc(a.summary)}</p>
     <div class="kpis">
-      <div class="kpi"><span class="label">חיסכון אפשרי בחודש</span><span class="n good mono">${ils(t.ils)}</span><span class="d">${nf.format(Math.round(t.hrs))} שעות נציג · ${t.fte.toFixed(1)} משרות</span></div>
-      <div class="kpi"><span class="label">זמן בתהליך המרכזי</span><span class="n mono">${af ? fmtSec(b) + ' ← ' + fmtSec(af) : fmtSec(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
-      <div class="kpi"><span class="label">הזדמנויות שזוהו</span><span class="n mono">${a.opportunities.length}</span><span class="d">${a.opportunities.filter(o=>o.effort<=2&&o.impact>=4).length} מהן ניצחונות מהירים</span></div>
-      <div class="kpi"><span class="label">ציטוטים שאומתו במקור</span><span class="n mono ${v.total && v.ok===v.total?'good':''}">${v.ok}/${v.total}</span><span class="d">כל ממצא נבדק מול הטקסט</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="label">חיסכון אפשרי בחודש</span><span class="n good mono">${ils(t.ils)}</span><span class="d">${nf.format(Math.round(t.hrs))} שעות נציג · ${t.fte.toFixed(1)} משרות</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><span class="label">זמן בתהליך המרכזי</span><span class="n mono">${af ? fmtSec(b) + ' ← ' + fmtSec(af) : fmtSec(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="label">הזדמנויות שזוהו</span><span class="n mono">${a.opportunities.length}</span><span class="d">${a.opportunities.filter(o=>o.effort<=2&&o.impact>=4).length} מהן ניצחונות מהירים</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span><span class="label">ציטוטים שאומתו במקור</span><span class="n mono ${v.total && v.ok===v.total?'good':''}">${v.ok}/${v.total}</span><span class="d">כל ממצא נבדק מול הטקסט</span></div>
     </div>
     <div style="display:grid;gap:10px"><h3>שלוש ההזדמנויות המובילות</h3>
       <div class="top3">${ranked.map((o,i) => { const r = roi(o); return `<div class="card"><span class="rank">${i+1} · ${esc(o.category||'')}</span><b>${esc(o.title)}</b><p class="small muted">${esc(o.description)}</p><span class="mono" style="color:var(--good);font-weight:700">${r.ils ? ils(r.ils)+' בחודש' : esc(o.roi_note || 'חיסכון מחוץ לזמן השיחה')}</span></div>`; }).join('')}</div>
@@ -874,6 +950,13 @@ function renderSum(a){
     ${a.data_gaps.length ? `<div class="msg warn"><b>מה חסר כדי לדייק:</b> ${a.data_gaps.map(esc).join(' · ')}</div>` : ''}
     <p class="note">החישוב: שיחות בחודש × אחוז השיחות שההזדמנות נוגעת בהן × שניות שנחסכות × עלות שעה. שינוי המספרים בשלב 1 מעדכן אותו מיד. חלק מההזדמנויות חופפות, ולכן הסכום הוא גבול עליון.</p>
   </div>`;
+}
+function donut(s){
+  const parts = [[+s.positive_pct||0,'var(--good)','חיובי'],[+s.neutral_pct||0,'var(--line)','ניטרלי'],[+s.negative_pct||0,'var(--crit)','שלילי']];
+  const tot = parts.reduce((n,p)=>n+p[0],0) || 1, R = 38, C = 2*Math.PI*R; let off = 0;
+  const arcs = parts.map(p => { const len = p[0]/tot*C; const el = `<circle cx="50" cy="50" r="${R}" fill="none" stroke="${p[1]}" stroke-width="16" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 50 50)"/>`; off += len; return el; }).join('');
+  return `<div class="donut"><svg width="104" height="104" viewBox="0 0 100 100" role="img" aria-label="שלילי ${parts[2][0]} אחוז">${arcs}<text x="50" y="48" text-anchor="middle" font-size="17" font-weight="700" font-family="Rubik,sans-serif" fill="var(--crit)">${parts[2][0]}%</text><text x="50" y="63" text-anchor="middle" font-size="9.5" fill="var(--muted)">שלילי</text></svg>
+    <div class="legend">${parts.map(p => `<span style="--c:${p[1]}">${p[2]} ${p[0]}%</span>`).join('')}</div></div>`;
 }
 function renderDet(a){
   const maxS = Math.max(1, ...a.intents.map(i => +i.share_pct||0)), s = a.sentiment;
@@ -886,8 +969,7 @@ function renderDet(a){
         ${a.intents.filter(i=>i.note).map(i => `<div class="small"><b>${esc(i.name)}:</b> <span class="muted">${esc(i.note)}</span></div>`).join('')}
       </div>
       <div style="display:grid;gap:8px"><h3>מצב רוח הלקוחות</h3>
-        <div class="stack"><i style="width:${+s.positive_pct||0}%;background:var(--good)"></i><i style="width:${+s.neutral_pct||0}%;background:var(--line)"></i><i style="width:${+s.negative_pct||0}%;background:var(--crit)"></i></div>
-        <div class="legend"><span style="--c:var(--good)">חיובי ${esc(s.positive_pct??'–')}%</span><span style="--c:var(--line)">ניטרלי ${esc(s.neutral_pct??'–')}%</span><span style="--c:var(--crit)">שלילי ${esc(s.negative_pct??'–')}%</span></div>
+        ${donut(s)}
         <h3 style="margin-top:10px">שאלות שחוזרות על עצמן</h3>
         <ul class="list">${a.repeated_questions.map(q => `<li><span class="chip ${q.has_procedure?'good':'amb'}">${q.has_procedure?'יש נוהל':'אין נוהל'}</span><span>"${esc(q.q)}"</span><span class="mono small muted">${esc(q.count)} פעמים</span></li>`).join('')}</ul>
         <p class="note">שאלה שחוזרת ויש לה נוהל מתאימה לעוזר ידע או לבוט. שאלה בלי נוהל היא נוהל שצריך לכתוב.</p>
@@ -1185,8 +1267,8 @@ $('to-gmail').onclick = async () => {
 
 /* ================= nav & boot ================= */
 const secIds = ['s-sources','s-run','s-results','s-eval','s-export'];
-if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.steps a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
-['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
+if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.navbar a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
+['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
   const el = $('ai-status');
   if(caps.sample){ el.className = 'chip good'; el.textContent = 'מחובר ל-Claude'; }
