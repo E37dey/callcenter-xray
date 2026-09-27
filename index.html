@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="רנטגן למוקד: אבחון תהליכים ואיתור אוטומציות במוקדי שירות בעזרת Claude">
-<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<style>[hidden]{display:none!important}html,body{margin:0;height:100%}img{max-width:100%}</style>
 </head>
 <body>
 <title>רנטגן למוקד</title>
@@ -92,7 +92,7 @@ textarea{min-height:130px;resize:vertical;line-height:1.5}
 .msg.err{background:var(--crit-soft);border-color:transparent}
 .msg.ok{background:var(--good-soft);border-color:transparent}
 
-.profile{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:10px}
+.profile{display:grid;grid-template-columns:1.9fr repeat(4,1fr);gap:10px}
 .src-tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
 .src-tabs button{border:0;background:none;padding:8px 12px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .src-tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
@@ -233,7 +233,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/28px 28px}
 .hero .film{color:#7FD3E6}
 .hero .film i{background:repeating-linear-gradient(90deg,#7FD3E6 0 3px,transparent 3px 6px)}
-.hero h1{font-size:46px;line-height:1.05;margin-top:10px;color:#FFFFFF;letter-spacing:-.02em}
+.hero h1{font-size:40px;line-height:1.05;margin-top:10px;color:#FFFFFF;letter-spacing:-.02em}
 .hero h1 span{color:#7FD3E6}
 .hero p{color:#B6C6D5;max-width:60ch;margin-top:12px;font-size:15.5px}
 .hero .trust{margin-top:16px}
@@ -291,13 +291,74 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
 .cat-ic svg{width:14px;height:14px}
 @media (max-width:980px){.hero{grid-template-columns:1fr;padding:26px}.hero h1{font-size:36px}}
 @media (max-width:680px){.hero{padding:22px 18px;border-radius:16px}.hero h1{font-size:30px}.ro-main b{font-size:32px}.panel{padding:16px}}
+
+/* ===== v4 app shell ===== */
+body{font-size:15.5px;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:262px minmax(0,1fr);min-height:100%}
+.side{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:18px;padding:22px 16px calc(18px + env(safe-area-inset-bottom,0px));background:var(--surface);border-inline-start:1px solid var(--line-2);border-inline-end:1px solid var(--line-2);overflow-y:auto}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);padding:0 6px}
+.logo .mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#0B6E8A,#0A1520);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.logo b{font-family:"Rubik",sans-serif;font-size:18px;display:block;line-height:1.1}
+.logo small{font-size:11.5px;color:var(--muted);display:block}
+.side .navlabel{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);padding:0 10px}
+.side nav{display:grid;gap:2px}
+.side nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:700;font-size:14.5px;position:relative}
+.side nav a svg{width:19px;height:19px;flex:none}
+.side nav a .n{margin-inline-start:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;opacity:.7}
+.side nav a:hover{background:var(--surface-2);color:var(--ink)}
+.side nav a.on{background:var(--accent-soft);color:var(--accent)}
+.side .card{margin-top:auto;border:1px solid var(--line-2);border-radius:12px;padding:12px;display:grid;gap:8px;background:var(--surface-2);font-size:12.5px;color:var(--muted)}
+.side .card b{color:var(--ink);font-size:13px}
+.side .card .chip{justify-self:start}
+.main{min-width:0}
+.main .wrap{max-width:1120px;padding-inline:28px;padding-block:24px 64px}
+.rtabs button{display:inline-flex;align-items:center;gap:7px}
+.rtabs button svg{width:16px;height:16px;opacity:.85}
+.toasts{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:20px;z-index:50;display:grid;gap:8px;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:10px;min-width:220px;max-width:360px;padding:11px 14px;border-radius:12px;background:#0F1B28;color:#E8F1F8;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:tin .25s ease-out}
+.toast i{width:8px;height:8px;border-radius:50%;background:#5CC990;flex:none}
+.toast.err i{background:#FF7C6D}
+@keyframes tin{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.toast{animation:none}}
+.opp .roi{height:5px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:6px;width:120px}
+.opp .roi i{display:block;height:100%;background:var(--good);border-radius:999px}
+.panel{box-shadow:0 1px 2px rgba(18,32,51,.04),0 10px 30px -12px rgba(18,32,51,.10)}
+.panel > .phead{padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+.kpi{background:linear-gradient(180deg,var(--surface),var(--surface-2))}
+@media (max-width:980px){
+  .app{grid-template-columns:1fr}
+  .side{position:sticky;top:0;z-index:30;height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border:0;border-bottom:1px solid var(--line-2);overflow-x:auto;scrollbar-width:none;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px)}
+  .side::-webkit-scrollbar{display:none}
+  .side .navlabel,.side .card,.logo small{display:none}
+  .side nav{display:flex;gap:4px}
+  .side nav a{white-space:nowrap;padding:7px 10px;font-size:13.5px}
+  .side nav a .n{display:none}
+  .logo .mark{width:32px;height:32px}
+  .logo b{font-size:15px;white-space:nowrap}
+  .main .wrap{padding-inline:16px}
+  .toasts{left:12px;right:12px}
+}
 </style>
 
+<div class="app">
+<aside class="side" aria-label="ניווט">
+  <a class="logo" href="#top"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>Call Center X-Ray</small></span></a>
+  <span class="navlabel">תהליך העבודה</span>
+  <nav aria-label="שלבים">
+    <a href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>מקורות<span class="n">01</span></a>
+    <a href="#s-run"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>פרטיות וניתוח<span class="n">02</span></a>
+    <a href="#s-results" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>תוצאות<span class="n">03</span></a>
+    <a href="#s-eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>מבחן דיוק<span class="n">04</span></a>
+    <a href="#s-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>שיתוף<span class="n">05</span></a>
+  </nav>
+  <div class="card"><b>מצב המערכת</b><span class="chip" id="ai-status">בודק חיבור…</span><span>פרטים מזהים מוסתרים בדפדפן לפני כל שליחה.</span></div>
+</aside>
+<main class="main" id="top">
 <div class="wrap">
   <header class="hero">
     <div>
       <span class="film"><i></i>אבחון תהליכים מבוסס AI · מוקדי שירות ומכירות</span>
-      <h1>רנטגן <span>למוקד</span></h1>
+      <h1>מה באמת קורה בשיחות,<br><span>ואיפה AI יחסוך הכי הרבה</span></h1>
       <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude משרטט את התהליך כפי שהוא קורה בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, ותוכנית פיילוט.</p>
       <div class="trust" aria-label="עקרונות">
         <span class="chip">פרטים מזהים מוסתרים לפני שליחה</span>
@@ -307,15 +368,7 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
     </div>
     <div class="readout" aria-live="polite" id="readout"></div>
   </header>
-  <nav class="navbar" aria-label="שלבים">
-    <a href="#s-sources"><i>1</i>מקורות</a>
-    <a href="#s-run"><i>2</i>פרטיות וניתוח</a>
-    <a href="#s-results" class="on"><i>3</i>תוצאות</a>
-    <a href="#s-eval"><i>4</i>מבחן דיוק</a>
-    <a href="#s-export"><i>5</i>שיתוף</a>
-    <span class="spacer"></span>
-    <span class="chip" id="ai-status">בודק חיבור…</span>
-  </nav>
+
 
   <!-- 1. SOURCES -->
   <section class="panel" id="s-sources" aria-labelledby="h-src">
@@ -432,12 +485,12 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
     <div class="phead"><div class="shead"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><span class="num">שלב 3</span><h2 id="h-res">תוצאות</h2></div></div><span class="chip" id="res-when"></span></div>
     <div class="banner" id="demo-banner"><span><b>ניתוח לדוגמה.</b> תוצאה על נתוני דמו של מוקד תמיכה לספק אינטרנט. הריצו ניתוח על המקורות שלכם כדי לקבל תוצאה אמיתית.</span></div>
     <div class="rtabs" role="tablist" aria-label="תוצאות">
-      <button role="tab" data-r="sum" aria-selected="true">תמונת מצב</button>
-      <button role="tab" data-r="det" aria-selected="false">זיהוי</button>
-      <button role="tab" data-r="proc" aria-selected="false">מפת תהליך</button>
-      <button role="tab" data-r="opp" aria-selected="false">הזדמנויות</button>
-      <button role="tab" data-r="pilot" aria-selected="false">פיילוט</button>
-      <button role="tab" data-r="chat" aria-selected="false">שאלו את האנליסט</button>
+      <button role="tab" data-r="sum" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>תמונת מצב</button>
+      <button role="tab" data-r="det" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>זיהוי</button>
+      <button role="tab" data-r="proc" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="15" width="6" height="5" rx="1.5"/><path d="M6 9v4a2 2 0 0 0 2 2h7"/></svg>מפת תהליך</button>
+      <button role="tab" data-r="opp" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>הזדמנויות</button>
+      <button role="tab" data-r="pilot" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>פיילוט</button>
+      <button role="tab" data-r="chat" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>שאלו את האנליסט</button>
     </div>
     <div data-rp="sum" id="r-sum"></div>
     <div data-rp="det" id="r-det" hidden></div>
@@ -510,6 +563,9 @@ footer{font-size:12.5px;color:var(--muted);text-align:center;display:grid;gap:4p
     <span>נתוני הדוגמה בדויים. המספרים הם הערכות מתוך המקורות שנותחו, לא התחייבות.</span>
   </footer>
 </div>
+</main>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script>
 /* ================= demo data (fictional) ================= */
@@ -620,6 +676,7 @@ const EVAL_BUILTIN = [
 ];
 
 /* ================= helpers & state ================= */
+function toast(msg, kind){ const box = document.getElementById('toasts'); if(!box || !msg) return; const t = document.createElement('div'); t.className = 'toast' + (kind === 'err' ? ' err' : ''); t.innerHTML = '<i></i><span></span>'; t.lastChild.textContent = msg; box.append(t); setTimeout(() => t.remove(), 3800); }
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nf = new Intl.NumberFormat('he-IL');
@@ -695,6 +752,7 @@ function roi(o){ const p = profile(), calls = p.calls * (+o.affected_calls_pct |
 function totals(a){ let hrs = 0, ils = 0; (a.opportunities||[]).forEach(o => { const r = roi(o); hrs += r.hrs; ils += r.ils; }); const p = profile(), totalHrs = p.calls * p.aht / 60; return { hrs, ils, share: totalHrs ? hrs / totalHrs : 0, fte: hrs / 182 }; }
 const ils = v => '₪' + nf.format(Math.round(v));
 function fmtSec(s){ s = Math.round(+s||0); if(!s) return '–'; const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')} דק׳` : `${r} שנ׳`; }
+const clock = s => { s = Math.round(+s||0); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
 const sumSec = steps => (steps||[]).reduce((n,s) => n + (+s.duration_sec||0), 0);
 
 /* ================= sources ================= */
@@ -881,7 +939,7 @@ $('run').onclick = async () => {
       onText: ({text}) => { const ph = $('run-phase'); if(ph) ph.textContent = `כותב את האבחון… ${nf.format(text.length)} תווים`; const s = $('run-stream'); if(s) s.textContent = text.slice(-400); } });
     state.analysis = validate(a); state.sent = prep.list; state.isDemo = false; state.when = new Date().toISOString(); state.chat = [];
     saveLocal(); renderResults();
-    const v = verifyAll(state.analysis);
+    const v = verifyAll(state.analysis); toast('הניתוח הושלם');
     $('run-state').innerHTML = `<div class="msg ok">הניתוח הושלם ב-${Math.round((Date.now()-t0)/1000)} שניות. ${v.total ? `${v.ok} מתוך ${v.total} ציטוטים נמצאו במקור מילה במילה.` : ''}</div>`;
     $('s-results').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
   }catch(e){
@@ -924,7 +982,7 @@ function renderReadout(a){
   $('readout').innerHTML = `<div class="rh"><span>קריאה מהניתוח</span><span class="live">${state.isDemo ? 'נתוני דוגמה' : 'ניתוח אחרון'}</span></div>
     <div class="ro-main"><b class="mono">${ils(t.ils)}</b><span>חיסכון אפשרי בחודש · ${nf.format(Math.round(t.hrs))} שעות נציג</span></div>
     ${af ? `<div class="ro-bars"><div><span>היום</span><i style="width:100%;background:#F0A73A"></i></div><div><span>אחרי</span><i style="width:${Math.round(af/mx*100)}%;background:#5CC990"></i></div></div>` : ''}
-    <div class="ro-row"><div><b>${af ? fmtSec(b)+' ← '+fmtSec(af) : fmtSec(b)}</b><span>זמן בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
+    <div class="ro-row"><div><b class="mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span>דקות בתהליך המרכזי</span></div><div><b>${v.ok}/${v.total}</b><span>ציטוטים שאומתו במקור</span></div></div>`;
 }
 function renderResults(){
   const a = state.analysis; renderReadout(a);
@@ -940,7 +998,7 @@ function renderSum(a){
     <p class="lead">${esc(a.summary)}</p>
     <div class="kpis">
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/></svg></span><span class="label">חיסכון אפשרי בחודש</span><span class="n good mono">${ils(t.ils)}</span><span class="d">${nf.format(Math.round(t.hrs))} שעות נציג · ${t.fte.toFixed(1)} משרות</span></div>
-      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><span class="label">זמן בתהליך המרכזי</span><span class="n mono">${af ? fmtSec(b) + ' ← ' + fmtSec(af) : fmtSec(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
+      <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><span class="label">דקות בתהליך המרכזי</span><span class="n mono">${af ? clock(b) + ' ← ' + clock(af) : clock(b)}</span><span class="d">${af && b ? `${Math.round((1-af/b)*100)}% פחות אחרי האוטומציות` : 'לפני האוטומציות'}</span></div>
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="label">הזדמנויות שזוהו</span><span class="n mono">${a.opportunities.length}</span><span class="d">${a.opportunities.filter(o=>o.effort<=2&&o.impact>=4).length} מהן ניצחונות מהירים</span></div>
       <div class="kpi"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span><span class="label">ציטוטים שאומתו במקור</span><span class="n mono ${v.total && v.ok===v.total?'good':''}">${v.ok}/${v.total}</span><span class="d">כל ממצא נבדק מול הטקסט</span></div>
     </div>
@@ -991,6 +1049,7 @@ function laneSvg(steps, oppByStep, label){
   const W = labelW + steps.length * colW + 20, H = top + actors.length * laneH + 40;
   const X = i => W - labelW - (i + 0.5) * colW, Y = act => top + actors.indexOf(act || 'נציג') * laneH + laneH/2;
   const col = { manual:'var(--amber)', system:'var(--accent)', wait:'var(--muted)', decision:'var(--violet)' };
+  const fillc = { manual:'var(--amber-soft)', system:'var(--accent-soft)', wait:'var(--surface)', decision:'var(--violet-soft)' };
   let g = '';
   actors.forEach((act, k) => { const y = top + k*laneH;
     g += `<rect x="0" y="${y}" width="${W}" height="${laneH}" fill="${k%2?'var(--surface-2)':'var(--surface)'}"/><text x="${W-12}" y="${y+laneH/2+5}" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)">${esc(act)}</text><line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line)"/>`; });
@@ -998,7 +1057,7 @@ function laneSvg(steps, oppByStep, label){
   for(let i=1;i<steps.length;i++){ const x1 = X(i-1)-bw/2, y1 = Y(steps[i-1].actor), x2 = X(i)+bw/2, y2 = Y(steps[i].actor), mx = (x1+x2)/2;
     g += `<path d="M${x1} ${y1} H${mx} V${y2} H${x2+2}" fill="none" stroke="var(--muted)" stroke-width="1.25" marker-end="url(#ar)"/>`; }
   steps.forEach((s,i) => { const x = X(i), y = Y(s.actor), c = col[s.type] || 'var(--muted)', lines = wrapText(s.title, 15);
-    g += `<rect x="${x-bw/2}" y="${y-bh/2}" width="${bw}" height="${bh}" rx="${s.type==='decision'?20:9}" fill="var(--surface)" stroke="${c}" stroke-width="${s.pain?2:1.25}" ${s.type==='wait'?'stroke-dasharray="5 4"':''}/>`;
+    g += `<rect x="${x-bw/2}" y="${y-bh/2}" width="${bw}" height="${bh}" rx="${s.type==='decision'?20:10}" fill="${fillc[s.type]||'var(--surface)'}" stroke="${c}" stroke-width="${s.pain?2:1.25}" ${s.type==='wait'?'stroke-dasharray="5 4"':''}/>`;
     lines.forEach((l,j) => g += `<text x="${x}" y="${y - (lines.length-1)*8 + j*16 + 4}" text-anchor="middle" font-size="12.5" fill="var(--ink)">${esc(l)}</text>`);
     if(+s.duration_sec) g += `<text x="${x}" y="${y+bh/2+14}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">${fmtSec(s.duration_sec)}</text>`;
     if(s.pain) g += `<circle cx="${x+bw/2-6}" cy="${y-bh/2+6}" r="9" fill="var(--crit)"/><text x="${x+bw/2-6}" y="${y-bh/2+10}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">!</text>`;
@@ -1047,7 +1106,7 @@ function matrix(a){
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px;display:block;margin-inline:auto" role="img" aria-label="מטריצת השפעה מול מאמץ" direction="ltr">${g}</svg>`;
 }
 function renderOpp(a){
-  const list = a.opportunities.map((o,i) => ({o, i, r: roi(o)}));
+  const list = a.opportunities.map((o,i) => ({o, i, r: roi(o)})), maxIls = Math.max(1, ...list.map(x => x.r.ils));
   const sorted = [...list].sort((x,y) => sortBy==='money' ? y.r.ils - x.r.ils : sortBy==='quick' ? (y.o.impact - y.o.effort) - (x.o.impact - x.o.effort) : x.i - y.i);
   $('r-opp').innerHTML = `<div style="display:grid;gap:16px">
     <div class="grid2" style="align-items:center">
@@ -1060,7 +1119,7 @@ function renderOpp(a){
     </div>
     <div class="opps">${sorted.map(({o,i,r}) => `<details class="opp"${i===0?' open':''}>
       <summary><span class="idx">${i+1}</span><span style="display:grid;gap:4px"><b>${esc(o.title)}</b><span class="row small"><span class="chip ${CAT[o.category]||''}">${esc(o.category||'')}</span><span class="muted">השפעה ${dots(o.impact)}</span><span class="muted">מאמץ ${dots(o.effort)}</span><span class="muted">ודאות ${esc(o.confidence||'–')}</span></span></span>
-      <span class="money">${r.ils ? ils(r.ils) : '—'}<small>${r.ils ? nf.format(Math.round(r.hrs)) + ' שעות בחודש' : 'מחוץ לזמן שיחה'}</small></span></summary>
+      <span class="money">${r.ils ? ils(r.ils) : '—'}<small>${r.ils ? nf.format(Math.round(r.hrs)) + ' שעות בחודש' : 'מחוץ לזמן שיחה'}</small><span class="roi" aria-hidden="true"><i style="width:${Math.round(r.ils/maxIls*100)}%"></i></span></span></summary>
       <div class="body">
         <p>${esc(o.description)}</p>
         <div class="grid2" style="align-items:start">
@@ -1225,15 +1284,15 @@ ${a.pilot ? `<h2>פיילוט מוצע: ${esc(a.pilot.title)}</h2>${arr(a.pilot.
 }
 async function save(filename, data, el, mime){
   if(caps.downloads){
-    try{ await caps.downloads.save({filename, data}); el.textContent = 'נשמר.'; }
+    try{ await caps.downloads.save({filename, data}); el.textContent = 'נשמר.'; toast('הקובץ נשמר'); }
     catch(e){ el.textContent = e.code === 'declined' ? 'ההורדה בוטלה.' : e.code === 'rate_limited' ? 'חלון הורדה כבר פתוח.' : 'ההורדה לא זמינה כאן.'; }
     return;
   }
   if(INSIDE_CLAUDE){ el.textContent = 'ההורדה לא זמינה בתצוגה הזו.'; return; }
-  try{ const u = URL.createObjectURL(new Blob([data], {type: (mime || 'text/plain') + ';charset=utf-8'})); const l = document.createElement('a'); l.href = u; l.download = filename; document.body.append(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 2000); el.textContent = 'הקובץ ירד.'; }
+  try{ const u = URL.createObjectURL(new Blob([data], {type: (mime || 'text/plain') + ';charset=utf-8'})); const l = document.createElement('a'); l.href = u; l.download = filename; document.body.append(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 2000); el.textContent = 'הקובץ ירד.'; toast('הקובץ ירד'); }
   catch(e){ el.textContent = 'ההורדה לא זמינה כאן.'; }
 }
-function copy(text, el){ try{ navigator.clipboard.writeText(text).then(() => el.textContent = 'הועתק.', () => el.textContent = 'לא ניתן להעתיק כאן.'); }catch(e){ el.textContent = 'לא ניתן להעתיק כאן.'; } }
+function copy(text, el){ try{ navigator.clipboard.writeText(text).then(() => { el.textContent = 'הועתק.'; toast('הועתק ללוח'); }, () => el.textContent = 'לא ניתן להעתיק כאן.'); }catch(e){ el.textContent = 'לא ניתן להעתיק כאן.'; } }
 const stamp = () => new Date().toISOString().slice(0,10);
 $('dl-exec').onclick = () => save(`דוח-מנהלים-${stamp()}.html`, execReport(), $('exec-status'), 'text/html');
 $('dl-md').onclick = () => save(`רנטגן-למוקד-${stamp()}.md`, mdReport(), $('dl-status'), 'text/markdown');
@@ -1245,7 +1304,7 @@ $('to-drive').onclick = async () => {
   try{
     const res = await caps.mcp.callTool('Google Drive','create_file',{title:`רנטגן למוקד · ${stamp()}`, textContent: mdReport(), contentMimeType:'text/markdown'});
     const f = res.payload || {}; const url = f.viewUrl || f.webViewLink || '';
-    st.innerHTML = url ? `נשמר. <a href="${esc(url)}" target="_blank" rel="noopener">פתיחת המסמך</a>` : 'נשמר ב-Drive.';
+    toast('הדוח נשמר ב-Google Drive'); st.innerHTML = url ? `נשמר. <a href="${esc(url)}" target="_blank" rel="noopener">פתיחת המסמך</a>` : 'נשמר ב-Drive.';
   }catch(e){ st.textContent = mcpMessage(e, 'Google Drive'); }
   finally{ b.disabled = false; }
 };
@@ -1260,14 +1319,14 @@ $('to-gmail').onclick = async () => {
   try{
     const input = {subject:'אבחון תהליכים ואוטומציה במוקד', htmlBody: html, body: text}; if(to) input.to = [to];
     const res = await caps.mcp.callTool('Gmail','create_draft', input);
-    const d = res.payload || {}; st.innerHTML = d.viewUrl ? `הטיוטה מוכנה. <a href="${esc(d.viewUrl)}" target="_blank" rel="noopener">פתיחה ב-Gmail</a>` : 'הטיוטה מוכנה ב-Gmail.';
+    toast('טיוטת המייל מוכנה ב-Gmail'); const d = res.payload || {}; st.innerHTML = d.viewUrl ? `הטיוטה מוכנה. <a href="${esc(d.viewUrl)}" target="_blank" rel="noopener">פתיחה ב-Gmail</a>` : 'הטיוטה מוכנה ב-Gmail.';
   }catch(e){ st.textContent = mcpMessage(e, 'Gmail'); }
   finally{ b.disabled = false; }
 };
 
 /* ================= nav & boot ================= */
 const secIds = ['s-sources','s-run','s-results','s-eval','s-export'];
-if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.navbar a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
+if('IntersectionObserver' in window){ const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ const k = secIds.indexOf(en.target.id); document.querySelectorAll('.side nav a').forEach((a,i) => a.classList.toggle('on', i===k)); } }), {rootMargin:'-40% 0px -55% 0px'}); secIds.forEach(id => io.observe($(id))); }
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
 function setAiStatus(){
   const el = $('ai-status');
