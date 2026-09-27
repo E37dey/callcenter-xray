@@ -69,7 +69,7 @@ test.describe('demo state', () => {
     expect(counts.total).toBeGreaterThan(20);
     expect(counts.ok).toBe(counts.total);
     await page.click('[data-r="opp"]');
-    await expect(page.locator('.opp[open] .evq').first()).toContainText('נמצא במקור');
+    await expect(page.locator('.opp[open] .evq').first()).toContainText('מאומת 100%');
   });
 
   test('process map switches between today and after', async ({ page }) => {
@@ -139,7 +139,7 @@ test.describe('live analysis with a mocked Claude', () => {
     // 2 of 3 quotes exist in the demo sources; the invented one must be flagged
     await expect(page.locator('#r-sum .kpi').nth(3)).toContainText('2/3');
     await page.click('[data-r="opp"]');
-    await expect(page.locator('.opp[open] .evq').first()).toContainText('לא נמצא מילה במילה');
+    await expect(page.locator('.opp[open] .evq').first()).toContainText('לא נמצא במקור');
     // what left the browser was redacted
     const sent = JSON.stringify(bodies[0]);
     expect(sent).not.toContain('039337423');
@@ -225,7 +225,7 @@ test.describe('screens', () => {
     await expect(page.locator('#ov-map svg')).toHaveCount(1);
     await expect(page.locator('#ov-roi svg')).toHaveCount(1);
     await expect(page.locator('#ov-gov')).toContainText('22');
-    await expect(page.locator('#ov-next li')).toHaveCount(6);
+    await expect(page.locator('#ov-next li')).toHaveCount(10);
   });
 
   test('sidebar lists every step and switches screens', async ({ page }) => {
@@ -259,7 +259,7 @@ test.describe('screens', () => {
 
   test('overview has the header, both tracks and the BI cards', async ({ page }) => {
     await open(page, { screens: true });
-    await expect(page.locator('.hero h1')).toContainText('מה באמת קורה בשיחות');
+    await expect(page.locator('.hero h1')).toContainText('זיהינו');
     await expect(page.locator('.hero .track')).toHaveCount(3);
     await expect(page.locator('#ov-int svg circle')).toHaveCount(5); // five call reasons in the demo
     await expect(page.locator('#ov-int')).toContainText('סנטימנט');
@@ -577,3 +577,94 @@ test.describe('smart agents', () => {
     await expect(page.locator('#ag-undo')).toBeVisible();
   });
 });
+
+test.describe('overview story', () => {
+  test('headline tells the story from the analysis', async ({ page }) => {
+    await open(page, { screens: true });
+    const h = page.locator('#ov-h1');
+    await expect(h).toContainText('42');
+    await expect(h).toContainText('זיהינו 7 הזדמנויות');
+    await expect(h).toContainText('התחילו ב');
+    await expect(h).toContainText('חיסכון סביר');
+    await expect(page.locator('#ov-start')).toContainText('התחילו כאן');
+    await expect(page.locator('#ov-opps .badge')).toHaveCount(2);
+  });
+
+  test('every KPI shows its source, scenario and time', async ({ page }) => {
+    await open(page, { screens: true });
+    const src = page.locator('#readout .kc-src');
+    await expect(src).toHaveCount(4);
+    await expect(src.nth(0)).toContainText('פרופיל המוקד');
+    await expect(src.nth(0)).toContainText('נתוני דוגמה');
+    await expect(page.locator('#readout .kc').nth(0)).toContainText('תרחיש סביר');
+    await expect(src.nth(1)).toContainText('יוזמות בתיק');
+  });
+
+  test('journey has ten numbered steps with status and completion', async ({ page }) => {
+    await open(page, { screens: true });
+    const j = page.locator('#ov-next li');
+    await expect(j).toHaveCount(10);
+    await expect(j.nth(1)).toHaveClass(/blocked/); // analysis is locked until real sources exist
+    await expect(page.locator('#ov-prog')).toContainText('%');
+    await page.click('#ov-next li:nth-child(5) a');
+    await expect(page.locator('#s-org')).toBeVisible();
+  });
+
+  test('governance badge counts uses without full controls', async ({ page }) => {
+    await open(page, { screens: true });
+    await expect(page.locator('#ov-govalert')).toBeVisible();
+    await expect(page.locator('#ov-govalert')).toContainText('22 שימושי AI בלי בקרות מלאות');
+  });
+
+  test('citations tile opens a verified quote highlighted in its source', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('#kc-quotes');
+    await expect(page.locator('#modal')).toBeVisible();
+    await expect(page.locator('#modal mark#src-mark')).toBeVisible();
+    await expect(page.locator('#modal-f')).toContainText('מאומת 100%');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#modal')).toBeHidden();
+  });
+
+  test('every citation in the results can be shown in its source', async ({ page }) => {
+    await open(page);
+    await page.click('[data-r="opp"]');
+    await page.locator('.opp[open] .srcbtn').first().click();
+    await expect(page.locator('#modal mark')).toBeVisible();
+  });
+
+  test('deck opens a two-slide preview before download', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.click('#ov-deck');
+    await expect(page.locator('#modal')).toBeVisible();
+    await expect(page.locator('#modal-t')).toContainText('9 שקפים');
+    await expect(page.locator('.slide-prev')).toHaveCount(2);
+    await expect(page.locator('#modal-f')).toContainText('נתוני דוגמה (סינתטיים)');
+    const html = await page.evaluate(() => deckReport());
+    expect((html.match(/class="brandbar"/g) || []).length).toBe(9);
+  });
+
+  test('insights show at most three, each with one action', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.evaluate(() => { insSave(Array.from({ length: 6 }, (_, i) => ({ title: 'תובנה ' + i, detail: 'פרט', severity: 'low', area: 'org', at: new Date().toISOString(), agent: 'סוכן' }))); go('overview'); });
+    await expect(page.locator('#ov-ins .i')).toHaveCount(3);
+    await page.locator('#ov-ins .i').first().locator('a.btn').click();
+    await expect(page.locator('#s-org')).toBeVisible();
+  });
+
+  test('interview mode swaps in stable demo data and restores the work state', async ({ page }) => {
+    await open(page, { screens: true });
+    await page.evaluate(() => { document.getElementById('p-calls').value = '24000'; document.getElementById('p-calls').dispatchEvent(new Event('input')); insSave([{ title: 'שלי', detail: 'x', severity: 'low', area: 'org', at: new Date().toISOString() }]); });
+    await page.check('#iv-mode');
+    await expect(page.locator('#iv-banner')).toContainText('מצב ראיון');
+    await expect(page.locator('#p-calls')).toHaveValue('18000');
+    await expect(page.locator('#ov-ins .i')).toHaveCount(3);
+    await page.reload();
+    await expect(page.locator('#iv-mode')).toBeChecked(); // remembered
+    await page.uncheck('#iv-mode');
+    await expect(page.locator('#iv-banner')).toBeEmpty();
+    await expect(page.locator('#p-calls')).toHaveValue('24000');
+    await expect(page.locator('#ov-ins')).toContainText('שלי');
+  });
+});
+

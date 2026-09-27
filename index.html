@@ -609,8 +609,123 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 .oc-h h3::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--hc,var(--accent))}
 @media (max-width:1100px){ .hero{grid-template-columns:1fr} .hero h1{font-size:28px} .tracks{grid-template-columns:1fr} }
 @media (max-width:680px){ .hero{padding:20px 18px;border-radius:14px} .hero h1{font-size:24px} .dn{grid-template-columns:1fr;justify-items:center} }
+
+/* ================= v16: overview story, trust, modes ================= */
+.skip{position:absolute;inset-inline-start:12px;top:-60px;z-index:100;background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:8px;font-weight:600;text-decoration:none}
+.skip:focus{top:10px}
+:root{--faint:#7E8CA8}
+.hero .narr{font-size:15.5px;color:var(--ink);margin-top:10px}
+.hero .narr b{color:var(--accent-hover)}
+.hero .expl{font-size:14px;color:var(--muted);margin-top:8px}
+.track .why{display:block;margin-top:6px;font-size:12.5px;font-weight:600;color:var(--tc)}
+.ov-head .row{align-items:center}
+.progress-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px}
+.progress-pill .pbar{width:110px;--kc:var(--c3)}
+.gov-alert{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--crit-soft);border:1px solid color-mix(in srgb,var(--crit) 40%,transparent);color:var(--crit);font-size:13px;font-weight:600;text-decoration:none}
+.gov-alert:hover{background:color-mix(in srgb,var(--crit) 22%,transparent)}
+.gov-alert i{width:8px;height:8px;border-radius:50%;background:var(--crit);box-shadow:0 0 0 3px rgba(251,113,133,.25)}
+.kc-src{display:block;font-size:11.5px;color:var(--faint);line-height:1.5;border-top:1px solid var(--line-2);padding-top:8px}
+.kc.flash{animation:kflash 1.4s ease-out}
+@keyframes kflash{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--kc) 70%,transparent)}40%{box-shadow:0 0 0 6px color-mix(in srgb,var(--kc) 25%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+.ov-main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+.ov-sub3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+.ov-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.oc.big{padding:20px 22px}
+.oc.big .oc-h h3{font-size:16px}
+.oc.compact{padding:14px 16px;gap:10px}
+.oc.compact .oc-h h3{font-size:13.5px}
+.oc.compact .oc-h a{font-size:12.5px}
+.oc.compact .dn svg{width:100px;height:100px}
+.oc.compact .dn-l div{font-size:12.5px}
+.start-here{display:grid;gap:8px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,rgba(52,211,153,.14),rgba(56,189,248,.08));border:1px solid rgba(52,211,153,.35)}
+.start-here .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--good)}
+.start-here b{font-size:16px}
+.start-here .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted)}
+.start-here .meta strong{color:var(--ink);font-weight:600}
+.ob .badge{font-size:10.5px;font-weight:700;color:var(--good);background:var(--good-soft);border-radius:999px;padding:1px 7px;margin-inline-start:6px;vertical-align:middle}
+.ins3{display:grid;gap:10px}
+.ins3 .i{display:grid;gap:6px;padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2);border-inline-start:3px solid var(--c,var(--line-strong))}
+.ins3 .i b{font-size:13.5px}
+.ins3 .i p{font-size:12.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ins3 .i .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--faint)}
+.cmp-mini{display:grid;gap:8px}
+.cmp-mini div{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:10px;align-items:center;font-size:13px;padding-block:6px;border-top:1px solid var(--line-2)}
+.cmp-mini div:first-child{border-top:0}
+.cmp-mini .d{font-weight:700;font-size:12px;padding:1px 8px;border-radius:999px}
+.cmp-mini .d.up{background:var(--good-soft);color:var(--good)} .cmp-mini .d.down{background:var(--crit-soft);color:var(--crit)} .cmp-mini .d.eq{background:var(--sunken);color:var(--muted)}
+.journey{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;list-style:none;margin:0;padding:0}
+.journey li a{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);text-decoration:none;color:var(--ink);height:100%}
+.journey li a:hover{border-color:var(--accent-line)}
+.journey .no{grid-row:span 2;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;font-family:var(--mono);background:var(--sunken);color:var(--muted);border:1.5px solid var(--line-strong)}
+.journey .t{font-size:13.5px;font-weight:600}
+.journey .s{font-size:11.5px;font-weight:600}
+.journey li.done .no{background:var(--good);border-color:var(--good);color:#04111C}
+.journey li.done .s{color:var(--good)}
+.journey li.open .no{border-color:var(--accent);color:var(--accent)}
+.journey li.open .s{color:var(--accent)}
+.journey li.blocked a{opacity:.62}
+.journey li.blocked .s{color:var(--faint)}
+/* citations */
+.evq > summary{grid-template-columns:1fr auto auto}
+.evq .srcbtn{border:1px solid var(--line-strong);background:var(--surface);color:var(--accent);border-radius:6px;padding:2px 8px;font:500 12px/1.6 var(--font);cursor:pointer;white-space:nowrap}
+.evq .srcbtn:hover{background:var(--accent-soft)}
+.evq.part{border-inline-start-color:var(--amber)}
+.trustbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-2);font-size:13px}
+.trustbar .pbar{width:140px;--kc:var(--good)}
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(3,7,15,.66);backdrop-filter:blur(3px)}
+.modal-box{width:min(980px,100%);max-height:min(86vh,900px);display:grid;grid-template-rows:auto 1fr auto;background:var(--surface);border:1px solid var(--line-strong);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+.modal-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.modal-h h3{font-size:15.5px}
+.modal-x{border:0;background:none;color:var(--muted);font-size:22px;line-height:1;cursor:pointer;border-radius:8px;padding:2px 8px}
+.modal-x:hover{background:var(--surface-2);color:var(--ink)}
+.modal-b{overflow:auto;padding:16px 18px}
+.modal-f{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.srcview{margin:0;white-space:pre-wrap;font:14px/1.9 var(--font);color:var(--ink-2)}
+.srcview mark{background:rgba(251,191,36,.35);color:var(--ink);padding:2px 3px;border-radius:4px;box-shadow:0 0 0 2px rgba(251,191,36,.6)}
+.slides{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.slide-prev{border-radius:10px;overflow:hidden;border:1px solid var(--line-strong);background:#fff;aspect-ratio:16/9;position:relative}
+/* interview mode */
+.mode{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line-strong)}
+.mode input{appearance:none;width:30px;height:17px;border-radius:999px;background:var(--line-strong);position:relative;margin:0;cursor:pointer}
+.mode input::after{content:"";position:absolute;top:2px;right:2px;width:13px;height:13px;border-radius:50%;background:#E8EEF8;transition:right .2s}
+.mode input:checked{background:var(--c7)}
+.mode input:checked::after{right:15px}
+.mode.on{border-color:var(--c7);color:var(--c7);background:color-mix(in srgb,var(--c7) 12%,transparent)}
+.iv-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--c7) 12%,transparent);border:1px solid color-mix(in srgb,var(--c7) 40%,transparent);font-size:13.5px}
+/* empty states */
+.empty-state{display:grid;justify-items:center;text-align:center;gap:8px;padding:28px 16px;border:1.5px dashed var(--line-strong);border-radius:14px;background:var(--surface-2)}
+.empty-state .ei{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.empty-state .ei svg{width:22px;height:22px}
+.empty-state b{font-size:15px}
+.empty-state p{color:var(--muted);font-size:13.5px;max-width:52ch}
+.empty-state .row{justify-content:center}
+.soon{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--amber-soft);color:var(--amber);margin-inline-start:6px}
+.verified{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--good-soft);color:var(--good);margin-inline-start:6px}
+/* audit footer */
+.audit{display:grid;gap:6px;justify-items:center;font-size:12px;color:var(--muted)}
+.audit .last{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px}
+.audit .last span{display:inline-flex;gap:4px;align-items:center}
+.audit .last b{color:var(--ink-2);font-weight:600}
+.audit details{width:min(900px,100%)}
+.audit summary{cursor:pointer;text-align:center}
+.audit table{margin-top:8px}
+.eta{font-size:12.5px;color:var(--muted)}
+@media (max-width:1100px){ .ov-main,.ov-two{grid-template-columns:1fr} .ov-sub3{grid-template-columns:1fr 1fr} .journey{grid-template-columns:1fr 1fr} .slides{grid-template-columns:1fr} }
+@media (max-width:680px){ .ov-sub3,.journey{grid-template-columns:1fr} .progress-pill .pbar{width:70px} .cmp-mini div{grid-template-columns:minmax(0,1fr) auto} .cmp-mini div span:nth-child(2),.cmp-mini div span:nth-child(3){display:none} }
+@media (prefers-reduced-motion: reduce){ .kc.flash{animation:none} }
+ .hero h1{font-size:28px;line-height:1.3}
+.hero h1 .n{color:var(--accent-hover)}
+.hero h1 .z{background:linear-gradient(90deg,#34D399,#38BDF8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.track .cta{display:inline-flex;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--tc)}
+.track.hint{border-style:dashed}
+.track.hint .why{color:var(--amber)}
+.kc{cursor:default}.kc.click{cursor:pointer}.kc.click:hover{border-color:var(--kc)}
+@media (max-width:1100px){ .hero h1{font-size:23px} }
+
 </style>
 
+<a class="skip" href="#top">דלג לתוכן</a>
 <div class="app">
 <aside class="side" aria-label="ניווט">
   <a class="logo" href="#overview"><span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8F1F8" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/><path d="M8 9.5h8" stroke="#7FD3E6" stroke-width="2.2"/></svg></span><span><b>רנטגן למוקד</b><small>Call Center X-Ray</small></span></a>
@@ -635,35 +750,41 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 <main class="main" id="top">
 <header class="topbar">
   <div class="tb-title"><span>רנטגן למוקד</span><span class="sep">/</span><h1 id="tb-title">סקירה</h1></div>
-  <div class="tb-actions"><button class="btn ghost sm" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור</button><a class="btn primary sm" href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ניתוח חדש</a></div>
+  <div class="tb-actions"><label class="mode" id="iv-label" title="נתוני דוגמה יציבים להצגה, בלי לגעת בעבודה שלכם"><input type="checkbox" id="iv-mode"> מצב ראיון</label><button class="btn ghost sm" id="tour-start" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>סיור</button><a class="btn primary sm" href="#s-sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>ניתוח חדש</a></div>
 </header>
 <nav class="subnav" id="subnav" aria-label="שלבים" hidden></nav>
 <div class="wrap">
-  <section class="ov" id="overview" aria-labelledby="h-ov">
+  <section class="ov" id="overview" aria-labelledby="ov-h1">
+    <div id="iv-banner"></div>
     <header class="hero">
       <div>
         <span class="eyebrow"><i></i>אבחון תהליכים מבוסס AI · מוקדי שירות ומכירות וכל הארגון</span>
-        <h1>מה באמת קורה בשיחות,<br><span>ואיפה AI יחסוך הכי הרבה</span></h1>
-        <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude משרטט את התהליך כפי שהוא קורה בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, עם משילות, ROI ותוכנית פיילוט.</p>
+        <h1 id="ov-h1">מה באמת קורה בשיחות, <span>ואיפה AI יחסוך הכי הרבה</span></h1>
+        <p class="expl">הכלי מנתח שיחות ונהלים, מסתיר פרטים מזהים ומאמת כל ממצא מול המקור, כדי להראות איפה AI ואוטומציה יחסכו הכי הרבה.</p>
         <div class="trust"><span>פרטים מזהים מוסתרים לפני שליחה</span><span>כל ממצא עם ציטוט מאומת</span><span>דיוק נמדד, לא מובטח</span><span>כל פעולה של סוכן באישורך</span></div>
       </div>
       <div class="tracks">
-        <a class="track" href="#s-sources" style="--tc:var(--c1)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/></svg></span><span><b>מסלול 1: ניתוח שיחות מוקד</b><small>תמלולים, נהלים ותצפיות ← מפת תהליך, הזדמנויות עם ציטוטים, חיסכון ופיילוט</small></span><span class="go">‹</span></a>
-        <a class="track" href="#s-org" style="--tc:var(--c2)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><span><b>מסלול 2: מפת AI לכל הארגון</b><small>תהליכים בכל המחלקות ← ציון התאמה, סוג פתרון ותוכנית בשלושה גלים</small></span><span class="go">‹</span></a>
-        <a class="track" href="#s-agents" style="--tc:var(--c7)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></span><span><b>סוכנים חכמים</b><small>Claude עובר על כל הנתונים, מבצע פעולות באישורך ומביא תובנות</small></span><span class="go">‹</span></a>
+        <a class="track" href="#s-sources" style="--tc:var(--c1)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/></svg></span><span><b>לאבחן את המוקד מתוך שיחות</b><small>תמלולים ונהלים ← מפת תהליך, הזדמנויות עם ציטוטים, חיסכון ופיילוט</small><span class="why" id="why-calls"></span><span class="cta" id="cta-calls"></span></span><span class="go">‹</span></a>
+        <a class="track" href="#s-org" style="--tc:var(--c2)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><span><b>למפות איפה עוד AI יחסוך בארגון</b><small>תהליכים בכל המחלקות ← ציון התאמה, סוג פתרון ותוכנית בשלושה גלים</small><span class="why" id="why-org"></span><span class="cta" id="cta-org"></span></span><span class="go">‹</span></a>
+        <a class="track" href="#s-agents" style="--tc:var(--c7)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></span><span><b>לתת לסוכנים לסגור פערים</b><small>Claude עובר על כל הנתונים, מבצע פעולות באישורך ומביא תובנות</small><span class="why" id="why-ag"></span><span class="cta" id="cta-ag"></span></span><span class="go">‹</span></a>
       </div>
     </header>
-    <div class="ov-head"><div><h2 id="h-ov">תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>הורדת מצגת</button></div></div>
+    <div class="ov-head"><div><h2>תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><a class="gov-alert" id="ov-govalert" href="#s-gov" hidden></a><span class="progress-pill" id="ov-prog"></span><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>מצגת: תצוגה והורדה</button></div></div>
     <div class="readout" id="readout" aria-live="polite"></div>
-    <div class="ov-grid">
-      <div class="oc" style="--hc:var(--c6)"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results">כל ההזדמנויות</a></div><div id="ov-opps"></div></div>
-      <div class="oc" style="--hc:var(--c4)"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
-      <div class="oc" style="--hc:var(--c1)"><div class="oc-h"><h3>סיבות פנייה וסנטימנט</h3><a href="#s-results">לזיהוי המלא</a></div><div id="ov-int"></div></div>
-      <div class="oc" style="--hc:var(--c2)"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה המלאה</a></div><div id="ov-map"></div></div>
-      <div class="oc" style="--hc:var(--c8)"><div class="oc-h"><h3>משילות AI לפי רמת סיכון</h3><a href="#s-gov">למלאי השימושים</a></div><div id="ov-gov"></div></div>
-      <div class="oc" style="--hc:var(--c7)"><div class="oc-h"><h3>תובנות אחרונות מהסוכנים</h3><a href="#s-agents">לסוכנים</a></div><div id="ov-ins"></div></div>
-      <div class="oc wide" style="--hc:var(--c3)"><div class="oc-h"><h3>הצעדים הבאים</h3></div><ol class="steps-list" id="ov-next"></ol></div>
+    <div class="ov-main">
+      <div class="oc big" style="--hc:var(--c3)"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results" data-rt="opp">כל ההזדמנויות</a></div><div id="ov-start"></div><div id="ov-opps"></div></div>
+      <div class="oc big" style="--hc:var(--c4)"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
     </div>
+    <div class="ov-sub3">
+      <div class="oc compact" style="--hc:var(--c2)"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה</a></div><div id="ov-map"></div></div>
+      <div class="oc compact" style="--hc:var(--c1)"><div class="oc-h"><h3>סיבות פנייה וסנטימנט</h3><a href="#s-results" data-rt="det">לזיהוי</a></div><div id="ov-int"></div></div>
+      <div class="oc compact" style="--hc:var(--c8)"><div class="oc-h"><h3>משילות לפי רמת סיכון</h3><a href="#s-gov">למלאי</a></div><div id="ov-gov"></div></div>
+    </div>
+    <div class="ov-two">
+      <div class="oc" style="--hc:var(--c7)"><div class="oc-h"><h3>תובנות מהסוכנים</h3><a href="#s-agents">ליומן הסוכנים</a></div><div id="ov-ins"></div></div>
+      <div class="oc" style="--hc:var(--c6)"><div class="oc-h"><h3>לפני ואחרי פיילוט</h3><a href="#s-projects">לניתוחים השמורים</a></div><div id="ov-cmp"></div></div>
+    </div>
+    <div class="oc" style="--hc:var(--c3)"><div class="oc-h"><h3>המסע: מאבחון למצגת להנהלה</h3><span class="note" id="ov-prog2"></span></div><ol class="journey" id="ov-next"></ol></div>
   </section>
 
   <!-- 1. SOURCES -->
@@ -965,16 +1086,16 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
         <div id="dl-status" class="note"></div>
       </div>
       <div class="card">
-        <h3>שמירה ב-Google Drive</h3>
+        <h3>שמירה ב-Google Drive<span class="verified">נבדק מול Drive</span></h3>
         <p class="note">מסמך Google Docs חדש עם הדוח המלא, בתיקייה הראשית שלכם.</p>
         <div class="row"><button class="btn primary" id="to-drive">שמירה כמסמך</button></div>
         <div id="drive-save-status" class="note"></div>
       </div>
       <div class="card">
-        <h3>טיוטת מייל ב-Gmail</h3>
+        <h3>טיוטת מייל ב-Gmail<span class="soon">בקרוב</span></h3>
         <p class="note">טיוטה עם תמונת המצב ושלוש ההזדמנויות. שום דבר לא נשלח.</p>
         <div class="field"><label class="label" for="mail-to">נמען</label><input id="mail-to" class="inp mono" type="email" placeholder="manager@example.com" dir="ltr"></div>
-        <div class="row"><button class="btn primary" id="to-gmail">יצירת טיוטה</button></div>
+        <div class="row"><button class="btn" id="to-gmail" disabled title="החיבור ל-Gmail עוד לא נבדק מול חשבון אמיתי">יצירת טיוטה</button></div><p class="note">יופעל אחרי בדיקה מול חשבון Gmail אמיתי. בינתיים: דוח המנהלים או החבילה המלאה.</p>
         <div id="gmail-status" class="note"></div>
       </div>
     </div>
@@ -988,6 +1109,7 @@ table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2
 </main>
 </div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-t"><div class="modal-box"><div class="modal-h"><h3 id="modal-t"></h3><button class="modal-x" id="modal-x" type="button" aria-label="סגירה">×</button></div><div class="modal-b" id="modal-b"></div><div class="modal-f" id="modal-f"></div></div></div>
 <div class="tour" id="tour" hidden role="dialog" aria-labelledby="tour-t" aria-describedby="tour-d">
   <div class="tour-top"><span class="tour-n" id="tour-n"></span><button type="button" class="tour-x" id="tour-skip" aria-label="סגירת הסיור">×</button></div>
   <h3 id="tour-t"></h3><p id="tour-d"></p>
@@ -1395,6 +1517,41 @@ function findQuote(ev){
   for(const i of order){ const s = srcs[i]; if(!s) continue; const t = normQ(s.text), k = t.indexOf(q); if(k >= 0) return { i, name: s.name, before: t.slice(Math.max(0, k-160), k), match: t.slice(k, k+q.length), after: t.slice(k+q.length, k+q.length+160), cut0: k > 160, cut1: k+q.length+160 < t.length }; }
   return null;
 }
+/* partial match: best window of the quote's words inside the source, for quotes that were lightly reworded */
+function quoteMatch(ev){
+  const f = findQuote(ev); if(f) return { score:1, f };
+  const srcs = sentSources(), qw = normQ(ev.quote).split(' ').filter(w => w.length > 1); if(qw.length < 3) return { score:0 };
+  let best = { score:0 };
+  srcs.forEach((s, i) => { const t = normQ(s.text), words = t.split(' '), set = new Set(qw), n = qw.length;
+    for(let k = 0; k + n <= words.length; k++){ let hit = 0; for(let j = 0; j < n; j++) if(set.has(words[k+j])) hit++;
+      const sc = hit / n; if(sc > best.score){ const start = words.slice(0, k).join(' ').length + (k ? 1 : 0), end = start + words.slice(k, k+n).join(' ').length; best = { score: sc, i, name: s.name, start, end }; } } });
+  return best.score >= .5 ? best : { score: best.score };
+}
+const EVQ = [];
+function quoteChip(m){ return m.score === 1 ? '<span class="chip good">מאומת 100% ✓</span>' : m.score >= .5 ? `<span class="chip amb">התאמה חלקית ${Math.round(m.score*100)}%</span>` : '<span class="chip crit">לא נמצא במקור</span>'; }
+function openSource(ev){
+  const m = quoteMatch(ev), srcs = sentSources();
+  let body, title;
+  if(m.score === 1){ const f = m.f, t = normQ(srcs[f.i].text), k = t.indexOf(normQ(ev.quote)); title = `מקור ${f.i + 1}: ${f.name}`;
+    body = `<pre class="srcview">${esc(t.slice(0, k))}<mark id="src-mark">${esc(t.slice(k, k + normQ(ev.quote).length))}</mark>${esc(t.slice(k + normQ(ev.quote).length))}</pre>`; }
+  else if(m.score >= .5){ const t = normQ(srcs[m.i].text); title = `מקור ${m.i + 1}: ${m.name}`;
+    body = `<pre class="srcview">${esc(t.slice(0, m.start))}<mark id="src-mark">${esc(t.slice(m.start, m.end))}</mark>${esc(t.slice(m.end))}</pre>`; }
+  else { title = 'הציטוט לא נמצא במקור'; body = `<div class="msg warn">"${esc(ev.quote)}"<br><br>הציטוט לא נמצא בטקסט שנשלח לניתוח, גם לא בהתאמה חלקית. כדאי לבדוק את הטענה ידנית.</div>`; }
+  openModal(title, body, `<span>${quoteChip(m)} <span class="note">"${esc(ev.quote)}"</span></span><span class="note">${state.isDemo ? 'נתוני דוגמה' : 'הטקסט שנשלח לניתוח, אחרי הסתרת פרטים מזהים'}</span>`);
+  const mk = document.getElementById('src-mark'); if(mk) setTimeout(() => mk.scrollIntoView({ block:'center' }), 30);
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-srcq]'); if(!b) return; e.preventDefault(); e.stopPropagation(); openSource(EVQ[+b.dataset.srcq]); });
+
+/* modal */
+let modalBack = null;
+function openModal(title, body, foot){
+  modalBack = document.activeElement; $('modal-t').textContent = title; $('modal-b').innerHTML = body; $('modal-f').innerHTML = foot || ''; $('modal').hidden = false; $('modal-x').focus();
+}
+function closeModal(){ $('modal').hidden = true; $('modal-b').innerHTML = ''; if(modalBack && modalBack.focus) modalBack.focus(); }
+$('modal-x').onclick = closeModal;
+$('modal').addEventListener('click', e => { if(e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && !$('modal').hidden) closeModal(); });
+
 function verifyAll(a){
   let ok = 0, total = 0;
   const each = evs => arr(evs).forEach(ev => { total++; if(findQuote(ev)) ok++; });
@@ -1404,26 +1561,34 @@ function verifyAll(a){
 function evidenceHtml(evs){
   evs = arr(evs); if(!evs.length) return '';
   return `<div class="evs"><span class="label">ראיות מהמקורות</span>${evs.map(ev => { const f = findQuote(ev);
-    return `<details class="evq ${f?'ok':'bad'}"><summary><span>"${esc(ev.quote)}"</span><span class="chip ${f?'good':'amb'}">${f ? 'נמצא במקור ✓' : 'לא נמצא מילה במילה'}</span></summary>
+    const m = quoteMatch(ev), qi = EVQ.push(ev) - 1;
+    return `<details class="evq ${f ? 'ok' : m.score >= .5 ? 'part' : 'bad'}"><summary><span>"${esc(ev.quote)}"</span>${quoteChip(m)}<button type="button" class="srcbtn" data-srcq="${qi}">הצג במקור</button></summary>
       <div class="ctx">${f ? `<b>${esc(f.name)}</b>\n${f.cut0?'…':''}${esc(f.before)}<mark>${esc(f.match)}</mark>${esc(f.after)}${f.cut1?'…':''}` : 'הציטוט לא נמצא בטקסט שנשלח לניתוח. ייתכן שנוסח מחדש: כדאי לבדוק את הטענה ידנית.'}</div></details>`; }).join('')}</div>`;
 }
 
 /* ================= results ================= */
 document.querySelectorAll('.rtabs button').forEach(b => b.onclick = () => showR(b.dataset.r));
 function showR(r){ document.querySelectorAll('.rtabs button').forEach(x => x.setAttribute('aria-selected', x.dataset.r === r)); document.querySelectorAll('[data-rp]').forEach(p => p.hidden = p.dataset.rp !== r); }
+const KPREV = {};
+function whenLabel(){ return state.isDemo ? 'נתוני דוגמה' : state.when ? 'נותח ' + new Date(state.when).toLocaleString('he-IL', { dateStyle:'short', timeStyle:'short' }) : 'ניתוח אחרון'; }
+function sampleQuote(a){ const all = []; a.opportunities.forEach(o => arr(o.evidence).forEach(ev => all.push(ev))); a.compliance.forEach(c => arr(c.evidence).forEach(ev => all.push(ev))); a.process.steps.forEach(st => arr(st.evidence).forEach(ev => all.push(ev))); return all.find(ev => findQuote(ev)) || all[0]; }
 function renderReadout(a){
-  const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
+  const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps), p = profile(), W = whenLabel();
   const P = typeof roiItems === 'function' ? portfolio(roiItems(), 'r') : null;
   const ic = d => '<span class="kc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg></span>';
   const sc = [SCEN.p, SCEN.r, SCEN.o].map((k, i) => `<i class="${i === 1 ? 'hi' : ''}" style="height:${Math.round(k*100)}%" title="${['פסימי','סביר','אופטימי'][i]}: ${ils(t.ils*k)}"></i>`).join('');
   const cum = P ? P.cum.filter((_, i) => i % 3 === 2) : [], lo = Math.min(0, ...cum), hi = Math.max(1, ...cum);
   const roiSpark = cum.map(c => `<i class="${c >= 0 ? 'hi' : ''}" style="height:${Math.max(6, Math.round((c - lo) / (hi - lo) * 100))}%"></i>`).join('');
   const dots = v.total ? Array.from({length: Math.min(v.total, 40)}, (_, i) => `<i class="${i < Math.round(v.ok / v.total * Math.min(v.total, 40)) ? '' : 'off'}"></i>`).join('') : '';
+  const vals = [Math.round(t.ils*SCEN.r), P ? Math.round(P.roi12*100) : 0, af, v.ok];
   $('readout').innerHTML = `
-    <div class="kc"><div class="kc-top"><span class="kc-l">חיסכון חודשי, תרחיש סביר</span>${ic('<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>')}</div><b class="kc-v">${ils(t.ils*SCEN.r)}</b><div class="spark">${sc}</div><span class="kc-s">טווח: ${ils(t.ils*SCEN.p)} עד ${ils(t.ils)}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">ROI בשנה הראשונה</span>${ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>')}</div><b class="kc-v">${P ? fmtPct(P.roi12) : '—'}</b><div class="spark">${roiSpark}</div><span class="kc-s">${P ? `<span class="delta">החזר ב-${fmtPay(P.pay)}</span>${P.n} יוזמות בתיק` : ''}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">זמן בתהליך המרכזי</span>${ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>')}</div><b class="kc-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><div style="display:grid;gap:5px"><div class="pbar"><i style="width:100%;background:var(--amber)"></i></div><div class="pbar"><i style="width:${af && b ? Math.round(af/b*100) : 100}%"></i></div></div><span class="kc-s">${af && b ? `<span class="delta">${Math.round((1-af/b)*100)}% פחות</span>היום מול אחרי` : 'דקות לשיחה'}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">ציטוטים שאומתו במקור</span>${ic('<path d="M4 12l5 5L20 6"/>')}</div><b class="kc-v mono">${v.ok}/${v.total}</b><div class="dots5">${dots}</div><span class="kc-s"><span class="delta ${v.total && v.ok === v.total ? '' : 'neu'}">${v.total ? Math.round(v.ok/v.total*100) : 0}%</span>כל ממצא נבדק מול הטקסט</span></div>`;
+    <div class="kc"><div class="kc-top"><span class="kc-l">חיסכון חודשי</span>${ic('<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>')}</div><b class="kc-v">${ils(t.ils*SCEN.r)}</b><div class="spark">${sc}</div><span class="kc-s"><span class="delta">תרחיש סביר (70%)</span>טווח: ${ils(t.ils*SCEN.p)} עד ${ils(t.ils)}</span><span class="kc-src">מקור: פרופיל המוקד (${nf.format(p.calls)} שיחות × ₪${p.cost} לשעה) והזדמנויות הניתוח · ${esc(W)}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">ROI בשנה הראשונה</span>${ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>')}</div><b class="kc-v">${P ? fmtPct(P.roi12) : '—'}</b><div class="spark">${roiSpark}</div><span class="kc-s">${P ? `<span class="delta">תרחיש סביר</span>החזר ב-${fmtPay(P.pay)}` : ''}</span><span class="kc-src">מקור: ${P ? `${P.n} יוזמות בתיק · הקמה ${ils(P.once)} · הפעלה ${ils(P.run)} בחודש` : 'תיק ה-ROI'} · עלויות מוערכות לפי מאמץ וסוג פתרון, ניתנות לעריכה ב-07</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">זמן בתהליך המרכזי</span>${ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>')}</div><b class="kc-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><div style="display:grid;gap:5px"><div class="pbar"><i style="width:100%;background:var(--amber)"></i></div><div class="pbar"><i style="width:${af && b ? Math.round(af/b*100) : 100}%"></i></div></div><span class="kc-s">${af && b ? `<span class="delta">${Math.round((1-af/b)*100)}% פחות</span>היום מול אחרי האוטומציות` : 'דקות לשיחה'}</span><span class="kc-src">מקור: מפת התהליך מהניתוח (${a.process.steps.length} צעדים היום, ${a.to_be.steps.length} אחרי) · ${esc(W)}</span></div>
+    <div class="kc click" id="kc-quotes" role="button" tabindex="0" title="לחיצה: ציטוט לדוגמה עם הדגשה במקור"><div class="kc-top"><span class="kc-l">ציטוטים שאומתו במקור</span>${ic('<path d="M4 12l5 5L20 6"/>')}</div><b class="kc-v mono">${v.ok}/${v.total}</b><div class="dots5">${dots}</div><span class="kc-s"><span class="delta ${v.total && v.ok === v.total ? '' : 'neu'}">${v.total ? Math.round(v.ok/v.total*100) : 0}%</span>לחצו לראות ציטוט במקור</span><span class="kc-src">מקור: בדיקה אוטומטית של כל ציטוט מול הטקסט שנשלח לניתוח · ${esc(W)}</span></div>`;
+  $('readout').querySelectorAll('.kc').forEach((el, i) => { if(KPREV[i] != null && KPREV[i] !== vals[i]) el.classList.add('flash'); KPREV[i] = vals[i]; });
+  const kq = $('kc-quotes'), open = () => { const ev = sampleQuote(a); if(ev) openSource(ev); };
+  kq.onclick = open; kq.onkeydown = e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } };
 }
 function renderResults(){
   const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0); if(typeof renderRoi === 'function' && $('roi-tbl')) setTimeout(renderRoi, 0);
@@ -2089,6 +2254,7 @@ function deckReport(){
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&display=swap">
 <style>@page{size:1280px 720px;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#0A1520;font-family:Assistant,Arial,sans-serif;color:#122033}
 .deck{height:100vh;overflow-y:auto;scroll-snap-type:y mandatory}
+section .brandbar{position:absolute;bottom:18px;left:24px;display:flex;align-items:center;gap:8px;font:600 13px Assistant,Arial,sans-serif;color:#5A6878;z-index:3}.cover .brandbar{color:#9FB2C3}section .brandbar .bm{width:14px;height:14px;border-radius:4px;background:linear-gradient(145deg,#38BDF8,#6366F1)}section .brandbar .dl{font-size:11.5px;padding:2px 9px;border-radius:999px}section .brandbar .dl.syn{background:#EFECFA;color:#5A45B6}section .brandbar .dl.real{background:#E4F4EA;color:#0B7445}
 section{scroll-snap-align:start;width:min(1280px,100vw);aspect-ratio:16/9;max-height:100vh;margin:0 auto;background:#fff;padding:56px 64px;display:flex;flex-direction:column;gap:22px;position:relative;overflow:hidden;page-break-after:always;border-bottom:1px solid #0A1520}
 section::after{content:attr(data-n);position:absolute;bottom:22px;left:32px;font-size:13px;color:#8796A6;font-family:monospace}
 h1,h2,h3{font-family:Rubik,Arial,sans-serif;margin:0}h2{font-size:34px;color:#0A1520}h2::before{content:"";display:block;width:48px;height:5px;border-radius:3px;background:#0B6E8A;margin-bottom:14px}h3{font-size:18px;color:#0B6E8A;margin:4px 0 10px}
@@ -2108,10 +2274,22 @@ blockquote{margin:0;padding:6px 12px;border-right:3px solid #1D7A4D;background:#
 .nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(10,21,32,.85);color:#fff;border-radius:999px;padding:6px 14px;font-size:13px}
 @media print{.deck{height:auto;overflow:visible}.nav{display:none}section{width:1280px;max-height:none}}
 @media (max-width:900px){section{aspect-ratio:auto;min-height:100vh;padding:28px 20px}.kpis,.cards,.waves,.two{grid-template-columns:1fr}.cover h1{font-size:36px}h2{font-size:26px}}
-</style></head><body><div class="deck" id="deck">${slides.map((sl, i) => sl.replace('<section', `<section data-n="${i + 1} / ${slides.length}"`)).join('')}</div><div class="nav">חצים או גלילה למעבר בין שקפים · Ctrl+P להדפסה ל-PDF</div>
+</style></head><body><div class="deck" id="deck">${slides.map((sl, i) => sl.replace('<section', `<section data-n="${i + 1} / ${slides.length}"`).replace(/<\/section>$/, `<div class="brandbar"><span class="bm"></span>רנטגן למוקד<span class="dl ${demo ? 'syn' : 'real'}">${demo ? 'נתוני דוגמה (סינתטיים)' : 'מניתוח אמיתי · ' + esc(state.when ? new Date(state.when).toLocaleDateString('he-IL') : stamp())}</span></div></section>`)).join('')}</div><div class="nav">חצים או גלילה למעבר בין שקפים · Ctrl+P להדפסה ל-PDF</div>
 <script>const d=document.getElementById('deck'),ss=[...d.querySelectorAll('section')];document.addEventListener('keydown',e=>{const i=ss.findIndex(s=>s.getBoundingClientRect().top>=-5);let k=i<0?0:i;if(['ArrowLeft','ArrowDown','PageDown',' '].includes(e.key))k=Math.min(ss.length-1,k+1);else if(['ArrowRight','ArrowUp','PageUp'].includes(e.key))k=Math.max(0,k-1);else return;e.preventDefault();ss[k].scrollIntoView({behavior:'smooth'});});<\/script></body></html>`;
 }
-$('dl-deck').onclick = () => save(`מצגת-הטמעת-AI-${stamp()}.html`, deckReport(), $('deck-status'), 'text/html');
+function deckDownload(el){ save(`מצגת-הטמעת-AI-${stamp()}.html`, deckReport(), el || $('deck-status'), 'text/html'); try{ localStorage.setItem('xray-deck-done', '1'); }catch(e){} }
+function deckPreview(){
+  const html = deckReport(), doc = new DOMParser().parseFromString(html, 'text/html');
+  const css = [...doc.querySelectorAll('style')].map(x => x.textContent).join('\n'), secs = [...doc.querySelectorAll('section')];
+  const demo = state.isDemo || org.isDemo;
+  openModal(`תצוגה מקדימה · ${secs.length} שקפים`, '<div class="slides"><div class="slide-prev" id="sp0"></div><div class="slide-prev" id="sp1"></div></div>',
+    `<span class="note">${demo ? 'המספרים במצגת מסומנים "נתוני דוגמה (סינתטיים)"' : 'המספרים במצגת מסומנים "מניתוח אמיתי" עם תאריך הניתוח'} · שקפים 1 ו-2 מתוך ${secs.length}</span><span class="row"><span class="note" id="deck-mstatus"></span><button class="btn primary" id="deck-go" type="button">הורדת המצגת</button></span>`);
+  [0, 1].forEach(i => { const host = $('sp' + i), sec = secs[i]; if(!host || !sec) return; const root = host.attachShadow({ mode:'open' });
+    root.innerHTML = `<style>${css}\n:host{display:block}.frame{width:1280px;height:720px;transform-origin:top right;position:absolute;top:0;right:0;color:#122033;font-family:Assistant,Arial,sans-serif;line-height:1.5}.frame section{width:1280px!important;height:720px!important;max-height:none!important;aspect-ratio:auto!important;margin:0!important}</style><div class="frame" dir="rtl">${sec.outerHTML}</div>`;
+    const fit = () => { const f = root.querySelector('.frame'); if(f) f.style.transform = `scale(${host.clientWidth / 1280})`; }; fit(); setTimeout(fit, 50); });
+  $('deck-go').onclick = () => deckDownload($('deck-mstatus'));
+}
+$('dl-deck').onclick = deckPreview;
 
 /* ================= guided tour ================= */
 const TOUR = [
@@ -2474,6 +2652,7 @@ function go(id, init){
   sn.hidden = V.secs.length < 2;
   sn.innerHTML = V.secs.length > 1 ? V.secs.map(([sid, l], i) => `<a href="#${sid}" class="${sid === id ? 'on' : ''}"${sid === id ? ' aria-current="page"' : ''}><i>${i+1}</i>${l}</a>`).join('') : '';
   document.querySelectorAll('.side nav a[data-nav]').forEach(a => { const on = a.getAttribute('href') === '#' + id; a.classList.toggle('on', on); on ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'); });
+  if(id === 's-results' && !state.isDemo){ try{ localStorage.setItem('xray-seen-results', '1'); }catch(e){} }
   if(id === 'overview') renderOverview();
   window.scrollTo(0, 0);
   if(!init){ try{ history.replaceState(null, '', '#' + id); }catch(e){} }
@@ -2487,61 +2666,133 @@ document.addEventListener('click', e => {
   const el = document.getElementById(id); if(!el) return;
   const sec = secOf(el); if(!sec) return;
   e.preventDefault(); go(sec.id);
+  if(a.dataset.rt && typeof showR === 'function') showR(a.dataset.rt);
   if(sec !== el) el.scrollIntoView({ block:'center' });
 });
-$('ov-deck').onclick = () => $('dl-deck').click();
+$('ov-deck').onclick = deckPreview;
+
+/* interview mode: stable demo data for presenting, work state kept aside and restored */
+const IV_INSIGHTS = [
+  { title:'יוזמה עם החזר מהיר אבל בלי בעלים', detail:'"סיכום ותיעוד שיחות ב-CRM" מחזירה את עצמה בתוך כ-2 חודשים, אבל עדיין אין לה בעלים במלאי המשילות. מומלץ להגדיר בעלים לפני הפיילוט.', severity:'high', area:'gov', agent:'סוכן תובנות', sample:true },
+  { title:'ההזדמנות הגדולה במוקד עוד לא במפת הארגון', detail:'"מענה לשאלות חוזרות של לקוחות" היא היוזמה עם החיסכון החודשי הגבוה בתיק. כדאי להוסיף אותה למפה כדי שתיכנס לתוכנית הגלים.', severity:'medium', area:'org', agent:'סוכן תובנות', sample:true },
+  { title:'חסר בסיס למדד הסיכומים', detail:'למדד "סיכומים אחידים ומלאים" אין ערך בסיס, ולכן אי אפשר יהיה להראות שיפור. מומלץ לדגום 30 שיחות לפני ההטמעה.', severity:'low', area:'kpi', agent:'סוכן מדדים', sample:true }
+];
+const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } }, lsSet = (k, v) => { try{ v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){} };
+function ivRenderAll(){ saveLocal(); renderSources(); renderResults(); renderOrg(); renderRoi(); renderInsights(); renderProjects(); if(curSec === 'overview') renderOverview(); }
+function ivSet(on){
+  if(on){
+    lsSet('xray-work', JSON.stringify({ ...snapshot('work'), sources: state.sources, when: state.when }));
+    const P0 = { type: $('p-type').options[0].value, calls: 18000, aht: 5.5, cost: 55, agents: 45 };
+    for(const k in P0) $('p-' + k).value = P0[k];
+    state.analysis = JSON.parse(JSON.stringify(DEMO_ANALYSIS)); state.isDemo = true; state.sent = null; state.when = null; state.chat = [];
+    state.sources = []; DEMO_SOURCES.forEach(x => state.sources.push({ id:'demo' + Math.random().toString(36).slice(2,7), name:x.name, text:x.text, kind:'demo' }));
+    org.rows = ORG_DEMO.map(r => ({...r})); org.isDemo = true; $('org-cost').value = 70; saveOrg();
+    govSave({}); roiSave({}); lsSet('xray-kpi', null); insSave(IV_INSIGHTS.map((x, i) => ({ ...x, at: new Date(Date.now() - (i + 1) * 3600e3).toISOString() })));
+    lsSet('xray-mode', 'interview'); toast('מצב ראיון: נתוני דוגמה יציבים. העבודה שלכם נשמרה בצד.');
+  } else {
+    let w = null; try{ w = JSON.parse(lsGet('xray-work') || 'null'); }catch(e){}
+    if(w){ for(const k of ['type','calls','aht','cost','agents']) if(w.profile && w.profile[k] != null) $('p-' + k).value = w.profile[k];
+      state.analysis = w.analysis; state.sent = w.sent || null; state.isDemo = !!w.isDemo; state.when = w.when || w.date; state.sources = w.sources || []; state.chat = [];
+      if(w.org){ org.rows = w.org.rows || []; org.isDemo = !!w.org.isDemo; if(w.org.cost) $('org-cost').value = w.org.cost; saveOrg(); }
+      govSave(w.gov || {}); roiSave(w.roi || {}); if(w.kpi) kpiSave(w.kpi); insSave(w.insights || []); }
+    lsSet('xray-mode', 'work'); lsSet('xray-work', null); toast('מצב עבודה: הנתונים שלכם חזרו.');
+  }
+  ivUi(); ivRenderAll();
+}
+function ivUi(){ const on = lsGet('xray-mode') === 'interview'; $('iv-mode').checked = on; $('iv-label').classList.toggle('on', on);
+  $('iv-banner').innerHTML = on ? '<div class="iv-banner"><span><b>מצב ראיון.</b> נתוני דוגמה יציבים של מוקד בדוי, בלי תלות ב-API. העבודה שלכם שמורה בצד וחוזרת כשמכבים.</span><button class="btn sm" type="button" id="iv-off">חזרה למצב עבודה</button></div>' : '';
+  const off = $('iv-off'); if(off) off.onclick = () => ivSet(false); }
+$('iv-mode').onchange = e => ivSet(e.target.checked);
+ivUi();
 
 /* rail tooltips */
 document.querySelectorAll('.side nav a').forEach(a => a.title = a.textContent.replace(/\d+$/, '').trim());
 
+function startHere(a){
+  const list = a.opportunities.map(o => ({ o, v: roi(o).ils * SCEN.r })).filter(x => x.v > 0);
+  const quick = list.filter(x => x.o.effort <= 2).sort((x, y) => y.v - x.v);
+  return (quick[0] || list.sort((x, y) => y.v / y.o.effort - x.v / x.o.effort)[0] || {}).o || a.opportunities[0];
+}
+function journeySteps(){
+  const gi = govItems(), gm = govLoad(), noOwner = gi.filter(g => g.tier >= 1 && !(gm[g.key] || {}).owner).length;
+  const ls = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+  const real = state.sources.some(x => x.kind !== 'demo'), analysed = !state.isDemo;
+  return [
+    ['s-sources','מקורות אמיתיים', real, false, ''],
+    ['s-run','ניתוח עם Claude', analysed, !real && !analysed, 'צריך מקורות'],
+    ['s-results','סקירת התוצאות', analysed && !!ls('xray-seen-results'), !analysed, 'אחרי הניתוח'],
+    ['s-eval','מבחן דיוק', !!(state.eval && state.eval.last), false, ''],
+    ['s-org','מפת הארגון', !org.isDemo && org.rows.length > 0, false, ''],
+    ['s-gov','בעלים לשימושים בסיכון', gi.length > 0 && noOwner === 0, gi.length === 0, 'אין שימושים עדיין'],
+    ['s-roi','ערכים בפועל במדדים', kpiLoad().some(k => k.cur != null && k.cur !== ''), false, ''],
+    ['s-agents','תובנות מסוכן', insLoad().some(x => !x.sample), !llmReady(), 'צריך חיבור ל-Claude'],
+    ['s-projects','שמירת מצב לפני פיילוט', projGet().length > 0, false, ''],
+    ['s-export','מצגת להנהלה', !!ls('xray-deck-done'), false, '']
+  ];
+}
 function renderOverview(){
-  const a = state.analysis, p = profile();
+  const a = state.analysis, p = profile(), t = totals(a), v = verifyAll(a);
   renderReadout(a);
-  $('ov-sub').textContent = `${p.type} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים${state.isDemo ? ' · נתוני דוגמה' : ''}`;
-  // opportunities
+  const Z = startHere(a), N = a.calls_analyzed || state.sources.length, M = a.opportunities.length;
+  $('ov-h1').innerHTML = `מ-<span class="n">${nf.format(N)}</span> ${a.calls_analyzed ? 'שיחות' : 'מקורות'} זיהינו <span class="n">${M}</span> הזדמנויות · התחילו ב<span class="z">${esc(Z ? Z.title : 'הזדמנות הראשונה')}</span> · חיסכון סביר <span class="n">${ils(t.ils*SCEN.r)}</span> לחודש`;
+  $('ov-sub').textContent = `${p.type} · ${nf.format(p.calls)} שיחות בחודש · ${p.agents} נציגים · ${whenLabel()}`;
+  // track cards: why now + CTA + hint when data is missing
+  const gi = govItems(), gm = govLoad(), noOwner = gi.filter(g => g.tier >= 1 && !(gm[g.key] || {}).owner).length, list = orgScored(), L = insLoad();
+  const track = (id, why, cta, hint) => { const w = $('why-' + id), c = $('cta-' + id); w.textContent = why; c.textContent = cta; w.closest('.track').classList.toggle('hint', !!hint); };
+  track('calls', state.isDemo ? 'למה עכשיו: מוצגים נתוני דוגמה. 10 עד 50 שיחות אמיתיות יספיקו לאבחון ראשון' : `למה עכשיו: ${v.ok}/${v.total} ציטוטים מאומתים · ${whenLabel()}`, state.isDemo ? 'להכניס שיחות ←' : 'לתוצאות ←', state.isDemo);
+  track('org', list.length ? `למה עכשיו: ${list.filter(x => x.s.feas >= 65).length} תהליכים עם היתכנות גבוהה · חיסכון סביר ${ils(list.reduce((n, x) => n + x.s.ils, 0) * SCEN.r)} בחודש` : 'חסר: עוד לא מופו תהליכים בארגון', list.length ? 'למפה ←' : 'למיפוי ←', !list.length);
+  track('ag', !llmReady() ? 'חסר: צריך חיבור ל-Claude (בתוך Claude או מפתח API)' : `למה עכשיו: ${noOwner} שימושים בסיכון בלי בעלים · ${L.length} תובנות`, llmReady() ? 'להפעלת סוכן ←' : 'לחיבור ←', !llmReady());
+  // governance badge
+  const missing = gi.filter(g => g.controls.some(c => !(((gm[g.key] || {}).done) || {})[c.id])).length, ga = $('ov-govalert');
+  ga.hidden = !missing; ga.innerHTML = `<i></i>${missing} שימושי AI בלי בקרות מלאות`;
+  // journey + completion
+  const J = journeySteps(), done = J.filter(x => x[2]).length, pct = Math.round(done / J.length * 100);
+  $('ov-prog').innerHTML = `<span>התקדמות</span><span class="pbar" style="--kc:var(--c3)"><i style="width:${pct}%"></i></span><b>${pct}%</b>`;
+  $('ov-prog2').textContent = `${done} מתוך ${J.length} הושלמו · ${pct}%`;
+  let prev = {}; try{ prev = JSON.parse(localStorage.getItem('xray-journey') || '{}'); }catch(e){}
+  const ck = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  $('ov-next').innerHTML = J.map(([sid, title, d, locked, why], i) => { const cls = d ? 'done' : locked ? 'blocked' : 'open', fresh = d && prev[sid] === false;
+    return `<li class="${cls}${fresh ? ' fresh' : ''}"><a href="#${sid}"${locked ? ' aria-disabled="true"' : ''}><span class="no">${d ? ck : String(i+1).padStart(2,'0')}</span><span class="t">${title}</span><span class="s">${d ? 'הושלם' : locked ? 'נעול · ' + why : 'זמין'}</span></a></li>`; }).join('');
+  J.forEach(([sid, title, d]) => { if(d && prev[sid] === false) toast(`הושלם: ${title}`); });
+  try{ localStorage.setItem('xray-journey', JSON.stringify(Object.fromEntries(J.map(x => [x[0], x[2]])))); }catch(e){}
+  // top opportunities with "start here"
   const ranked = [...a.opportunities].map(o => ({ o, v: roi(o).ils * SCEN.r })).sort((x, y) => y.v - x.v).slice(0, 5), mx = Math.max(1, ...ranked.map(x => x.v));
-  $('ov-opps').innerHTML = ranked.length ? ranked.map(({o, v}) => `<div class="ob"><span><b>${esc(o.title)}</b><small>${esc(o.category || '')} · מאמץ ${o.effort}/5</small></span><span class="t"><i style="width:${Math.round(v/mx*100)}%"></i></span><span class="v">${v ? ils(v) : '—'}</span></div>`).join('')
+  const second = ranked.find(x => x.o !== Z && x.o.effort <= 2);
+  $('ov-start').innerHTML = Z ? `<div class="start-here"><span class="tag">✦ התחילו כאן</span><b>${esc(Z.title)}</b><span class="note">${esc(Z.description || '')}</span><div class="meta"><span>חיסכון סביר <strong>${ils(roi(Z).ils*SCEN.r)}</strong> בחודש</span><span>מאמץ <strong>${Z.effort}/5</strong></span><span>השפעה <strong>${Z.impact}/5</strong></span><span>${esc(Z.category || '')}</span></div></div>` : '';
+  $('ov-opps').innerHTML = ranked.length ? ranked.map(({o, v}) => `<div class="ob"><span><b>${esc(o.title)}${o === Z || (second && o === second.o) ? '<span class="badge">התחל כאן</span>' : ''}</b><small>${esc(o.category || '')} · מאמץ ${o.effort}/5</small></span><span class="t"><i style="width:${Math.round(v/mx*100)}%"></i></span><span class="v">${v ? ils(v) : '—'}</span></div>`).join('')
     : '<div class="empty">אין עדיין הזדמנויות. <a class="btn sm" href="#s-sources">להתחיל ניתוח</a></div>';
-  // roi
   try{ $('ov-roi').innerHTML = roiChart(roiItems()); }catch(e){ $('ov-roi').innerHTML = ''; }
-  // intents donut + sentiment
-  const INT = (a.intents || []).filter(x => +x.share_pct > 0).sort((x, y) => y.share_pct - x.share_pct).slice(0, 7);
-  const COLS = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)','var(--c7)'];
+  // org map (compact)
+  if(list.length){ const vals = list.map(x => x.s.ils).sort((x, y) => x - y), med = vals[Math.floor(vals.length/2)] || 0; $('ov-map').innerHTML = bubbleChart(list, med); }
+  else $('ov-map').innerHTML = '<div class="empty">עוד לא מופו תהליכים. <a class="btn sm" href="#s-org">למפת הארגון</a></div>';
+  // intents donut + sentiment (compact)
+  const INT = (a.intents || []).filter(x => +x.share_pct > 0).sort((x, y) => y.share_pct - x.share_pct).slice(0, 6);
+  const COLS = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)'];
   const tot = INT.reduce((n, x) => n + (+x.share_pct), 0) || 1, R = 46, C = 2 * Math.PI * R; let off = 0;
   const arcs = INT.map((x, i) => { const len = (+x.share_pct) / tot * C; const el = `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${COLS[i]}" stroke-width="18" stroke-dasharray="${Math.max(0, len - 2)} ${C - Math.max(0, len - 2)}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"><title>${esc(x.name)} ${x.share_pct}%</title></circle>`; off += len; return el; }).join('');
   const S = a.sentiment || {}, neg = +S.negative_pct || 0, neu = +S.neutral_pct || 0, pos = +S.positive_pct || 0, st = (neg + neu + pos) || 1;
-  $('ov-int').innerHTML = INT.length ? `<div class="dn"><svg width="132" height="132" viewBox="0 0 120 120" role="img" aria-label="סיבות פנייה">${arcs}<text x="60" y="58" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)">${a.calls_analyzed || INT.length}</text><text x="60" y="75" text-anchor="middle" font-size="10" fill="var(--muted)">${a.calls_analyzed ? 'שיחות נותחו' : 'סיבות'}</text></svg>
+  $('ov-int').innerHTML = INT.length ? `<div class="dn"><svg width="100" height="100" viewBox="0 0 120 120" role="img" aria-label="סיבות פנייה: ${esc(INT.map(x => x.name + ' ' + x.share_pct + '%').join(', '))}">${arcs}<text x="60" y="58" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)">${a.calls_analyzed || INT.length}</text><text x="60" y="75" text-anchor="middle" font-size="10" fill="var(--muted)">${a.calls_analyzed ? 'שיחות' : 'סיבות'}</text></svg>
     <div class="dn-l">${INT.map((x, i) => `<div><i style="background:${COLS[i]}"></i><span>${esc(x.name)}</span><b>${x.share_pct}%</b></div>`).join('')}</div></div>
-    <div><span class="kc-l">סנטימנט הלקוחות</span><div class="sent"><i style="width:${pos/st*100}%;background:var(--good)"></i><i style="width:${neu/st*100}%;background:var(--line-strong)"></i><i style="width:${neg/st*100}%;background:var(--crit)"></i></div>
+    <div><span class="kc-l">סנטימנט</span><div class="sent" role="img" aria-label="חיובי ${pos}%, ניטרלי ${neu}%, שלילי ${neg}%"><i style="width:${pos/st*100}%;background:var(--good)"></i><i style="width:${neu/st*100}%;background:var(--line-strong)"></i><i style="width:${neg/st*100}%;background:var(--crit)"></i></div>
     <div class="sent-l"><span style="--c:var(--good)">חיובי ${pos}%</span><span style="--c:var(--line-strong)">ניטרלי ${neu}%</span><span style="--c:var(--crit)">שלילי ${neg}%</span></div></div>`
     : '<div class="empty">אין עדיין סיבות פנייה. הריצו ניתוח על שיחות.</div>';
-  // org map
-  const list = orgScored();
-  if(list.length){ const vals = list.map(x => x.s.ils).sort((x, y) => x - y), med = vals[Math.floor(vals.length/2)] || 0; $('ov-map').innerHTML = bubbleChart(list, med); }
-  else $('ov-map').innerHTML = '<div class="empty">עוד לא מופו תהליכים. <a class="btn sm" href="#s-org">למפת הארגון</a></div>';
-  // governance
-  const gi = govItems(), gm = govLoad(), cnt = [0,1,2].map(t => gi.filter(g => g.tier === t).length), mxT = Math.max(1, ...cnt);
-  const noOwner = gi.filter(g => g.tier >= 1 && !(gm[g.key] || {}).owner).length;
-  const done = gi.reduce((n, g) => n + g.controls.filter(c => ((gm[g.key] || {}).done || {})[c.id]).length, 0), total = gi.reduce((n, g) => n + g.controls.length, 0);
-  const T = [['סיכון גבוה','var(--crit)',2],['בינוני','var(--amber)',1],['נמוך','var(--good)',0]];
-  $('ov-gov').innerHTML = `<div class="tiers">${T.map(([l, c, k]) => `<div><span>${l}</span><span class="t"><i style="width:${Math.round(cnt[k]/mxT*100)}%;background:${c}"></i></span><b>${cnt[k]}</b></div>`).join('')}</div>
-    <div class="ov-stat"><span><b>${gi.length}</b>שימושי AI במלאי</span><span><b>${noOwner}</b>בסיכון בינוני וגבוה בלי בעלים</span><span><b>${total ? Math.round(done/total*100) : 0}%</b>בקרות הושלמו</span></div>`;
-  // insights
-  const L = insLoad(), sevC = { high:'var(--crit)', medium:'var(--amber)', low:'var(--accent)' };
-  $('ov-ins').innerHTML = L.length ? `<div class="ov-ins">${L.slice(0, 4).map(x => `<div class="i"><span class="s" style="background:${sevC[x.severity] || 'var(--muted)'}"></span><span><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></span></div>`).join('')}</div>`
-    : '<div class="empty">עדיין אין תובנות. סוכן התובנות עובר על כל הנתונים ומחפש קשרים שלא רואים במבט ראשון. <a class="btn sm primary" href="#s-agents">להפעלת סוכן</a></div>';
-  // next steps
-  const kpis = kpiLoad(), hasActual = kpis.some(k => k.cur != null && k.cur !== '');
-  const steps = [
-    [!state.isDemo, 'לנתח שיחות אמיתיות מהמוקד', 's-sources'],
-    [!!state.eval && !!state.eval.last, 'להריץ מבחן דיוק על שיחות מתויגות', 's-eval'],
-    [!org.isDemo && org.rows.length > 0, 'למפות את התהליכים בארגון', 's-org'],
-    [gi.length > 0 && noOwner === 0, 'להגדיר בעלים לכל שימוש בסיכון בינוני וגבוה', 's-gov'],
-    [hasActual, 'למלא ערכים בפועל במדדי ההצלחה', 's-roi'],
-    [false, 'להוריד מצגת ולשלוח למנהל', 's-export']
-  ];
-  const ck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
-  $('ov-next').innerHTML = steps.map(([d, t, h]) => `<li class="${d ? 'done' : ''}"><a href="#${h}"><span class="ck">${ck}</span><span>${t}</span><span class="go">‹</span></a></li>`).join('');
+  // governance (compact)
+  const cnt = [0,1,2].map(k => gi.filter(g => g.tier === k).length), mxT = Math.max(1, ...cnt);
+  const cdone = gi.reduce((n, g) => n + g.controls.filter(c => ((gm[g.key] || {}).done || {})[c.id]).length, 0), ctot = gi.reduce((n, g) => n + g.controls.length, 0);
+  $('ov-gov').innerHTML = `<div class="tiers">${[['סיכון גבוה','var(--crit)',2],['בינוני','var(--amber)',1],['נמוך','var(--good)',0]].map(([l, c, k]) => `<div><span>${l}</span><span class="t"><i style="width:${Math.round(cnt[k]/mxT*100)}%;background:${c}"></i></span><b>${cnt[k]}</b></div>`).join('')}</div>
+    <div class="ov-stat"><span><b>${missing}</b>בלי בקרות מלאות</span><span><b>${ctot ? Math.round(cdone/ctot*100) : 0}%</b>בקרות הושלמו</span></div>`;
+  // insights: at most 3, one action each
+  const ACT = { call:['לפתיחת ההזדמנויות','s-results','opp'], org:['למפת הארגון','s-org',''], gov:['לפתיחת המשילות','s-gov',''], roi:['לתיק ה-ROI','s-roi',''], kpi:['למדדי ההצלחה','s-roi',''], cross:['ליומן הסוכנים','s-agents',''] };
+  const sevC = { high:'var(--crit)', medium:'var(--amber)', low:'var(--accent)' };
+  const ago = iso => { const m = Math.round((Date.now() - new Date(iso)) / 60000); return !isFinite(m) ? '' : m < 1 ? 'עכשיו' : m < 60 ? `לפני ${m} דק׳` : m < 1440 ? `לפני ${Math.round(m/60)} שע׳` : new Date(iso).toLocaleDateString('he-IL'); };
+  $('ov-ins').innerHTML = L.length ? `<div class="ins3">${L.slice(0, 3).map(x => { const [lbl, href, r] = ACT[x.area] || ACT.cross; return `<div class="i" style="--c:${sevC[x.severity] || 'var(--muted)'}"><b>${esc(x.title)}</b><p>${esc(x.detail)}</p><div class="foot"><span>${esc(x.agent || 'סוכן')}${x.at ? ' · ' + ago(x.at) : ''}${x.sample ? ' · דוגמה' : ''}</span><a class="btn sm" href="#${href}"${r ? ` data-rt="${r}"` : ''}>${lbl}</a></div></div>`; }).join('')}</div>`
+    : `<div class="empty">עדיין אין תובנות. סוכן התובנות עובר על כל הנתונים ומחפש קשרים שלא רואים במבט ראשון. <a class="btn sm primary" href="#s-agents">להפעלת סוכן</a></div>`;
+  // before / after pilot from saved analyses
+  const pl = projGet().slice().sort((x, y) => new Date(x.date) - new Date(y.date));
+  if(pl.length >= 2){ const A = pl[pl.length - 2], B = pl[pl.length - 1], ma = metrics(A), mb = metrics(B);
+    $('ov-cmp').innerHTML = `<p class="note">${esc(A.name)} ← ${esc(B.name)}</p><div class="cmp-mini">${[0,1,4,7].map(i => { const x = ma[i][1], y = mb[i][1], dir = ma[i][3], ch = x ? (y - x) / Math.abs(x) : 0, good = dir ? ch * dir > 0 : null;
+      return `<div><span>${ma[i][0]}</span><span class="mono">${fmtM(x, ma[i][2])}</span><span class="mono">${fmtM(y, ma[i][2])}</span><span class="d ${!ch ? 'eq' : good ? 'up' : 'down'}">${ch ? (ch > 0 ? '+' : '') + Math.round(ch*100) + '%' : '='}</span></div>`; }).join('')}</div>`; }
+  else $('ov-cmp').innerHTML = `<div class="empty">שומרים את המצב לפני הפיילוט, ואחריו שוב. כאן תופיע ההשוואה. <a class="btn sm" href="#s-projects">לשמירת מצב</a></div>`;
 }
 
 ['p-calls','p-aht','p-cost','p-agents','p-type'].forEach(id => $(id).addEventListener('input', () => { renderReadout(state.analysis); if(typeof renderRoi === 'function') renderRoi(); renderSum(state.analysis); renderOpp(state.analysis); saveLocal(); }));
