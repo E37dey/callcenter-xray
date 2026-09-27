@@ -257,14 +257,22 @@ test.describe('screens', () => {
     await expect(page.locator('.side nav a[data-nav="gov"]')).toHaveClass(/on/);
   });
 
-  test('explanations sit behind an info button', async ({ page }) => {
+  test('overview has the header, both tracks and the BI cards', async ({ page }) => {
+    await open(page, { screens: true });
+    await expect(page.locator('.hero h1')).toContainText('מה באמת קורה בשיחות');
+    await expect(page.locator('.hero .track')).toHaveCount(3);
+    await expect(page.locator('#ov-int svg circle')).toHaveCount(5); // five call reasons in the demo
+    await expect(page.locator('#ov-int')).toContainText('סנטימנט');
+    await page.click('.hero .track[href="#s-org"]');
+    await expect(page.locator('#s-org')).toBeVisible();
+  });
+
+  test('every step shows its icon and full explanation', async ({ page }) => {
     await open(page, { screens: true });
     await page.click('.side nav a[href="#s-roi"]');
-    const intro = page.locator('#s-roi > p.intro');
-    await expect(intro).toBeHidden();
-    await page.click('#s-roi .info-btn');
-    await expect(intro).toBeVisible();
-    await expect(page.locator('#s-roi .info-btn')).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('#s-roi .shead .ico')).toBeVisible();
+    await expect(page.locator('#s-roi > p').first()).toBeVisible();
+    await expect(page.locator('#s-roi > p').first()).toContainText('חיסכון הוא רק חצי מהתמונה');
   });
 });
 

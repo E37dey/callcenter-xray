@@ -13,48 +13,25 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
+  color-scheme:dark;
   --font:"IBM Plex Sans Hebrew","IBM Plex Sans","Segoe UI","Arial Hebrew",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#F8F9FB; --sunken:#EEF1F4;
-  --line:#DEE3E9; --line-2:#EBEEF2; --line-strong:#CBD2DB;
-  --ink:#0F1A2A; --ink-2:#354357; --muted:#5E6B7C; --faint:#8C97A5;
-  --accent:#0A6378; --accent-hover:#084F60; --accent-ink:#FFFFFF; --accent-soft:#E4F0F3; --accent-line:#A8CDD7;
-  --amber:#9A5A06; --amber-soft:#FDF3E1;
-  --good:#0B7445; --good-soft:#E4F4EA;
-  --crit:#B42318; --crit-soft:#FDECEA;
-  --violet:#5A45B6; --violet-soft:#EFECFA;
-  --mark:#FFEBA8;
-  --side-bg:#0E1726; --side-ink:#C4CDD9; --side-muted:#7D899B; --side-hover:#162235; --side-on:#1D2C43; --side-line:#1C2839; --side-acc:#7CCBDD;
-  --shadow-sm:0 1px 2px rgba(15,26,42,.05);
-  --shadow-md:0 1px 2px rgba(15,26,42,.04),0 6px 16px -4px rgba(15,26,42,.10);
-  --ring:0 0 0 3px rgba(10,99,120,.18);
-  --r-sm:6px; --r:8px; --r-lg:12px;
+  --bg:#0A0F1C; --surface:#111a2e; --surface-2:#16213a; --sunken:#0d1526;
+  --line:#22304b; --line-2:#1b2740; --line-strong:#2e3f60;
+  --ink:#E8EEF8; --ink-2:#C3CEDF; --muted:#8C9BB5; --faint:#65748F;
+  --accent:#38BDF8; --accent-hover:#7DD3FC; --accent-ink:#04111C; --accent-soft:rgba(56,189,248,.14); --accent-line:rgba(56,189,248,.4);
+  --amber:#FBBF24; --amber-soft:rgba(251,191,36,.14);
+  --good:#34D399; --good-soft:rgba(52,211,153,.14);
+  --crit:#FB7185; --crit-soft:rgba(251,113,133,.14);
+  --violet:#A78BFA; --violet-soft:rgba(167,139,250,.15);
+  --mark:rgba(251,191,36,.3);
+  --c1:#38BDF8; --c2:#A78BFA; --c3:#34D399; --c4:#FBBF24; --c5:#FB7185; --c6:#60A5FA; --c7:#F472B6; --c8:#2DD4BF;
+  --side-bg:#070B16; --side-ink:#C3CEDF; --side-muted:#5E6D88; --side-hover:#111a2e; --side-on:#16213a; --side-line:#172238; --side-acc:#7DD3FC;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 10px 30px -10px rgba(0,0,0,.6);
+  --ring:0 0 0 3px rgba(56,189,248,.28);
+  --r-sm:6px; --r:8px; --r-lg:14px;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme:dark;
-    --bg:#0A1018; --surface:#111924; --surface-2:#151F2B; --sunken:#0D141D;
-    --line:#233042; --line-2:#1B2634; --line-strong:#304055;
-    --ink:#E6EBF1; --ink-2:#C1CBD7; --muted:#8F9CAD; --faint:#6A7789;
-    --accent:#5BB8CE; --accent-hover:#7BCADB; --accent-ink:#06121A; --accent-soft:#11303A; --accent-line:#245767;
-    --amber:#F0A73A; --amber-soft:#30240F; --good:#4FC98A; --good-soft:#0F2D1E;
-    --crit:#FF8070; --crit-soft:#381713; --violet:#A99BF4; --violet-soft:#221E42; --mark:#5A4712;
-    --side-bg:#070C13; --side-hover:#101926; --side-on:#172335; --side-line:#141E2B;
-    --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(91,184,206,.25);
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#0A1018; --surface:#111924; --surface-2:#151F2B; --sunken:#0D141D;
-  --line:#233042; --line-2:#1B2634; --line-strong:#304055;
-  --ink:#E6EBF1; --ink-2:#C1CBD7; --muted:#8F9CAD; --faint:#6A7789;
-  --accent:#5BB8CE; --accent-hover:#7BCADB; --accent-ink:#06121A; --accent-soft:#11303A; --accent-line:#245767;
-  --amber:#F0A73A; --amber-soft:#30240F; --good:#4FC98A; --good-soft:#0F2D1E;
-  --crit:#FF8070; --crit-soft:#381713; --violet:#A99BF4; --violet-soft:#221E42; --mark:#5A4712;
-  --side-bg:#070C13; --side-hover:#101926; --side-on:#172335; --side-line:#141E2B;
-  --shadow-sm:none; --shadow-md:0 8px 24px -8px rgba(0,0,0,.5); --ring:0 0 0 3px rgba(91,184,206,.25);
-}
-
 /* ---------- base ---------- */
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -146,14 +123,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .kc-s{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
 .delta{font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--good-soft);color:var(--good);font-variant-numeric:tabular-nums}
 .delta.neu{background:var(--sunken);color:var(--ink-2)}
-.ov-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
-.ov-grid{grid-template-areas:"opps roi" "map gov" "map ins" "next next"}
-.ov-grid > :nth-child(1){grid-area:opps} .ov-grid > :nth-child(2){grid-area:roi} .ov-grid > :nth-child(3){grid-area:map}
-.ov-grid > :nth-child(4){grid-area:gov} .ov-grid > :nth-child(5){grid-area:ins} .ov-grid > :nth-child(6){grid-area:next}
-.ov-grid .steps-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
-.ov-grid{grid-template-areas:"opps roi" "map gov" "map ins" "next next"}
-.ov-grid > :nth-child(1){grid-area:opps} .ov-grid > :nth-child(2){grid-area:roi} .ov-grid > :nth-child(3){grid-area:map}
-.ov-grid > :nth-child(4){grid-area:gov} .ov-grid > :nth-child(5){grid-area:ins} .ov-grid > :nth-child(6){grid-area:next}
+.ov-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.ov-grid .oc.wide{grid-column:1 / -1}
 .ov-grid .steps-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
 .oc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;display:grid;gap:14px;align-content:start;box-shadow:var(--shadow-sm);min-width:0}
 .oc-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -193,7 +164,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .phead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
 .panel > .phead{padding-bottom:16px;border-bottom:1px solid var(--line-2)}
 .shead{display:flex;align-items:center;gap:12px}
-.shead .ico{display:none}
+.shead .ico{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--ic,var(--accent));background:color-mix(in srgb,var(--ic,var(--accent)) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ic,var(--accent)) 30%,transparent)}
+.shead .ico svg{width:22px;height:22px}
+#s-sources{--ic:var(--c1)} #s-run{--ic:var(--c3)} #s-results{--ic:var(--c6)} #s-eval{--ic:var(--c2)} #s-org{--ic:var(--c2)}
+#s-gov{--ic:var(--c8)} #s-roi{--ic:var(--c4)} #s-agents{--ic:var(--c7)} #s-projects{--ic:var(--c6)} #s-export{--ic:var(--c5)}
 .shead .num{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
 .shead .lede{display:block;font-size:13.5px;color:var(--muted);margin-top:2px;max-width:80ch}
 .panel > p{color:var(--ink-2);max-width:82ch}
@@ -419,6 +393,7 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tier.h{background:var(--crit-soft);color:var(--crit)} .tier.m{background:var(--amber-soft);color:var(--amber)} .tier.l{background:var(--good-soft);color:var(--good)}
 .gov-tbl input.own,.gov-tbl select,.roi-tbl input,.kpi-tbl input,.kpi-tbl select{font:inherit;font-size:13px;height:32px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:0 8px;color:var(--ink)}
 .gov-tbl input.own{width:130px}
+.gov-tbl{min-width:920px}.gov-tbl td:first-child{min-width:220px}.gov-tbl td:nth-child(3){max-width:260px}
 .gov-tbl details summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;white-space:nowrap}
 .gov-tbl details summary::-webkit-details-marker{display:none}
 .prog,.kprog{height:5px;border-radius:999px;background:var(--sunken);overflow:hidden;display:inline-block;vertical-align:middle}
@@ -508,11 +483,24 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .agents{grid-template-columns:1fr 1fr}
   .insights{grid-template-columns:1fr}
   .readout{grid-template-columns:1fr 1fr}
-  .ov-grid{grid-template-columns:1fr;grid-template-areas:none}
-  .ov-grid > *{grid-area:auto!important}
+  .ov-grid{grid-template-columns:1fr}
   .ov-grid .steps-list{grid-template-columns:1fr}
 }
-@media (max-width:980px){
+@media (min-width:681px) and (max-width:1100px){
+  .app{grid-template-columns:68px minmax(0,1fr)}
+  .side{padding:12px 10px;align-items:stretch}
+  .logo{padding:4px 0 14px;justify-content:center}
+  .logo > span:last-child,.side .navlabel,.side .card{display:none}
+  .side nav{gap:4px}
+  .side nav a{justify-content:center;padding:10px 0;font-size:0;gap:0}
+  .side nav a svg{width:21px;height:21px}
+  .side nav a .n{display:none}
+  .side nav a.on{box-shadow:inset -3px 0 0 var(--side-acc)}
+  .topbar,.subnav{padding-inline:20px}
+  .main .wrap{padding-inline:20px}
+  .hero{grid-template-columns:1fr}
+}
+@media (max-width:680px){
   .app{grid-template-columns:1fr}
   .side{position:sticky;top:0;z-index:30;height:auto;flex-direction:row;align-items:center;gap:8px;padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top,0px));overflow-x:auto;scrollbar-width:none}
   .side::-webkit-scrollbar{display:none}
@@ -531,6 +519,8 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .exp .deck-card{grid-column:auto}
 }
 @media (max-width:680px){
+  .waves,.exp{grid-template-columns:1fr}
+  .exp .deck-card{grid-column:auto}
   h1{font-size:25px}
   .panel{padding:16px}
   .grid2,.run,.keybox,.acc-grid,.agents{grid-template-columns:1fr}
@@ -546,6 +536,79 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .src{grid-template-columns:auto 1fr auto}
   .src .size{display:none}
 }
+
+/* ---------- BI layer ---------- */
+body{background:radial-gradient(1200px 600px at 100% -10%,rgba(56,189,248,.07),transparent 60%),radial-gradient(900px 500px at 0% 0%,rgba(167,139,250,.06),transparent 60%),var(--bg);background-attachment:fixed}
+.panel,.oc,.kc,.top3 .card,.exp .card,.agent,.wave,.opp,.bubble-wrap,.tbl-wrap,.tbl-scroll{background:var(--surface);border-color:var(--line)}
+.panel{box-shadow:var(--shadow-md)}
+.topbar{background:rgba(10,15,28,.82)}
+.subnav{background:rgba(17,26,46,.9)}
+.side nav a svg{opacity:1}
+.side nav a[href="#overview"] svg{color:var(--c6)}
+.side nav a[href="#s-sources"] svg{color:var(--c1)} .side nav a[href="#s-run"] svg{color:var(--c3)} .side nav a[href="#s-results"] svg{color:var(--c6)} .side nav a[href="#s-eval"] svg{color:var(--c2)}
+.side nav a[href="#s-org"] svg{color:var(--c2)} .side nav a[href="#s-gov"] svg{color:var(--c8)} .side nav a[href="#s-roi"] svg{color:var(--c4)} .side nav a[href="#s-agents"] svg{color:var(--c7)}
+.side nav a[href="#s-projects"] svg{color:var(--c6)} .side nav a[href="#s-export"] svg{color:var(--c5)}
+.logo .mark{background:linear-gradient(145deg,#38BDF8,#6366F1)}
+.btn{background:var(--surface-2);border-color:var(--line-strong);color:var(--ink)}
+.btn:hover{background:#1c2946;border-color:#3b4f75}
+.btn.primary{background:linear-gradient(180deg,#38BDF8,#0EA5E9);border-color:#0EA5E9;color:#04111C}
+.btn.primary:hover{background:#7DD3FC;border-color:#7DD3FC}
+.field input,.field select,textarea,.inp,.gov-tbl input.own,.gov-tbl select,.roi-tbl input,.kpi-tbl input,.kpi-tbl select{background:var(--sunken);border-color:var(--line-strong);color:var(--ink)}
+table.t thead th,table.t tr:first-child th,.orgtbl th{background:var(--surface-2)}
+.seg button[aria-pressed="true"],.depts button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.switch input::after{background:#E8EEF8}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:18px;padding:30px 32px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center;border:1px solid var(--line);isolation:isolate;
+  background:radial-gradient(80% 120% at 100% 0%,rgba(56,189,248,.22),transparent 60%),radial-gradient(60% 100% at 0% 100%,rgba(167,139,250,.22),transparent 65%),linear-gradient(180deg,#0f1930,#0b1224)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/26px 26px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/26px 26px;mask-image:linear-gradient(90deg,#000,transparent 80%)}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--accent-hover)}
+.hero .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+.hero h1{font-size:34px;line-height:1.15;margin-top:10px;letter-spacing:-.02em}
+.hero h1 span{background:linear-gradient(90deg,#38BDF8,#A78BFA);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--ink-2);margin-top:12px;max-width:62ch;font-size:15px}
+.hero .trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hero .trust span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--ink-2)}
+.hero .trust span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+.tracks{display:grid;gap:12px}
+.track{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-decoration:none;color:var(--ink);padding:16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:border-color .15s,background .15s}
+.track:hover{border-color:var(--tc);background:color-mix(in srgb,var(--tc) 10%,transparent)}
+.track .ti{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--tc);background:color-mix(in srgb,var(--tc) 18%,transparent)}
+.track .ti svg{width:23px;height:23px}
+.track b{font-size:15.5px}
+.track small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.track .go{color:var(--tc);font-weight:600;font-size:18px}
+
+/* KPI tiles */
+.kc{position:relative;overflow:hidden}
+.kc::after{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--kc)}
+.readout .kc:nth-child(1){--kc:var(--c3)} .readout .kc:nth-child(2){--kc:var(--c4)} .readout .kc:nth-child(3){--kc:var(--c1)} .readout .kc:nth-child(4){--kc:var(--c2)}
+.kc-ic{color:var(--kc);background:color-mix(in srgb,var(--kc) 16%,transparent)}
+.kc-v{color:var(--ink)}
+.spark{display:flex;align-items:flex-end;gap:4px;height:30px}
+.spark i{flex:1;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--kc) 55%,transparent)}
+.spark i.hi{background:var(--kc)}
+.pbar{height:8px;border-radius:999px;background:var(--sunken);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--kc) 60%,transparent),var(--kc))}
+.dots5{display:flex;gap:4px;flex-wrap:wrap}
+.dots5 i{width:9px;height:9px;border-radius:3px;background:var(--kc)}
+.dots5 i.off{background:var(--line-strong)}
+
+/* donut & sentiment */
+.dn{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.dn-l{display:grid;gap:8px}
+.dn-l div{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center;font-size:13px}
+.dn-l i{width:10px;height:10px;border-radius:3px}
+.dn-l b{font-variant-numeric:tabular-nums}
+.sent{display:flex;height:12px;border-radius:999px;overflow:hidden;margin-top:6px}
+.sent i{display:block;height:100%}
+.sent-l{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.sent-l span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-inline-end:6px;background:var(--c)}
+.ob .t i{background:linear-gradient(90deg,var(--c6),var(--c1))}
+.oc-h h3{display:flex;align-items:center;gap:8px}
+.oc-h h3::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--hc,var(--accent))}
+@media (max-width:1100px){ .hero{grid-template-columns:1fr} .hero h1{font-size:28px} .tracks{grid-template-columns:1fr} }
+@media (max-width:680px){ .hero{padding:20px 18px;border-radius:14px} .hero h1{font-size:24px} .dn{grid-template-columns:1fr;justify-items:center} }
 </style>
 
 <div class="app">
@@ -577,15 +640,29 @@ table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 <nav class="subnav" id="subnav" aria-label="שלבים" hidden></nav>
 <div class="wrap">
   <section class="ov" id="overview" aria-labelledby="h-ov">
+    <header class="hero">
+      <div>
+        <span class="eyebrow"><i></i>אבחון תהליכים מבוסס AI · מוקדי שירות ומכירות וכל הארגון</span>
+        <h1>מה באמת קורה בשיחות,<br><span>ואיפה AI יחסוך הכי הרבה</span></h1>
+        <p>מכניסים תמלולי שיחות, נהלים והערות מישיבה ליד נציגים. הכלי מסתיר פרטים מזהים, Claude משרטט את התהליך כפי שהוא קורה בפועל, וכל ממצא מגיע עם ציטוט שנבדק מול המקור. בסוף: איפה אוטומציה ו-AI יחסכו הכי הרבה, בשקלים, עם משילות, ROI ותוכנית פיילוט.</p>
+        <div class="trust"><span>פרטים מזהים מוסתרים לפני שליחה</span><span>כל ממצא עם ציטוט מאומת</span><span>דיוק נמדד, לא מובטח</span><span>כל פעולה של סוכן באישורך</span></div>
+      </div>
+      <div class="tracks">
+        <a class="track" href="#s-sources" style="--tc:var(--c1)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="3.5" y="13" width="4" height="6" rx="1.5"/><rect x="16.5" y="13" width="4" height="6" rx="1.5"/></svg></span><span><b>מסלול 1: ניתוח שיחות מוקד</b><small>תמלולים, נהלים ותצפיות ← מפת תהליך, הזדמנויות עם ציטוטים, חיסכון ופיילוט</small></span><span class="go">‹</span></a>
+        <a class="track" href="#s-org" style="--tc:var(--c2)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5l-6 5M12 11.5l6 5"/></svg></span><span><b>מסלול 2: מפת AI לכל הארגון</b><small>תהליכים בכל המחלקות ← ציון התאמה, סוג פתרון ותוכנית בשלושה גלים</small></span><span class="go">‹</span></a>
+        <a class="track" href="#s-agents" style="--tc:var(--c7)"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></span><span><b>סוכנים חכמים</b><small>Claude עובר על כל הנתונים, מבצע פעולות באישורך ומביא תובנות</small></span><span class="go">‹</span></a>
+      </div>
+    </header>
     <div class="ov-head"><div><h2 id="h-ov">תמונת מצב</h2><p id="ov-sub"></p></div><div class="row"><button class="btn" id="ov-deck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>הורדת מצגת</button></div></div>
     <div class="readout" id="readout" aria-live="polite"></div>
     <div class="ov-grid">
-      <div class="oc"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results">כל ההזדמנויות</a></div><div id="ov-opps"></div></div>
-      <div class="oc"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
-      <div class="oc"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה המלאה</a></div><div id="ov-map"></div></div>
-      <div class="oc"><div class="oc-h"><h3>משילות AI</h3><a href="#s-gov">למלאי השימושים</a></div><div id="ov-gov"></div></div>
-      <div class="oc"><div class="oc-h"><h3>תובנות אחרונות</h3><a href="#s-agents">לסוכנים</a></div><div id="ov-ins"></div></div>
-      <div class="oc"><div class="oc-h"><h3>הצעדים הבאים</h3></div><ol class="steps-list" id="ov-next"></ol></div>
+      <div class="oc" style="--hc:var(--c6)"><div class="oc-h"><h3>ההזדמנויות המובילות במוקד</h3><a href="#s-results">כל ההזדמנויות</a></div><div id="ov-opps"></div></div>
+      <div class="oc" style="--hc:var(--c4)"><div class="oc-h"><h3>תזרים מצטבר, 24 חודשים</h3><a href="#s-roi">לתיק ה-ROI</a></div><div id="ov-roi"></div></div>
+      <div class="oc" style="--hc:var(--c1)"><div class="oc-h"><h3>סיבות פנייה וסנטימנט</h3><a href="#s-results">לזיהוי המלא</a></div><div id="ov-int"></div></div>
+      <div class="oc" style="--hc:var(--c2)"><div class="oc-h"><h3>איפה להטמיע AI בארגון</h3><a href="#s-org">למפה המלאה</a></div><div id="ov-map"></div></div>
+      <div class="oc" style="--hc:var(--c8)"><div class="oc-h"><h3>משילות AI לפי רמת סיכון</h3><a href="#s-gov">למלאי השימושים</a></div><div id="ov-gov"></div></div>
+      <div class="oc" style="--hc:var(--c7)"><div class="oc-h"><h3>תובנות אחרונות מהסוכנים</h3><a href="#s-agents">לסוכנים</a></div><div id="ov-ins"></div></div>
+      <div class="oc wide" style="--hc:var(--c3)"><div class="oc-h"><h3>הצעדים הבאים</h3></div><ol class="steps-list" id="ov-next"></ol></div>
     </div>
   </section>
 
@@ -1338,11 +1415,15 @@ function renderReadout(a){
   const t = totals(a), v = verifyAll(a), b = sumSec(a.process.steps), af = sumSec(a.to_be.steps);
   const P = typeof roiItems === 'function' ? portfolio(roiItems(), 'r') : null;
   const ic = d => '<span class="kc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg></span>';
+  const sc = [SCEN.p, SCEN.r, SCEN.o].map((k, i) => `<i class="${i === 1 ? 'hi' : ''}" style="height:${Math.round(k*100)}%" title="${['פסימי','סביר','אופטימי'][i]}: ${ils(t.ils*k)}"></i>`).join('');
+  const cum = P ? P.cum.filter((_, i) => i % 3 === 2) : [], lo = Math.min(0, ...cum), hi = Math.max(1, ...cum);
+  const roiSpark = cum.map(c => `<i class="${c >= 0 ? 'hi' : ''}" style="height:${Math.max(6, Math.round((c - lo) / (hi - lo) * 100))}%"></i>`).join('');
+  const dots = v.total ? Array.from({length: Math.min(v.total, 40)}, (_, i) => `<i class="${i < Math.round(v.ok / v.total * Math.min(v.total, 40)) ? '' : 'off'}"></i>`).join('') : '';
   $('readout').innerHTML = `
-    <div class="kc"><div class="kc-top"><span class="kc-l">חיסכון חודשי, תרחיש סביר</span>${ic('<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>')}</div><b class="kc-v">${ils(t.ils*SCEN.r)}</b><span class="kc-s">טווח: ${ils(t.ils*SCEN.p)} עד ${ils(t.ils)}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">ROI בשנה הראשונה</span>${ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>')}</div><b class="kc-v">${P ? fmtPct(P.roi12) : '—'}</b><span class="kc-s">${P ? `<span class="delta">החזר ב-${fmtPay(P.pay)}</span>${P.n} יוזמות בתיק` : ''}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">זמן בתהליך המרכזי</span>${ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>')}</div><b class="kc-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><span class="kc-s">${af && b ? `<span class="delta">${Math.round((1-af/b)*100)}% פחות</span>אחרי האוטומציות` : 'דקות לשיחה'}</span></div>
-    <div class="kc"><div class="kc-top"><span class="kc-l">ציטוטים שאומתו במקור</span>${ic('<path d="M4 12l5 5L20 6"/>')}</div><b class="kc-v mono">${v.ok}/${v.total}</b><span class="kc-s"><span class="delta ${v.total && v.ok === v.total ? '' : 'neu'}">${v.total ? Math.round(v.ok/v.total*100) : 0}%</span>כל ממצא נבדק מול הטקסט</span></div>`;
+    <div class="kc"><div class="kc-top"><span class="kc-l">חיסכון חודשי, תרחיש סביר</span>${ic('<path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/>')}</div><b class="kc-v">${ils(t.ils*SCEN.r)}</b><div class="spark">${sc}</div><span class="kc-s">טווח: ${ils(t.ils*SCEN.p)} עד ${ils(t.ils)}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">ROI בשנה הראשונה</span>${ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>')}</div><b class="kc-v">${P ? fmtPct(P.roi12) : '—'}</b><div class="spark">${roiSpark}</div><span class="kc-s">${P ? `<span class="delta">החזר ב-${fmtPay(P.pay)}</span>${P.n} יוזמות בתיק` : ''}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">זמן בתהליך המרכזי</span>${ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>')}</div><b class="kc-v mono">${af ? clock(b)+' ← '+clock(af) : clock(b)}</b><div style="display:grid;gap:5px"><div class="pbar"><i style="width:100%;background:var(--amber)"></i></div><div class="pbar"><i style="width:${af && b ? Math.round(af/b*100) : 100}%"></i></div></div><span class="kc-s">${af && b ? `<span class="delta">${Math.round((1-af/b)*100)}% פחות</span>היום מול אחרי` : 'דקות לשיחה'}</span></div>
+    <div class="kc"><div class="kc-top"><span class="kc-l">ציטוטים שאומתו במקור</span>${ic('<path d="M4 12l5 5L20 6"/>')}</div><b class="kc-v mono">${v.ok}/${v.total}</b><div class="dots5">${dots}</div><span class="kc-s"><span class="delta ${v.total && v.ok === v.total ? '' : 'neu'}">${v.total ? Math.round(v.ok/v.total*100) : 0}%</span>כל ממצא נבדק מול הטקסט</span></div>`;
 }
 function renderResults(){
   const a = state.analysis; renderReadout(a); if(typeof renderGov === 'function' && $('gov-tbl')) setTimeout(renderGov, 0); if(typeof renderRoi === 'function' && $('roi-tbl')) setTimeout(renderRoi, 0);
@@ -2035,7 +2116,7 @@ $('dl-deck').onclick = () => save(`מצגת-הטמעת-AI-${stamp()}.html`, deck
 /* ================= guided tour ================= */
 const TOUR = [
   { sel:'.side', t:'כל המסכים במקום אחד', d:'מכאן עוברים בין המסכים: סקירה, ניתוח שיחות, מפת הארגון, משילות, ROI, סוכנים ודוחות.' },
-  { sel:'.readout', t:'השורה התחתונה', d:'חיסכון חודשי, ROI בשנה הראשונה, זמן התהליך לפני ואחרי, וכמה ממצאים אומתו מול המקור. כרגע מוצגים נתוני דוגמה.' },
+  { sel:'.readout', t:'תמונת המצב', d:'חיסכון חודשי, ROI בשנה הראשונה, זמן התהליך לפני ואחרי, וכמה ממצאים אומתו מול המקור. כרגע מוצגים נתוני דוגמה.' },
   { sel:'#s-sources', t:'1. מכניסים חומר', d:'מדביקים תמלולים, מעלים קבצים או הקלטות, או מייבאים מ-Drive. אין לכם חומר? "טעינת נתוני דוגמה".' },
   { sel:'#s-run .shield', t:'2. פרטיות לפני הכול', d:'ת.ז, טלפונים, כרטיסי אשראי ושמות מוסתרים כאן, בדפדפן, לפני שמשהו יוצא. אפשר לראות בדיוק מה נשלח.' },
   { sel:'#s-results', t:'3. התוצאות', d:'מפת תהליך לפני ואחרי, הזדמנויות מדורגות עם חיסכון בשקלים, וציטוט מהשיחה לכל ממצא. אפשר לשאול את האנליסט שאלות המשך.' },
@@ -2410,18 +2491,8 @@ document.addEventListener('click', e => {
 });
 $('ov-deck').onclick = () => $('dl-deck').click();
 
-/* intro paragraphs live behind an info button, so each screen opens clean */
-document.querySelectorAll('.panel').forEach(p => {
-  const intro = [...p.children].find(c => c.tagName === 'P' && !c.classList.contains('note')); if(!intro) return;
-  const head = p.querySelector('.phead .shead'); if(!head) return;
-  intro.classList.add('intro'); intro.hidden = true; intro.id = intro.id || p.id + '-intro';
-  const first = intro.textContent.trim().split(/(?<=[.:])\s/)[0];
-  const h2 = head.querySelector('h2'); if(h2){ const l = document.createElement('span'); l.className = 'lede'; l.textContent = first; h2.after(l); }
-  const b = document.createElement('button'); b.type = 'button'; b.className = 'info-btn'; b.textContent = 'i';
-  b.setAttribute('aria-label', 'הסבר על המסך'); b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', intro.id);
-  b.onclick = () => { intro.hidden = !intro.hidden; b.setAttribute('aria-expanded', String(!intro.hidden)); };
-  head.append(b);
-});
+/* rail tooltips */
+document.querySelectorAll('.side nav a').forEach(a => a.title = a.textContent.replace(/\d+$/, '').trim());
 
 function renderOverview(){
   const a = state.analysis, p = profile();
@@ -2433,6 +2504,17 @@ function renderOverview(){
     : '<div class="empty">אין עדיין הזדמנויות. <a class="btn sm" href="#s-sources">להתחיל ניתוח</a></div>';
   // roi
   try{ $('ov-roi').innerHTML = roiChart(roiItems()); }catch(e){ $('ov-roi').innerHTML = ''; }
+  // intents donut + sentiment
+  const INT = (a.intents || []).filter(x => +x.share_pct > 0).sort((x, y) => y.share_pct - x.share_pct).slice(0, 7);
+  const COLS = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)','var(--c7)'];
+  const tot = INT.reduce((n, x) => n + (+x.share_pct), 0) || 1, R = 46, C = 2 * Math.PI * R; let off = 0;
+  const arcs = INT.map((x, i) => { const len = (+x.share_pct) / tot * C; const el = `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${COLS[i]}" stroke-width="18" stroke-dasharray="${Math.max(0, len - 2)} ${C - Math.max(0, len - 2)}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"><title>${esc(x.name)} ${x.share_pct}%</title></circle>`; off += len; return el; }).join('');
+  const S = a.sentiment || {}, neg = +S.negative_pct || 0, neu = +S.neutral_pct || 0, pos = +S.positive_pct || 0, st = (neg + neu + pos) || 1;
+  $('ov-int').innerHTML = INT.length ? `<div class="dn"><svg width="132" height="132" viewBox="0 0 120 120" role="img" aria-label="סיבות פנייה">${arcs}<text x="60" y="58" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)">${a.calls_analyzed || INT.length}</text><text x="60" y="75" text-anchor="middle" font-size="10" fill="var(--muted)">${a.calls_analyzed ? 'שיחות נותחו' : 'סיבות'}</text></svg>
+    <div class="dn-l">${INT.map((x, i) => `<div><i style="background:${COLS[i]}"></i><span>${esc(x.name)}</span><b>${x.share_pct}%</b></div>`).join('')}</div></div>
+    <div><span class="kc-l">סנטימנט הלקוחות</span><div class="sent"><i style="width:${pos/st*100}%;background:var(--good)"></i><i style="width:${neu/st*100}%;background:var(--line-strong)"></i><i style="width:${neg/st*100}%;background:var(--crit)"></i></div>
+    <div class="sent-l"><span style="--c:var(--good)">חיובי ${pos}%</span><span style="--c:var(--line-strong)">ניטרלי ${neu}%</span><span style="--c:var(--crit)">שלילי ${neg}%</span></div></div>`
+    : '<div class="empty">אין עדיין סיבות פנייה. הריצו ניתוח על שיחות.</div>';
   // org map
   const list = orgScored();
   if(list.length){ const vals = list.map(x => x.s.ils).sort((x, y) => x - y), med = vals[Math.floor(vals.length/2)] || 0; $('ov-map').innerHTML = bubbleChart(list, med); }
